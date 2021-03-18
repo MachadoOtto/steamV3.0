@@ -9,3 +9,8 @@
 #include "include/DtFechaHora.h"
 #include "include/DtPartidaIndividual.h"
 #include "include/DtPartidaMultijugador"
+#include "include/Sistema.h"
+
+#define MAX_JUGADORES
+#define MAX_VIDEOJUEGOS
+#define MAX_PARTIDAS
