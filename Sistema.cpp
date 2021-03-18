@@ -14,3 +14,5 @@
 #define MAX_JUGADORES
 #define MAX_VIDEOJUEGOS
 #define MAX_PARTIDAS
+
+//---Implementacion funciones de sistema---
