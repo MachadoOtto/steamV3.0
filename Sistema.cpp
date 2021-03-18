@@ -8,7 +8,7 @@
 #include "include/DtJugador.h"
 #include "include/DtFechaHora.h"
 #include "include/DtPartidaIndividual.h"
-#include "include/DtPartidaMultijugador"
+#include "include/DtPartidaMultijugador.h"
 #include "include/Sistema.h"
 
 #define MAX_JUGADORES
