@@ -1,4 +1,4 @@
-#include "../src/CabezalListaJugador.h"
+#include "../include/CabezalListaJugador.h"
 
 CabezalListaJugador::CabezalListaJugador() {
     largoActual = 0;
@@ -6,15 +6,21 @@ CabezalListaJugador::CabezalListaJugador() {
 }
 
 CabezalListaJugador::~CabezalListaJugador() {
-    if(jugadores != NULL) {
-        delete * jugadores; //se supone que 'delete' está redefinido
+    Jugador * aux1 = jugadores;
+    while(aux1) {
+        Jugador * aux2 = jugadores->siguiente;
+        delete aux1
+        aux1 = aux2;
     }
+    jugadores = NULL;
 }
 
 void CabezalListaJugador::insertar(Jugador nuevoJugador) {
-    ListaJugador nuevaLista(nuevoJugador);
+    ListaJugador * nuevaLista(nuevoJugador);
     nuevaLista->siguiente = jugadores;
-    jugadores = nuevaLista;
+    videoJugador = nuevaLista;
+    if (nuevaLista->siguiente)
+        nuevaLista->siguiente->anterior = jugadores;
 }
 
 int CabezalListaJugador::getLargoActual() {
