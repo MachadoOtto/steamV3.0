@@ -10,6 +10,7 @@
 #ifndef PARTIDA
 #define PARTIDA
 
+#include <string>
 #include "listaJugador.h"
 
 class Partida{
@@ -67,7 +68,7 @@ private:
     bool transmitidaEnVivo;
 public:
     DtPartidaIndividual(bool,DtFechaHora,float);
-    string * nicknameJugadoresUnidos();
+    std::string nicknameJugadoresUnidos();
     int cantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
 };

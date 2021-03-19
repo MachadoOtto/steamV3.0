@@ -13,22 +13,22 @@
 #include <string>
 class Jugador{
 private:
-    string nickname;
+    std::string nickname;
     int edad;
-    string constrasena;
+    std::string constrasena;
 public:
-    Jugador(string,int,string);
+    Jugador(std::string,int,std::string);
     DtJugador getDt();
 };
 
 class DtJugador{
 private:
-    string nickname;
+    std::string nickname;
     int edad;
 public:
-    DtJugador(string,int);
+    DtJugador(std::string,int);
 
-    string getNickname();
+    std::string getNickname();
     int getEdad();
 };
 #endif

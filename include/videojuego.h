@@ -12,8 +12,8 @@
 #define VIDEOJUEGO
 
 #include <string>
-#include "TipoJuego.h"
-
+#include "tipoJuego.h"
+#include "listaPartida.h"
 class Videojuego {
 private:
     std::string nombre;
