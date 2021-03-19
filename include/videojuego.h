@@ -20,7 +20,7 @@ private:
     TipoJuego genero;
     ListaPartida partidas;
 public:
-    Videojuego(std::string, TipoJuego, ListaPartida);
+    Videojuego(std::string, TipoJuego);
     DtVideojuego getDt();    
     //ListaPartidas getListaPartidas();
 };
