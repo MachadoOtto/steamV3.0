@@ -13,6 +13,5 @@ CabezalListaPartidas::~CabezalListaPartidas() {
         delete aux1;
         aux1 = aux2;
     }
-    delete aux2;
     partidas = NULL;
 }

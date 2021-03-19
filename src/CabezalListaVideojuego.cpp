@@ -9,7 +9,7 @@ CabezalListaVideojuego()::~CabezalListaVideojuego() {
     Videojuego * aux1 = videojuegos;
     while(aux1) {
         Videojuego * aux2 = videojuegos->siguiente;
-        delete aux1
+        delete aux1;
         aux1 = aux2;
     }
     videojuegos = NULL;
