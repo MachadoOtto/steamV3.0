@@ -1,20 +1,26 @@
-#include "../src/CabezalListaVideojuego.h"
+#include "../include/CabezalListaVideojuego.h"
 
 CabezalListaVideojuego::CabezalListaVideojuego() {
     largoActual = 0;
     videojuegos = NULL;
 }
 
-CabezalListaJugador::~CabezalListaJugador() {
-    if(jugadores != NULL) {
-        delete * videojuegos; //se supone que 'delete' está redefinido
+CabezalListaVideojuego()::~CabezalListaVideojuego() {
+    Videojuego * aux1 = videojuegos;
+    while(aux1) {
+        Videojuego * aux2 = videojuegos->siguiente;
+        delete aux1
+        aux1 = aux2;
     }
+    videojuegos = NULL;
 }
 
-void CabezalListaJugador::insertar(Jugador nuevoVideojuego) {
-    ListaVideojuego nuevaLista(nuevoVideojuego);
+void CabezalListaVideojuego::insertar(Jugador nuevoVideojuego) {
+    ListaVideojuego * nuevaLista(nuevoVideojuego);
     nuevaLista->siguiente = videojuegos;
     videojuegos = nuevaLista;
+    if (nuevaLista->siguiente)
+        nuevaLista->siguiente->anterior = videojuegos;
 }
 
 int CabezalListaVideojuego::getLargoActual() {
