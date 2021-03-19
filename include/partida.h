@@ -19,6 +19,7 @@ private:
     Jugador * host;
 public:
     virtual float darTotalHorasParticipantes()=0;
+    //Jugador * getHost();
 protected:
     Partida(DtFechaHora,float,Jugador *);
 };
@@ -30,6 +31,7 @@ public:
     PartidaIndividual(bool,DtFechaHora,float,Jugador*);
 
     virtual float darTotalHorasParticipantes();
+    DtPartidaIndividual getDt();
 };
 
 class PartidaMultijugador: public Partida{
@@ -38,8 +40,9 @@ private:
     ListaJugador invitados;   
 public:
     PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
-
+    //ListaPartidas getInvitados();
     virtual float darTotalHorasParticipantes();
+    DtPartidaMultijugador getDt(); 
 };
 
 class DtPartida{
