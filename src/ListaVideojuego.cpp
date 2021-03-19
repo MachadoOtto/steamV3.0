@@ -6,7 +6,7 @@ ListaVideojuego::ListaVideojuego(Videojuego nuevoVideojuego) {
     videojuego->anterior = NULL;
 }
 
-void ListaJugador::setVideojuego(Videojuego nuevoVideojuego) {
+void ListaVideojuego::setVideojuego(Videojuego nuevoVideojuego) {
     videojuego = nuevoVideojuego;
 }
 Videojuego ListaVideojuego::getVideojuego() {

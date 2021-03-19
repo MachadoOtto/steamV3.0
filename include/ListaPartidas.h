@@ -10,8 +10,10 @@ class ListaPartidas {
         Partida partida;
     public:
         ListaPartidas *siguiente;
-        ListaPartidas *anterior;
         ListaPartidas();
+        ListaPartidas(Partida);
+        void setPartida(Partida);
+        Partida getPartida();
 };
 
 #endif LISTAPARTIDAS
