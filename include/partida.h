@@ -1,0 +1,71 @@
+/* Laboratorio Programacion IV - INCO/FING/UDELAR
+ * Laboratorio 0 - Modulo de clase
+ * Autores (por nombre):
+ * 	Alexis Ramilo
+ * 	Guillermo Toyos
+ * 	Jorge Machado
+ * 	Juan Jose Mangado
+ * 	Mathias Ramilo
+ */
+#ifndef PARTIDA
+#define PARTIDA
+
+#include "listaJugador.h"
+
+class Partida{
+private:
+    DtFechaHora fecha;
+    float duracion;
+    Jugador * host;
+public:
+    virtual float darTotalHorasParticipantes()=0;
+protected:
+    Partida(DtFechaHora,float,Jugador *);
+};
+
+class PartidaIndividual: public Partida{
+private:
+    bool continuarPartidaAnterior;
+public:
+    PartidaIndividual(bool,DtFechaHora,float,Jugador*);
+
+    virtual float darTotalHorasParticipantes();
+};
+
+class PartidaMultijugador: public Partida{
+private:
+    bool transmitidaEnVivo;
+    ListaJugador invitados;   
+public:
+    PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
+
+    virtual float darTotalHorasParticipantes();
+};
+
+class DtPartida{
+private:
+    DtFechaHora fecha;
+    float duracion;
+protected:
+    DtPartida(DtFechaHora,float);
+public:
+    DtFechaHora getFecha();
+    float getDuracion();
+};
+class DtPartidaIndividual : public DtPartida{
+private:
+    bool continuaPartidaAnterior;
+public:
+    DtPartidaIndividual(bool,DtFechaHota,float);
+    bool getContinuaPartidaAnterior();
+};
+class DtPartidaMultijugador : public DtPartida{
+private:
+    bool transmitidaEnVivo;
+public:
+    DtPartidaIndividual(bool,DtFechaHora,float);
+    string * nicknameJugadoresUnidos();
+    int cantidadJugadoresUnidos();
+    bool getTransmitidaEnVivo();
+};
+#endif
