@@ -11,7 +11,7 @@
 #define PARTIDA
 
 #include <string>
-#include "listaJugador.h"
+#include "jugador.h"
 
 class Partida{
 private:
@@ -20,6 +20,8 @@ private:
     Jugador * host;
 public:
     virtual float darTotalHorasParticipantes()=0;
+    float getDuracion();
+    DtFechaHora getFecha();
     //Jugador * getHost();
 protected:
     Partida(DtFechaHora,float,Jugador *);
@@ -38,7 +40,7 @@ public:
 class PartidaMultijugador: public Partida{
 private:
     bool transmitidaEnVivo;
-    ListaJugador invitados;   
+    ListaJugador * invitados;   
 public:
     PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
     //ListaPartidas getInvitados();
@@ -66,10 +68,12 @@ public:
 class DtPartidaMultijugador : public DtPartida{
 private:
     bool transmitidaEnVivo;
+    std::string nicknameJugadoresUnidos;
+    int cantidadJugadoresUnidos;
 public:
-    DtPartidaIndividual(bool,DtFechaHora,float);
-    std::string nicknameJugadoresUnidos();
-    int cantidadJugadoresUnidos();
+    DtPartidaMultijugador(bool,ListaJugador * ,DtFechaHora,float);
+    std::string getNicknameJugadoresUnidos();
+    int getCantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
 };
 
