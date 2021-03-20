@@ -45,8 +45,7 @@ ListaJugador::~ListaJugador(){
 
 void ListaJugador::add(Jugador * pp){
     ListaJugador * tmp = sig;
-    sig = new ListaJugador;
-    sig->player = pp;
+    sig = new ListaJugador(pp);
     sig->sig = tmp;
 }
 ListaJugador * ListaJugador::next(){
