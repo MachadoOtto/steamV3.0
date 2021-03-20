@@ -7,6 +7,10 @@
  * 	Juan Jose Mangado
  * 	Mathias Ramilo
  */
+
+/* Los siguientes valores son el valor maximo de jugadores, videojuegos y partidas (respectivamente) que soporta el sistema.
+ */
+
 #ifndef CONSTRAINTS
 #define CONSTRAINTS
 

@@ -26,24 +26,34 @@ private:
     std::string nickname;
     int edad;
 public:
-    DtJugador(std::string,int);
+    DtJugador(std::string, int);
 
     std::string getNickname();
     int getEdad();
 };
+
+/*
+ * La clase ListaJugador permite tener una lista encadenada de Jugadores.
+ * La siguiente tiene las siguientes caracteristicas: 
+ * ListaJugador * l = NULL; representa la lista vacia.
+ * l->add(jugadorptr); agrega un nuevo nodo entre l y el consecutivo al mismo con el
+ * puntero al nuevo jugador.
+ * sigl = l->next(); Retorna el siguiente nodo de la lista. Si l es el ultimo nodo se retorna nullptr 
+ */
 
 class ListaJugador{
 private:
     Jugador * player;
     ListaJugador * sig;
 public:
-    ListaJugador();
+    ListaJugador(Jugador *);
     ~ListaJugador();
 
     void add(Jugador *);
-    void next();
-    bool esVacia();
+    ListaJugador * next();
     Jugador * getJugador();
+
+    void masacre(); //tras la masacre: delete l;
 };
 
 #endif
