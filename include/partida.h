@@ -84,11 +84,12 @@ private:
 public:
     ListaPartida();
     ~ListaPartida();
+    void masacre();
 
     void add(Partida *);
     void next();
     bool esVacia();
-    Partida * getJugador();
+    Partida * getPartida();
 };
 
 

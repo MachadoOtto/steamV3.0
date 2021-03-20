@@ -26,7 +26,7 @@ private:
     std::string nickname;
     int edad;
 public:
-    DtJugador(std::string, int);
+    DtJugador(std::string = "", int = 0);
 
     std::string getNickname();
     int getEdad();

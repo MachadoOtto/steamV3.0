@@ -82,4 +82,61 @@ bool DtPartidaIndividual::getContinuaPartidaAnterior(){
 
 DtPartidaMultijugador::DtPartidaMultijugador(bool b, ListaJugador * pp, DtFechaHora d, float f): DtPartida(d,f){
     transmitidaEnVivo = b;
-    
+    nicknameJugadoresUnidos = "";
+    cantidadJugadoresUnidos = 0;
+    Jugador * jug = nullptr;
+    DtJugador dtJug();
+    while(pp != nullptr){
+	cantidadJugadoresUnidos++;
+	jug = pp->getJugador();
+	dtJug = jug->getDt();
+	nicknameJugadoresUnidos = nicknameJugadoresUnidos + ", " + dtJug.getNickname();
+	pp = pp->next();
+    }
+} 
+
+std::string DtPartidaMultijugador::getNicknameJugadoresUnidos(){
+    return nicknameJugadoresUnidos;
+}
+
+int DtPartidaMultijugador::getCantidadJugadoresUnidos(){
+    return cantidadJugadoresUnidos;
+}
+
+bool DtPartidaMultijugador::getTransmitidaEnVivo(){
+    return transmitidaEnVivo;
+}
+
+
+ListaPartida::ListaPartida(Partida * pp){
+    match = pp; 
+    sig = nullptr;
+}
+
+ListaJugador::~ListaJugador(){
+    delete sig;
+}
+
+void ListaPartida::add(Partida * pp){
+    ListaPartida * tmp = sig;
+    sig = new ListaPartida(pp);
+    sig->sig = tmp;
+}
+ListaPartida * ListaPartida::next(){
+    return sig;
+};
+Partida * ListaPartida::getPartida(){
+    return match;
+};
+
+void ListaPartida::masacre(){
+    if(sig == nullptr){
+	delete match;
+	return;
+    }
+    sig->masacre();
+    delete match;
+}
+
+
+
