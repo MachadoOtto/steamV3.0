@@ -72,4 +72,21 @@ public:
     int cantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
 };
+
+class ListaPartida{
+private:
+    Partida * match;
+    ListaPartida * sig;
+public:
+    ListaPartida();
+    ~ListaPartida();
+
+    void add(Partida *);
+    void next();
+    bool esVacia();
+    Partida * getJugador();
+};
+
+
+
 #endif

@@ -31,4 +31,19 @@ public:
     std::string getNickname();
     int getEdad();
 };
+
+class ListaJugador{
+private:
+    Jugador * player;
+    ListaJugador * sig;
+public:
+    ListaJugador();
+    ~ListaJugador();
+
+    void add(Jugador *);
+    void next();
+    bool esVacia();
+    Jugador * getJugador();
+};
+
 #endif

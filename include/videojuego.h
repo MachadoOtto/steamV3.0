@@ -36,5 +36,21 @@ public:
     TipoJuego getGenero();
     float getTotalHorasDeJuego();
 };
+
+class ListaVideojuego{
+private:
+    Videojuego * video;
+    ListaVideojuego * sig;
+public:
+    ListaVideojuego();
+    ~ListaVideojuego();
+
+    void add(Videojuego *);
+    void next();
+    bool esVacia();
+    Videojuego * getJugador();
+};
+
+
 #endif
 
