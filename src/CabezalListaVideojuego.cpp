@@ -15,7 +15,7 @@ CabezalListaVideojuego()::~CabezalListaVideojuego() {
     videojuegos = NULL;
 }
 
-void CabezalListaVideojuego::insertar(Jugador nuevoVideojuego) {
+void CabezalListaVideojuego::insertar(Videojuego nuevoVideojuego) {
     ListaVideojuego * nuevaLista(nuevoVideojuego);
     nuevaLista->siguiente = videojuegos;
     videojuegos = nuevaLista;
