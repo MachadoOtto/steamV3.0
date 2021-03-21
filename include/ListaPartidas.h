@@ -10,7 +10,6 @@ class ListaPartidas {
         Partida partida;
     public:
         ListaPartidas *siguiente;
-        ListaPartidas();
         ListaPartidas(Partida);
         void setPartida(Partida);
         Partida getPartida();
