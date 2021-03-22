@@ -5,6 +5,7 @@ void Sistema::agregarJugador(std::string nickname, int edad, std::string contras
         throw std::invalid_argument("Ya hay un jugador con ese nombre");
     }
     else {
-        jugadores.(nickname,edad,contraseña); //FALTA AGREGAR A LA LISTA
+        Jugador * nuevoJugador = new Jugador(nickname,edad,contraseña);
+        jugadores.add(nuevoJugador);
     }
 }
