@@ -83,7 +83,7 @@ private:
     Partida * match;
     ListaPartida * sig;
 public:
-    ListaPartida();
+    ListaPartida(Partida *);
     ~ListaPartida();
     void masacre();
 

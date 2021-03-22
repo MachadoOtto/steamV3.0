@@ -31,7 +31,7 @@ private:
     TipoJuego genero;
     float totalHorasDeJuego;
 public:
-    DtVideojuego(std::string, TipoJuego,float);
+    DtVideojuego(std::string = "", TipoJuego = TipoJuego::Otro,float = 0.0);
     std::string getNombre();
     TipoJuego getGenero();
     float getTotalHorasDeJuego();
@@ -42,7 +42,7 @@ private:
     Videojuego * video;
     ListaVideojuego * sig;
 public:
-    ListaVideojuego();
+    ListaVideojuego(Videojuego *);
     ~ListaVideojuego();
 
     void add(Videojuego *);

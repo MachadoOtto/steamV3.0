@@ -12,9 +12,9 @@
 #define SISTEMA
 class Sistema{
 private:
-    ListaJugador Jugadores;
-    ListaVideoJuego Videojuego;
-    ListaPartida Partidas;
+    ListaJugador * jugadores;
+    ListaVideoJuego * videojuegos;
+    ListaPartida * partidas;
 public:
     Sistema();
     
