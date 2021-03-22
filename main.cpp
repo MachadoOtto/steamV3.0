@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
     int controlVar;
-    while (controlVar) {
+    while (controlVar != 7) {
         cout << "--- MENU---" << endl << endl;
         cout << "Seleccione una opcion" endl;
         cout << " 1. Agregar Jugador" endl;
@@ -104,7 +104,15 @@ int main() {
                 cout << "Videojuego del cual desea obtener sus partidas: ";
                 cin >> videojuego;
 
-                
+                try {
+                    DtPartida** arrayPartidas = obtenerPartidas(videojuego, cantPartidas);
+                    cout << "Hay " << cantPartidas << " partidas registradas en el sistema." endl;
+                    for (int i = 0; i < cantPartidas; i++) {
+                        
+                    }
+                }
+                catch (std::invalid_argument) {
+                }
             break;
 
             case 6: //Iniciar Partida
