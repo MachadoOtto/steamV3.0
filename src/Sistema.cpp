@@ -15,7 +15,18 @@
 #define MAX_VIDEOJUEGOS
 #define MAX_PARTIDAS
 
-//---Implementacion funciones de sistema---
-DtPartida** obtenerPartidas(string Videojuego, int& cantPartidas) {
-    
+DtPartida** obtenerPartidas(string videojuego, int& cantPartidas) {
+    if (existeVideojuego(videojuego)) {
+        cantPartidas = cantidadPartidas;
+        DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
+        ListaPartidas list = partidas;
+        for (int i = 0; i < cantPartidas; i++) {
+            arregloPartidas[i] = list.getPartida()->getDt(); 
+            list.next;
+        }
+        return arregloPartidas;
+    } else {
+        throw std::invalid_argument("El videojuego ingresado no existe");
+    }
 }
+
