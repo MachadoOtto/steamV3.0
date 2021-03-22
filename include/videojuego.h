@@ -19,11 +19,13 @@ class Videojuego {
 private:
     std::string nombre;
     TipoJuego genero;
-    ListaPartida partidas;
+    ListaPartida  * partidas;
 public:
     Videojuego(std::string, TipoJuego);
+    ~Videojuego();
     DtVideojuego getDt();    
-    //ListaPartidas getListaPartidas();
+    ListaPartida * getPartidas();
+    void agregarPartida(Partida *);
 };
 
 class DtVideojuego {
@@ -48,7 +50,7 @@ public:
 
     void add(Videojuego *);
     void next();
-    //bool esVacia();
+    void masacre(); //luego delete l;
     Videojuego * getVideojuego();
 };
 

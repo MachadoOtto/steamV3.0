@@ -10,9 +10,15 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 #include "../include/sistema.h"
 #include "../include/constraints.h"
+#include "../include/videojuego.h"
+#include "../include/tipoJuego.h"
+#include "../include/partida.h"
+#include "../include/jugador.h"
+
 Sistema::Sistema(){
     jugadores = nullptr;
     videojuegos = nullptr;
@@ -20,6 +26,14 @@ Sistema::Sistema(){
     cantidadJugadores = 0;
     cantidadVideojuegos = 0;
     cantidadPartidas = 0;
+}
+Sistema::~Sistema(){
+    jugadores->masacre();
+    delete jugadores;
+    partidas->masacre();
+    delete partidas;
+    videojuegos->masacre();
+    delete videojuegos;
 }
 
 void Sistema::agregarVideojuego(string nombre, TipoJuego genero){
@@ -97,17 +111,19 @@ DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) 
 }
 
 void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPartida* datos) {
+    Videojuego * v;
     if (findJugador(nickname) == nullptr)
         throw std::invalid_argument("Jugador no registrado en el Sistema");
-    if (findVideojuego(videojuego) == nullptr)
+    if ((v = findVideojuego(videojuego)) == nullptr)
         throw std::invalid_argument("Videojuego no ingresado en el Sistema");
     if(cantidadPartidas == MAX_PARTIDAS){
-	Partida * p = new Partida(datos,nickname);
+	Partida * p = new fabricarPartida(datos,findJugador(nickname),jugadores);
 	if(partidas == nullptr)
 	    partidas = new ListaPartida(p);
 	else
 	    partidas.add(p);
 	cantidadPartidas++;
+	v.agregarPartida(p);
     }
 }
 

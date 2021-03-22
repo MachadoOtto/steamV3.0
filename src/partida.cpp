@@ -38,7 +38,7 @@ Partida * Partida::fabricarPartida(DtPartidaMultijugador d,Jugador * host, Lista
     int i=0,j=0;
     while(j < invstr.length()){
 	if(invstr[j] == ','){
-	    Jugador * p = findJugador(invstr(i,j-1));
+	    Jugador * p = findJugador(invstr(i,j-1),jugadoresSystema);
 	    if(p == nullptr)
 	        throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
 	    if(invitees == nullptr)
@@ -53,7 +53,7 @@ Partida * Partida::fabricarPartida(DtPartidaMultijugador d,Jugador * host, Lista
     Partida * p = new PartidaMultijugador(d.transmitidaEnVivo(),d.getFecha(),d.getDuracion(),host,invitees);
     return p;
 
-static Jugador * findJugador(std::string nombre) {
+static Jugador * findJugador(std::string nombre,ListaJugador * jugadores) {
     ListaJugador * list_player = jugadores;
     while (list_player != nullptr) {
         if (nombre == ( (list_player.getJugador()->getDt()).getNickname()))
@@ -81,6 +81,10 @@ PartidaMultijugador::PartidaMultijugador(bool b,DtFechaHora d, float f, Jugador 
     Partida(d,f,p){
     transmitidaEnVivo = b;
     invitados = l;
+}
+
+PartidaMultijugador::~PartidaMultijugador(){
+    delete invitados;
 }
 
 float PartidaMultijugador::darTotalHorasParticipantes(){

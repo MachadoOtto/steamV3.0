@@ -20,7 +20,8 @@ private:
     int cantida:wdPartidas;
 public:
     Sistema();
-    
+    ~Sistema();
+
     /*Funcionalidades solicitadas*/
     void agregarJugador(string,int,string);
     void agregarVideojuego(string,TipoJuego);

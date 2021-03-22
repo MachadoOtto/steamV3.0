@@ -15,13 +15,27 @@
 Videojuego::Videojuego(std::string name, TipoJuego gen) {
     nombre = name;
     genero = gen;
+    partidas = nullptr;
 }
-        
+
+Videojuego::~Videojuego(){
+    delete partidas;
+};
+
 DtVideojuego Videojuego::getDt() {
     DtVideojuego dt_v(nombre, genero);
     return dt_v;
 }
 
+ListaPartida * Videojuego::getPartidas(){
+    return partidas;
+
+void Videojuego::agregarPartida(Partida * p){
+    if(partidas==nullptr)
+	partidas = new ListaPartida(p);
+    else
+	partidas.add(p);
+}
 /* Operaciones de Clase DtVideojuego */
 
 DtVideojuego::DtVideojuego(std::string name, TipoJuego gen, float f) {
@@ -76,11 +90,16 @@ ListaVideojuego* ListaVideojuego::next() {
     return sig;
 }
 
-//bool ListaVideojuego::esVacia() {
-//    return (this == nullptr);
-//}
-//This nunca va a ser nulo :^)
+void ListaVideojuego::masacre(){
+    if(sig == nullptr){
+	delete video;
+	return;
+    }
+    sig->masacre();
+    delete video;
+}
 
 Videojuego* ListaVideojuego::getVideojuego() {
     return video;
 }
+

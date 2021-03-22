@@ -38,7 +38,6 @@ public:
 
     virtual float darTotalHorasParticipantes();
     virtual DtPartida getDt();
-    virtual Partida * fabricarPartida(DtPartida);
 };
 
 class PartidaMultijugador: public Partida{
@@ -47,6 +46,7 @@ private:
     ListaJugador * invitados;   
 public:
     PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
+    ~PartidaMultijugador();
     //ListaPartidas getInvitados();
     virtual float darTotalHorasParticipantes();
     virtual DtPartida getDt(); 
