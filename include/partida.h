@@ -22,6 +22,7 @@ public:
     virtual float darTotalHorasParticipantes()=0;
     float getDuracion();
     DtFechaHora getFecha();
+    virtual DtPartida getDt()=0;
     //Jugador * getHost();
 protected:
     Partida(DtFechaHora,float,Jugador *);
@@ -34,7 +35,7 @@ public:
     PartidaIndividual(bool,DtFechaHora,float,Jugador*);
 
     virtual float darTotalHorasParticipantes();
-    DtPartidaIndividual getDt();
+    virtual DtPartida getDt();
 };
 
 class PartidaMultijugador: public Partida{
@@ -45,7 +46,7 @@ public:
     PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
     //ListaPartidas getInvitados();
     virtual float darTotalHorasParticipantes();
-    DtPartidaMultijugador getDt(); 
+    virtual DtPartida getDt(); 
 };
 
 class DtPartida{
@@ -88,7 +89,7 @@ public:
 
     void add(Partida *);
     void next();
-    bool esVacia();
+    //bool esVacia();
     Partida * getPartida();
 };
 

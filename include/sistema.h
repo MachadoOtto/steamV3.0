@@ -17,7 +17,8 @@ private:
     ListaPartida Partidas;
 public:
     Sistema();
-
+    
+    /*Funcionalidades solicitadas*/
     void agregarJugador(string,int,string);
     void agregarVideojuego(string,TipoJuego);
     DtJugador** obtenerJugadores(int&);

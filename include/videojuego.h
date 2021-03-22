@@ -47,8 +47,8 @@ public:
 
     void add(Videojuego *);
     void next();
-    bool esVacia();
-    Videojuego * getJugador();
+    //bool esVacia();
+    Videojuego * getVideojuego();
 };
 
 
