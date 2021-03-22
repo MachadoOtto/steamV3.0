@@ -30,6 +30,7 @@ int main() {
         cout << " 7. Salir" endl << endl;
         cout << "Ingrese una opcion: "
         cin >> controlVar;
+        cout << endl;
 
         switch (controlVar) {
             case 1: //Agregar Jugador
@@ -72,6 +73,7 @@ int main() {
             case 3: //Obtener Jugadores
                 int cantJugadores;
                 DtJugador** arrayJugadores = obtenerJugadores(cantJugadores);
+
                 cout << "Hay " << cantJugadores << " jugadores registrados en el sistema." endl;
                 cout << endl;
                 for (int i = 0; i < cantJugadores; i++) {
@@ -84,6 +86,7 @@ int main() {
             case 4: //Obtener Videojuegos
                 int cantVideojuegos;
                 DtVideojuego** arrayVideojuegos = obtenerVideojuegos(cantVideojuegos);
+
                 cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema." endl;
                 cout << endl;
                 for (int i = 0; i < cantVideojuegos; i++) {
@@ -95,7 +98,13 @@ int main() {
             break;
 
             case 5: //Obtener Partidas
+                string videojuego;
+                int cantPartidas;
 
+                cout << "Videojuego del cual desea obtener sus partidas: ";
+                cin >> videojuego;
+
+                
             break;
 
             case 6: //Iniciar Partida
