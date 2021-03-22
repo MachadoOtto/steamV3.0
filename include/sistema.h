@@ -15,6 +15,9 @@ private:
     ListaJugador * jugadores;
     ListaVideoJuego * videojuegos;
     ListaPartida * partidas;
+    int cantidadJugadores;
+    int cantidadVideojuegos;
+    int cantida:wdPartidas;
 public:
     Sistema();
     
@@ -25,6 +28,9 @@ public:
     DtVideojuego** obtenerVidejuegos(int&);
     DtPartida** obtenerPartidas(string,int&);
     void iniciarPartida(string,string,DtPartida*);
+
+    /*Auxiliares*/
+
 };
 #endif
 
