@@ -14,16 +14,20 @@
 #include <iostream>
 #include <cstdlib>
 
+using namespace std;
+
 int main() {
     int controlVar;
     while (controlVar) {
-        cout << "1. Agregar Jugador" endl;
-        cout << "2. Agregar Videojuego" endl;
-        cout << "3. Obtener Jugadores" endl;
-        cout << "4. Obtener Videojuegos" endl;
-        cout << "5. Obtener Partidas" endl;
-        cout << "6. Iniciar Partida" endl;
-        cout << "7. Salir" endl;
+        cout << "--- MENU---" << endl << endl;
+        cout << "Seleccione una opcion" endl;
+        cout << " 1. Agregar Jugador" endl;
+        cout << " 2. Agregar Videojuego" endl;
+        cout << " 3. Obtener Jugadores" endl;
+        cout << " 4. Obtener Videojuegos" endl;
+        cout << " 5. Obtener Partidas" endl;
+        cout << " 6. Iniciar Partida" endl;
+        cout << " 7. Salir" endl << endl;
         cout << "Ingrese una opcion: "
         cin >> controlVar;
 
@@ -68,14 +72,26 @@ int main() {
             case 3: //Obtener Jugadores
                 int cantJugadores;
                 DtJugador** arrayJugadores = obtenerJugadores(cantJugadores);
+                cout << "Hay " << cantJugadores << " jugadores registrados en el sistema." endl;
+                cout << endl;
                 for (int i = 0; i < cantJugadores; i++) {
-                    cout << i << ". Nickname: " << arrayJugadores[i]
-                    cout << "   Edad: " << arrayJugadores[i].edad;
-                }
+                    cout << i+1 << ". Nickname: " << arrayJugadores[i]->getNickname() << endl;
+                    cout << "   Edad: " << arrayJugadores[i]->getEdad() << endl;
+                    cout << endl;
+                } 
             break;
 
             case 4: //Obtener Videojuegos
-
+                int cantVideojuegos;
+                DtVideojuego** arrayVideojuegos = obtenerVideojuegos(cantVideojuegos);
+                cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema." endl;
+                cout << endl;
+                for (int i = 0; i < cantVideojuegos; i++) {
+                    cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getTitulo() << endl;
+                    cout << "   Genero: " << arrayVideojuegos[i]->getGenero() << endl;
+                    cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
+                    cout << endl;
+                }
             break;
 
             case 5: //Obtener Partidas
