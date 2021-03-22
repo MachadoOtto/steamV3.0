@@ -10,6 +10,8 @@
 
 #include "../include/partida.h"
 #include "../include/jugador.h"
+#include "<iostream>"
+#include "<string.h>"
 
 Partida::Partida(DtFechaHora d, float f, Jugador * p){
     fecha = d;
@@ -25,6 +27,42 @@ DtFechaHora Partida::getFecha(){
     return fecha;
 }
 
+Partida * Partida::fabricarPartida(DtPartidaIndividual d,Jugador * host, ListaJugador * invitees){
+    Partida * p = new PartidaIndividual(d.getContinuarPartidaAnterior(),d.getFecha(),d.getDuracion(),host);
+    return p;
+}
+//Limitacion: El nickname de un usuario no puede contener comas.
+Partida * Partida::fabricarPartida(DtPartidaMultijugador d,Jugador * host, ListaJugador * jugadoresSystema){
+    ListaJugador * invitees = nullptr;
+    std::string invstr = d.getNicknameJugadoresUnidos();
+    int i=0,j=0;
+    while(j < invstr.length()){
+	if(invstr[j] == ','){
+	    Jugador * p = findJugador(invstr(i,j-1));
+	    if(p == nullptr)
+	        throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
+	    if(invitees == nullptr)
+	        invitees = new ListaJugador(p);
+	    else
+	        invitees.add(p);
+	    i=j+2;
+	    j++;
+	}
+	j++;
+    }
+    Partida * p = new PartidaMultijugador(d.transmitidaEnVivo(),d.getFecha(),d.getDuracion(),host,invitees);
+    return p;
+
+static Jugador * findJugador(std::string nombre) {
+    ListaJugador * list_player = jugadores;
+    while (list_player != nullptr) {
+        if (nombre == ( (list_player.getJugador()->getDt()).getNickname()))
+            return list_player->getJugador(); 
+	list_player = list_player->next();
+    }
+    return nullptr; 
+}
+
 PartidaIndividual::PartidaIndividual(bool b,DtFechaHora d, float f, Jugador * p):
     Partida(d,f,p){
     continuarPartidaAnterior = b;
@@ -32,7 +70,7 @@ PartidaIndividual::PartidaIndividual(bool b,DtFechaHora d, float f, Jugador * p)
 
 float PartidaIndividual::darTotalHorasParticipantes(){
     return duracion;
-}
+}:
 
 DtPartidaIndividual PartidaIndividual::getDt(){
     DtPartidaIndividual pkg(continuarPartidaAnterior,fecha,duracion);

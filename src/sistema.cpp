@@ -44,9 +44,8 @@ void Sistema::agregarVideojuego(string nombre, TipoJuego genero){
 }
 
 void Sistema::agregarJugador(std::string nickname, int edad, std::string contrasenia) {
-    if(estaJugadorSistema(nickname)) { //supongo que funciona cuando jugadores es NULL
-            throw std::invalid_argument("Ya hay un jugador con ese nombre.");
-    }
+    if(findJugador(nickname) != nullptr)
+	throw std::invalid_argument("Ya hay un jugador con ese nombre.");
     if(cantidadJugadores == MAX_JUGADORES){ 
         Jugador * nuevoJugador = new Jugador(nickname,edad,contrasenia);
         if(jugadores == nullptr) 
@@ -82,7 +81,7 @@ DtVideojuego** Sistema::obtenerVideojuegos(int& cantVideojuegos) {
 }
 
 DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) {
-    if (estaVideojuegoSistema(videojuego)) {
+    if (findVideojuego(videojuego) == nullptr) {
         cantPartidas = cantidadPartidas;
         DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
         ListaPartidas list = partidas;
@@ -98,9 +97,9 @@ DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) 
 }
 
 void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPartida* datos) {
-    if (!estaJugadorSistema(nickname))
+    if (findJugador(nickname) == nullptr)
         throw std::invalid_argument("Jugador no registrado en el Sistema");
-    if (!estaVideojuegoSistema(videojuego))
+    if (findVideojuego(videojuego) == nullptr)
         throw std::invalid_argument("Videojuego no ingresado en el Sistema");
     if(cantidadPartidas == MAX_PARTIDAS){
 	Partida * p = new Partida(datos,nickname);
@@ -114,24 +113,22 @@ void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPar
 
 /* Operaciones Auxiliares */
 
-// Devuelve true si 'nombre' ya es un nickname presente en el sistema.
-bool Sistema::estaJugadorSistema(std::string nombre) {
+Jugador * Sistema::findJugador(std::string nombre) {
     ListaJugador * list_player = jugadores;
     while (list_player != nullptr) {
         if (nombre == ( (list_player.getJugador()->getDt()).getNickname()))
-            return true;
+            return list_player->getJugador(); 
 	list_player = list_player->next();
     }
-    return false;
+    return nullptr; 
 }
 
-// Devuelve true si 'nombre' ya es un videojuego presente en el sistema.
-bool Sistema::estaVideojuegoSistema(std::string nombre) {
+Videojuego * Sistema::findVideojuego(std::string nombre) {
     ListaVideojuego * list_games = videojuegos;
     while (list_games != nullptr) {
-        if (nombre == ( (list_games.getVideojuego()->getDt()).getNombre()))
-            return true;
+        if (nombre == ( (list_games->getVideojuego()->getDt()).getNombre()))
+            return list_games->getVideojuego(); 
         list_games = list_games->next();
     }
-    return false;
+    return nullptr; 
 }

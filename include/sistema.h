@@ -30,6 +30,8 @@ public:
     void iniciarPartida(string,string,DtPartida*);
 
     /*Auxiliares*/
+    Videjuego * findVideojuego(std::string nombre);
+    Jugador * findJugador(std::string nombre);
 
 };
 #endif

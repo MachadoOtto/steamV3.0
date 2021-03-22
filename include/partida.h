@@ -24,8 +24,8 @@ public:
     DtFechaHora getFecha();
     virtual DtPartida getDt()=0;
     //Jugador * getHost();
-    Partida * fabricarPartida(DtPartidaIndividual);
-    Partida * fabricarPartida(DtPartidaMultijugador);
+    Partida * fabricarPartida(DtPartidaIndividual, Jugador *,ListaJugadores *);
+    Partida * fabricarPartida(DtPartidaMultijugador, Jugador *,ListaJugadores *);
 protected:
     Partida(DtFechaHora,float,Jugador *);
 };

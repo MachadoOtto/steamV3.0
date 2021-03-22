@@ -13,7 +13,8 @@
 
 #include <string>
 #include "tipoJuego.h"
-#include "listaPartida.h"
+#include "partida.h"
+
 class Videojuego {
 private:
     std::string nombre;
