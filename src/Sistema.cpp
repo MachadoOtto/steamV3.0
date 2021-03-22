@@ -17,6 +17,5 @@
 
 //---Implementacion funciones de sistema---
 DtPartida** obtenerPartidas(string Videojuego, int& cantPartidas) {
-    arregloPartidas* DtPartida*;
     
 }
