@@ -64,7 +64,7 @@ int main() {
 
                 try {
                     agregarVideojuego(nombre, genero);
-                    cout << "Se ha registrado " << nombre << " En el sistema." endl;
+                    cout << "Se ha registrado el videojuego " << nombre << " en el sistema." endl;
                 }
                 catch (std::invalid_argument) {
                 }
