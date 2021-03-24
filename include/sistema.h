@@ -10,28 +10,36 @@
 
 #ifndef SISTEMA
 #define SISTEMA
+
+#include <string>
+#include "jugador.h"
+#include "partida.h"
+#include "videojuego.h"
+#include "constraints.h"
+#include "tipoJuego.h"
+
 class Sistema{
 private:
     ListaJugador * jugadores;
-    ListaVideoJuego * videojuegos;
+    ListaVideojuego * videojuegos;
     ListaPartida * partidas;
     int cantidadJugadores;
     int cantidadVideojuegos;
-    int cantida:wdPartidas;
+    int cantidadPartidas;
 public:
     Sistema();
     ~Sistema();
 
     /*Funcionalidades solicitadas*/
-    void agregarJugador(string,int,string);
-    void agregarVideojuego(string,TipoJuego);
+    void agregarJugador(std::string,int,std::string);
+    void agregarVideojuego(std::string,TipoJuego);
     DtJugador** obtenerJugadores(int&);
-    DtVideojuego** obtenerVidejuegos(int&);
-    DtPartida** obtenerPartidas(string,int&);
-    void iniciarPartida(string,string,DtPartida*);
+    DtVideojuego** obtenerVideojuegos(int&);
+    DtPartida** obtenerPartidas(std::string,int&);
+    void iniciarPartida(std::string,std::string,DtPartida*);
 
     /*Auxiliares*/
-    Videjuego * findVideojuego(std::string nombre);
+    Videojuego * findVideojuego(std::string nombre);
     Jugador * findJugador(std::string nombre);
 
 };

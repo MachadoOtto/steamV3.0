@@ -11,11 +11,15 @@
 #define JUGADOR
 
 #include <string>
+
+class DtJugador;
+class ListaJugador;
+
 class Jugador{
 private:
     std::string nickname;
     int edad;
-    std::string constrasena;
+    std::string contrasena;
 public:
     Jugador(std::string,int,std::string);
     DtJugador getDt();

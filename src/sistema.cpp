@@ -14,10 +14,6 @@
 
 #include "../include/sistema.h"
 #include "../include/constraints.h"
-#include "../include/videojuego.h"
-#include "../include/tipoJuego.h"
-#include "../include/partida.h"
-#include "../include/jugador.h"
 
 Sistema::Sistema(){
     jugadores = nullptr;
@@ -28,26 +24,32 @@ Sistema::Sistema(){
     cantidadPartidas = 0;
 }
 Sistema::~Sistema(){
-    jugadores->masacre();
-    delete jugadores;
-    partidas->masacre();
-    delete partidas;
-    videojuegos->masacre();
-    delete videojuegos;
+    if(jugadores != nullptr){
+	jugadores->masacre();
+	delete jugadores;
+    }
+    if(partidas != nullptr){
+	partidas->masacre();
+	delete partidas;
+    }
+    if(videojuegos != nullptr){
+	videojuegos->masacre();
+	delete videojuegos;
+    }
 }
 
-void Sistema::agregarVideojuego(string nombre, TipoJuego genero){
+void Sistema::agregarVideojuego(std::string nombre, TipoJuego genero){
     Videojuego * lol;
     ListaVideojuego *vt = videojuegos;
-    DtVideojuego d();
+    DtVideojuego * d = new DtVideojuego();
     while(vt != nullptr){
 	lol = vt->getVideojuego();
-	d = lol->getDt();
-	if(nombre == d.getNombre())
+	*d = lol->getDt();
+	if(nombre == d->getNombre())
 	    throw std::invalid_argument("El videojuego ya existe en el sistema");
 	vt = vt->next();
     }
-    if(cantidadVideojuegos == MAX_VIDEOJUEGOS){
+    if(cantidadVideojuegos < MAX_VIDEOJUEGOS){
 	lol = new Videojuego(nombre,genero); 
 	if(videojuegos == nullptr)
 	    videojuegos = new ListaVideojuego(lol);
@@ -60,12 +62,12 @@ void Sistema::agregarVideojuego(string nombre, TipoJuego genero){
 void Sistema::agregarJugador(std::string nickname, int edad, std::string contrasenia) {
     if(findJugador(nickname) != nullptr)
 	throw std::invalid_argument("Ya hay un jugador con ese nombre.");
-    if(cantidadJugadores == MAX_JUGADORES){ 
+    if(cantidadJugadores < MAX_JUGADORES){ 
         Jugador * nuevoJugador = new Jugador(nickname,edad,contrasenia);
         if(jugadores == nullptr) 
-	    jugadores = new ListaJugadores(nuevoJugador);
+	    jugadores = new ListaJugador(nuevoJugador);
         else
-	    jugadores.add(nuevoJugador);
+	    jugadores->add(nuevoJugador);
 	cantidadJugadores++;
     } 
 }
@@ -77,7 +79,7 @@ DtJugador** Sistema::obtenerJugadores(int & cantJugadores){
     for(int i = 0; i < cantJugadores; i++){
         jugs[i] = new DtJugador;
 	*(jugs[i]) = lista->getJugador()->getDt();
-        lista = lista.next();
+        lista = lista->next();
     }
     return jugs;
 }
@@ -85,11 +87,11 @@ DtJugador** Sistema::obtenerJugadores(int & cantJugadores){
 DtVideojuego** Sistema::obtenerVideojuegos(int& cantVideojuegos) {
     cantVideojuegos = cantidadVideojuegos;
     DtVideojuego** arr_dt = new DtVideojuego*[cantVideojuegos];
-    ListaVideojuego * list_aux = Videojuegos;
+    ListaVideojuego * list_aux = videojuegos;
     for (int i = 0; i < cantVideojuegos; i++){
 	arr_dt[i] = new DtVideojuego;
         *(arr_dt[i]) = list_aux->getVideojuego()->getDt();
-	list_aux = list_aux();
+	list_aux = list_aux->next();
     }
     return arr_dt;
 }
@@ -98,9 +100,8 @@ DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) 
     if (findVideojuego(videojuego) == nullptr) {
         cantPartidas = cantidadPartidas;
         DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
-        ListaPartidas list = partidas;
+        ListaPartida * list = partidas;
         for (int i = 0; i < cantPartidas; i++) {
-	    arregloPartidas = new DtPartida;
             arregloPartidas[i] = list->getPartida()->getDt(); 
             list = list->next();
         }
@@ -116,14 +117,15 @@ void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPar
         throw std::invalid_argument("Jugador no registrado en el Sistema");
     if ((v = findVideojuego(videojuego)) == nullptr)
         throw std::invalid_argument("Videojuego no ingresado en el Sistema");
-    if(cantidadPartidas == MAX_PARTIDAS){
-	Partida * p = new fabricarPartida(datos,findJugador(nickname),jugadores);
+    if(cantidadPartidas < MAX_PARTIDAS){
+	//Partida * p = Partida::fabricarPartida(*datos,findJugador(nickname),jugadores);
+	Partida * p = datos->fabricarPartida(findJugador(nickname),jugadores);
 	if(partidas == nullptr)
 	    partidas = new ListaPartida(p);
 	else
-	    partidas.add(p);
+	    partidas->add(p);
 	cantidadPartidas++;
-	v.agregarPartida(p);
+	v->agregarPartida(p);
     }
 }
 
@@ -132,7 +134,7 @@ void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPar
 Jugador * Sistema::findJugador(std::string nombre) {
     ListaJugador * list_player = jugadores;
     while (list_player != nullptr) {
-        if (nombre == ( (list_player.getJugador()->getDt()).getNickname()))
+        if (nombre == ( (list_player->getJugador()->getDt()).getNickname()))
             return list_player->getJugador(); 
 	list_player = list_player->next();
     }

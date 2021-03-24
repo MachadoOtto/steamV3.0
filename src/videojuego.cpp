@@ -29,12 +29,13 @@ DtVideojuego Videojuego::getDt() {
 
 ListaPartida * Videojuego::getPartidas(){
     return partidas;
+}
 
 void Videojuego::agregarPartida(Partida * p){
     if(partidas==nullptr)
 	partidas = new ListaPartida(p);
     else
-	partidas.add(p);
+	partidas->add(p);
 }
 /* Operaciones de Clase DtVideojuego */
 
@@ -86,7 +87,7 @@ void ListaVideojuego::add(Videojuego *game) {
     this->sig = aux;
 }
 
-ListaVideojuego* ListaVideojuego::next() {
+ListaVideojuego * ListaVideojuego::next() {
     return sig;
 }
 

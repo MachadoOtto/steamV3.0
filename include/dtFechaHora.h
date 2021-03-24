@@ -15,12 +15,16 @@ class DtFechaHora {
 private:
     int dia, mes, anio, hora, minuto;
 public:
-    DtFechaHora(int, int, int, int, int);
+//    DtFechaHora(int=-1, int=-1, int=-1, int=-1, int=-1); //Prueba: Generar un constructor sin parametros!?
+    DtFechaHora(int, int, int, int, int); //Prueba: Generar un constructor sin parametros!?
+    DtFechaHora(const DtFechaHora &);
     int getDia();
     int getMes();
     int getAnio();
     int getHora();
     int getMinuto();
+    
+    DtFechaHora & operator=(DtFechaHora&);
 };
 #endif
 

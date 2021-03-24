@@ -15,6 +15,9 @@
 #include "tipoJuego.h"
 #include "partida.h"
 
+class DtVideojuego;
+class ListaVideojuego;
+
 class Videojuego {
 private:
     std::string nombre;
@@ -49,7 +52,7 @@ public:
     ~ListaVideojuego();
 
     void add(Videojuego *);
-    void next();
+    ListaVideojuego * next();
     void masacre(); //luego delete l;
     Videojuego * getVideojuego();
 };

@@ -12,6 +12,12 @@
 
 #include <string>
 #include "jugador.h"
+#include "dtFechaHora.h"
+
+class DtPartida;
+class DtPartidaIndividual;
+class DtPartidaMultijugador;
+class ListaPartida;
 
 class Partida{
 private:
@@ -22,12 +28,12 @@ public:
     virtual float darTotalHorasParticipantes()=0;
     float getDuracion();
     DtFechaHora getFecha();
-    virtual DtPartida getDt()=0;
-    //Jugador * getHost();
-    Partida * fabricarPartida(DtPartidaIndividual, Jugador *,ListaJugadores *);
-    Partida * fabricarPartida(DtPartidaMultijugador, Jugador *,ListaJugadores *);
+    //Partida * fabricarPartida(DtPartidaIndividual, Jugador *,ListaJugador *);
+    //Partida * fabricarPartida(DtPartidaMultijugador, Jugador *,ListaJugador *);
+    virtual DtPartida *getDt()=0;
+    //Jugador * gethost()
 protected:
-    Partida(DtFechaHora,float,Jugador *);
+    Partida(DtFechaHora, float, Jugador *);
 };
 
 class PartidaIndividual: public Partida{
@@ -37,7 +43,7 @@ public:
     PartidaIndividual(bool,DtFechaHora,float,Jugador*);
 
     virtual float darTotalHorasParticipantes();
-    virtual DtPartida getDt();
+    virtual DtPartida * getDt();
 };
 
 class PartidaMultijugador: public Partida{
@@ -45,11 +51,11 @@ private:
     bool transmitidaEnVivo;
     ListaJugador * invitados;   
 public:
-    PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador);
+    PartidaMultijugador(bool,DtFechaHora,float,Jugador*,ListaJugador *);
     ~PartidaMultijugador();
     //ListaPartidas getInvitados();
     virtual float darTotalHorasParticipantes();
-    virtual DtPartida getDt(); 
+    virtual DtPartida *getDt(); 
 };
 
 class DtPartida{
@@ -61,13 +67,15 @@ protected:
 public:
     DtFechaHora getFecha();
     float getDuracion();
+    virtual Partida * fabricarPartida(Jugador *,ListaJugador *)=0;
 };
 class DtPartidaIndividual : public DtPartida{
 private:
     bool continuaPartidaAnterior;
 public:
-    DtPartidaIndividual(bool,DtFechaHota,float);
+    DtPartidaIndividual(bool,DtFechaHora,float);
     bool getContinuaPartidaAnterior();
+    virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 };
 class DtPartidaMultijugador : public DtPartida{
 private:
@@ -79,6 +87,8 @@ public:
     std::string getNicknameJugadoresUnidos();
     int getCantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
+    virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
+
 };
 
 class ListaPartida{
@@ -91,11 +101,14 @@ public:
     void masacre();
 
     void add(Partida *);
-    void next();
+    ListaPartida * next();
     //bool esVacia();
     Partida * getPartida();
 };
 
+//Funciones de sobrecarga de flujo
+std::ostream &operator<<(std::ostream &, DtPartidaIndividual &);
+std::ostream &operator<<(std::ostream &, DtPartidaMultijugador &);
 
 
 #endif

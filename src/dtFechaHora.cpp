@@ -20,7 +20,24 @@ DtFechaHora::DtFechaHora(int d, int m, int a, int h, int min){
     hora = h;
     minuto = min;
 }
+DtFechaHora::DtFechaHora(const DtFechaHora &d){
+    dia=d.dia;
+    mes=d.mes;
+    anio=d.anio;
+    hora=d.hora;
+    minuto=d.minuto;
+}
 
+DtFechaHora & DtFechaHora::operator=(DtFechaHora &d){
+    if(this != &d){
+	dia=d.dia;
+	mes=d.mes;
+	anio=d.anio;
+	hora=d.hora;
+	minuto=d.minuto;
+    }
+    return *this;
+}
 int DtFechaHora::getDia(){
     return dia;
 }
