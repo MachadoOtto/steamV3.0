@@ -81,6 +81,7 @@ int main() {
                     cout << "   Edad: " << arrayJugadores[i]->getEdad() << endl;
                     cout << endl;
                 } 
+                delete[] arrayJugadores;
             break;
 
             case 4: //Obtener Videojuegos
@@ -95,6 +96,7 @@ int main() {
                     cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
                     cout << endl;
                 }
+                delete[] arrayVideojuegos;
             break;
 
             case 5: //Obtener Partidas
@@ -110,6 +112,7 @@ int main() {
                     for (int i = 0; i < cantPartidas; i++) {
                         
                     }
+                    delete[] arrayPartidas;
                 }
                 catch (std::invalid_argument) {
                 }
