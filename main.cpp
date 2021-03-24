@@ -1,3 +1,13 @@
+/* Laboratorio Programacion IV - INCO/FING/UDELAR
+ * Laboratorio 0 - Implementacion de main
+ * Autores (por nombre):
+ * 	Alexis Baladon
+ * 	Guillermo Toyos
+ * 	Jorge Machado
+ * 	Juan Jose Mangado
+ * 	Mathias Ramilo
+ */
+
 #include "include/Sistema.h"
 #include "include/Videojuego.h"
 #include "include/Partida.h"
