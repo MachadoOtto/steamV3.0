@@ -15,7 +15,7 @@
 #define MAX_VIDEOJUEGOS
 #define MAX_PARTIDAS
 
-DtPartida** obtenerPartidas(string videojuego, int& cantPartidas) {
+DtPartida** Sistema::obtenerPartidas(string videojuego, int& cantPartidas) {
     if (existeVideojuego(videojuego)) {
         cantPartidas = cantidadPartidas;
         DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
