@@ -38,7 +38,7 @@ int main() {
         cout << " 5. Obtener Partidas" endl;
         cout << " 6. Iniciar Partida" endl;
         cout << " 7. Salir" endl << endl;
-        cout << "Ingrese una opcion: "
+        cout << "Ingrese una opcion: ";
         cin >> controlVar;
         cout << endl;
 
@@ -56,10 +56,11 @@ int main() {
                 cin >> password;
 
                 try {
-                    agregarJugador(nickname, edad, password);
+                    Sistema::agregarJugador(nickname, edad, password);
                     cout << "Se ha registrado a " << nickname << " en el sistema." endl;
                 }
                 catch (std::invalid_argument) {
+                    
                 }
             break;
 
