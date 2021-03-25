@@ -26,6 +26,7 @@ public:
     bool getTransmitidaEnVivo();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 
+    void setNicknameJugadoresUnidos(string*);
 };
 
 //Funciones de sobrecarga de flujo
