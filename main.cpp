@@ -44,6 +44,7 @@ int main() {
 
         switch (controlVar) {
             case 1: //Agregar Jugador
+                Sistema sys();
                 string nickname;
                 int edad;
                 string password;
@@ -56,11 +57,12 @@ int main() {
                 cin >> password;
 
                 try {
-                    Sistema::agregarJugador(nickname, edad, password);
+                    sys.agregarJugador(nickname, edad, password);
                     cout << "Se ha registrado a " << nickname << " en el sistema." endl;
                 }
-                catch (std::invalid_argument) {
-                    
+                catch (invalid_argument &e) {
+                    cout << e.what() << endl;
+                    break;
                 }
             break;
 
@@ -111,6 +113,7 @@ int main() {
             break;
 
             case 5: //Obtener Partidas
+                Sistema sys();
                 string videojuego;
                 int cantPartidas;
 
@@ -120,8 +123,16 @@ int main() {
                 try {
                     DtPartida** arrayPartidas = obtenerPartidas(videojuego, cantPartidas);
                     cout << "Hay " << cantPartidas << " partidas registradas en el sistema." endl;
+                    DtPartidaIndividual* ptrIndividual;
+                    DtPartidaMultijugador* ptrMulti;
                     for (int i = 0; i < cantPartidas; i++) {
-                        
+                        ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
+                        if (ptrIndividual == NULL) { //Multijugador
+                            ptrMulti = dynamic_cast<DtPartidaMultijugador*>(arrayPartidas[i]);
+
+                        } else { //Individual
+
+                        }
                     }
                     delete[] arrayPartidas;
                 }
