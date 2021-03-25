@@ -24,6 +24,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -165,7 +166,57 @@ int main() {
             break;
 
             case 6: //Iniciar Partida
+                Sistema sys();
+                string nickname;
+                string videojuego;
+                DtPartida* datos;
+                float duracion;
+                int tipoPartida;
+                DtPartidaIndividual* ptrIndividual;
+                DtPartidaMultijugador* ptrMulti;
 
+                cout << "Nickname: ";
+                cin >> nickname;
+                cout << "Videojuego: ";
+                cin >> videojuego;
+
+                time_t now = time(0);
+                tm * time = localtime(&now);
+                DtFechaHora fechaSistema(time->tm_year, time->tm_mon, time->tm_mday, time->tm_hour, time->tm_min);
+
+                cout << "Duracion: ";
+                cin >> duracion; 
+                cout << endl;
+
+                cout << "Tipo de partida:" << endl;
+                cout << " 1.Individual" << endl;
+                cout << " 2.Multijugador" << endl << endl;
+                cout << "Seleccione una opcion: ";
+                cin >> tipoPartida;
+                cout << endl;
+
+                switch(tipoPartida) {
+                    case 1: //Individual
+                        bool cpa;
+                        cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
+                        cin >> cpa;
+                    break;
+
+                    case 2: //Multijugador
+                        bool tev;
+                        
+                    break;
+
+                    default:
+                        cout << "La opcion ingresada no es valida, ingrese otra porfavor." << endl;
+                }
+                try {
+                    sys.iniciarPartida(nickname, videojuego, datos);
+                }
+                catch (invalid_argument &e) {
+                    cout << e.what() << endl;
+                    break;
+                }
             break;
 
             case 7: //Salir
