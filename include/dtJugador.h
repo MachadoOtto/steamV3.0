@@ -8,20 +8,20 @@
  * 	Mathias Ramilo
  */
 
-#ifndef JUGADOR
-#define JUGADOR
+#ifndef DT_JUGADOR
+#define DT_JUGADOR
 
 #include <string>
-#include "dtJugador.h"
 
-class Jugador{
+class DtJugador{
 private:
     std::string nickname;
     int edad;
-    std::string contrasena;
 public:
-    Jugador(std::string,int,std::string);
-    DtJugador getDt();
+    DtJugador(std::string = "", int = 0);
+
+    std::string getNickname();
+    int getEdad();
 };
 
 #endif

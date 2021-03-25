@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Ramilo
+ * 	Alexis Baladón
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -17,6 +17,9 @@
 #include "videojuego.h"
 #include "constraints.h"
 #include "tipoJuego.h"
+#include "listaJugador.h"
+#include "listaPartida.h"
+#include "listaVideojuego.h"
 
 class Sistema{
 private:
@@ -41,7 +44,7 @@ public:
     /*Auxiliares*/
     Videojuego * findVideojuego(std::string nombre);
     Jugador * findJugador(std::string nombre);
-
 };
+
 #endif
 

@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Ramilo
+ * 	Alexis Baladón
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado

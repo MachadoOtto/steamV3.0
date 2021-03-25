@@ -8,16 +8,18 @@
  * 	Mathias Ramilo
  */
 
-#include "../include/jugador.h"
+#include "../include/dtJugador.h"
 #include <string>
 
-Jugador::Jugador(std::string nick, int age, std::string passwd){
-    nickname = nick;
-    edad = age;
-    contrasena = passwd;
+DtJugador::DtJugador(std::string n, int e){
+   nickname = n;
+   edad = e;
 }
 
-DtJugador Jugador::getDt(){
-    DtJugador pkg(nickname,edad);
-    return pkg;
+std::string DtJugador::getNickname(){
+    return nickname;
+}
+
+int DtJugador::getEdad(){
+    return edad;
 }

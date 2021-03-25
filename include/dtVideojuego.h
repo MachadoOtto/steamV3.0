@@ -8,25 +8,22 @@
  * 	Mathias Ramilo
  */
 
-#ifndef VIDEOJUEGO
-#define VIDEOJUEGO
+#ifndef DT_VIDEOJUEGO
+#define DT_VIDEOJUEGO
 
 #include <string>
 #include "tipoJuego.h"
-#include "listaPartida.h"
-#include "dtVideojuego.h"
 
-class Videojuego {
+class DtVideojuego {
 private:
     std::string nombre;
     TipoJuego genero;
-    ListaPartida  * partidas;
+    float totalHorasDeJuego;
 public:
-    Videojuego(std::string, TipoJuego);
-    ~Videojuego();
-    DtVideojuego getDt();    
-    ListaPartida * getPartidas();
-    void agregarPartida(Partida *);
+    DtVideojuego(std::string = "", TipoJuego = TipoJuego::Otro,float = 0.0);
+    std::string getNombre();
+    TipoJuego getGenero();
+    float getTotalHorasDeJuego();
 };
 
 #endif
