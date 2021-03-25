@@ -23,6 +23,8 @@ public:
     int getHora();
     int getMinuto();
     
+    void setFechaHora(DtFechaHora);
+
     DtFechaHora & operator=(DtFechaHora&);
 };
 #endif

@@ -58,3 +58,11 @@ int DtFechaHora::getMinuto(){
     return minuto;
 }
 
+void setFechaHora(DtFechaHora fechaHora) {
+    this->anio = getAnio(fechaHora);
+    this->mes = getMes(fechaHora);
+    this->dia = getDia(fechaHora);
+    this->hora = getHora(fechaHora);
+    this->minuto = getMinuto(fechaHora);
+}
+
