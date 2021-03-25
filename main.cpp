@@ -179,7 +179,7 @@ int main() {
                 cin >> nickname;
                 cout << "Videojuego: ";
                 cin >> videojuego;
-
+                
                 time_t now = time(0);
                 tm * time = localtime(&now);
                 DtFechaHora fechaSistema(time->tm_year, time->tm_mon, time->tm_mday, time->tm_hour, time->tm_min);
@@ -200,23 +200,56 @@ int main() {
                         bool cpa;
                         cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
                         cin >> cpa;
+                        ptrIndividual->setFechaHora(fechaSistema);
+                        ptrIndividual->setDuracion(duracion);
+                        ptrIndividual->setContinuarPartidaAnterior(cpa);
+                        try {
+                            sys.iniciarPartida(nickname, videojuego, ptrIndividual);
+                        }
+                        catch (invalid_argument &e) {
+                            cout << e.what() << endl;
+                            break;
+                         }
                     break;
 
                     case 2: //Multijugador
                         bool tev;
-                        
+                        cout << "Es transmitida en vivo (1.Si/0.No): ";
+                        cin >> tev;
+                        int cantJugadoresUnidos;
+                        cout << "Cantidad de jugadores unidos: ";
+                        cin >> cantJugadoresUnidos;
+                        string *nicknameJugadoresUnidos;
+                        nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
+                        cout << "Ingrese el nickname de los jugadores unidos" << endl;
+                        for (int i = 0; i < cantJugadoresUnidos; i++) {
+                            cout << "Jugador " << i+1 << ":";
+                            cin >> nicknameJugadoresUnidos[i];
+                        }
+                        ptrMulti->setFechaHora(fechaSistema);
+                        ptrMulti->setDuracion(duracion);
+                        ptrMulti->setTransmitidaEnVivo(tev);
+                        ptrMulti->setNicknameJugadoresUnidos(nicknameJugadoresUnidos);
+                        ptrMulti->setCantidadJugadoresUnidos(cantJugadoresUnidos);
+                        try {
+                            sys.iniciarPartida(nickname, videojuego, ptrMulti);
+                        }
+                        catch (invalid_argument &e) {
+                            cout << e.what() << endl;
+                            break;
+                        }
                     break;
 
                     default:
                         cout << "La opcion ingresada no es valida, ingrese otra porfavor." << endl;
-                }
+                /*}
                 try {
                     sys.iniciarPartida(nickname, videojuego, datos);
                 }
                 catch (invalid_argument &e) {
                     cout << e.what() << endl;
                     break;
-                }
+                }*/
             break;
 
             case 7: //Salir
@@ -229,3 +262,4 @@ int main() {
     }
     return 0;
 }
+
