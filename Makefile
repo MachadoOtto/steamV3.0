@@ -1,7 +1,7 @@
 # Laboratorio Programacion IV - INCO/FING/UDELAR
-#  Laboratorio 0 - Makefile 
-#  Autores (por nombre):
-#  	Alexis Ramilo
+# Laboratorio 0 - Makefile 
+# Autores (por nombre):
+# 	Alexis Baladon 
 #  	Guillermo Toyos
 #  	Jorge Machado
 #  	Juan Jose Mangado
@@ -20,7 +20,7 @@ ODIR = obj
 CC = g++
 CFLAGS = -Wall -Werror -I$(HDIR) -g
 
-MODULOS = dtFechaHora jugador partida sistema videojuego
+MODULOS = dtFechaHora dtJugador dtPartida dtPartidaIndividual dtPartidaMultijugador dtVideojuego listaJugador listaPartida listaVideojuego partidaIndividual partidaMultijugador jugador partida sistema videojuego
 CONST_MODULES = tipoJuego constraints
 
 #lista de archivos

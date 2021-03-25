@@ -1,14 +1,14 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
  * 	Mathias Ramilo
  */
 
-#include "listaJugador.h"
+#include "../include/listaJugador.h"
 #include "../include/jugador.h"
 #include <string>
 

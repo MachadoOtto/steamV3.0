@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -11,11 +11,8 @@
 #ifndef PARTIDA_INDIVIDUAL
 #define PARTIDA_INDIVIDUAL
 
-#include "partida.h"
-#include "dtPartida.h"
 #include <string>
-#include "jugador.h"
-#include "dtFechaHora.h"
+#include "partida.h"
 
 class PartidaIndividual: public Partida{
 private:

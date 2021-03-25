@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -10,7 +10,7 @@
 
 #include "../include/dtPartidaIndividual.h"
 #include "../include/dtPartida.h"
-#include "../include/PartidaIndividual.h"
+#include "../include/partidaIndividual.h"
 #include <iostream>
 #include <string.h>
 

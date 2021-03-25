@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -11,9 +11,8 @@
 #ifndef LISTA_PARTIDA
 #define LISTA_PARTIDA
 
-#include "partida.h"
 #include <string>
-#include "jugador.h"
+#include "partida.h"
 
 class ListaPartida{
 private:

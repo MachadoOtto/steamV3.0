@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -12,11 +12,11 @@
 #define SISTEMA
 
 #include <string>
+
 #include "jugador.h"
 #include "partida.h"
 #include "videojuego.h"
-#include "constraints.h"
-#include "tipoJuego.h"
+
 #include "listaJugador.h"
 #include "listaPartida.h"
 #include "listaVideojuego.h"

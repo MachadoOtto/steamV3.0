@@ -1,7 +1,7 @@
 /* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Laboratorio 0 - Modulo de clase
  * Autores (por nombre):
- * 	Alexis Baladón
+ * 	Alexis Baladon 
  * 	Guillermo Toyos
  * 	Jorge Machado
  * 	Juan Jose Mangado
@@ -11,12 +11,8 @@
 #ifndef DT_PARTIDA_INDIVIDUAL
 #define DT_PARTIDA_INDIVIDUAL
 
-#include "dtPartida.h"
-#include "partida.h"
 #include <string>
-#include "jugador.h"
-#include "dtFechaHora.h"
-#include "listaJugador.h"
+#include "dtPartida.h"
 
 class DtPartidaIndividual : public DtPartida {
 private:
