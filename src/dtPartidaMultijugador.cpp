@@ -16,21 +16,23 @@
 
 DtPartidaMultijugador::DtPartidaMultijugador(bool b, ListaJugador * pp, DtFechaHora d, float f): DtPartida(d,f){
     transmitidaEnVivo = b;
-    nicknameJugadoresUnidos = "";
     cantidadJugadoresUnidos = 0;
+    ListaJugador * tmp = pp;
+    while(tmp != nullptr)
+	cantidadJugadoresUnidos++;
+    nicknameJugadoresUnidos = new std::string(cantidadJugadoresUnidos);
     Jugador * jug = nullptr;
     DtJugador * dtJug = new DtJugador();
-    while(pp != nullptr){
-	cantidadJugadoresUnidos++;
+    for(int i=0;i<cantidadJugadoresUnidos;i++){
 	jug = pp->getJugador();
 	*dtJug = jug->getDt();
-	nicknameJugadoresUnidos = nicknameJugadoresUnidos + ", " + dtJug->getNickname();
+	nicknameJugadoresUnidos[i]=dtJug->getNickname();
 	pp = pp->next();
-    }
+    } 
     delete dtJug;
 } 
 
-std::string DtPartidaMultijugador::getNicknameJugadoresUnidos(){
+std::string * DtPartidaMultijugador::getNicknameJugadoresUnidos(){
     return nicknameJugadoresUnidos;
 }
 
@@ -86,7 +88,11 @@ std::ostream &operator <<(std::ostream &o, DtPartidaMultijugador &pMult) {
     o << "Duración partida:" << auxFecha.getHora() << "/" << auxFecha.getMinuto() << std::endl;
     o << "Transmitida en vivo: " << siNo << std::endl;
     o << "Cantidad jugadores unidos a la partida: " << pMult.getCantidadJugadoresUnidos() << std::endl;
-    o << "Jugadores unidos a la partida: " << pMult.getNicknameJugadoresUnidos() << std::endl;
+    o << "Jugadores unidos a la partida: ";
+    string * invitados = pMult.getNicknameJugadoresUnidos();
+    for(int i=0;i<cantidadJugadoresUnidos-1;i++)
+	o << invitados[i] << ", ";
+    o << invitados[cantidadJugadoresUnidos] << ".\n";
 
     return o;
 }

@@ -17,11 +17,11 @@
 class DtPartidaMultijugador : public DtPartida{
 private:
     bool transmitidaEnVivo;
-    std::string nicknameJugadoresUnidos;
+    std::string * nicknameJugadoresUnidos;
     int cantidadJugadoresUnidos;
 public:
     DtPartidaMultijugador(bool,ListaJugador * ,DtFechaHora,float);
-    std::string getNicknameJugadoresUnidos();
+    std::string * getNicknameJugadoresUnidos();
     int getCantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
