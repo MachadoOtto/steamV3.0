@@ -77,10 +77,6 @@ Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * 
     return p;
 }
 
-void setNicknameJugadoresUnidos(string *nicknameJugadoresUnidos) {
-    this->nicknameJugadoresUnidos = nicknameJugadoresUnidos;
-}
-
 std::ostream &operator <<(std::ostream &o, DtPartidaMultijugador &pMult) {
 
     std::string siNo = "Si";
