@@ -14,6 +14,8 @@
 #include <string>
 #include "dtPartida.h"
 
+class Partida;
+
 class DtPartidaIndividual : public DtPartida {
 private:
     bool continuaPartidaAnterior;

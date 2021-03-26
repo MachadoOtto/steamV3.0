@@ -15,6 +15,8 @@
 #include "jugador.h"
 #include "listaJugador.h"
 #include "dtFechaHora.h"
+#include "dtPartidaMultijugador.h"
+#include "dtPartidaIndividual.h"
 
 //Foward declaration
 class Partida;

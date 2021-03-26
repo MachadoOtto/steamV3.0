@@ -12,7 +12,9 @@
 #define PARTIDA_INDIVIDUAL
 
 #include <string>
-#include "partida.h"
+//#include "partida.h"
+
+class Partida;
 
 class PartidaIndividual: public Partida{
 private:

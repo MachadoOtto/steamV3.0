@@ -12,8 +12,10 @@
 #define PARTIDA_MULTIJUGADOR
 
 #include <string>
-#include "partida.h"
+//#include "partida.h"
 #include "listaJugador.h"
+
+class Partida;
 
 class PartidaMultijugador: public Partida{
 private:

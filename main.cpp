@@ -68,7 +68,14 @@ int main() {
                 cin >> nombre;
                 cout << "Genero (Accion/Aventura/Deporte/Otro): ";
                 cin >> input_genero;
-		if(input_genero == "Accion"
+		if(input_genero == "Accion")
+		    genero = TipoJuego::Accion;
+		else if(input_genero == "Aventura")
+		    genero = TipoJuego::Aventura;
+		else if(input_genero == "Deporte")
+		    genero = TipoJuego::Deporte;
+		else if(input_genero == "Otro")
+		    genero = TipoJuego::Otro;
                 try {
                     sys.agregarVideojuego(nombre, genero);
                     cout << "Se ha registrado el videojuego " << nombre << " en el sistema.\n";
@@ -95,12 +102,23 @@ int main() {
             case 4:{ //Obtener Videojuegos
                 int cantVideojuegos;
                 DtVideojuego** arrayVideojuegos = sys.obtenerVideojuegos(cantVideojuegos);
-
+			
                 cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema.\n";
                 cout << endl;
+		TipoJuego gen;
+		string gen_str;
                 for (int i = 0; i < cantVideojuegos; i++) {
-                    cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getTitulo() << endl;
-                    cout << "   Genero: " << arrayVideojuegos[i]->getGenero() << endl;
+		    gen = arrayVideojuegos[i]->getGenero();
+		    if(gen = TipoJuego::Accion)
+			gen_str = "Accion";	
+		    else if(gen = TipoJuego::Aventura)
+			gen_str = "Aventura";
+		    else if(gen = TipoJuego::Deporte)
+			gen_str = "Deporte";
+		    else if(gen = TipoJuego::Otro)
+			gen_str = "Otro";
+                    cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getNombre() << endl;
+                    cout << "   Genero: " << gen_str << endl;
                     cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
                     cout << endl;
                 }

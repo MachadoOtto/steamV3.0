@@ -15,6 +15,8 @@
 #include "jugador.h"
 #include "dtFechaHora.h"
 #include "dtPartida.h"
+#include "partidaIndividual.h"
+#include "partidaMultijugador.h"
 
 class Partida{
 private:
