@@ -12,11 +12,11 @@
 #define PARTIDA
 
 #include <string>
-#include "jugador.h"
+//#include "jugador.h"
 #include "dtFechaHora.h"
 #include "dtPartida.h"
-#include "partidaIndividual.h"
-#include "partidaMultijugador.h"
+
+class Jugador;
 
 class Partida{
 private:

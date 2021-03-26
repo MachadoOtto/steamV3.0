@@ -32,6 +32,18 @@ float PartidaMultijugador::darTotalHorasParticipantes(){
 }
 
 DtPartida * PartidaMultijugador::getDt(){
-    DtPartidaMultijugador * pkg = new DtPartidaMultijugador(transmitidaEnVivo,invitados,this->getFecha(),this->getDuracion());
+    int i=0;
+    ListaJugador * inv = invitados;
+    while(inv == nullptr){
+	inv = inv->next();
+	i++;
+    }
+    inv = invitados;
+    std::string * ark = new std::string[i];
+    for(int k=0;k<i;k++){
+	ark[k] = inv->getJugador()->getDt().getNickname();
+	inv = inv->next();
+    }
+    DtPartidaMultijugador * pkg = new DtPartidaMultijugador(transmitidaEnVivo,ark,i,this->getFecha(),this->getDuracion());
     return pkg;
 }

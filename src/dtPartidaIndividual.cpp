@@ -11,6 +11,7 @@
 #include "../include/dtPartidaIndividual.h"
 #include "../include/dtPartida.h"
 #include "../include/partidaIndividual.h"
+#include "../include/listaJugador.h"
 #include <iostream>
 #include <string.h>
 

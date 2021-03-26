@@ -14,6 +14,7 @@
 #include <string>
 #include "tipoJuego.h"
 
+
 class DtVideojuego {
 private:
     std::string nombre;

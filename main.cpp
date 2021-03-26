@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <stdio.h>
 #include <ctime>
 #include "include/sistema.h"
 
@@ -109,13 +110,13 @@ int main() {
 		string gen_str;
                 for (int i = 0; i < cantVideojuegos; i++) {
 		    gen = arrayVideojuegos[i]->getGenero();
-		    if(gen = TipoJuego::Accion)
+		    if(gen == TipoJuego::Accion)
 			gen_str = "Accion";	
-		    else if(gen = TipoJuego::Aventura)
+		    else if(gen == TipoJuego::Aventura)
 			gen_str = "Aventura";
-		    else if(gen = TipoJuego::Deporte)
+		    else if(gen == TipoJuego::Deporte)
 			gen_str = "Deporte";
-		    else if(gen = TipoJuego::Otro)
+		    else if(gen == TipoJuego::Otro)
 			gen_str = "Otro";
                     cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getNombre() << endl;
                     cout << "   Genero: " << gen_str << endl;
@@ -141,6 +142,8 @@ int main() {
                         ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
                         if (ptrIndividual == nullptr) { //Multijugador
                             ptrMulti = dynamic_cast<DtPartidaMultijugador*>(arrayPartidas[i]);
+			    int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
+
                             cout << i+1 << ". Fecha: " << ptrMulti->getFecha() << endl;
                             cout << "   Duracion: " << ptrMulti->getDuracion() << endl;
                             string tev = "NO";
@@ -148,15 +151,17 @@ int main() {
                                 tev = "SI";
                             }
                             cout << "   Trasmtida en vivo: " << tev << endl;
-                            cout << "   Jugadores unidos: " << ptrMulti->getCantidadJugadoresUnidos() << endl << endl;
-                            for (int j = 0; j < ptrMulti->getCantidadJugadoresUnidos(); j++) {
-                                cout << "    " << j+1 << ". " << ptrMulti->getNicknameJugadoresUnidos[j] << endl;
+                            cout << "   Jugadores unidos: " << cardInvitees << endl << endl;
+			    
+			    string * ju = ptrMulti->getNicknameJugadoresUnidos();
+                            for (int j = 0; j < cardInvitees; j++) {
+                                cout << "    " << j+1 << ". " << ju[j] << endl;
                             }
                         } else { //Individual
                             cout << i+1 << ". Fecha: " << ptrIndividual->getFecha() << endl;
                             cout << "   Duracion: " << ptrIndividual->getDuracion() << endl;
                             string cpa = "NO";
-                            if (ptrIndividual->getContinuarPartidaAnterior()) {
+                            if (ptrIndividual->getContinuaPartidaAnterior()) {
                                 cpa = "SI";
                             }
                             cout << "   Es continuacion de una partida anterior: " << cpa << endl;
@@ -183,10 +188,22 @@ int main() {
                 cin >> nickname;
                 cout << "Videojuego: ";
                 cin >> videojuego;
-                
+		cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
+		string date_input;
+		cin >> date_input;	
+		int y,m,d,h,min;
                 time_t now = time(0);
                 tm * time = localtime(&now);
-                DtFechaHora fechaSistema(time->tm_year, time->tm_mon, time->tm_mday, time->tm_hour, time->tm_min);
+		if(date_input == "ahora"){
+		    y = time->tm_year;
+		    m = time->tm_mon;
+		    d = time->tm_mday;
+		    h = time->tm_hour;
+		    min = time->tm_min;
+		}
+		else
+		    sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
+		DtFechaHora fechaSistema(y,m,d,h,min);
 
                 cout << "Duracion: ";
                 cin >> duracion; 
@@ -200,13 +217,11 @@ int main() {
                 cout << endl;
 
                 switch(tipoPartida) {
-                    case 1: //Individual
+                    case 1:{ //Individual
                         bool cpa;
                         cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
                         cin >> cpa;
-                        ptrIndividual->setFechaHora(fechaSistema);
-                        ptrIndividual->setDuracion(duracion);
-                        ptrIndividual->setContinuarPartidaAnterior(cpa);
+			ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
                         try {
                             sys.iniciarPartida(nickname, videojuego, ptrIndividual);
                         }
@@ -215,8 +230,8 @@ int main() {
                             break;
                          }
 			break;
-
-                    case 2: //Multijugador
+		    }
+                    case 2:{ //Multijugador
                         bool tev;
                         cout << "Es transmitida en vivo (1.Si/0.No): ";
                         cin >> tev;
@@ -230,11 +245,7 @@ int main() {
                             cout << "Jugador " << i+1 << ":";
                             cin >> nicknameJugadoresUnidos[i];
                         }
-                        ptrMulti->setFechaHora(fechaSistema);
-                        ptrMulti->setDuracion(duracion);
-                        ptrMulti->setTransmitidaEnVivo(tev);
-                        ptrMulti->setNicknameJugadoresUnidos(nicknameJugadoresUnidos);
-                        ptrMulti->setCantidadJugadoresUnidos(cantJugadoresUnidos);
+			ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                         try {
                             sys.iniciarPartida(nickname, videojuego, ptrMulti);
                         }
@@ -243,20 +254,22 @@ int main() {
                             break;
                         }
 			break;
-
-                    default:
+		    }
+                    default:{
                         cout << "La opcion ingresada no es valida, ingrese otra porfavor." << endl;
                	    	break;
-
+		    }
+		break;
 		}
+	    }
             case 7: //Salir
 		break;
-            default:
+            default:{
                 cout << "La opcion ingresada no es valida, ingrese otra porfavor.\n";
 		break;
+	    }
 	}
-        
-	}
+	
     }
     return 0;
 }
