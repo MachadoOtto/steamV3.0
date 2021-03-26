@@ -20,10 +20,8 @@ using namespace std;
 
 int main() {
     Sistema* sys = new Sistema();
-    
     int controlVar=0;
     while (controlVar != 7) {
-
         cout << "--- MENU --- \n\n";
         cout << "Seleccione una opcion\n";
         cout << " 1. Agregar Jugador\n";
@@ -35,18 +33,21 @@ int main() {
         cout << " 7. Salir\n\n";
         cout << "Ingrese una opcion: ";
         cin >> controlVar;
+        if (cin.fail()) {// Miguel: se realiza lo mismo que para 'edad' al ingresar jugadores.
+            // Se generaba otro loop infinito si ingresabas 'char'. Basicamente el mismo error.
+            cin.clear(); // limpia las flags erroneas.
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // descarta el resto de la entrada.
+            controlVar = 0; // Hacemos que salte el error del menu en el switch.
+        }
         cout << endl;
-
         switch (controlVar) {
 	    //Agregar Jugador
             case 1:{ 
                 string nickname;
                 int edad;
                 string password;
-
                 cout << "Nickname: ";
                 cin >> nickname;
-
                 cout << "Edad: ";
                 while (true) {
                     cin >> edad;
@@ -54,14 +55,13 @@ int main() {
                         // si esto no se agrega tendriamos un loop infinito!
                         cin.clear(); // limpia las flags erroneas.
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // descarta el resto de la entrada.
-                        cout << "La entrada para 'edad' no es valida. \nIngresela nuevamente: ";
+                        cout << "Edad invalida. \nIngresela nuevamente: ";
                     } else {
-                        break;
+                        break; // corta el while al ingresar un 'int' sea cual sea.
                     }
                 }
                 cout << "Password: ";
                 cin >> password;
-
                 try {
                     sys->agregarJugador(nickname, edad, password);
                     cout << "Se ha registrado a " << nickname << " en el sistema.\n";
@@ -198,29 +198,40 @@ int main() {
                 cin >> nickname;
                 cout << "Videojuego: ";
                 cin >> videojuego;
-		        cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
-		        string date_input;
-		        cin >> date_input;	
-		        int y,m,d,h,min;
-                time_t now = time(0);
-                tm * time = localtime(&now);
-		        if(date_input == "ahora"){
-		            y = time->tm_year;
-		            m = time->tm_mon;
-		            d = time->tm_mday;
-		            h = time->tm_hour;
-		            min = time->tm_min;
-		        } else
-		            sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
-		        DtFechaHora fechaSistema(y,m,d,h,min);
+                // Miguel: correccion de time.
+                /* Aclaracion: es innecesario que se ingrese la fecha manualmente, como esto genera problemas al leer la entrada lo quite.
+                    Se pide solo que la fecha ingresada sea la del sistema en el momento del registro, nada mas. */
+		        time_t now = time(0);
+                tm* time = localtime(&now);
+		        // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
+		        // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
+                // fechaSistema(dia, mes, anio, hora, min).
+		        DtFechaHora fechaSistema(time->tm_mday, time->tm_mon + 1, time->tm_year + 1900, time->tm_hour, time->tm_min); 
                 cout << "Duracion: ";
-                cin >> duracion; 
+                while (true) {
+                    // Correccion del error del buffer de entrada para float. (Error de loop infinito).
+                    cin >> duracion;
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+                        cout << "Duracion invalida.\nIngresela nuevamente: ";
+                    } else {
+                        break;
+                    }
+                }
+
                 cout << endl;
                 cout << "Tipo de partida:" << endl;
                 cout << " 1.Individual" << endl;
                 cout << " 2.Multijugador" << endl << endl;
                 cout << "Seleccione una opcion: ";
+                // Correccion del error del buffer de entrada para int. (Error de loop infinito).
                 cin >> tipoPartida;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
+                }
                 cout << endl;
                 switch(tipoPartida) {
                     case 1:{ //Individual
@@ -262,7 +273,7 @@ int main() {
 			            break;
 		            }
                     default:{
-                        cout << "La opcion ingresada no es valida, ingrese otra porfavor." << endl;
+                        cout << "La opcion ingresada no es valida, ingrese otra porfavor: " << endl;
                	    	break;
 		            }
 		            break;
