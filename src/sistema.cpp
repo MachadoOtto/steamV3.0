@@ -41,21 +41,23 @@ Sistema::~Sistema(){
 void Sistema::agregarVideojuego(std::string nombre, TipoJuego genero){
     Videojuego * lol;
     ListaVideojuego *vt = videojuegos;
-    DtVideojuego * d = new DtVideojuego();
-    while(vt != nullptr){
-	lol = vt->getVideojuego();
-	*d = lol->getDt();
-	if(nombre == d->getNombre())
-	    throw std::invalid_argument("El videojuego ya existe en el sistema");
-	vt = vt->next();
+    DtVideojuego * d; // = new DtVideojuego() esto es innecesario, deja memoria colgada.
+    while(vt != nullptr) {
+	    lol = vt->getVideojuego();
+	    *d = lol->getDt();
+	    if(nombre == d->getNombre())
+	        throw std::invalid_argument("El videojuego ya existe en el sistema.");
+	    vt = vt->next();
     }
-    if(cantidadVideojuegos < MAX_VIDEOJUEGOS){
-	lol = new Videojuego(nombre,genero); 
-	if(videojuegos == nullptr)
-	    videojuegos = new ListaVideojuego(lol);
-	else
-	    videojuegos->add(lol);    
-	cantidadVideojuegos++;
+    if(cantidadVideojuegos < MAX_VIDEOJUEGOS) {
+	    lol = new Videojuego(nombre,genero); 
+	    if(videojuegos == nullptr)
+	        videojuegos = new ListaVideojuego(lol);
+	    else
+	        videojuegos->add(lol);    
+	    cantidadVideojuegos++;
+    } else {
+        throw std::invalid_argument("Videojuego no ingresado. Cantidad maxima alcanzada."); // Miguel: esta linea la hice por control.
     }
 }
 
