@@ -19,7 +19,7 @@
 using namespace std;
 
 int main() {
-    Sistema sys;
+    Sistema* sys = new Sistema();
     
     int controlVar=0;
     while (controlVar != 7) {
@@ -63,7 +63,7 @@ int main() {
                 cin >> password;
 
                 try {
-                    sys.agregarJugador(nickname, edad, password);
+                    sys->agregarJugador(nickname, edad, password);
                     cout << "Se ha registrado a " << nickname << " en el sistema.\n";
                 }
                 catch (invalid_argument &e) {
@@ -90,7 +90,7 @@ int main() {
 		        else if(input_genero == "Otro")
 		            genero = TipoJuego::Otro;
                 try {
-                    sys.agregarVideojuego(nombre, genero);
+                    sys->agregarVideojuego(nombre, genero);
                     cout << "Se ha registrado el videojuego " << nombre << " en el sistema.\n";
                 }
                 catch (invalid_argument &e) {
@@ -101,7 +101,7 @@ int main() {
 	        }
             case 3:{ //Obtener Jugadores
                 int cantJugadores;
-                DtJugador** arrayJugadores = sys.obtenerJugadores(cantJugadores);
+                DtJugador** arrayJugadores = sys->obtenerJugadores(cantJugadores);
 
                 cout << "Hay " << cantJugadores << " jugadores registrados en el sistema.\n\n";
                 for (int i = 0; i < cantJugadores; i++) {
@@ -115,7 +115,7 @@ int main() {
 	        }
             case 4:{ //Obtener Videojuegos
                 int cantVideojuegos;
-                DtVideojuego** arrayVideojuegos = sys.obtenerVideojuegos(cantVideojuegos);
+                DtVideojuego** arrayVideojuegos = sys->obtenerVideojuegos(cantVideojuegos);
 			
                 cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema.\n";
                 cout << endl;
@@ -147,7 +147,7 @@ int main() {
                 cin >> videojuego;
 
                 try {
-                    DtPartida** arrayPartidas = sys.obtenerPartidas(videojuego, cantPartidas);
+                    DtPartida** arrayPartidas = sys->obtenerPartidas(videojuego, cantPartidas);
                     cout << "Hay " << cantPartidas << " partidas registradas en el sistema.\n";
                     DtPartidaIndividual* ptrIndividual;
                     DtPartidaMultijugador* ptrMulti;
@@ -229,7 +229,7 @@ int main() {
                         cin >> cpa;
 			            ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
                         try {
-                            sys.iniciarPartida(nickname, videojuego, ptrIndividual);
+                            sys->iniciarPartida(nickname, videojuego, ptrIndividual);
                         }
                         catch (invalid_argument &e) {
                             cout << e.what() << endl;
@@ -253,7 +253,7 @@ int main() {
                         }
 			            ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                         try {
-                            sys.iniciarPartida(nickname, videojuego, ptrMulti);
+                            sys->iniciarPartida(nickname, videojuego, ptrMulti);
                         }
                         catch (invalid_argument &e) {
                             cout << e.what() << endl;
@@ -276,6 +276,6 @@ int main() {
 	        }
 	    }
     }
+    delete sys;
     return 0;
 }
-
