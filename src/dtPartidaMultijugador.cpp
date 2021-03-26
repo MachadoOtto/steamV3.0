@@ -10,26 +10,15 @@
 
 #include "../include/dtPartidaMultijugador.h"
 #include "../include/dtPartida.h"
+#include "../include/listaJugador.h"
 #include "../include/partidaMultijugador.h"
 #include <iostream>
-#include <string.h>
+#include <string>
 
-DtPartidaMultijugador::DtPartidaMultijugador(bool b, ListaJugador * pp, DtFechaHora d, float f): DtPartida(d,f){
+DtPartidaMultijugador::DtPartidaMultijugador(bool b, std::string * pp,int card, DtFechaHora d, float f): DtPartida(d,f){
     transmitidaEnVivo = b;
-    cantidadJugadoresUnidos = 0;
-    ListaJugador * tmp = pp;
-    while(tmp != nullptr)
-	cantidadJugadoresUnidos++;
-    nicknameJugadoresUnidos = new std::string(cantidadJugadoresUnidos);
-    Jugador * jug = nullptr;
-    DtJugador * dtJug = new DtJugador();
-    for(int i=0;i<cantidadJugadoresUnidos;i++){
-	jug = pp->getJugador();
-	*dtJug = jug->getDt();
-	nicknameJugadoresUnidos[i]=dtJug->getNickname();
-	pp = pp->next();
-    } 
-    delete dtJug;
+    cantidadJugadoresUnidos = card;
+    nicknameJugadoresUnidos = pp;
 } 
 
 std::string * DtPartidaMultijugador::getNicknameJugadoresUnidos(){
@@ -57,46 +46,36 @@ static Jugador * findJugador(std::string nombre,ListaJugador * jugadores) {
 //Limitacion: El nickname de un usuario no puede contener comas.
 Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * jugadoresSystema){
     ListaJugador * invitees = nullptr;
-    std::string invstr = this->getNicknameJugadoresUnidos();
-    int i=0,j=0;
-    while(j < invstr.length()){
-	if(invstr[j] == ','){
-	    Jugador * p = findJugador(invstr.substr(i,j-1),jugadoresSystema);
-	    if(p == nullptr)
+    int tot = this->getCantidadJugadoresUnidos();
+    for(int i=0;i<tot;i++){
+	Jugador * p = findJugador(this->getNicknameJugadoresUnidos()[i],jugadoresSystema);
+	if(p == nullptr)
 	        throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
 	    if(invitees == nullptr)
 	        invitees = new ListaJugador(p);
 	    else
 	        invitees->add(p);
-	    i=j+2;
-	    j++;
-	}
-	j++;
     }
     Partida * p = new PartidaMultijugador(this->transmitidaEnVivo,this->getFecha(),this->getDuracion(),host,invitees);
     return p;
 }
 
-void setNicknameJugadoresUnidos(string *nicknameJugadoresUnidos) {
-    this->nicknameJugadoresUnidos = nicknameJugadoresUnidos;
-}
-
 std::ostream &operator <<(std::ostream &o, DtPartidaMultijugador &pMult) {
-
+    
     std::string siNo = "Si";
     if(pMult.getTransmitidaEnVivo()) siNo = "No";
     DtFechaHora auxFecha = pMult.getFecha();
-
+    int cantJug = pMult.getCantidadJugadoresUnidos();
     o << "Tipo Partida: Multijugador" << std::endl; 
     o << "Fecha partida:" << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << std::endl;
     o << "Duración partida:" << auxFecha.getHora() << "/" << auxFecha.getMinuto() << std::endl;
     o << "Transmitida en vivo: " << siNo << std::endl;
     o << "Cantidad jugadores unidos a la partida: " << pMult.getCantidadJugadoresUnidos() << std::endl;
     o << "Jugadores unidos a la partida: ";
-    string * invitados = pMult.getNicknameJugadoresUnidos();
-    for(int i=0;i<cantidadJugadoresUnidos-1;i++)
+    std::string * invitados = pMult.getNicknameJugadoresUnidos();
+    for(int i=0;i<cantJug-1;i++)
 	o << invitados[i] << ", ";
-    o << invitados[cantidadJugadoresUnidos] << ".\n";
+    o << invitados[cantJug] << ".\n";
 
     return o;
 }

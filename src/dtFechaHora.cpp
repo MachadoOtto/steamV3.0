@@ -9,6 +9,7 @@
  */
 
 #include <stdexcept>
+#include <iostream>
 #include "../include/dtFechaHora.h"
 
 DtFechaHora::DtFechaHora(int d, int m, int a, int h, int min){
@@ -58,11 +59,8 @@ int DtFechaHora::getMinuto(){
     return minuto;
 }
 
-void setFechaHora(DtFechaHora fechaHora) {
-    this->anio = getAnio(fechaHora);
-    this->mes = getMes(fechaHora);
-    this->dia = getDia(fechaHora);
-    this->hora = getHora(fechaHora);
-    this->minuto = getMinuto(fechaHora);
+std::ostream & operator<<(std::ostream & o, DtFechaHora d){
+    o << d.getDia() << "/" << d.getMes() << "/" << d.getAnio() << " - " << d.getHora() << ":" << d.getMinuto();
+    return o;
 }
 

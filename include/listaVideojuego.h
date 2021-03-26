@@ -13,7 +13,6 @@
 
 #include <string>
 #include "videojuego.h"
-#include "tipoJuego.h"
 
 class ListaVideojuego{
 private:

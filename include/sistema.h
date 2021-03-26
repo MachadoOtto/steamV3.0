@@ -11,15 +11,17 @@
 #ifndef SISTEMA
 #define SISTEMA
 
-#include <string>
-
-#include "jugador.h"
-#include "partida.h"
-#include "videojuego.h"
-
 #include "listaJugador.h"
+#include "dtPartidaIndividual.h"
+#include "dtPartidaMultijugador.h"
+
+#include <string>
+#include "constraints.h"
 #include "listaPartida.h"
 #include "listaVideojuego.h"
+
+#include "partidaMultijugador.h"
+#include "partidaIndividual.h"
 
 class Sistema{
 private:

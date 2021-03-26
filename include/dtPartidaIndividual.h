@@ -13,6 +13,11 @@
 
 #include <string>
 #include "dtPartida.h"
+#include "dtFechaHora.h"
+#include "partida.h"
+
+class Jugador;
+class ListaJugador;
 
 class DtPartidaIndividual : public DtPartida {
 private:

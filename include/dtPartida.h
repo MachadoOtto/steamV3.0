@@ -12,12 +12,14 @@
 #define DT_PARTIDA
 
 #include <string>
-#include "jugador.h"
-#include "listaJugador.h"
+//#include "jugador.h"
+//#include "listaJugador.h"
 #include "dtFechaHora.h"
 
 //Foward declaration
 class Partida;
+class Jugador;
+class ListaJugador;
 
 class DtPartida {
 private:

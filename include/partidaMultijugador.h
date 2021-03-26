@@ -12,8 +12,13 @@
 #define PARTIDA_MULTIJUGADOR
 
 #include <string>
+#include "dtFechaHora.h"
 #include "partida.h"
 #include "listaJugador.h"
+
+class Jugador;
+class DtPartida;
+
 
 class PartidaMultijugador: public Partida{
 private:

@@ -16,6 +16,8 @@
 #include "listaPartida.h"
 #include "dtVideojuego.h"
 
+class Partida;
+
 class Videojuego {
 private:
     std::string nombre;

@@ -13,6 +13,12 @@
 
 #include <string>
 #include "dtPartida.h"
+#include "partida.h"
+#include "dtFechaHora.h"
+
+class Jugador;
+class ListaJugador;
+class DtFechaHora;
 
 class DtPartidaMultijugador : public DtPartida{
 private:
@@ -20,13 +26,12 @@ private:
     std::string * nicknameJugadoresUnidos;
     int cantidadJugadoresUnidos;
 public:
-    DtPartidaMultijugador(bool,ListaJugador * ,DtFechaHora,float);
+    DtPartidaMultijugador(bool,std::string *,int,DtFechaHora,float); //revisar cambios listJug ->string*
     std::string * getNicknameJugadoresUnidos();
     int getCantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 
-    void setNicknameJugadoresUnidos(string*);
 };
 
 //Funciones de sobrecarga de flujo

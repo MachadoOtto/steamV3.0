@@ -11,6 +11,8 @@
 #ifndef DT_FECHAHORA
 #define DT_FECHAHORA
 
+#include <iostream>
+
 class DtFechaHora {
 private:
     int dia, mes, anio, hora, minuto;
@@ -23,8 +25,9 @@ public:
     int getHora();
     int getMinuto();
     
-    void setFechaHora(DtFechaHora);
-
     DtFechaHora & operator=(DtFechaHora&);
 };
+
+std::ostream & operator<<(std::ostream &,DtFechaHora);
+
 #endif
