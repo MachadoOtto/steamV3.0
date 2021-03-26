@@ -13,6 +13,7 @@
 #include <string>
 #include <stdio.h>
 #include <ctime>
+#include <limits> // necesario para limpiar el buffer de entrada.
 #include "include/sistema.h"
 
 using namespace std;
@@ -45,8 +46,19 @@ int main() {
 
                 cout << "Nickname: ";
                 cin >> nickname;
+
                 cout << "Edad: ";
-                cin >> edad;
+                while (true) {
+                    cin >> edad;
+                    if (cin.fail()) {// Miguel: ingresa solo si el buffer intenta leer un valor que no sea del tipo int.
+                        // si esto no se agrega tendriamos un loop infinito!
+                        cin.clear(); // limpia las flags erroneas.
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // descarta el resto de la entrada.
+                        cout << "La entrada para 'edad' no es valida. \nIngresela nuevamente: ";
+                    } else {
+                        break;
+                    }
+                }
                 cout << "Password: ";
                 cin >> password;
 
@@ -59,24 +71,24 @@ int main() {
                     break;
                 }
                 break;
-	    }
+	        }
             case 2:{ //Agregar Videojuego
                 string nombre;
-		string input_genero;
+		        string input_genero;
                 TipoJuego genero;
 
                 cout << "Nombre del videojuego: ";
                 cin >> nombre;
                 cout << "Genero (Accion/Aventura/Deporte/Otro): ";
                 cin >> input_genero;
-		if(input_genero == "Accion")
-		    genero = TipoJuego::Accion;
-		else if(input_genero == "Aventura")
-		    genero = TipoJuego::Aventura;
-		else if(input_genero == "Deporte")
-		    genero = TipoJuego::Deporte;
-		else if(input_genero == "Otro")
-		    genero = TipoJuego::Otro;
+		        if(input_genero == "Accion")
+		            genero = TipoJuego::Accion;
+		        else if(input_genero == "Aventura")
+		            genero = TipoJuego::Aventura;
+		        else if(input_genero == "Deporte")
+		            genero = TipoJuego::Deporte;
+		        else if(input_genero == "Otro")
+		            genero = TipoJuego::Otro;
                 try {
                     sys.agregarVideojuego(nombre, genero);
                     cout << "Se ha registrado el videojuego " << nombre << " en el sistema.\n";
@@ -85,8 +97,8 @@ int main() {
                     cout << e.what() << endl;
                     break;
                 }
-		break;
-	    }
+		        break;
+	        }
             case 3:{ //Obtener Jugadores
                 int cantJugadores;
                 DtJugador** arrayJugadores = sys.obtenerJugadores(cantJugadores);
@@ -96,36 +108,37 @@ int main() {
                     cout << i+1 << ". Nickname: " << arrayJugadores[i]->getNickname() << endl;
                     cout << "   Edad: " << arrayJugadores[i]->getEdad() << endl;
                     cout << endl;
+                    delete arrayJugadores[i];
                 } 
                 delete[] arrayJugadores;
-		break;
-	    }
+		        break;
+	        }
             case 4:{ //Obtener Videojuegos
                 int cantVideojuegos;
                 DtVideojuego** arrayVideojuegos = sys.obtenerVideojuegos(cantVideojuegos);
 			
                 cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema.\n";
                 cout << endl;
-		TipoJuego gen;
-		string gen_str;
+		        TipoJuego gen;
+		        string gen_str;
                 for (int i = 0; i < cantVideojuegos; i++) {
-		    gen = arrayVideojuegos[i]->getGenero();
-		    if(gen == TipoJuego::Accion)
-			gen_str = "Accion";	
-		    else if(gen == TipoJuego::Aventura)
-			gen_str = "Aventura";
-		    else if(gen == TipoJuego::Deporte)
-			gen_str = "Deporte";
-		    else if(gen == TipoJuego::Otro)
-			gen_str = "Otro";
+		            gen = arrayVideojuegos[i]->getGenero();
+		            if(gen == TipoJuego::Accion)
+			            gen_str = "Accion";	
+		            else if(gen == TipoJuego::Aventura)
+			            gen_str = "Aventura";
+		            else if(gen == TipoJuego::Deporte)
+			            gen_str = "Deporte";
+		            else if(gen == TipoJuego::Otro)
+			            gen_str = "Otro";
                     cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getNombre() << endl;
                     cout << "   Genero: " << gen_str << endl;
                     cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
                     cout << endl;
                 }
                 delete[] arrayVideojuegos;
-		break;
-	    }
+            break;
+	        }
             case 5:{ //Obtener Partidas
                 string videojuego;
                 int cantPartidas;
@@ -142,8 +155,7 @@ int main() {
                         ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
                         if (ptrIndividual == nullptr) { //Multijugador
                             ptrMulti = dynamic_cast<DtPartidaMultijugador*>(arrayPartidas[i]);
-			    int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
-
+			                int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
                             cout << i+1 << ". Fecha: " << ptrMulti->getFecha() << endl;
                             cout << "   Duracion: " << ptrMulti->getDuracion() << endl;
                             string tev = "NO";
@@ -152,8 +164,7 @@ int main() {
                             }
                             cout << "   Trasmtida en vivo: " << tev << endl;
                             cout << "   Jugadores unidos: " << cardInvitees << endl << endl;
-			    
-			    string * ju = ptrMulti->getNicknameJugadoresUnidos();
+                            string * ju = ptrMulti->getNicknameJugadoresUnidos();
                             for (int j = 0; j < cardInvitees; j++) {
                                 cout << "    " << j+1 << ". " << ju[j] << endl;
                             }
@@ -173,8 +184,8 @@ int main() {
                     cout << e.what() << endl;
                     break;
                 }
-		break;
-	    }
+		        break;
+	        }
             case 6:{ //Iniciar Partida
                 string nickname;
                 string videojuego;
@@ -183,54 +194,49 @@ int main() {
                 int tipoPartida;
                 DtPartidaIndividual* ptrIndividual;
                 DtPartidaMultijugador* ptrMulti;
-
                 cout << "Nickname: ";
                 cin >> nickname;
                 cout << "Videojuego: ";
                 cin >> videojuego;
-		cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
-		string date_input;
-		cin >> date_input;	
-		int y,m,d,h,min;
+		        cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
+		        string date_input;
+		        cin >> date_input;	
+		        int y,m,d,h,min;
                 time_t now = time(0);
                 tm * time = localtime(&now);
-		if(date_input == "ahora"){
-		    y = time->tm_year;
-		    m = time->tm_mon;
-		    d = time->tm_mday;
-		    h = time->tm_hour;
-		    min = time->tm_min;
-		}
-		else
-		    sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
-		DtFechaHora fechaSistema(y,m,d,h,min);
-
+		        if(date_input == "ahora"){
+		            y = time->tm_year;
+		            m = time->tm_mon;
+		            d = time->tm_mday;
+		            h = time->tm_hour;
+		            min = time->tm_min;
+		        } else
+		            sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
+		        DtFechaHora fechaSistema(y,m,d,h,min);
                 cout << "Duracion: ";
                 cin >> duracion; 
                 cout << endl;
-
                 cout << "Tipo de partida:" << endl;
                 cout << " 1.Individual" << endl;
                 cout << " 2.Multijugador" << endl << endl;
                 cout << "Seleccione una opcion: ";
                 cin >> tipoPartida;
                 cout << endl;
-
                 switch(tipoPartida) {
                     case 1:{ //Individual
                         bool cpa;
                         cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
                         cin >> cpa;
-			ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
+			            ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
                         try {
                             sys.iniciarPartida(nickname, videojuego, ptrIndividual);
                         }
                         catch (invalid_argument &e) {
                             cout << e.what() << endl;
                             break;
-                         }
-			break;
-		    }
+                        }
+			            break;
+		            }
                     case 2:{ //Multijugador
                         bool tev;
                         cout << "Es transmitida en vivo (1.Si/0.No): ";
@@ -245,7 +251,7 @@ int main() {
                             cout << "Jugador " << i+1 << ":";
                             cin >> nicknameJugadoresUnidos[i];
                         }
-			ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
+			            ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                         try {
                             sys.iniciarPartida(nickname, videojuego, ptrMulti);
                         }
@@ -253,23 +259,22 @@ int main() {
                             cout << e.what() << endl;
                             break;
                         }
-			break;
-		    }
+			            break;
+		            }
                     default:{
                         cout << "La opcion ingresada no es valida, ingrese otra porfavor." << endl;
                	    	break;
-		    }
-		break;
-		}
-	    }
+		            }
+		            break;
+		        }
+	        }
             case 7: //Salir
-		break;
+		        break;
             default:{
                 cout << "La opcion ingresada no es valida, ingrese otra porfavor.\n";
-		break;
+		        break;
+	        }
 	    }
-	}
-	
     }
     return 0;
 }
