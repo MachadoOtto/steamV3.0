@@ -13,14 +13,16 @@
 #include "../include/dtFechaHora.h"
 
 DtFechaHora::DtFechaHora(int d, int m, int a, int h, int min){
-    if( (d < 1 || d > 31) || (m < 1 || m > 12) || (a < 1900) )
-	throw std::invalid_argument("La fecha indicada no es valida");
+    if( (d < 1 || d > 31) || (m < 1 || m > 12) || (a < 1900) ) {
+	    throw std::invalid_argument("La fecha indicada no es valida");
+    }
     dia = d;
     mes = m;
     anio = a;
     hora = h;
     minuto = min;
 }
+
 DtFechaHora::DtFechaHora(const DtFechaHora &d){
     dia=d.dia;
     mes=d.mes;
