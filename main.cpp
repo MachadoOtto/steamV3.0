@@ -203,7 +203,10 @@ int main() {
                 // Miguel: correccion de time.
                 cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
                 string date_input;
-                cin >> date_input;
+                //cin >> date_input;
+		cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+		getline(cin,date_input);
                 int d,m,y,h,min;
                 if (date_input == "ahora") {
                     time_t now = time(0);
