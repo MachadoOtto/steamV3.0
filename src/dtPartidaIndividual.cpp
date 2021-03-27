@@ -46,7 +46,7 @@ std::ostream &operator <<(std::ostream &o, DtPartidaIndividual &pInd) {
     DtFechaHora auxFecha = pInd.getFecha();
 
     o << "Tipo Partida: Individual" << std::endl;
-     o << "Fecha partida:" << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << std::endl;
+    o << "Fecha partida:" << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << std::endl;
     o << "Duración partida:" << auxFecha.getHora() << "/" << auxFecha.getMinuto() << std::endl;
     o << "Continuación de una partida anterior: " << siNo << std::endl;
 
