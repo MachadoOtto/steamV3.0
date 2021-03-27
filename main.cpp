@@ -202,21 +202,22 @@ int main() {
                 cin >> videojuego;
                 // Miguel: correccion de time.
                 cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
-		        string date_input;
-		        cin >> date_input;
+		string date_input;
+		cin >> date_input;
                 int d,m,y,h,min;
-		        if (date_input == "ahora") {
-		            time_t now = time(0);
+		if (date_input == "ahora") {
+	            time_t now = time(0);
                     tm* time = localtime(&now);
                     d = time->tm_mday;
                     m = time->tm_mon + 1; // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
                     y = time->tm_year + 1900; // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
                     h = time->tm_hour;
-		            min = time->tm_min;
-		        } else {
-                    sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
-                }
-		        DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
+    	            min = time->tm_min;
+	        }
+		else {
+                    sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min);
+		}
+		DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
                
                 cout << "Duracion: ";
                 while (true) {
