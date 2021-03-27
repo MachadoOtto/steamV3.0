@@ -10,17 +10,12 @@
 
 #include "../include/dtVideojuego.h"
 
+// Miguel: la duracion total del DtVideojuego 'j' se la pasa al construir el objeto desde videojuego.getDt();
 DtVideojuego::DtVideojuego(std::string name, TipoJuego gen, float f) {
     nombre = name;
     genero = gen;
     totalHorasDeJuego = f;
-//    totalHorasDeJuego = 0.0;
 }
-// #Guille: El totalHorasDeJuego se setea al construir el objeto.
-// Incrementa 'totalHorasDeJuego' en la cantidad pasada por el float 'thour'.
-//void DtVideojuego::setTotalHoras(float thour) {
-//    totalHorasDeJuego += thour;
-//}
         
 std::string DtVideojuego::getNombre() {
     return nombre;

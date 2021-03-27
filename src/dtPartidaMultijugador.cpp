@@ -50,11 +50,11 @@ Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * 
     for(int i=0;i<tot;i++){
 	Jugador * p = findJugador(this->getNicknameJugadoresUnidos()[i],jugadoresSystema);
 	if(p == nullptr)
-	        throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
-	    if(invitees == nullptr)
-	        invitees = new ListaJugador(p);
-	    else
-	        invitees->add(p);
+	    throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
+	if(invitees == nullptr)
+	    invitees = new ListaJugador(p);
+	else
+	    invitees->add(p);
     }
     Partida * p = new PartidaMultijugador(this->transmitidaEnVivo,this->getFecha(),this->getDuracion(),host,invitees);
     return p;

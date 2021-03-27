@@ -39,38 +39,30 @@ Sistema::~Sistema(){
 }
 
 void Sistema::agregarVideojuego(std::string nombre, TipoJuego genero){
-    Videojuego * lol;
-    ListaVideojuego *vt = videojuegos;
-    DtVideojuego * d; // = new DtVideojuego() esto es innecesario, deja memoria colgada.
-    while(vt != nullptr) {
-	    lol = vt->getVideojuego();
-	    *d = lol->getDt();
-	    if(nombre == d->getNombre())
-	        throw std::invalid_argument("El videojuego ya existe en el sistema.");
-	    vt = vt->next();
-    }
+    // Migue: nueva implementacion de agregarVideojuego, la anterior no permitia ingresar mas de 2 videojuegos
+    //  y lanzaba 'General Protection Fault'. 
+    if (findVideojuego(nombre) != nullptr) 
+        throw std::invalid_argument("El videojuego ya existe en el sistema.");
     if(cantidadVideojuegos < MAX_VIDEOJUEGOS) {
-	    lol = new Videojuego(nombre,genero); 
+	    Videojuego* lol = new Videojuego(nombre,genero); 
 	    if(videojuegos == nullptr)
 	        videojuegos = new ListaVideojuego(lol);
 	    else
 	        videojuegos->add(lol);    
 	    cantidadVideojuegos++;
-    } else {
-        throw std::invalid_argument("Videojuego no ingresado. Cantidad maxima alcanzada."); // Miguel: esta linea la hice por control.
     }
 }
 
 void Sistema::agregarJugador(std::string nickname, int edad, std::string contrasenia) {
     if(findJugador(nickname) != nullptr)
-	throw std::invalid_argument("Ya hay un jugador con ese nombre.");
+	    throw std::invalid_argument("Ya hay un jugador con ese nombre.");
     if(cantidadJugadores < MAX_JUGADORES){ 
         Jugador * nuevoJugador = new Jugador(nickname,edad,contrasenia);
         if(jugadores == nullptr) 
-	    jugadores = new ListaJugador(nuevoJugador);
+	        jugadores = new ListaJugador(nuevoJugador);
         else
-	    jugadores->add(nuevoJugador);
-	cantidadJugadores++;
+	        jugadores->add(nuevoJugador);
+	    cantidadJugadores++;
     } 
 }
 
@@ -99,11 +91,18 @@ DtVideojuego** Sistema::obtenerVideojuegos(int& cantVideojuegos) {
 }
 
 DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) {
-    if (findVideojuego(videojuego) == nullptr) {
-        cantPartidas = cantidadPartidas;
-        DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
-        ListaPartida * list = partidas;
-        for (int i = 0; i < cantPartidas; i++) {
+    Videojuego* juego = findVideojuego(videojuego);
+    if (juego != nullptr) { // Correccion de condicion del if (antes: == , ahora: !=).
+	ListaPartida* list = juego->getPartidas();
+	int card=0;
+	while(list != nullptr){
+	    card++;
+	    list = list->next();
+	}
+	cantPartidas = card;
+        DtPartida** arregloPartidas = new DtPartida*[card];
+        list = juego->getPartidas();
+        for (int i = 0; i < card; i++) {
             arregloPartidas[i] = list->getPartida()->getDt(); 
             list = list->next();
         }

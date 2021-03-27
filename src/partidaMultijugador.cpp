@@ -34,7 +34,7 @@ float PartidaMultijugador::darTotalHorasParticipantes(){
 DtPartida * PartidaMultijugador::getDt(){
     int i=0;
     ListaJugador * inv = invitados;
-    while(inv == nullptr){
+    while(inv != nullptr){
 	inv = inv->next();
 	i++;
     }
