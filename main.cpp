@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <string>
 #include <stdio.h>
+#include <conio.h> // System("clear") para Linux
 #include <ctime>
 #include <limits> // necesario para limpiar el buffer de entrada.
 #include "include/sistema.h"
@@ -235,66 +236,71 @@ int main() {
                 }
 
                 cout << endl;
-                cout << "Tipo de partida:" << endl;
-                cout << " 1.Individual" << endl;
-                cout << " 2.Multijugador" << endl << endl;
-                cout << "Seleccione una opcion: ";
-                // Correccion del error del buffer de entrada para int. (Error de loop infinito).
-                cin >> tipoPartida;
-                if (cin.fail()) {
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
-                }
-                cout << endl;
-                switch(tipoPartida) {
-                    case 1:{ //Individual
-                        bool cpa;
-                        cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
-                        cin >> cpa;
-                                    ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
-                        try {
-                            sys->iniciarPartida(nickname, videojuego, ptrIndividual);
-                            cout << "La partida individual ha sido registrada con exito.";
-                        }
-                        catch (invalid_argument &e) {
-                            cout << e.what() << endl;
-                            break;
-                        }
-                                    break;
-                            }
-                    case 2:{ //Multijugador
-                        bool tev;
-                        cout << "Es transmitida en vivo (1.Si/0.No): ";
-                        cin >> tev;
-                        int cantJugadoresUnidos;
-                        cout << "Cantidad de jugadores unidos: ";
-                        cin >> cantJugadoresUnidos;
-                        string *nicknameJugadoresUnidos;
-                        nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
-                        cout << "Ingrese el nickname de los jugadores unidos" << endl;
-                        for (int i = 0; i < cantJugadoresUnidos; i++) {
-                            cout << "Jugador " << i+1 << ":";
-                            cin >> nicknameJugadoresUnidos[i];
-                        }
-                        ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
-                        try {
-                            sys->iniciarPartida(nickname, videojuego, ptrMulti);
-                            cout << "La partida multijugador ha sido registrada con exito.";
-                        }
-                        catch (invalid_argument &e) {
-                            cout << e.what() << endl;
-                            break;
-                        }
-			break;
+                bool loopControl = true;
+                while (loopControl) {
+                    cout << "Tipo de partida:" << endl;
+                    cout << " 1.Individual" << endl;
+                    cout << " 2.Multijugador" << endl << endl;
+                    cout << "Seleccione una opcion: ";
+                    // Correccion del error del buffer de entrada para int. (Error de loop infinito).
+                    cin >> tipoPartida;
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
                     }
-                    default:{
-                        cout << "La opcion ingresada no es valida, ingrese otra porfavor: " << endl;
-                        break;
+                    cout << endl;
+                    switch(tipoPartida) {
+                        case 1:{ //Individual
+                            loopControl = false;
+                            bool cpa;
+                            cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
+                            cin >> cpa;
+                                        ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
+                            try {
+                                sys->iniciarPartida(nickname, videojuego, ptrIndividual);
+                                cout << "La partida individual ha sido registrada con exito.";
                             }
-                            break;
+                            catch (invalid_argument &e) {
+                                cout << e.what() << endl;
+                                break;
+                            }
+                        break;
+                                }
+                        case 2:{ //Multijugador
+                            loopControl = false;
+                            bool tev;
+                            cout << "Es transmitida en vivo (1.Si/0.No): ";
+                            cin >> tev;
+                            int cantJugadoresUnidos;
+                            cout << "Cantidad de jugadores unidos: ";
+                            cin >> cantJugadoresUnidos;
+                            string *nicknameJugadoresUnidos;
+                            nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
+                            cout << "Ingrese el nickname de los jugadores unidos" << endl;
+                            for (int i = 0; i < cantJugadoresUnidos; i++) {
+                                cout << "Jugador " << i+1 << ":";
+                                cin >> nicknameJugadoresUnidos[i];
+                            }
+                            ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
+                            try {
+                                sys->iniciarPartida(nickname, videojuego, ptrMulti);
+                                cout << "La partida multijugador ha sido registrada con exito.";
+                            }
+                            catch (invalid_argument &e) {
+                                cout << e.what() << endl;
+                                break;
+                            }
+                        break;
                         }
-                }
+                        default:{
+                            cout << "La opcion ingresada no es valida, ingrese otra porfavor: " << endl;
+                            break;
+                                }
+                                break;
+                            }
+                } 
+            } // Fin case 6
             case 7: //Salir
 
                         break;
