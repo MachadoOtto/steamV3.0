@@ -21,7 +21,15 @@ Videojuego::~Videojuego(){
 };
 
 DtVideojuego Videojuego::getDt() {
-    DtVideojuego dt_v(nombre, genero);
+    // Miguel: antes de dar el Dt se calcula la duracion total de partidas del videojuego. Ya que no se puede acceder a este
+    //  atributo desde DtVideojuego.
+    float duracion = 0.0;
+    ListaPartida* iterador = partidas;
+    while (iterador != nullptr) {
+        duracion += iterador->getPartida()->darTotalHorasParticipantes();
+        iterador = iterador->next();
+    }
+    DtVideojuego dt_v(nombre, genero, duracion);
     return dt_v;
 }
 

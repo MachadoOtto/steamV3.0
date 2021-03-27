@@ -135,6 +135,7 @@ int main() {
                     cout << "   Genero: " << gen_str << endl;
                     cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
                     cout << endl;
+                    delete arrayVideojuegos[i]; // Se borra el DtVideojuego 'i'.
                 }
                 delete[] arrayVideojuegos;
             break;
@@ -177,6 +178,7 @@ int main() {
                             }
                             cout << "   Es continuacion de una partida anterior: " << cpa << endl;
                         }
+                        delete arrayPartidas[i]; // Se borra el DtPartida 'i'.
                     }
                     delete[] arrayPartidas;
                 }
@@ -199,14 +201,23 @@ int main() {
                 cout << "Videojuego: ";
                 cin >> videojuego;
                 // Miguel: correccion de time.
-                /* Aclaracion: es innecesario que se ingrese la fecha manualmente, como esto genera problemas al leer la entrada lo quite.
-                    Se pide solo que la fecha ingresada sea la del sistema en el momento del registro, nada mas. */
-		        time_t now = time(0);
-                tm* time = localtime(&now);
-		        // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
-		        // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
-                // fechaSistema(dia, mes, anio, hora, min).
-		        DtFechaHora fechaSistema(time->tm_mday, time->tm_mon + 1, time->tm_year + 1900, time->tm_hour, time->tm_min); 
+                cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm .\nSi desea iniciar la partida con la fecha actual del sistema escriba ""ahora"".\nFecha: ";
+		        string date_input;
+		        cin >> date_input;
+                int d,m,y,h,min;
+		        if (date_input == "ahora") {
+		            time_t now = time(0);
+                    tm* time = localtime(&now);
+                    d = time->tm_mday;
+                    m = time->tm_mon + 1; // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
+                    y = time->tm_year + 1900; // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
+                    h = time->tm_hour;
+		            min = time->tm_min;
+		        } else {
+                    sscanf(date_input.c_str(),"%d/%d/%d %d:%d",d,m,y,h,min);
+                }
+		        DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
+               
                 cout << "Duracion: ";
                 while (true) {
                     // Correccion del error del buffer de entrada para float. (Error de loop infinito).
