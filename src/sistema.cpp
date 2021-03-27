@@ -91,13 +91,15 @@ DtVideojuego** Sistema::obtenerVideojuegos(int& cantVideojuegos) {
 }
 
 DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) {
-    if (findVideojuego(videojuego) != nullptr) { // Correccion de condicion del if (antes: == , ahora: !=).
-        cantPartidas = cantidadPartidas;
-        DtPartida **arregloPartidas = new DtPartida* [cantPartidas];
-        ListaPartida * list = partidas;
+    Videojuego* juego = findVideojuego(videojuego);
+    if (juego != nullptr) { // Correccion de condicion del if (antes: == , ahora: !=).
+        cantPartidas = 0;
+        DtPartida** arregloPartidas = new DtPartida*[cantPartidas];
+        ListaPartida* list = juego->getPartidas();
         for (int i = 0; i < cantPartidas; i++) {
             arregloPartidas[i] = list->getPartida()->getDt(); 
             list = list->next();
+            cantPartidas++;
         }
         return arregloPartidas;
     } else {
