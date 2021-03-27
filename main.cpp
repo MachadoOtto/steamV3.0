@@ -64,7 +64,7 @@ int main() {
                 cin >> password;
                 try {
                     sys->agregarJugador(nickname, edad, password);
-                    cout << "Se ha registrado a " << nickname << " en el sistema.\n";
+                    cout << "Se ha registrado a " << nickname << " en el sistema." << endl;
                 }
                 catch (invalid_argument &e) {
                     cout << e.what() << endl;
@@ -91,7 +91,7 @@ int main() {
                             genero = TipoJuego::Otro;
                 try {
                     sys->agregarVideojuego(nombre, genero);
-                    cout << "Se ha registrado el videojuego " << nombre << " en el sistema.\n";
+                    cout << "Se ha registrado el videojuego " << nombre << " en el sistema."  << endl;
                 }
                 catch (invalid_argument &e) {
                     cout << e.what() << endl;
@@ -103,7 +103,7 @@ int main() {
                 int cantJugadores;
                 DtJugador** arrayJugadores = sys->obtenerJugadores(cantJugadores);
 
-                cout << "Hay " << cantJugadores << " jugadores registrados en el sistema.\n\n";
+                cout << "Hay " << cantJugadores << " jugadores registrados en el sistema." << endl << endl;
                 for (int i = 0; i < cantJugadores; i++) {
                     cout << i+1 << ". Nickname: " << arrayJugadores[i]->getNickname() << endl;
                     cout << "   Edad: " << arrayJugadores[i]->getEdad() << endl;
@@ -255,6 +255,7 @@ int main() {
                                     ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
                         try {
                             sys->iniciarPartida(nickname, videojuego, ptrIndividual);
+                            cout << "La partida individual ha sido registrada con exito.";
                         }
                         catch (invalid_argument &e) {
                             cout << e.what() << endl;
@@ -279,6 +280,7 @@ int main() {
                         ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                         try {
                             sys->iniciarPartida(nickname, videojuego, ptrMulti);
+                            cout << "La partida multijugador ha sido registrada con exito.";
                         }
                         catch (invalid_argument &e) {
                             cout << e.what() << endl;
@@ -294,6 +296,7 @@ int main() {
                         }
                 }
             case 7: //Salir
+
                         break;
             default:{
                 cout << "La opcion ingresada no es valida, ingrese otra porfavor.\n";
