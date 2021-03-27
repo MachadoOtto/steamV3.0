@@ -75,21 +75,21 @@ int main() {
                 }
             case 2:{ //Agregar Videojuego
                 string nombre;
-                        string input_genero;
+                string input_genero;
                 TipoJuego genero;
 
                 cout << "Nombre del videojuego: ";
                 cin >> nombre;
                 cout << "Genero (Accion/Aventura/Deporte/Otro): ";
                 cin >> input_genero;
-                        if(input_genero == "Accion")
-                            genero = TipoJuego::Accion;
-                        else if(input_genero == "Aventura")
-                            genero = TipoJuego::Aventura;
-                        else if(input_genero == "Deporte")
-                            genero = TipoJuego::Deporte;
-                        else if(input_genero == "Otro")
-                            genero = TipoJuego::Otro;
+                if(input_genero == "Accion")
+                    genero = TipoJuego::Accion;
+                else if(input_genero == "Aventura")
+                    genero = TipoJuego::Aventura;
+                else if(input_genero == "Deporte")
+                    genero = TipoJuego::Deporte;
+                else if(input_genero == "Otro")
+                    genero = TipoJuego::Otro;
                 try {
                     sys->agregarVideojuego(nombre, genero);
                     cout << "Se ha registrado el videojuego " << nombre << " en el sistema."  << endl;
@@ -98,7 +98,7 @@ int main() {
                     cout << e.what() << endl;
                     break;
                 }
-                        break;
+            break;
                 }
             case 3:{ //Obtener Jugadores
                 int cantJugadores;
@@ -112,7 +112,7 @@ int main() {
                     delete arrayJugadores[i];
                 } 
                 delete [] arrayJugadores;
-                break;
+            break;
                 }
             case 4:{ //Obtener Videojuegos
                 int cantVideojuegos;
@@ -187,7 +187,7 @@ int main() {
                     cout << e.what() << endl;
                     break;
                 }
-                        break;
+            break;
                 }
             case 6:{ //Iniciar Partida
                 string nickname;
@@ -297,7 +297,7 @@ int main() {
                             cout << "La opcion ingresada no es valida, ingrese otra porfavor: " << endl;
                             break;
                                 }
-                                break;
+                            break;
                             }
                 } 
             } // Fin case 6
