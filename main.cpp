@@ -110,8 +110,8 @@ int main() {
                     cout << endl;
                     delete arrayJugadores[i];
                 } 
-                delete[] arrayJugadores;
-                        break;
+                delete [] arrayJugadores;
+                break;
                 }
             case 4:{ //Obtener Videojuegos
                 int cantVideojuegos;
@@ -156,7 +156,7 @@ int main() {
                         ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
                         if (ptrIndividual == nullptr) { //Multijugador
                             ptrMulti = dynamic_cast<DtPartidaMultijugador*>(arrayPartidas[i]);
-                                        int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
+                            int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
                             cout << i+1 << ". Fecha: " << ptrMulti->getFecha() << endl;
                             cout << "   Duracion: " << ptrMulti->getDuracion() << endl;
                             string tev = "NO";
@@ -276,7 +276,7 @@ int main() {
                             cout << "Jugador " << i+1 << ":";
                             cin >> nicknameJugadoresUnidos[i];
                         }
-                                    ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
+                        ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                         try {
                             sys->iniciarPartida(nickname, videojuego, ptrMulti);
                         }
@@ -284,8 +284,8 @@ int main() {
                             cout << e.what() << endl;
                             break;
                         }
-                                    break;
-                            }
+			break;
+                    }
                     default:{
                         cout << "La opcion ingresada no es valida, ingrese otra porfavor: " << endl;
                         break;
