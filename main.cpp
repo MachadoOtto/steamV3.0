@@ -218,7 +218,8 @@ int main() {
                     sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min);
                 }
                 DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
-               
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 cout << "Duracion: ";
                 while (true) {
                     // Correccion del error del buffer de entrada para float. (Error de loop infinito).
