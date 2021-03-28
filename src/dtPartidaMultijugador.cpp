@@ -60,22 +60,25 @@ Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * 
     return p;
 }
 
-std::ostream &operator <<(std::ostream &o, DtPartidaMultijugador &pMult) {
-    
+std::ostream &operator<<(std::ostream& o, DtPartidaMultijugador const& pMult){
     std::string siNo = "Si";
-    if(pMult.getTransmitidaEnVivo()) siNo = "No";
-    DtFechaHora auxFecha = pMult.getFecha();
-    int cantJug = pMult.getCantidadJugadoresUnidos();
+    if(pMult.transmitidaEnVivo) 
+        siNo = "No";
+    DtFechaHora auxFecha = pMult.fecha;
+    int cantJug = pMult.cantidadJugadoresUnidos;
     o << "Tipo Partida: Multijugador" << std::endl; 
     o << "Fecha partida:" << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << std::endl;
     o << "Duración partida:" << auxFecha.getHora() << "/" << auxFecha.getMinuto() << std::endl;
     o << "Transmitida en vivo: " << siNo << std::endl;
-    o << "Cantidad jugadores unidos a la partida: " << pMult.getCantidadJugadoresUnidos() << std::endl;
+    o << "Cantidad jugadores unidos a la partida: " << pMult.cantidadJugadoresUnidos << std::endl;
     o << "Jugadores unidos a la partida: ";
-    std::string * invitados = pMult.getNicknameJugadoresUnidos();
-    for(int i=0;i<cantJug-1;i++)
-	o << invitados[i] << ", ";
-    o << invitados[cantJug] << ".\n";
-
+    std::string * invitados = pMult.nicknameJugadoresUnidos;
+    for(int i = 0; i < cantJug; i++) {
+	    o << invitados[i];
+        if (i + 1 == cantJug)
+            o << ".";
+        else
+            o << ", ";
+    }
     return o;
 }

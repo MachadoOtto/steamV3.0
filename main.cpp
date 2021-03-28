@@ -89,7 +89,7 @@ int main() {
                     genero = TipoJuego::Aventura;
                 else if ((input_genero == "Deporte") || (input_genero == "deporte"))
                     genero = TipoJuego::Deporte;
-                else if ((input_genero == "Otro") || (input_genero == "otro"))
+                else
                     genero = TipoJuego::Otro;
                 try {
                     sys->agregarVideojuego(nombre, genero);
@@ -163,36 +163,21 @@ int main() {
                     DtPartidaIndividual* ptrIndividual;
                     DtPartidaMultijugador* ptrMulti;
                     for (int i = 0; i < cantPartidas; i++) {
+                        cout << endl;
                         ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
-                        if (ptrIndividual == nullptr) { 
+                        if (ptrIndividual == nullptr) {
                             /* Multijugador */
                             ptrMulti = dynamic_cast<DtPartidaMultijugador*>(arrayPartidas[i]);
-                            int cardInvitees = ptrMulti->getCantidadJugadoresUnidos();
-                            cout << i+1 << ". Fecha: " << ptrMulti->getFecha() << endl;
-                            cout << "   Duracion: " << ptrMulti->getDuracion() << endl;
-                            string tev = "NO";
-                            if (ptrMulti->getTransmitidaEnVivo()) {
-                                tev = "SI";
-                            }
-                            cout << "   Trasmtida en vivo: " << tev << endl;
-                            cout << "   Jugadores unidos: " << cardInvitees << endl << endl;
-                            string * ju = ptrMulti->getNicknameJugadoresUnidos();
-                            for (int j = 0; j < cardInvitees; j++) {
-                                cout << "    " << j+1 << ". " << ju[j] << endl;
-                            }
-                        } else { 
+                            cout << *ptrMulti;
+                        }
+                        else {
                             /* Individual */
-                            cout << i+1 << ". Fecha: " << ptrIndividual->getFecha() << endl;
-                            cout << "   Duracion: " << ptrIndividual->getDuracion() << endl;
-                            string cpa = "NO";
-                            if (ptrIndividual->getContinuaPartidaAnterior()) {
-                                cpa = "SI";
-                            }
-                            cout << "   Es continuacion de una partida anterior: " << cpa << endl;
+                            cout << *ptrIndividual;
                         }
                         delete arrayPartidas[i]; // Se borra el DtPartida 'i'.
                     }
                     delete[] arrayPartidas;
+                    cout << endl;
                 }
                 catch (invalid_argument &e) {
                     cout << e.what() << endl << endl;
@@ -218,7 +203,7 @@ int main() {
                     getline(cin, videojuego);
                     // Miguel: correccion de time.
                     cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm ." << endl;
-                    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba ""ahora""." << endl << "Fecha: ";
+                    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba 'ahora'." << endl << "Fecha: ";
                     string date_input;
                     //cin >> date_input;
                     getline(cin,date_input);
@@ -254,10 +239,17 @@ int main() {
                     cout << " 2.Multijugador" << endl << endl;
                     cout << "Seleccione una opcion: ";
                     // Correccion del error del buffer de entrada para int. (Error de loop infinito).
-                    if (!(cin >> tipoPartida)) {
-                        cin.clear();
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
+                    while (true) {
+                        if (!(cin >> tipoPartida)) {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
+                        }
+                        if (!((tipoPartida == 1) || (tipoPartida == 2))) {
+                            cout << "Porfavor, ingrese una opcion valida: ";
+                        }
+                        else
+                            break;                            
                     }
                     cout << endl;
                     switch(tipoPartida) {
@@ -268,6 +260,9 @@ int main() {
                             cin >> cpa;
                             ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
                             sys->iniciarPartida(nickname, videojuego, ptrIndividual);
+                            cout << "Se registro la Partida Individual al sistema." << endl;
+                            delete ptrIndividual; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
+                            break;
                         }
                         case 2: { 
                             /* Multijugador */
@@ -297,9 +292,12 @@ int main() {
                             }
                             ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                             sys->iniciarPartida(nickname, videojuego, ptrMulti);
+                            cout << "Se registro la Partida Multijugador al sistema." << endl;
+                            delete ptrMulti; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
+                            break;
                         }
                         default: {
-                            cout << "Porfavor, ingrese una opcion valida: ";
+                            cout << "Se ha producido un error con su opcion. Volviendo al menu." << endl;
                             break;
                         }
                         break;
@@ -318,6 +316,7 @@ int main() {
                 break;
             }
         }
+        cout << endl << endl;
     }
     delete sys;
     return 0;

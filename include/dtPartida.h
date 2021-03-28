@@ -23,9 +23,9 @@ class ListaJugador;
 
 class DtPartida {
 private:
-    DtFechaHora fecha;
     float duracion;
 protected:
+    DtFechaHora fecha; // Se vuelve protected para poder acceder con el friendship de la sobrecarga de <<.
     DtPartida(DtFechaHora,float);
 public:
     DtFechaHora getFecha();

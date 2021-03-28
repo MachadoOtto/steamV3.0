@@ -62,7 +62,12 @@ int DtFechaHora::getMinuto(){
 }
 
 std::ostream & operator<<(std::ostream & o, DtFechaHora d){
-    o << d.getDia() << "/" << d.getMes() << "/" << d.getAnio() << " - " << d.getHora() << ":" << d.getMinuto();
+    o << d.getDia() << "/" << d.getMes() << "/" << d.getAnio() << " - ";
+    if (d.getHora() < 10)
+        o << "0";
+    o << d.getHora() << ":";
+    if (d.getMinuto() < 10)
+        o << "0";
+    o << d.getMinuto();
     return o;
 }
-
