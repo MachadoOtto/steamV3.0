@@ -12,7 +12,6 @@
 #include <cstdlib>
 #include <string>
 #include <stdio.h>
-#include <conio.h> // System("clear") para Linux
 #include <ctime>
 #include <limits> // Necesario para limpiar el buffer de entrada.
 #include "include/sistema.h"
