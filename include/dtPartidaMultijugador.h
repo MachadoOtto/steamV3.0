@@ -32,9 +32,8 @@ public:
     bool getTransmitidaEnVivo();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 
+    //Funciones de sobrecarga de flujo
+    friend std::ostream &operator<<(std::ostream &, DtPartidaMultijugador const&);
 };
-
-//Funciones de sobrecarga de flujo
-std::ostream &operator<<(std::ostream &, DtPartidaMultijugador &);
 
 #endif

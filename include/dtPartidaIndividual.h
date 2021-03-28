@@ -26,9 +26,9 @@ public:
     DtPartidaIndividual(bool,DtFechaHora,float);
     bool getContinuaPartidaAnterior();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
-};
 
-//Funciones de sobrecarga de flujo
-std::ostream &operator<<(std::ostream &, DtPartidaIndividual &);
+    //Funciones de sobrecarga de flujo
+    friend std::ostream &operator<<(std::ostream &, DtPartidaIndividual const&);
+};
 
 #endif
