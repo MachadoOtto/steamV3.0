@@ -156,7 +156,7 @@ int main() {
             case 5: {
                 string videojuego;
                 int cantPartidas;
-                cout << "Videojuego del cual desea obtener sus partidas: ";
+                cout << "Videojuego del cual desea obtener sus partidas: " << endl;
                 getline(cin, videojuego);
                 try {
                     DtPartida** arrayPartidas = sys->obtenerPartidas(videojuego, cantPartidas);
