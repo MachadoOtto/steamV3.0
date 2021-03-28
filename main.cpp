@@ -104,7 +104,7 @@ int main() {
                         cout << "Deporte";
                     else if(genero == TipoJuego::Otro)
                         cout << "Otro";
-                    cout << ", en el sistema." << endl;
+                    cout << ", en el sistema." << endl << endl;
                 }
                 catch (invalid_argument &e) {
                     cout << e.what() << endl << endl;
