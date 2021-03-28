@@ -268,10 +268,10 @@ int main() {
                         case 2: { 
                             /* Multijugador */
                             bool tev;
-                            cout << "Es transmitida en vivo (1.Si/0.No): ";
+                            cout << "Es transmitida en vivo (1.Si/0.No): " << endl;
                             cin >> tev;
                             int cantJugadoresUnidos;
-                            cout << "Cantidad de jugadores unidos: ";
+                            cout << "Cantidad de jugadores unidos: " << endl;
                             while (true) {
                                 // Correccion del error del buffer de entrada para int. (Error de loop infinito).
                                 if (!(cin >> cantJugadoresUnidos)) {
@@ -286,14 +286,14 @@ int main() {
                             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                             string *nicknameJugadoresUnidos;
                             nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
-                            cout << "Ingrese el nickname de los jugadores unidos" << endl;
+                            cout << "Ingrese el nickname de los jugadores unidos" << endl << endl;
                             for (int i = 0; i < cantJugadoresUnidos; i++) {
                                 cout << "Jugador " << i+1 << ": ";
                                 getline(cin, nicknameJugadoresUnidos[i]);
                             }
                             ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
                             sys->iniciarPartida(nickname, videojuego, ptrMulti);
-                            cout << "Se registro la Partida Multijugador al sistema." << endl;
+                            cout << endl << "Se registro la Partida Multijugador al sistema." << endl;
                             delete ptrMulti; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
                             break;
                         }
