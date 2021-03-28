@@ -288,7 +288,7 @@ int main() {
                             nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
                             cout << "Ingrese el nickname de los jugadores unidos" << endl;
                             for (int i = 0; i < cantJugadoresUnidos; i++) {
-                                cout << "Jugador " << i+1 << ":";
+                                cout << "Jugador " << i+1 << ": ";
                                 getline(cin, nicknameJugadoresUnidos[i]);
                             }
                             ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
