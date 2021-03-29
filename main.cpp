@@ -18,12 +18,48 @@
 
 using namespace std;
 
+void cls(){
+    cout << "\033[2J\033[1;1H";
+}
+
+void clinput(){
+    cin.clear(); 
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+}
+
+void pkey(){
+    char t;
+    cout << "Presione ENTER para volver al menu principal...\n";
+    t = cin.get();
+    if(t != '\n')
+	clinput();
+}
+
+void ptitle(){
+    cout << "\nBienvenido a,\n\n"
+ "  $$$$$$\\    $$\\                                                        $$$$$$\\      $$$$$$\\ \n"
+ " $$  __$$\\   $$ |                                                      $$  __$$\\    $$$ __$$\\ \n"
+ " $$ /  \\__|$$$$$$\\    $$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\        $$\\    $$\\__/  $$ |   $$$$\\ $$ |\n"
+ " \\$$$$$$\\  \\_$$  _|  $$  __$$\\  \\____$$\\ $$  _$$  _$$\\       \\$$\\  $$  |$$$$$$  |   $$\\$$\\$$ |\n"
+ "  \\____$$\\   $$ |    $$$$$$$$ | $$$$$$$ |$$ / $$ / $$ |       \\$$\\$$  /$$  ____/    $$ \\$$$$ |\n"
+ " $$\\   $$ |  $$ |$$\\ $$   ____|$$  __$$ |$$ | $$ | $$ |        \\$$$  / $$ |         $$ |\\$$$ |\n"
+ " \\$$$$$$  |  \\$$$$  |\\$$$$$$$\\ \\$$$$$$$ |$$ | $$ | $$ |         \\$  /  $$$$$$$$\\ $$\\$$$$$$  /\n"
+ "  \\______/    \\____/  \\_______| \\_______|\\__| \\__| \\__|          \\_/   \\________|\\__|\\______/\n\n";
+}
+
+void reprintln(){
+    cout << "\033[A                                                                                                 \r";
+}
+
 int main() {
     Sistema* sys = new Sistema();
     int controlVar=0;
+
     while (controlVar != 7) {
-        cout << "--- MENU ---" << endl << endl;
-        cout << "Seleccione una opcion:" << endl;
+	cls();
+	ptitle();
+        cout << "──────────  Menu Principal ──────────" << endl << endl;
+        cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Agregar Jugador" << endl;
         cout << " 2. Agregar Videojuego" << endl;
         cout << " 3. Obtener Jugadores" << endl;
@@ -31,45 +67,48 @@ int main() {
         cout << " 5. Obtener Partidas" << endl;
         cout << " 6. Iniciar Partida" << endl;
         cout << " 7. Salir" << endl << endl;
-        cout << "Ingrese una opcion: ";
-        if (!(cin >> controlVar)) {// Miguel: se realiza lo mismo que para 'edad' al ingresar jugadores.
-            // Se generaba otro loop infinito si ingresabas 'char'. Basicamente el mismo error.
-            cin.clear(); // Limpia flags erroneas.
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta el resto de la entrada.
-            controlVar = 0; // Hacemos que salte el error del menu en el switch.
+        cout << "Ingrese una opcion: ";		
+	while(true){
+	    if (!(cin >> controlVar) || (controlVar > 7 || controlVar < 1)) {
+		clinput();
+		reprintln();
+		cout << "Por favor ingrese una opcion valida: ";
+	    }
+	    else
+		break;
         }
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        cout << endl;
+	clinput();
+	cout << endl;
         switch (controlVar) {
             /* Agregar Jugador */
             case 1: { 
-                string nickname;
+                string password,nickname;
                 int edad;
-                string password;
+		
+		cout << "Por favor ingrese los siguientes datos del nuevo jugador.\n";
                 cout << "Nickname: ";
                 getline(cin, nickname);
                 cout << "Edad: ";
                 while (true) {
-                    if (!(cin >> edad)) {// Miguel: ingresa solo si el buffer intenta leer un valor que no sea del tipo int.
-                        // Si esto no se agrega tendriamos un loop infinito!
-                        cin.clear(); // Limpia flags erroneas.
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta el resto de la entrada.
-                        cout << "Porfavor, ingrese una edad valida: ";
-                    } else {
-                        break; // Corta el while al ingresar un 'int' sea cual sea.
-                    }
+                    if (!(cin >> edad)){
+			clinput();
+			reprintln();
+                        cout << "Porfavor, ingrese una edad interpretable: ";
+                    } 
+		    else 
+			break;
                 }
-                cin.clear();
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		clinput();
                 cout << "Password: ";
                 getline(cin, password);
                 try {
                     sys->agregarJugador(nickname, edad, password);
-                    cout << "Se ha registrado a " << nickname << " en el sistema." << endl << endl;
+                    cout << "Se ha registrado al jugador \"" << nickname << "\" en el sistema.\n";
+		    pkey();
                 }
                 catch (invalid_argument &e) {
-                    cout << e.what() << endl << endl;
+                    cout << "Error: " << e.what() << endl;
+		    pkey();
                     break;
                 }
                 break;
@@ -79,21 +118,27 @@ int main() {
                 string nombre;
                 string input_genero;
                 TipoJuego genero;
-                cout << "Nombre del videojuego: ";
+
+		cout << "Por favor ingrese los siguientes datos del nuevo videojuego.\n";
+                cout << "Nombre: ";
                 getline(cin, nombre);
-                cout << "Genero (Accion/Aventura/Deporte/Otro): ";
+                cout << "Genero (1.Accion/2.Aventura/3.Deporte/4.Otro): ";
                 getline(cin, input_genero);
-                if ((input_genero == "Accion") || (input_genero == "accion"))
+                if ((input_genero == "Accion") || (input_genero == "accion") || (input_genero == "1"))
                     genero = TipoJuego::Accion;
-                else if ((input_genero == "Aventura") || (input_genero == "aventura"))
+                else if ((input_genero == "Aventura") || (input_genero == "aventura") || (input_genero == "2"))
                     genero = TipoJuego::Aventura;
-                else if ((input_genero == "Deporte") || (input_genero == "deporte"))
+                else if ((input_genero == "Deporte") || (input_genero == "deporte") || (input_genero == "3")) 
                     genero = TipoJuego::Deporte;
-                else
+		else if ((input_genero == "Otro") || (input_genero == "Otro") || (input_genero == "4"))
+		    genero = TipoJuego::Otro;
+                else{
+		    cout << "Nota: El genero \"" << input_genero << "\" no existe como tal en el sistema. Se le ha asignado el genero \"Otro\".\n"; 
                     genero = TipoJuego::Otro;
+		}
                 try {
                     sys->agregarVideojuego(nombre, genero);
-                    cout << "Se ha registrado el videojuego " << nombre << ", de tipo ";
+                    cout << "Se ha registrado el videojuego \"" << nombre << "\", de genero ";
                     std::string gen;
                     if(genero == TipoJuego::Accion)
                         cout << "Accion";
@@ -103,10 +148,12 @@ int main() {
                         cout << "Deporte";
                     else if(genero == TipoJuego::Otro)
                         cout << "Otro";
-                    cout << ", en el sistema." << endl << endl;
+                    cout << ", en el sistema." << endl;
+		    pkey();
                 }
                 catch (invalid_argument &e) {
-                    cout << e.what() << endl << endl;
+                    cout << "ERROR: "<< e.what() << endl;
+		    pkey();
                     break;
                 }
                 break;
@@ -115,7 +162,13 @@ int main() {
             case 3: {
                 int cantJugadores;
                 DtJugador** arrayJugadores = sys->obtenerJugadores(cantJugadores);
-                cout << "Hay " << cantJugadores << " jugadores registrados en el sistema." << endl << endl;
+		
+		if(cantJugadores == 1)
+		    cout << "Hay " << cantJugadores << " jugador registrado en el sistema:" << endl << endl;
+		else if(cantJugadores == 0)
+		    cout << "No hay jugadores registrados en el sistema." << endl << endl;
+		else
+		    cout << "Hay " << cantJugadores << " jugadores registrados en el sistema:" << endl << endl;
                 for (int i = 0; i < cantJugadores; i++) {
                     cout << i+1 << ". Nickname: " << arrayJugadores[i]->getNickname() << endl;
                     cout << "   Edad: " << arrayJugadores[i]->getEdad() << endl;
@@ -123,15 +176,23 @@ int main() {
                     delete arrayJugadores[i];
                 } 
                 delete [] arrayJugadores;
+		pkey();
                 break;
             }
             /* Obtener Videojuegos */
             case 4: { 
                 int cantVideojuegos;
                 DtVideojuego** arrayVideojuegos = sys->obtenerVideojuegos(cantVideojuegos);
-                cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema." << endl << endl;
-                TipoJuego gen;
+		TipoJuego gen;
                 string gen_str;
+
+		if(cantVideojuegos == 0)
+		    cout << "No hay videojuegos registrados en el sistema." << endl << endl;
+		else if (cantVideojuegos == 1)
+		    cout << "Hay " << cantVideojuegos << " videojuego registrado en el sistema:" << endl << endl;
+		else
+		    cout << "Hay " << cantVideojuegos << " videojuegos registrados en el sistema:" << endl << endl;
+
                 for (int i = 0; i < cantVideojuegos; i++) {
                     gen = arrayVideojuegos[i]->getGenero();
                     if (gen == TipoJuego::Accion)
@@ -144,10 +205,11 @@ int main() {
                         gen_str = "Otro";
                     cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getNombre() << endl;
                     cout << "   Genero: " << gen_str << endl;
-                    cout << "   Total horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
+                    cout << "   Total de horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
                     cout << endl;
                     delete arrayVideojuegos[i]; // Se borra el DtVideojuego 'i'.
                 }
+		pkey();
                 delete[] arrayVideojuegos;
                 break;
             }
@@ -155,13 +217,20 @@ int main() {
             case 5: {
                 string videojuego;
                 int cantPartidas;
-                cout << "Videojuego del cual desea obtener sus partidas: " << endl;
+                cout << "Ingrese el nombre del videojuego del cual desea obtener sus respectivas partidas: ";
                 getline(cin, videojuego);
                 try {
                     DtPartida** arrayPartidas = sys->obtenerPartidas(videojuego, cantPartidas);
-                    cout << "El videojuego " << videojuego << " tiene " << cantPartidas << " partidas registradas en el sistema." << endl;
-                    DtPartidaIndividual* ptrIndividual;
+		    DtPartidaIndividual* ptrIndividual;
                     DtPartidaMultijugador* ptrMulti;
+
+		    if(cantPartidas == 0)
+                    cout << "El videojuego \"" << videojuego << "\" no tiene partidas registradas en el sistema." << endl;
+		    else if(cantPartidas == 1)
+			cout << "El videojuego \"" << videojuego << "\" tiene " << cantPartidas << " partida registrada en el sistema." << endl;
+		    else
+			cout << "El videojuego \"" << videojuego << "\" tiene " << cantPartidas << " partidas registradas en el sistema." << endl;
+
                     for (int i = 0; i < cantPartidas; i++) {
                         cout << endl;
                         ptrIndividual = dynamic_cast<DtPartidaIndividual*>(arrayPartidas[i]);
@@ -178,9 +247,11 @@ int main() {
                     }
                     delete[] arrayPartidas;
                     cout << endl;
+		    pkey();
                 }
                 catch (invalid_argument &e) {
-                    cout << e.what() << endl << endl;
+                    cout << "ERROR: " << e.what() << endl;
+		    pkey();
                     break;
                 }
                 break;
@@ -195,19 +266,22 @@ int main() {
                     DtPartida* datos;
                     float duracion;
                     int tipoPartida;
+                    int d,m,y,h,min;
                     DtPartidaIndividual* ptrIndividual;
                     DtPartidaMultijugador* ptrMulti;
-                    cout << "Nickname: ";
-                    getline(cin, nickname);
-                    cout << "Videojuego: ";
-                    getline(cin, videojuego);
-                    // Miguel: correccion de time.
-                    cout << "Ingrese la fecha de la partida dd/mm/yyyy hh:mm ." << endl;
-                    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba 'ahora'." << endl << "Fecha: ";
                     string date_input;
-                    //cin >> date_input;
+		    cout << "Por favor ingrese los siguientes datos de la nueva partida:\n";
+
+                    cout << "Nickname del jugador que inicia la partida: ";
+                    getline(cin, nickname);
+                    cout << "Videojuego al cual pertenece la partida: ";
+                    getline(cin, videojuego);
+
+                    // Miguel: correccion de time.
+                    cout << "Ingrese la fecha de creacion de la partida usando el formato dd/mm/yyyy hh:mm ." << endl;
+                    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba 'ahora'." << endl << "Fecha: ";
                     getline(cin,date_input);
-                    int d,m,y,h,min;
+		    
                     if (date_input == "ahora") {
                         time_t now = time(0);
                         tm* time = localtime(&now);
@@ -219,8 +293,9 @@ int main() {
                     }
                     else
                         sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min);
+
                     DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
-                    cout << "Duracion: ";
+                    cout << "Duracion (en min): ";
                     while (true) {
                         // Correccion del error del buffer de entrada para float. (Error de loop infinito).
                         if (!(cin >> duracion)) {
@@ -259,7 +334,14 @@ int main() {
                             cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
                             cin >> cpa;
                             ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
-                            sys->iniciarPartida(nickname, videojuego, ptrIndividual);
+			    try{
+				sys->iniciarPartida(nickname, videojuego, ptrIndividual);
+			    }
+			    catch(invalid_argument &e){
+				cout << e.what() << endl << endl;
+				delete ptrIndividual;
+				break;
+			    }
                             cout << "Se registro la Partida Individual al sistema." << endl;
                             delete ptrIndividual; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
                             break;
@@ -291,7 +373,14 @@ int main() {
                                 getline(cin, nicknameJugadoresUnidos[i]);
                             }
                             ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
-                            sys->iniciarPartida(nickname, videojuego, ptrMulti);
+			    try{
+				sys->iniciarPartida(nickname, videojuego, ptrMulti);
+			    }
+			    catch(invalid_argument &e){
+				cout << e.what() << endl << endl;
+				delete ptrMulti;
+				break;
+			    }
                             cout << endl << "Se registro la Partida Multijugador al sistema." << endl;
                             delete ptrMulti; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
                             break;

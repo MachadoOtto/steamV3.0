@@ -47,3 +47,4 @@ DtPartida * PartidaMultijugador::getDt(){
     DtPartidaMultijugador * pkg = new DtPartidaMultijugador(transmitidaEnVivo,ark,i,this->getFecha(),this->getDuracion());
     return pkg;
 }
+
