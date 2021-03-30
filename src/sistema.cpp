@@ -115,9 +115,9 @@ DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) 
 void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPartida* datos) {
     Videojuego * v;
     if (findJugador(nickname) == nullptr)
-        throw std::invalid_argument("Jugador no registrado en el Sistema.");
+        throw std::invalid_argument("El jugador \"" + nickname + "\" no se encuentra registrado en el sistema.");
     if ((v = findVideojuego(videojuego)) == nullptr)
-        throw std::invalid_argument("Videojuego no ingresado en el Sistema.");
+        throw std::invalid_argument("El videojuego \"" + videojuego + "\" no se encuentra registrado en el sistema.");
     if(cantidadPartidas < MAX_PARTIDAS){
 	//Partida * p = Partida::fabricarPartida(*datos,findJugador(nickname),jugadores);
 	Partida * p = datos->fabricarPartida(findJugador(nickname),jugadores);

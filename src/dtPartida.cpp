@@ -15,6 +15,8 @@ DtPartida::DtPartida(DtFechaHora d,float f):
     duracion=f;
 }
 
+DtPartida::~DtPartida(){}
+
 DtFechaHora DtPartida::getFecha(){
     return fecha;
 }

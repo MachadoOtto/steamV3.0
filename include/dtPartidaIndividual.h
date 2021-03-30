@@ -28,7 +28,7 @@ public:
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 
     //Funciones de sobrecarga de flujo
-    friend std::ostream &operator<<(std::ostream &, DtPartidaIndividual const&);
+    friend std::ostream &operator<<(std::ostream &, DtPartidaIndividual &);
 };
 
 #endif

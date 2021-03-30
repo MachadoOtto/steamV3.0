@@ -28,6 +28,7 @@ protected:
     DtFechaHora fecha; // Se vuelve protected para poder acceder con el friendship de la sobrecarga de <<.
     DtPartida(DtFechaHora,float);
 public:
+    virtual ~DtPartida();
     DtFechaHora getFecha();
     float getDuracion();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *)=0;

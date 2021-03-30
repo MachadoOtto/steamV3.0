@@ -21,6 +21,10 @@ DtPartidaMultijugador::DtPartidaMultijugador(bool b, std::string * pp,int card, 
     nicknameJugadoresUnidos = pp;
 } 
 
+DtPartidaMultijugador::~DtPartidaMultijugador(){
+    delete [] nicknameJugadoresUnidos;
+}
+
 std::string * DtPartidaMultijugador::getNicknameJugadoresUnidos(){
     return nicknameJugadoresUnidos;
 }
@@ -43,14 +47,16 @@ static Jugador * findJugador(std::string nombre,ListaJugador * jugadores) {
     return nullptr; 
 }
 
-//Limitacion: El nickname de un usuario no puede contener comas.
 Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * jugadoresSystema){
     ListaJugador * invitees = nullptr;
     int tot = this->getCantidadJugadoresUnidos();
-    for(int i=0;i<tot;i++){
+    for(int i=1;i<tot;i++){
 	Jugador * p = findJugador(this->getNicknameJugadoresUnidos()[i],jugadoresSystema);
-	if(p == nullptr)
-	    throw std::invalid_argument("Uno de los jugadores invitados a la partida no se encuentra registrado.");
+	if(p == nullptr){
+	    if(invitees != nullptr)
+		delete invitees;
+	    throw std::invalid_argument("El jugador \""+this->getNicknameJugadoresUnidos()[i]+"\" que se desea unir a la partida no se encuentra registrado en el sistema.");
+	}
 	if(invitees == nullptr)
 	    invitees = new ListaJugador(p);
 	else
@@ -60,15 +66,15 @@ Partida * DtPartidaMultijugador::fabricarPartida(Jugador * host, ListaJugador * 
     return p;
 }
 
-std::ostream &operator<<(std::ostream& o, DtPartidaMultijugador const& pMult){
-    std::string siNo = "Si";
+std::ostream &operator<<(std::ostream& o, DtPartidaMultijugador & pMult){
+    std::string siNo = "No";
     if(pMult.transmitidaEnVivo) 
-        siNo = "No";
+        siNo = "Si";
     DtFechaHora auxFecha = pMult.fecha;
     int cantJug = pMult.cantidadJugadoresUnidos;
     o << "Tipo Partida: Multijugador" << std::endl; 
-    o << "Fecha partida:" << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << std::endl;
-    o << "Duración partida:" << auxFecha.getHora() << "/" << auxFecha.getMinuto() << std::endl;
+    o << "Fecha partida: " << auxFecha.getDia() << "/" << auxFecha.getMes() << "/" << auxFecha.getAnio() << " " << auxFecha.getHora() << ":" << auxFecha.getMinuto() << std::endl;
+    o << "Duración partida: " << pMult.getDuracion() << " hs\n";  
     o << "Transmitida en vivo: " << siNo << std::endl;
     o << "Cantidad jugadores unidos a la partida: " << pMult.cantidadJugadoresUnidos << std::endl;
     o << "Jugadores unidos a la partida: ";
@@ -80,5 +86,6 @@ std::ostream &operator<<(std::ostream& o, DtPartidaMultijugador const& pMult){
         else
             o << ", ";
     }
+    o << '\n';
     return o;
 }

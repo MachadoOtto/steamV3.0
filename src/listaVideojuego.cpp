@@ -14,13 +14,7 @@ ListaVideojuego::ListaVideojuego(Videojuego *game) {
     video = game;
     sig = nullptr;
 }
-/*
-ListaVideojuego::~ListaVideojuego() {
-    if (!(sig->esVacia()))
-        sig->~ListaVideojuego();
-    delete video;
-}
-*/ //Con esta funcion estas deleteando todos los videojuegos, pero la lista permanece intacta ver:
+
 ListaVideojuego::~ListaVideojuego(){
     delete sig;
 }

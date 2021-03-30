@@ -25,12 +25,11 @@ private:
     Jugador * host;
 public:
     virtual float darTotalHorasParticipantes()=0;
+    virtual ~Partida();
     float getDuracion();
     DtFechaHora getFecha();
-    //Partida * fabricarPartida(DtPartidaIndividual, Jugador *,ListaJugador *);
-    //Partida * fabricarPartida(DtPartidaMultijugador, Jugador *,ListaJugador *);
     virtual DtPartida *getDt()=0;
-    //Jugador * gethost()
+    Jugador * getHost();
 protected:
     Partida(DtFechaHora, float, Jugador *);
 };

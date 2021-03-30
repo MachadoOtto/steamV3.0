@@ -20,6 +20,12 @@ fecha(d){
     host = p;
 }
 
+Partida::~Partida(){}
+
+Jugador * Partida::getHost(){
+    return host;
+}
+
 float Partida::getDuracion(){
     return duracion;
 }

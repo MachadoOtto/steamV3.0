@@ -141,13 +141,13 @@ int main() {
                     cout << "Se ha registrado el videojuego \"" << nombre << "\", de genero ";
                     std::string gen;
                     if(genero == TipoJuego::Accion)
-                        cout << "Accion";
+                        cout << "accion";
                     else if(genero == TipoJuego::Aventura)
-                        cout << "Aventura";
+                        cout << "aventura";
                     else if(genero == TipoJuego::Deporte)
-                        cout << "Deporte";
+                        cout << "deporte";
                     else if(genero == TipoJuego::Otro)
-                        cout << "Otro";
+                        cout << "otro";
                     cout << ", en el sistema." << endl;
 		    pkey();
                 }
@@ -205,7 +205,7 @@ int main() {
                         gen_str = "Otro";
                     cout << i+1 << ". Titulo: " << arrayVideojuegos[i]->getNombre() << endl;
                     cout << "   Genero: " << gen_str << endl;
-                    cout << "   Total de horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << endl;
+                    cout << "   Total de horas de juego: " << arrayVideojuegos[i]->getTotalHorasDeJuego() << " hs" << endl;
                     cout << endl;
                     delete arrayVideojuegos[i]; // Se borra el DtVideojuego 'i'.
                 }
@@ -263,7 +263,6 @@ int main() {
                 try {
                     string nickname;
                     string videojuego;
-                    DtPartida* datos;
                     float duracion;
                     int tipoPartida;
                     int d,m,y,h,min;
@@ -278,111 +277,158 @@ int main() {
                     getline(cin, videojuego);
 
                     // Miguel: correccion de time.
-                    cout << "Ingrese la fecha de creacion de la partida usando el formato dd/mm/yyyy hh:mm ." << endl;
-                    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba 'ahora'." << endl << "Fecha: ";
-                    getline(cin,date_input);
 		    
-                    if (date_input == "ahora") {
-                        time_t now = time(0);
-                        tm* time = localtime(&now);
-                        d = time->tm_mday;
-                        m = time->tm_mon + 1; // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
-                        y = time->tm_year + 1900; // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
-                        h = time->tm_hour;
-                        min = time->tm_min;
-                    }
-                    else
-                        sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min);
-
-                    DtFechaHora fechaSistema(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
-                    cout << "Duracion (en min): ";
+		    cout << "Ingrese la fecha de creacion de la partida usando el formato dd/mm/yyyy hh:mm ." << endl;
+		    cout << "Si desea iniciar la partida con la fecha actual del sistema escriba 'ahora'." << endl;
+		    cout << "Fecha: ";
+		    DtFechaHora *fechaSistema;
+		    bool fecha_check=false;
+		    while(!fecha_check){
+			try{
+			    getline(cin,date_input);
+			    if (date_input == "ahora") {
+				time_t now = time(0);
+				tm* time = localtime(&now);
+				d = time->tm_mday;
+				m = time->tm_mon + 1; // tm_mon devuelve el mes donde enero es igual a 0 (por lo tanto se suma uno).
+				y = time->tm_year + 1900; // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
+				h = time->tm_hour;
+				min = time->tm_min;
+			    }
+			    else{
+				if (sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min) != 5)
+				    throw invalid_argument("");	
+			    }
+			    fechaSistema = new DtFechaHora(d,m,y,h,min); // fechaSistema(dia, mes, anio, hora, min).
+			    fecha_check=true;
+			}
+			catch(invalid_argument &e){
+			    reprintln();
+			    cout << "Por favor ingrese una fecha valida: ";
+			}
+		    }
+                    cout << "Duracion (en horas): ";
                     while (true) {
-                        // Correccion del error del buffer de entrada para float. (Error de loop infinito).
                         if (!(cin >> duracion)) {
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+			    clinput();
+			    reprintln();
                             cout << "Porfavor, ingrese una duracion valida: ";
                         }
                         else 
                             break;
                     }
-                    cin.clear();
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		    clinput();
+
                     cout << endl;
                     cout << "Tipo de partida:" << endl;
                     cout << " 1.Individual" << endl;
                     cout << " 2.Multijugador" << endl << endl;
                     cout << "Seleccione una opcion: ";
-                    // Correccion del error del buffer de entrada para int. (Error de loop infinito).
                     while (true) {
-                        if (!(cin >> tipoPartida)) {
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                            tipoPartida = 0; // Hacemos saltar el error del switch de tipoPartida.
-                        }
-                        if (!((tipoPartida == 1) || (tipoPartida == 2))) {
-                            cout << "Porfavor, ingrese una opcion valida: ";
+                        if (!(cin >> tipoPartida) || !((tipoPartida == 1) || (tipoPartida == 2)) ) {
+			    clinput();
+			    reprintln();
+                            cout << "Por favor ingrese una opcion valida: ";
                         }
                         else
                             break;                            
                     }
                     cout << endl;
+		    clinput();
                     switch(tipoPartida) {
                         case 1: { 
                             /* Individual */
                             bool cpa;
-                            cout << "Es continuacion de una partida anterior (1.Si/0.No): ";
-                            cin >> cpa;
-                            ptrIndividual = new DtPartidaIndividual(cpa,fechaSistema,duracion);
+			    string cpa_input;
+                            cout << "Es continuacion de una partida anterior? (1.Si/0.No): ";
+			    while (true) {
+				getline(cin,cpa_input);
+				if (!( (cpa_input == "1") || (cpa_input == "0") || (cpa_input == "si") || (cpa_input == "no") || (cpa_input == "Si") || (cpa_input == "No"))){
+				    reprintln();
+				    cout << "Por favor ingrese una opcion valida (1.Si/0.No): ";
+				}
+				else
+				    break;                            
+			    }
+			    if(cpa_input == "1" || cpa_input == "Si" || cpa_input == "si")
+				cpa = true;
+			    else
+				cpa = false;
+
+                            ptrIndividual = new DtPartidaIndividual(cpa,*fechaSistema,duracion);
 			    try{
 				sys->iniciarPartida(nickname, videojuego, ptrIndividual);
 			    }
 			    catch(invalid_argument &e){
-				cout << e.what() << endl << endl;
+				cout << "ERROR: " << e.what() << endl << endl;
+				pkey();
 				delete ptrIndividual;
+				delete fechaSistema;
 				break;
 			    }
-                            cout << "Se registro la Partida Individual al sistema." << endl;
-                            delete ptrIndividual; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
+                            cout << "Se registro la partida individual exitosamente en el sistema." << endl;
+			    pkey();
+                            delete ptrIndividual; 
+			    delete fechaSistema;
                             break;
-                        }
+			}
                         case 2: { 
                             /* Multijugador */
                             bool tev;
-                            cout << "Es transmitida en vivo (1.Si/0.No): " << endl;
-                            cin >> tev;
+			    string cpa_input; //guille: reutilizando codigo xdd
+
+                            cout << "Es transmitida en vivo? (1.Si/0.No): ";
+			    while (true) {
+				getline(cin,cpa_input);
+				if (!( (cpa_input == "1") || (cpa_input == "0") || (cpa_input == "si") || (cpa_input == "no") || (cpa_input == "Si") || (cpa_input == "No"))){
+				    reprintln();
+				    cout << "Por favor ingrese una opcion valida (1.Si/0.No): ";
+				}
+				else
+				    break;                            
+			    }
+			    if(cpa_input == "1" || cpa_input == "Si" || cpa_input == "si")
+				tev = true;
+			    else
+				tev = false;
+
                             int cantJugadoresUnidos;
-                            cout << "Cantidad de jugadores unidos: " << endl;
+                            cout << "Cantidad de jugadores adicionales que se unen a la partida: ";
                             while (true) {
-                                // Correccion del error del buffer de entrada para int. (Error de loop infinito).
                                 if (!(cin >> cantJugadoresUnidos)) {
-                                    cin.clear();
-                                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+				    clinput();
+				    reprintln();
                                     cout << "Porfavor, ingrese una cantidad valida: ";
                                 }
                                 else
                                     break;
                             }
-                            cin.clear();
-                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			    clinput();
+
                             string *nicknameJugadoresUnidos;
-                            nicknameJugadoresUnidos = new string[cantJugadoresUnidos];
-                            cout << "Ingrese el nickname de los jugadores unidos" << endl << endl;
-                            for (int i = 0; i < cantJugadoresUnidos; i++) {
+			    cantJugadoresUnidos++;
+                            nicknameJugadoresUnidos = new string[cantJugadoresUnidos]; //un gracioso se le ocurrio que el host debe estar en la lista
+			    nicknameJugadoresUnidos[0] = nickname;
+                            cout << "Ingrese el nickname de los jugadores que se unen a la partida: " << endl << endl;
+                            for (int i = 1; i < cantJugadoresUnidos; i++) {
                                 cout << "Jugador " << i+1 << ": ";
                                 getline(cin, nicknameJugadoresUnidos[i]);
                             }
-                            ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,fechaSistema,duracion);
+                            ptrMulti = new DtPartidaMultijugador(tev,nicknameJugadoresUnidos,cantJugadoresUnidos,*fechaSistema,duracion);
 			    try{
 				sys->iniciarPartida(nickname, videojuego, ptrMulti);
 			    }
 			    catch(invalid_argument &e){
-				cout << e.what() << endl << endl;
+				cout << "ERROR: " << e.what() << endl << endl;
+				pkey();
 				delete ptrMulti;
+				delete fechaSistema;
 				break;
 			    }
-                            cout << endl << "Se registro la Partida Multijugador al sistema." << endl;
-                            delete ptrMulti; // Hay que borrarlo porque luego este Dt queda colgado. Solo borra el puntero (no lo que contiene).
+                            cout << endl << "Se registro la partida multijugador exitosamente en el sistema." << endl;
+			    pkey();
+                            delete ptrMulti; 
+			    delete fechaSistema;
                             break;
                         }
                         default: {
@@ -393,13 +439,17 @@ int main() {
                     }
                 }
                 catch (invalid_argument &e) {
-                    cout << e.what() << endl << endl;
+                    cout << "ERROR: " << e.what() << endl << endl;
+                    pkey();
                     break;
                 }
+                break;
             }
             /* Salir */
             case 7: 
+            	cout << "Gracias por utilizar Steam 2.0. \n";
                 break;
+	
             default: {
                 cout << "Porfavor, ingrese una opcion valida: ";
                 break;
