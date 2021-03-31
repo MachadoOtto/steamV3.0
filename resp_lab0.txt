@@ -1,0 +1,24 @@
+*** Ejercicio 2 - Preguntas ***
+
+1)	Las dependencias circulares que debieron resolverse son las siguientes:
+		La clase A depende de la clase B, pero la clase B depende de la clase A
+		La clase A depende de la clase C, pero la clase C depende de la clase A
+		La clase B depende de la clase C, pero la clase C depende de la clase B
+
+	Para que el programa pueda compilar fue necesario, en los header de las clases, declarar de forma anticipada el nombre de las clases que tienen una asociacion con la clase que se esta definiendo
+	en su respectivo .h. El objetivo de esto es evitar tener que usar #include entre las clases que es lo que genera la dependencia circular.
+
+2)	Se le llama "Forward Declaration" a la declaración de un identificador previa a su completa definición. Por ejemplo, una foward declaration de una clase
+	en C++ es "class banana", se define un identificador y se sabe que es una clase pero no se definen sus atributos ni operaciones. Esto le permite al compilador
+	reservar memoria para referencias y punteros al saber que tipo de dato es el identificador en las futuras referencias que se le haga al mismo sin conocer
+	su implementacion.  Su correcta utilización tiene diversas ventajas, entre ellas mejorar tiempos de compilación (al evitar incluir librerías que contengan más
+	información de la que necesitamos)  o evitar errores de compilación provocados por dependencias circulares al eliminar la necesidad de utilizar #include para
+	referirse a una clase externa al namespace donde se esta trabajando.
+
+*** Aclaraciones archivos ***
+
+    La carpeta "Ejercicio1" contiene la resolucion del ejercicio 1. Para su compilacion basta correr el comando make estando dentro de la carpeta. 
+    El archivo a ejecutar generado se llama "main". La carpeta "Ejercicio2" contiene la implementacion del ejercicio 2. La carpeta Ejercicio2ConFD
+    contiene la resolucion exitosa del problema realizando foward declarations. Para su compilacion basta correr el comando make estando dentro de la carpeta. 
+    Para su comparacion, la carpeta Ejercicio2SinFD contiene lo mismo que la carpeta anterior pero sin incluir las respectivas foward declarations con el afan
+    de observar los errores que se generan por referencias circulares al intentar compilar el programa. 
