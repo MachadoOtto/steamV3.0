@@ -39,12 +39,11 @@ Sistema::~Sistema(){
 }
 
 void Sistema::agregarVideojuego(std::string nombre, TipoJuego genero){
-    // Migue: nueva implementacion de agregarVideojuego, la anterior no permitia ingresar mas de 2 videojuegos
-    //  y lanzaba 'General Protection Fault'. 
-    if (findVideojuego(nombre) != nullptr) 
-        throw std::invalid_argument("El videojuego ya existe en el sistema.");
+    Videojuego * lol;
+    if ((lol=findVideojuego(nombre)) != nullptr) 
+        throw std::invalid_argument("Ya existe un videojuego con el nombre \"" + lol->getDt().getNombre() + "\" en el sistema.");
     if(cantidadVideojuegos < MAX_VIDEOJUEGOS) {
-	    Videojuego* lol = new Videojuego(nombre,genero); 
+	    lol = new Videojuego(nombre,genero); 
 	    if(videojuegos == nullptr)
 	        videojuegos = new ListaVideojuego(lol);
 	    else
@@ -54,8 +53,9 @@ void Sistema::agregarVideojuego(std::string nombre, TipoJuego genero){
 }
 
 void Sistema::agregarJugador(std::string nickname, int edad, std::string contrasenia) {
-    if(findJugador(nickname) != nullptr)
-	    throw std::invalid_argument("Ya hay un jugador con ese nombre.");
+    Jugador * p;
+    if((p=findJugador(nickname)) != nullptr)
+	    throw std::invalid_argument("Ya existe un jugador con el nombre \"" + p->getDt().getNickname() + "\" en el sistema.");
     if(cantidadJugadores < MAX_JUGADORES){ 
         Jugador * nuevoJugador = new Jugador(nickname,edad,contrasenia);
         if(jugadores == nullptr) 
@@ -107,17 +107,17 @@ DtPartida** Sistema::obtenerPartidas(std::string videojuego, int& cantPartidas) 
             list = list->next();
         }
         return arregloPartidas;
-    } else {
-        throw std::invalid_argument("El videojuego ingresado no existe.");
     }
+    else 
+	throw std::invalid_argument("El videojuego \"" + videojuego + "\" no existe en el sistema.");
 }
 
 void Sistema::iniciarPartida(std::string nickname, std::string videojuego, DtPartida* datos) {
     Videojuego * v;
     if (findJugador(nickname) == nullptr)
-        throw std::invalid_argument("Jugador no registrado en el Sistema.");
+        throw std::invalid_argument("El jugador \"" + nickname + "\" no se encuentra registrado en el sistema.");
     if ((v = findVideojuego(videojuego)) == nullptr)
-        throw std::invalid_argument("Videojuego no ingresado en el Sistema.");
+        throw std::invalid_argument("El videojuego \"" + videojuego + "\" no se encuentra registrado en el sistema.");
     if(cantidadPartidas < MAX_PARTIDAS){
 	//Partida * p = Partida::fabricarPartida(*datos,findJugador(nickname),jugadores);
 	Partida * p = datos->fabricarPartida(findJugador(nickname),jugadores);

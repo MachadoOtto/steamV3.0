@@ -24,6 +24,7 @@ void ListaPartida::add(Partida * pp){
     sig = new ListaPartida(pp);
     sig->sig = tmp;
 }
+
 ListaPartida * ListaPartida::next(){
     return sig;
 };

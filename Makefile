@@ -18,7 +18,7 @@ ODIR = obj
 
 #compilador
 CC = g++
-CFLAGS = -Wall -Werror -I$(HDIR) -g
+CCFLAGS = -Wall -Werror -I$(HDIR) -g
 
 MODULOS = dtFechaHora dtJugador dtPartida dtPartidaIndividual dtPartidaMultijugador dtVideojuego listaJugador listaPartida listaVideojuego partidaIndividual partidaMultijugador jugador partida sistema videojuego
 CONST_MODULES = tipoJuego constraints

@@ -27,13 +27,15 @@ private:
     int cantidadJugadoresUnidos;
 public:
     DtPartidaMultijugador(bool,std::string *,int,DtFechaHora,float); //revisar cambios listJug ->string*
+    ~DtPartidaMultijugador();
+
     std::string * getNicknameJugadoresUnidos();
     int getCantidadJugadoresUnidos();
     bool getTransmitidaEnVivo();
     virtual Partida * fabricarPartida(Jugador *,ListaJugador *);
 
     //Funciones de sobrecarga de flujo
-    friend std::ostream &operator<<(std::ostream &, DtPartidaMultijugador const&);
+    friend std::ostream &operator<<(std::ostream &, DtPartidaMultijugador &);
 };
 
 #endif
