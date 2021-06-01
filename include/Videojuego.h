@@ -30,9 +30,9 @@ class Videojuego {
         int totalJugadoresSuscriptos;
 
         //Associations
-        Suscripcion* suscripciones;
+        SET Suscripcion* suscripciones;
         std::map<int,Partida> *partidas;
-        Categoria* categorias;
+        SET Categoria* categorias;
         
     public:
         Videojuego(DtVideojuego,Set(Categoria));
