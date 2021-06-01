@@ -11,6 +11,15 @@
 #ifndef VIDEOJUEGO
 #define VIDEOJUEGO
 
+#include <map>
+#include <set>
+#include <string>
+#include "Suscripcion.h"
+#include "Partida.h"
+#include "Categoria.h"
+#include "Jugador.h"
+#include "DtPrecios.h"
+
 class Videojuego {
     private:
         std::string nombre;
@@ -22,7 +31,7 @@ class Videojuego {
 
         //Associations
         Suscripcion* suscripciones;
-        map<int,Partida> *partidas;
+        std::map<int,Partida> *partidas;
         Categoria* categorias;
         
     public:
