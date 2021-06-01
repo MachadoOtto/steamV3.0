@@ -15,7 +15,7 @@
 
 class Genero::Categoria {
     private:
-
+        
     public:
         
 }
