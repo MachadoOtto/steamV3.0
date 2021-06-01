@@ -12,6 +12,7 @@
 #define CATEGORIA
 
 #include <string>
+#include "DtCategoria.h"
 
 class Categoria {
     private:
