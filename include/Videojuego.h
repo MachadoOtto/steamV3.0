@@ -37,7 +37,7 @@ class Videojuego {
     public:
         Videojuego(DtVideojuego,Set(Categoria));
         DtVideojuego obtenerDatosVideojuego();
-        Set(string) obtenerJugadoresSubscriptos();
+        Set(string) obtenerJugadoresSuscriptos();
         bool estaActivo();
         void confirmarPartida(Jugador,bool,bool,Set(Jugador));
         void cancelarSuscripcion(Jugador);
