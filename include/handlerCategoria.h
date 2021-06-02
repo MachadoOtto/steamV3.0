@@ -25,8 +25,8 @@ class Plataforma;
 
 class HandlerCategoria {
 private:
-    static HandlerCategoria *instancia;
-    map<string, Categoria*> *categorias;
+    static HandlerCategoria* instancia;
+    map<string, Categoria*>* categorias;
     HandlerCategoria();
 public:
     static HandlerCategoria* getInstance();
@@ -36,7 +36,7 @@ public:
     Genero* findGender(string);
     Plataforma* findPlatform(string);
     Categoria* findCategory(string);
-    void addCategoria(Categoria);
+    void addCategoria(Categoria*);
     ~HandlerCategoria();
 };
 

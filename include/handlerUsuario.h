@@ -22,13 +22,14 @@ class Jugador;
 class HandlerUsuario {
 private:
     static HandlerUsuario* instancia;
+    Usuario* loggedUser;
     map<string, Usuario*>* usuarios;
     HandlerUsuario();
 public:
     static HandlerUsuario* getInstance();
     Usuario* getLoggedUser();
-    Jugador* findJugador(string);
-    bool existeJugador(string);
+    Usuario* findUsuario(string);
+    bool existeUsuario(string);
     void addUsuario(Usuario*);
     ~HandlerUsuario();
 };

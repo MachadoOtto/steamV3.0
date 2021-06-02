@@ -13,11 +13,18 @@ HandlerCatalogo::HandlerCatalogo(){
     videojuegos = new map<string, Videojuego*>;
 }
 
-static HandlerCatalogo HandlerCatalogo::*getInstance() {
+static HandlerCatalogo* HandlerCatalogo::getInstance() {
 
 }
-set<DtPartida>* HandlerCatalogo::getDatosInactivos() {
 
+set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
+    set<DtVideojuego> dtInactivos* = new set<DtVideojuego>;
+    for (map<string, Videojuego*>::iterator it = videojuegos.begin(); it! = videojuegos.end(); ++it) {
+        if (!(it->second.esActivo())) {
+            dtInactivos->insert(it->second->obtenerDatoVideojuego());
+        }
+    }
+    return dtInactivos;
 }
 
 Videojuego HandlerCatalogo::findVideojuego(string nombreVideojuego) {
@@ -36,5 +43,8 @@ void HandlerCatalogo::remove(Videojuego* vj) {
 }
 
 HandlerCatalogo::~HandlerCatalogo() {
-
+    for (map<string, Videojuego*>::iterator it = videojuegos.begin(); it! = videojuegos.end(); ++it) {
+        delete it->second;
+    }
+    delete videojuegos;
 }

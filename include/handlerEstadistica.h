@@ -20,11 +20,11 @@ using std::set;
 class HandlerEstadistica {
 private:
     static HandlerEstadistica* instancia;
-    map<string, Estadistica*>* estadisticas;
+    set<Estadistica*>* estadisticas;
     HandlerEstadistica();
 public:
     static HandlerEstadistica* getInstance();
-    set<Estadistica>* getEstadistica()
+    set<Estadistica>* getEstadistica();
     ~HandlerEstadistica();
 };
 
