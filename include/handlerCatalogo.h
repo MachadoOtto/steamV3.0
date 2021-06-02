@@ -23,15 +23,15 @@ class DtPartida;
 
 class HandlerCatalogo {
 private:
-    static HandlerCatalogo *instancia;
-    map<string, Videojuego> *videojuegos;
+    static HandlerCatalogo* instancia;
+    map<string, Videojuego*>* videojuegos;
     HandlerCatalogo();
 public:
-    static HandlerCatalogo *getInstance();
-    set<DtPartida> *getDatosInactivos();
-    Videojuego findVideojuego(string);
-    void addVideojuego(Videojuego);
-    void remove(Videojuego);
+    static HandlerCatalogo* getInstance();
+    set<DtPartida>* getDatosInactivos();
+    Videojuego* findVideojuego(string);
+    void addVideojuego(Videojuego*);
+    void remove(Videojuego*);
     ~HandlerCatalogo();
 };
 

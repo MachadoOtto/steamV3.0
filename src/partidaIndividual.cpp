@@ -14,6 +14,8 @@ PartidaIndividual::PartidaIndividual(DtPartidaIndividual* datos) {
     fecha = datos.getFechaHora();
     duracion = datos.getDuracion();
     activa = datos.getActiva();
+    host = NULL;
+    videogame = NULL;
 }
 
 void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {

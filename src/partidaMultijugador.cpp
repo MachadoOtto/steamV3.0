@@ -15,6 +15,10 @@ PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador* datos) {
     duracion = datos.getDuracion();
     activa = datos.getActiva();
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
+    host = NULL;
+    videogame = NULL;
+    jugadoresUnidos = NULL;
+    comentarios = new map<int, Comentario*>;
 }
     
 bool PartidaMultijugador::getTransmitidaEnVivo { return transmitidaEnVivo; }

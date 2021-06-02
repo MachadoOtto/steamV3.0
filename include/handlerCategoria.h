@@ -26,16 +26,16 @@ class Plataforma;
 class HandlerCategoria {
 private:
     static HandlerCategoria *instancia;
-    map<string, Categoria> *categorias;
+    map<string, Categoria*> *categorias;
     HandlerCategoria();
 public:
-    static HandlerCategoria *getInstance();
-    set<DtCategoria> *getDtGenders();
-    set<DtCategoria> *getDtPlatforms();
-    set<DtCategoria> *getDtCategories();
-    Genero *findGender(string);
-    Plataforma *findPlatform(string);
-    Categoria *findCategory(string);
+    static HandlerCategoria* getInstance();
+    set<DtCategoria>* getDtGenders();
+    set<DtCategoria>* getDtPlatforms();
+    set<DtCategoria>* getDtCategories();
+    Genero* findGender(string);
+    Plataforma* findPlatform(string);
+    Categoria* findCategory(string);
     void addCategoria(Categoria);
     ~HandlerCategoria();
 };

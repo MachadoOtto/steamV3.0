@@ -30,15 +30,15 @@ class DtPartida;
 class PartidaMultijugador : public Partida {
 private:
     bool transmitidaEnVivo;
-    map<string, Jugador*> *jugadoresUnidos;
-    map<int, Comentario*> *comentarios;
+    map<string, Jugador*>* jugadoresUnidos;
+    map<int, Comentario*>* comentarios;
 public:
     PartidaMultijugador(DtPartidaMultijugador*);
     bool getTransmitidaEnVivo;
     void setJugadoresUnidos(map<string, Jugador*>*);
-    map<string, Jugador*> *getJugadoresUnidos();
+    map<string, Jugador*>* getJugadoresUnidos();
     void addComentario(Comentario*);
-    map<int, Comentario*> *getComentarios();
+    map<int, Comentario*>* getComentarios();
     virtual DtPartida* obtenerDatosPartida();
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();

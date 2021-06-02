@@ -21,15 +21,15 @@ class Jugador;
 
 class HandlerUsuario {
 private:
-    static HandlerUsuario *instancia;
-    map<string, Usuario> *usuarios;
+    static HandlerUsuario* instancia;
+    map<string, Usuario*>* usuarios;
     HandlerUsuario();
 public:
-    static HandlerUsuario *getInstance();
-    Usuario *getLoggedUser();
-    Jugador *findJugador(string);
+    static HandlerUsuario* getInstance();
+    Usuario* getLoggedUser();
+    Jugador* findJugador(string);
     bool existeJugador(string);
-    void addUsuario(Usuario);
+    void addUsuario(Usuario*);
     ~HandlerUsuario();
 };
 
