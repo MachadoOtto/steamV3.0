@@ -20,6 +20,8 @@ class IIFPController {
         virtual void confirmarPartida() = 0;
         virtual void confirmarFinalizarPartida(int) = 0;
         virtual void clearCache() = 0;
+        
+        virtual ~IVideojuegoController();
 };
 
 #endif
