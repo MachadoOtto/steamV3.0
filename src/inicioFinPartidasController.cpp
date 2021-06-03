@@ -11,7 +11,7 @@ static IFPController * IFPController::getInstance() {
     return instancia;
 }
 
-//Set(string) IFPController::obtenerVideojuegosActivos() {
+/*Set(string) IFPController::obtenerVideojuegosActivos() {
 
 }
 
@@ -29,7 +29,7 @@ static IFPController * IFPController::getInstance() {
 
 //void IFPController::seleccionarVideojuego(string) {
 
-}
+}*/
 
 void IFPController::seleccionarContinuacionPartida(int) {
 
