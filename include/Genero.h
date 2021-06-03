@@ -14,7 +14,7 @@
 #include <string>
 #include "TipoGenero.h"
 
-class Genero::Categoria {
+class Genero : public Categoria {
     private:
         
     public:
