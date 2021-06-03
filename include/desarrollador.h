@@ -7,7 +7,7 @@
 #include "videojuego.h"
 
 #include <string>
-#include <list>
+#include <set>
 #include <map>
 
 class Desarrollador: public Usuario {
@@ -16,11 +16,11 @@ class Desarrollador: public Usuario {
         std::map<std::string,Videojuego *> * videojuegosDesarrollados;
         std::map<std::string,Estadistica *> * estadisticas;
     public:
-        std::list<std::string> * getVjSinPartidasActivas();
+        std::set<std::string> * getVjSinPartidasActivas();
         std::map<std::string,Videojuego *> * getVideojuegosDesarrollados();
-        void publishVideogame(DtVideojuego *,std::map<std::string,Categoria *> *);
+        void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
         void suscribirEstadistica(Estadistica *);
-        std::list<DtEstadistica *> * solicitarEstadisticas(Videjuego *);
+        std::set<DtEstadistica> * solicitarEstadisticas(Videjuego *);
 };
 
 #endif
