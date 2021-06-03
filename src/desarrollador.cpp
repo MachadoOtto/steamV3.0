@@ -12,8 +12,8 @@
 
 Desarrollador::Desarrollador(DtDesarrollador des) {
     empresa = des.empresa;
-    videojuegosDesarrollados = NULL;
-    estadisticas = NULL;
+    videojuegosDesarrollados = new std::map<std::string,Videojuego *>;
+    estadisticas = new std::map<std::string,Videojuego *>;
 }
 
 std::set<std::string> * getVjSinPartidasActivas() {
