@@ -7,14 +7,3 @@
  * 	Juan Jose Mangado
  * 	Mathias Ramilo
  */
-
-#include "Categoria.h"
-
-Categoria::Categoria() {
-    
-}
-
-DtCategoria Categoria::getDt() {
-    DtCategoria dtCat(nombre,descripcion,tipoCategoria::Otro);
-    return dtCat;
-}

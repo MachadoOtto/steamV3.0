@@ -8,20 +8,20 @@
  * 	Mathias Ramilo
  */
 
-#include "DtFechaHora.h"
+#include "dtFechaHora.h"
 
-Jugador-Multi::Jugador-Multi(DtFechaHora fechaHora) {
+JugadorMulti::JugadorMulti(DtFechaHora fechaHora) {
     this->desconexion = fechaHora;
 }
 
-DtFechaHora Jugador-Multi::getDesconexion() {
+DtFechaHora JugadorMulti::getDesconexion() {
     return this->desconexion;
 }
 
-void Jugador-Multi::setDesconexion(DtFechaHora fechaHora) {
+void JugadorMulti::setDesconexion(DtFechaHora fechaHora) {
     this->desconexion = fechaHora;
 }
 
-Jugador-Multi::~Jugador-Multi() {
-    delete Jugador-Multi;
+JugadorMulti::~JugadorMulti() {
+    
 }

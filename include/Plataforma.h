@@ -12,14 +12,16 @@
 #define PLATAFORMA
 
 #include <string>
-#include "TipoPlataforma.h"
+#include "tipoPlataforma.h"
 
 class Plataforma : public Categoria {
     private:
     
     public:
-        Plataforma(TipoPlataforma);
+        Plataforma(DtCategoria);
         ~Plataforma();
+
+        virtual DtCategoria getDt();
 }
 
 #endif

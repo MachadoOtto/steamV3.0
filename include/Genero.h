@@ -12,14 +12,16 @@
 #define GENERO
 
 #include <string>
-#include "TipoGenero.h"
+#include "tipoGenero.h"
 
 class Genero : public Categoria {
     private:
         
     public:
-        Genero(TipoGenero);
+        Genero(DtCategoria);
         ~Genero();
+
+        virtual DtCategoria getDt();
 }
 
 #endif

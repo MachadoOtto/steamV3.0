@@ -8,14 +8,14 @@
  * 	Mathias Ramilo
  */
 
-#include "DtFechaHora.h"
+#include "dtFechaHora.h"
 
-class Jugador-Multi {
+class JugadorMulti {
     private:
         DtFechaHora desconexion;
     public:
-        Jugador-Multi(DtFechaHora);
+        JugadorMulti(DtFechaHora);
         DtFechaHora getDesconexion();
         void setDesconexion(DtFechaHora);
-        ~Jugador-Multi();
+        ~JugadorMulti();
 }

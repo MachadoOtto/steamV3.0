@@ -12,21 +12,20 @@
 #define CATEGORIA
 
 #include <string>
-#include "DtCategoria.h"
+#include "dtCategoria.h"
+#include "tipoCategoria.h"
 
 class Categoria {
     private:
         std::string nombre;
         std::string descripcion;
     public:
-        Categoria();
+        Categoria(DtCategoria);
         std::string getNombre();
         std::string getDescripcion();
-        void setNombre(std::string);
-        void setDescripcion(std::string);
         ~Categoria();
         
-        DtCategoria getDt();
+        virtual DtCategoria getDt();
 }
 
 #endif
