@@ -14,7 +14,7 @@ class Jugador-Multi {
     private:
         DtFechaHora desconexion;
     public:
-        Jugador-Multi();
+        Jugador-Multi(DtFechaHora);
         DtFechaHora getDesconexion();
         void setDesconexion(DtFechaHora);
         ~Jugador-Multi();
