@@ -1,11 +1,12 @@
 #ifndef IFPCONTROLLER
 #define IFPCONTROLLER
 
-#include "HandlerUsuario.h"
-#include "HandlerCatalogo.h"
 #include "IIFPController.h"
+#include "dtPartida.h"
+#include "dtPartidaIndividual.h"
 
 #include <string>
+#include <set>
 
 class IFPController: public IIFPController {
     private:
@@ -15,11 +16,11 @@ class IFPController: public IIFPController {
         bool enVivo;
     public:
         static virtual IFPController * getInstance();
-        //virtual Set(string) obtenerVideojuegosActivos();
-        //virtual Set(DtPartida) obtenerPartidasActivas();
-        //virtual Set(DtPartidaIndividual) obtenerHistorialPartidas();
-        //virtual Set(string) obtenerJugadoresSubscriptos();
-        //virtual void seleccionarVideojuego(string);
+        virtual std::set<std::string> * obtenerVideojuegosActivos();
+        virtual std::set<DtPartida> * obtenerPartidasActivas();
+        virtual std::set<DtPartidaIndividual> * obtenerHistorialPartidas();
+        virtual std::set<std::string> * obtenerJugadoresSubscriptos();
+        virtual void seleccionarVideojuego(std::string);
         virtual void seleccionarContinuacionPartida(int);
         virtual void partidaEnVivo(bool);
         virtual void aniadirJugadorPartida(std::string);
