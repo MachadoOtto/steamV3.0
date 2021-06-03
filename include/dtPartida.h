@@ -10,7 +10,7 @@ class DtPartida {
         float duracion;
         bool activa;
     public:
-
+        DtPartida(int,DtFechaHora,float,bool);
 };
 
 #endif
