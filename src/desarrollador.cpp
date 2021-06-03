@@ -6,6 +6,10 @@
 #include <list>
 #include <map>
 
+Desarrollador::Desarrollador(DtDesarrollador) {
+    
+}
+
 std::list<std::string> * Desarrollador::getVideojuegosDesarrollados() {
     return getVideojuegosDesarrollados;
 }

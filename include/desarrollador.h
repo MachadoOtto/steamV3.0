@@ -16,6 +16,7 @@ class Desarrollador: public Usuario {
         std::map<std::string,Videojuego *> * videojuegosDesarrollados;
         std::map<std::string,Estadistica *> * estadisticas;
     public:
+        Desarrollador(DtDesarrollador);
         std::set<std::string> * getVjSinPartidasActivas();
         std::map<std::string,Videojuego *> * getVideojuegosDesarrollados();
         void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
