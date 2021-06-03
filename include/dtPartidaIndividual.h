@@ -7,6 +7,7 @@ class DtPartidaIndividual: public DtPartida{
     private:
 
     public:
+        DtPartidaIndividual(int,DtFechaHora,float,bool);
 };
 
 #endif
