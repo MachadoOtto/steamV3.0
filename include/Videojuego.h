@@ -30,16 +30,16 @@ class Videojuego {
         int totalJugadoresSuscriptos;
 
         //Associations
-        SET Suscripcion* suscripciones;
+        std::set<Suscripcion> *suscripciones;
         std::map<int,Partida> *partidas;
-        SET Categoria* categorias;
+        std::map<string,Categoria> *categorias;
         
     public:
         Videojuego(DtVideojuego,Set(Categoria));
         DtVideojuego obtenerDatosVideojuego();
         Set(string) obtenerJugadoresSuscriptos();
         bool estaActivo();
-        void confirmarPartida(Jugador,bool,bool,Set(Jugador));
+        void confirmarPartida(Jugador,bool,bool,std::set<Jugador>);
         void cancelarSuscripcion(Jugador);
         void confirmarSuscripcion(Jugador,TipoSuscripcion,TipoPago);
         void eliminarInfoAsociada(Videojuego);
