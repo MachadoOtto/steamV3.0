@@ -5,6 +5,8 @@
 #include "categoria.h"
 #include "estadistica.h"
 #include "videojuego.h"
+#include "dtEstadistica.h"
+#include "dtDesarrollador.h"
 
 #include <string>
 #include <set>
@@ -18,9 +20,10 @@ class Desarrollador: public Usuario {
     public:
         Desarrollador(DtDesarrollador);
         std::set<std::string> * getVjSinPartidasActivas();
-        std::map<std::string,Videojuego *> * getVideojuegosDesarrollados();
+        std::set<std::string> * getVideojuegosDesarrollados();
+        void remove(Videojuego *);
         void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
-        void suscribirEstadistica(Estadistica *);
+        void suscribirEstadistica(Estadistica *); //POR HACER
         std::set<DtEstadistica> * solicitarEstadisticas(Videjuego *);
 };
 
