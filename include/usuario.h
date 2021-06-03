@@ -8,7 +8,7 @@ class Usuario {
         std::string email;
         std::string contrasenia;
     public:
-
+        Usuario();
 };
 
 #endif
