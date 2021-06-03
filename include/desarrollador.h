@@ -13,13 +13,14 @@
 class Desarrollador: public Usuario {
     private:
         std::string empresa;
-        std::map<std::string,Videojuego> * videojuegosDesarrollados;
-        std::map<std::string,Estadistica> * estadisticas;
+        std::map<std::string,Videojuego *> * videojuegosDesarrollados;
+        std::map<std::string,Estadistica *> * estadisticas;
     public:
-        std::map<std::string,Videojuego> * getVideojuegosDesarrollados();
-        void publishVideogame(* DtVideojuego,* std::map<std::string,Categoria>);
-        void suscribirEstadistica(Estadistica);
-        std::list<DtEstadistica> solicitarEstadisticas(Videjuego);
+        std::list<std::string> * getVjSinPartidasActivas();
+        std::map<std::string,Videojuego *> * getVideojuegosDesarrollados();
+        void publishVideogame(DtVideojuego *,std::map<std::string,Categoria *> *);
+        void suscribirEstadistica(Estadistica *);
+        std::list<DtEstadistica *> * solicitarEstadisticas(Videjuego *);
 };
 
 #endif
