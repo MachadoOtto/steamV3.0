@@ -1,56 +1,56 @@
-#include "../include/inicioFinPartidasController.h"
+#include "../include/iFPController.h"
 
-InicioFinPartidasController::IFPartidasinterface() {
+IFPController::IFPController() {
 
 }
 
-static InicioFinPartidasController::InicioFinPartidasController * getInstance() {
+static IFPController * IFPController::getInstance() {
     if(instancia == NULL) {
-        instancia = new InicioFinPartidasController;
+        instancia = new IFPController;
     }
     return instancia;
 }
 
-//Set(string) InicioFinPartidasController::obtenerVideojuegosActivos() {
+//Set(string) IFPController::obtenerVideojuegosActivos() {
 
 }
 
-//Set(DtPartida) InicioFinPartidasController::obtenerPartidasActivas() {
+//Set(DtPartida) IFPController::obtenerPartidasActivas() {
 
 }
 
-//Set(DtPartidaIndividual) InicioFinPartidasController::obtenerHistorialPartidas() {
+//Set(DtPartidaIndividual) IFPController::obtenerHistorialPartidas() {
 
 }
 
-//Set(string) InicioFinPartidasController::obtenerJugadoresSubscriptos() {
+//Set(string) IFPController::obtenerJugadoresSubscriptos() {
 
 }
 
-//void InicioFinPartidasController::seleccionarVideojuego(string) {
+//void IFPController::seleccionarVideojuego(string) {
 
 }
 
-void InicioFinPartidasController::seleccionarContinuacionPartida(int) {
+void IFPController::seleccionarContinuacionPartida(int) {
 
 }
 
-void InicioFinPartidasController::partidaEnVivo(bool) {
+void IFPController::partidaEnVivo(bool) {
 
 }
 
-void InicioFinPartidasController::aniadirJugadorPartida(std::string) {
+void IFPController::aniadirJugadorPartida(std::string) {
 
 }
 
-void InicioFinPartidasController::confirmarPartida() {
+void IFPController::confirmarPartida() {
 
 }
 
-void InicioFinPartidasController::confirmarFinalizarPartida(int) {
+void IFPController::confirmarFinalizarPartida(int) {
 
 }
 
-void InicioFinPartidasController::clearCache() {
+void IFPController::clearCache() {
 
 }
