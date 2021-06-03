@@ -17,7 +17,8 @@ class Plataforma::Categoria {
     private:
     
     public:
-
+        Plataforma(TipoPlataforma);
+        ~Plataforma();
 }
 
 #endif
