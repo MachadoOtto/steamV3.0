@@ -1,14 +1,14 @@
-#ifndef IFPARTIDASINTERFACE
-#define IFPARTIDASINTERFACE
+#ifndef IIFPCONTROLLER
+#define IIFPCONTROLLER
 
 #include <string>
 
-class IFPartidasinterface {
+class IIFPController {
     private:
-        IFPartidasinterface();
-        static IFPartidasinterface * instancia;
+        IIFPController();
+        static IIFPController * instancia;
     public:
-        static IFPartidasinterface * getInstance() = 0;
+        static IIFPController * getInstance() = 0;
         //Set(string) obtenerVideojuegosActivos() = 0;
         //Set(DtPartida) obtenerPartidasActivas() = 0;
         //Set(DtPartidaIndividual) obtenerHistorialPartidas() = 0;
