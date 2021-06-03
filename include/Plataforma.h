@@ -14,7 +14,7 @@
 #include <string>
 #include "TipoPlataforma.h"
 
-class Plataforma::Categoria {
+class Plataforma : public Categoria {
     private:
     
     public:
