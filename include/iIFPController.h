@@ -8,10 +8,7 @@
 #include <set>
 
 class IIFPController {
-    private:
-        IIFPController();
     public:
-        static IIFPController * getInstance();
         virtual std::set<std::string> * obtenerVideojuegosActivos() = 0;
         virtual std::set<DtPartida> * obtenerPartidasActivas() = 0;
         virtual std::set<DtPartidaIndividual> * obtenerHistorialPartidas() = 0;

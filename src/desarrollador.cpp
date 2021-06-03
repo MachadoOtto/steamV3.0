@@ -9,6 +9,7 @@
 #include <set>
 #include <map>
 #include <pair>
+#include <iterator>
 
 Desarrollador::Desarrollador(DtDesarrollador des) {
     empresa = des.empresa;
