@@ -20,6 +20,12 @@ class Categoria {
         std::string descripcion;
     public:
         Categoria();
+        std::string getNombre();
+        std::string getDescripcion();
+        void setNombre(std::string);
+        void setDescripcion(std::string);
+        ~Categoria();
+        
         DtCategoria getDt();
 }
 
