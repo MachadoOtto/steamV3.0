@@ -9,9 +9,23 @@
  */
 
 #include "Categoria.h"
+#include "tipoCategoria.h"
 
-Categoria::Categoria() {
-    
+Categoria::Categoria(DtCategoria dtCat) {
+    nombre = dtCat.getNombre();
+    descripcion = dtCat.getDescripcion();
+}
+
+std::string Categoria::getNombre() {
+    return nombre;
+}
+
+std::string Categoria::getDescripcion() {
+    return descripcion;
+}
+
+Categoria::~Categoria() {
+
 }
 
 DtCategoria Categoria::getDt() {

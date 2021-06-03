@@ -8,13 +8,27 @@
  * 	Mathias Ramilo
  */
 
-#include "TipoPlataforma.h"
+#include "Plataforma.h"
+#include "tipoPlataforma.h"
 
-Plataforma:Plataforma(TipoPlataforma tipoPlataforma) {
-    nombre = tipoPlataforma;
+Plataforma::Plataforma(DtCategoria dtCat) {
+    nombre = dtCat.getNombre();
+    descripcion = dtCat.getDescripcion();
+}
 
+std::string Plataforma::getNombre() {
+    return nombre;
+}
+
+std::string Plataforma::getDescripcion() {
+    return descripcion;
 }
 
 Plataforma::~Plataforma() {
     
+}
+
+DtCategoria Plataforma::getDt() {
+    DtCategoria dtCat(nombre,descripcion,tipoCategoria::Genero);
+    return dtCat;
 }

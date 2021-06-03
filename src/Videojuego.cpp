@@ -15,30 +15,25 @@
 #include "PartidaIndividual.h"
 #include "PartidaMultijugador.h"
 
-Videojuego::Videojuego(DtVideojuego datos, Set(Categoria) categorias) {
+Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria> *categorias) {
     this->nombre = datos.getNombre();
     this->descripcion = datos.getDescripcion();
     this->costoSuscripciones = datos.getCostos();
     this->totalHorasJugadas = 0;
     this->puntaje = 0;
     this->totalJugadoresSuscriptos = 0;
-
-    ptrCat = begin(categorias);
-    while (ptrCat != NULL) {
-        this->categorias = add(categorias->getDt());
-        ptrCat = next(categorias);
-    }
+    this->categorias = categorias;
 }
 
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
-    DtVideojuego dtVid = new DtVideojuego();
-    dtVid->nombre = this->getNombre();
-    dtVid->descripcion = this->getDescripcion();
-    dtVid->costos = this->getCostoSuscripciones();
+    DtVideojuego dtVid();
+    dtVid.nombre = this->getNombre();
+    dtVid.descripcion = this->getDescripcion();
+    dtVid.costos = this->getCostoSuscripciones();
     return dtVid;
 }
 
-Set(string) Videojuego::obtenerJugadoresSuscriptos() {
+set<string> Videojuego::obtenerJugadoresSuscriptos() {
 
 }
 

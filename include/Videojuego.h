@@ -37,7 +37,7 @@ class Videojuego {
     public:
         Videojuego(DtVideojuego,Set(Categoria));
         DtVideojuego obtenerDatosVideojuego();
-        Set(string) obtenerJugadoresSuscriptos();
+        std::set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
         void confirmarPartida(Jugador,bool,bool,std::set<Jugador>);
         void cancelarSuscripcion(Jugador);
