@@ -6,27 +6,39 @@
 #include "../include/partida.h"
 #include "../include/suscripcion.h"
 
-/*Set(String) obtenerVidejuegosActivos() {
+#include <set>
+#include <iterator>
 
-}*/
+std::set<std::string> * obtenerVidejuegosActivos() {
 
-/*Set(DtVidejuego) obtenerDatosVj() {
+}
 
-}*/
+std::set<DtVideojuego> * obtenerDatosVj() {
+    std::set<DtVideojuego> * res = new std::set<DtVideojuego>;
+    for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
+        Suscripcion * s = *it;
+        bool esAct = s->esActiva();
+        if(esAct) {
+            DtVideojuego dtvjAct = s->obtenerVideojuego();
+            res->push_back(dtvjAct);
+        }
+    }
+    return res;
+}
 
-/*Set(String) getVjSinPartidasActivas() {
+std::set<std::string> * getVjSinPartidasActivas() {
 
-}*/
+}
 
-/*Set(DtPartida) obtenerPartidasActivas() {
+std::set<DtPartida> * obtenerPartidasActivas() {
 
-}*/
+}
 
-/*Set(DtPartidaindividual) obtenerHistorialPartidas() {
+std::set<DtPartidaindividual> * obtenerHistorialPartidas(Videojuego *) {
 
-}*/
+}
 
-Partidaindividual seleccionarContinuacionPartida(int) {
+Partidaindividual * seleccionarContinuacionPartida(int) {
 
 }
 
@@ -34,8 +46,8 @@ void agregarPartida(Partida) {
 
 }
 
-void agregarSuscripcion(Suscripcion) {
-
+void agregarSuscripcion(Suscripcion * sNueva) {
+    suscripciones->insert(sNueva);
 }
 
 void abandonarPartidaMulti(PartidaMultijugador) {
