@@ -1,20 +1,20 @@
-#ifndef INICIOFINPARTIDASCONTROLLER
-#define INICIOFINPARTIDASCONTROLLER
+#ifndef IFPCONTROLLER
+#define IFPCONTROLLER
 
-#include HandlerUsuario
-#include HandlerCatalogo
+#include "HandlerUsuario.h"
+#include "HandlerCatalogo.h"
+#include "IIFPController.h"
 
-#include "iFPartidasInterface.h"
 #include <string>
 
-class InicioFinPartidasController: public IFPartidasInterface {
+class IFPController: public IIFPController {
     private:
-        InicioFinPartidasController();
-        static InicioFinPartidasController * instancia;
+        IFPController();
+        static IFPController * instancia;
         bool pCont;
         bool enVivo;
     public:
-        static virtual InicioFinPartidasController * getInstance();
+        static virtual IFPController * getInstance();
         //virtual Set(string) obtenerVideojuegosActivos();
         //virtual Set(DtPartida) obtenerPartidasActivas();
         //virtual Set(DtPartidaIndividual) obtenerHistorialPartidas();
