@@ -18,7 +18,7 @@ class Jugador: public Usuario {
         //Set(DtVidejuego) obtenerDatosVj();
         //Set(String) getVjSinPartidasActivas();
         //Set(DtPartida) obtenerPartidasActivas();
-        //Set(DtPartidaindividual) obtenerHistorialPartidas();
+        //Set(DtPartidaindividual) obtenerHistorialPartidas(Videojuego *);
         Partidaindividual seleccionarContinuacionPartida(int);
         void agregarPartida(Partida);
         void agregarSuscripcion(Suscripcion);

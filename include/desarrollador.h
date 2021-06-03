@@ -25,6 +25,7 @@ class Desarrollador: public Usuario {
         void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
         void suscribirEstadistica(Estadistica *); //POR HACER
         std::set<DtEstadistica> * solicitarEstadisticas(Videjuego *);
+        ~Desarrollador();
 };
 
 #endif

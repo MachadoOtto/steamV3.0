@@ -64,3 +64,14 @@ std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videjuego * vj) {
     }
     return res;
 }
+
+Desarrollador::~Desarrollador() {
+    for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {
+        delete *it;
+    }
+    delete videojuegosDesarrollados;
+    for(std::map<std::string,Estadistica *>::iterator it = estadisticas->begin(); it != estadisticas->end(); it++) {
+        delete *it;
+    }
+    delete estadisticas;
+}

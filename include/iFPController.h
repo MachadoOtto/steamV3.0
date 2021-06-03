@@ -4,6 +4,7 @@
 #include "IIFPController.h"
 #include "dtPartida.h"
 #include "dtPartidaIndividual.h"
+#include "Usuario.h"
 
 #include <string>
 #include <set>
@@ -11,6 +12,10 @@
 class IFPController: public IIFPController {
     private:
         IFPController();
+        Usuario * host;
+        Videojuego * vj;
+        Partida * partida;
+        std::map<std::string,Jugador *> * jugadoresAUnir;
         static IFPController * instancia;
         bool pCont;
         bool enVivo;
@@ -27,6 +32,7 @@ class IFPController: public IIFPController {
         virtual void confirmarPartida();
         virtual void confirmarFinalizarPartida(int);
         virtual void clearCache();
+        ~IFPController();
 };
 
 #endif
