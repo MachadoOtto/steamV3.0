@@ -1,10 +1,11 @@
 #ifndef IFPCONTROLLER
 #define IFPCONTROLLER
 
-#include "IIFPController.h"
+#include "iIFPController.h"
 #include "dtPartida.h"
 #include "dtPartidaIndividual.h"
-#include "Usuario.h"
+#include "jugador.h"
+#include "partidaindividual.h"
 
 #include <string>
 #include <set>
@@ -12,9 +13,9 @@
 class IFPController: public IIFPController {
     private:
         IFPController();
-        Usuario * host;
+        Jugador * host;
         Videojuego * vj;
-        Partida * partida;
+        PartidaIndividual * partida;
         std::map<std::string,Jugador *> * jugadoresAUnir;
         static IFPController * instancia;
         bool pCont;
@@ -23,7 +24,7 @@ class IFPController: public IIFPController {
         static virtual IFPController * getInstance();
         virtual std::set<std::string> * obtenerVideojuegosActivos();
         virtual std::set<DtPartida> * obtenerPartidasActivas();
-        virtual std::set<DtPartidaIndividual> * obtenerHistorialPartidas();
+        virtual std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego *);
         virtual std::set<std::string> * obtenerJugadoresSubscriptos();
         virtual void seleccionarVideojuego(std::string);
         virtual void seleccionarContinuacionPartida(int);
