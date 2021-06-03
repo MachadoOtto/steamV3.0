@@ -12,6 +12,7 @@
 #define GENERO
 
 #include <string>
+#include <TipoGenero.h>
 
 class Genero::Categoria {
     private:
