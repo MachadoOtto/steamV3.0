@@ -12,6 +12,7 @@
 #define PLATAFORMA
 
 #include <string>
+#include <TipoPlataforma.h>
 
 class Plataforma::Categoria {
     private:
