@@ -7,15 +7,16 @@
 #include "videojuego.h"
 
 #include <string>
+#include <list>
 
 class Desarrollador: public Usuario {
     private:
         std::string empresa;
     public:
-        //Set(String) getVideojuegosDesarrollados;
-        //void publishVideogame(DtVideojuego,Set(Categoria));
+        std::list<std::string> getVideojuegosDesarrollados;
+        void publishVideogame(DtVideojuego,std::list<Categoria>);
         void suscribirEstadistica(Estadistica);
-        //Set(DtEstadistica) solicitarEstadisticas(Videjuego);
+        std::list<DtEstadistica> solicitarEstadisticas(Videjuego);
 };
 
 #endif
