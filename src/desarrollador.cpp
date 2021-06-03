@@ -1,15 +1,22 @@
 #include "../include/desarrollador.h"
+#include "../include/categoria.h"
 #include "../include/estadistica.h"
 
-/*Set(String) Desarrollador::getVideojuegosDesarrollados {
+#include <string>
+#include <list>
 
-}*/
-//void publishVideogame(DtVideojuego,Set(Categoria));
+std::list<std::string> Desarrollador::getVideojuegosDesarrollados {
+
+}
+
+void Desarrollador::publishVideogame(DtVideojuego,std::list<Categoria>) {
+    
+}
 
 void Desarrollador::suscribirEstadistica(Estadistica) {
 
 }
 
-/*Set(DtEstadistica) Desarrollador::solicitarEstadisticas(Videjuego) {
+std::list<DtEstadistica> Desarrollador::solicitarEstadisticas(Videjuego) {
 
-}*/
+}
