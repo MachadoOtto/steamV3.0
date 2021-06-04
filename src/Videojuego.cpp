@@ -15,6 +15,10 @@
 #include "PartidaIndividual.h"
 #include "PartidaMultijugador.h"
 
+using std::string
+using std::map
+using std::set
+
 Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria> *categorias) {
     this->nombre = datos.getNombre();
     this->descripcion = datos.getDescripcion();
@@ -33,8 +37,12 @@ DtVideojuego Videojuego::obtenerDatosVideojuego() {
     return dtVid;
 }
 
-set<string> Videojuego::obtenerJugadoresSuscriptos() {
-
+set<Jugador*>* Videojuego::obtenerJugadoresSuscriptos() {
+    set<Jugador*>* setJugadores = new set<Jugador*>;
+    for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
+        setJugadores->insert(it->getComprador());
+    }
+    return setJugadores;
 }
 
 bool Videojuego::estaActivo() {
@@ -45,14 +53,14 @@ bool Videojuego::estaActivo() {
     }
 }
 
-void Videojuego::confirmarPartida(Jugador host,PartidaIndividual pCont,bool enVivo,Set(Jugador) jUnidos) {
+void Videojuego::confirmarPartida(Jugador host,PartidaIndividual pCont,bool enVivo,set<Jugador> jUnidos) {
     if (pCont != NULL) {
         PartidaIndividual pInd = new PartidaIndividual();
-        pInd->id = obtenerDatosPartida()->getId();
-        pInd->fecha = obtenerDatosPartida()->getFecha();
-        pInd->duracion = obtenerDatosPartida()->getDuracion();
-        pInd->activa = obtenerDatosPartida()->getActiva();
-        host->partidas = add(pInd); 
+        pInd->setId(pCont->obtenerDatosPartida()->getId());
+        pInd->setFecha(pCont->obtenerDatosPartida()->getFecha());
+        pInd->setDuracion(pCont->obtenerDatosPartida()->getDuracion());
+        pInd->setActiva(pCont->obtenerDatosPartida()->getActiva());
+        host->partidas->add(pInd); 
     } else {
 
     }

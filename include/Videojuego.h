@@ -20,33 +20,37 @@
 #include "Jugador.h"
 #include "DtPrecios.h"
 
+using std::string
+using std::map
+using std::set
+
 class Videojuego {
     private:
-        std::string nombre;
-        std::string descripcion;
+        string nombre;
+        string descripcion;
         DtPrecios costoSuscripciones;
         float totalHorasJugadas;
         float puntaje;
         int totalJugadoresSuscriptos;
 
         //Associations
-        std::set<Suscripcion> *suscripciones;
-        std::map<int,Partida> *partidas;
-        std::map<string,Categoria> *categorias;
+        set<Suscripcion*> *suscripciones;
+        map<int,Partida*> *partidas;
+        map<string,Categoria*> *categorias;
         
     public:
-        Videojuego(DtVideojuego,Set(Categoria));
+        Videojuego(DtVideojuego,set<Categoria>);
         DtVideojuego obtenerDatosVideojuego();
-        std::set<Jugador*>* obtenerJugadoresSuscriptos();
+        set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
-        void confirmarPartida(Jugador,bool,bool,std::set<Jugador>);
+        void confirmarPartida(Jugador,bool,bool,set<Jugador>);
         void cancelarSuscripcion(Jugador);
         void confirmarSuscripcion(Jugador,TipoSuscripcion,TipoPago);
         void eliminarInfoAsociada(Videojuego);
 
         //Getters
-        std::string getNombre();
-        std::string getDescripcion();
+        string getNombre();
+        string getDescripcion();
         DtPrecios getCostoSuscripciones();
         float getTotalHorasJugadas();
         float getPuntaje();
@@ -56,8 +60,8 @@ class Videojuego {
         Categoria* getCategorias();
 
         //Setters
-        void setNombre(std::string);
-        void setDescripcion(std::string);
+        void setNombre(string);
+        void setDescripcion(string);
         void setCostoSuscripciones(DtPrecios);
         void setTotalHorasJugadas(float);
         void setPuntaje(float);
