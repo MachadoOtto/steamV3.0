@@ -1,6 +1,8 @@
 #ifndef USUARIO
 #define USUARIO
 
+#include "dtUsuario.h"
+
 #include <string>
 
 class Usuario {
@@ -8,7 +10,7 @@ class Usuario {
         std::string email;
         std::string contrasenia;
     public:
-        Usuario();
+        Usuario(DtUsuario);
 };
 
 #endif
