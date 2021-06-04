@@ -9,14 +9,20 @@
 #include "suscripcion"
 #include "dtVideojuego.h"
 #include "dtPartida.h"
+#include "../include/JugadorMulti.h"
 
 #include <string>
+#include <set>
+#include <map>
 
 class Jugador: public Usuario {
     private:
+        std::set<Suscripcion *> * suscripciones;
+        std::map<int,Partidaindividual *> * partidasInd;
+        std::set<JugadorMulti *> * jMultis;
         std::string empresa;
     public:
-        Jugador();
+        Jugador(DtVideojuego);
         std::set<std::string> * obtenerVidejuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
         std::set<std::string> * getVjSinPartidasActivas();
@@ -27,6 +33,10 @@ class Jugador: public Usuario {
         void agregarSuscripcion(Suscripcion *);
         void abandonarPartidaMulti(PartidaMultijugador *);
         void finPartida(int);
+        void associate(Partida *);
+        void removeSus(Suscripcion *);
+        void remove(Partida *);
+        ~Jugador();
 };
 
 #endif
