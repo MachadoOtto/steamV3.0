@@ -67,18 +67,18 @@ virtual void PartidaMultijugador::remove(Jugador* player) {
     if (player == host)
         host = NULL;
     else {
-        map<string, Jugador*>::iterator it = jugadoresUnidos.find(player.getNombre());
+        map<string, Jugador*>::iterator it = jugadoresUnidos->find(player.getNombre());
         if (jugadoresUnidos.end != it) {
             jugadoresUnidos.erase(it)
         }
     }
 }
 
-virtual PartidaMultijugador::~Partida() { 
-    for (map<int, Comentario*>::iterator it = comentarios.begin(); it! = comentarios.end(); ++it) {
-        it->second.eliminarComentario();
+PartidaMultijugador::~Partida() { 
+    for (map<int, Comentario*>::iterator it = comentarios->begin(); it != comentarios->end(); ++it) {
+        it->second->eliminarComentario();
         delete it->second;
     }
-    comentarios.clear();
-    jugadoresUnidos.clear();
+    delete comentarios;
+    delete jugadoresUnidos;
 }

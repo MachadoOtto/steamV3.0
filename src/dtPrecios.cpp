@@ -26,10 +26,8 @@ float DtPrecios::getAnual() { return anual; }
 
 float DtPrecios::getVitalicia() { return vitalicia; }
 
-// Retorna un string con el formato correcto para los precios.
-string DtPrecios::getPrecios() {
-    string fecha;
-    fecha = "Lista de precios: \n" + "Mensual: %d\n" +
-        "Trimestral: %d\n" + "Anual: %d\n" + "Vitalicia: %d\n"
-        (mensual, trimestral, anual, vitalicia); 
+ostream& operator<<(ostream& o, DtPrecios p) {
+    o << "Lista de precios: \n" << "Mensual: " << p.getMensual() << "\n" << "Trimestral: " << p.getTrimestral()
+        << "\n" << "Anual: " << p.getAnual() << "\n" << "Vitalicia: " << p.getVitalicia() << "\n";
+    return o;
 }

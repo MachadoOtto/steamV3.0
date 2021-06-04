@@ -9,13 +9,19 @@
 
 #include <../include/partidaIndividual.h>
 
-PartidaIndividual::PartidaIndividual(DtPartidaIndividual* datos) {
+PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) {
     identificador = datos.getIdentificador();
     fecha = datos.getFechaHora();
     duracion = datos.getDuracion();
     activa = datos.getActiva();
     host = NULL;
     videogame = NULL;
+}
+
+PartidaIndividual* PartidaIndividual::create(datos, punteros*) {
+    PartidaIndividual* nuevo = new PartidaIndividual(datos)
+    nuevo->apunto = punteros;
+    return nuevo;
 }
 
 void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
@@ -43,4 +49,4 @@ virtual void PartidaIndividual::remove(Jugador* player) {
         host = NULL; 
 }
 
-virtual PartidaIndividual::~Partida() { }
+PartidaIndividual::~PartidaIndividual() { }

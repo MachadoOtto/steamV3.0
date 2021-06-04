@@ -9,12 +9,21 @@
 
 #include <../include/handlerUsuario.h>
 
+HandlerUsuario* HandlerUsuario::instancia = nullptr;
+
 HandlerUsuario::HandlerUsuario(){
     usuarios = new map<string, Usuario*>;
+    loggedUser = nullptr;
 }
 
 static HandlerUsuario* HandlerUsuario::getInstance() {
+    if (instancia == nullptr)
+        instancia = new HandlerUsuario();
+    return instancia;
+}
 
+void HandlerUsuario::setLoggedUser(Usuario* user) {
+    loggedUser = user;
 }
 
 Usuario* HandlerUsuario::getLoggedUser() { return loggedUser; }
@@ -32,7 +41,7 @@ void HandlerUsuario::addUsuario(Usuario* user) {
 }
 
 HandlerUsuario::~HandlerUsuario() {
-    for (map<string, Usuario*>::iterator it = usuarios.begin(); it! = usuarios.end(); ++it) {
+    for (map<string, Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); ++it) {
         delete it->second;
     }
     delete usuarios;

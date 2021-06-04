@@ -10,22 +10,28 @@
 #ifndef DT_FECHAHORA
 #define DT_FECHAHORA
 
+#include <iostream>
 #include <string>
 
+using std::ostream;
 using std::string;
 
 class DtFechaHora {
 private:
     int anio, mes, dia, hora, min, segundo;
 public:
+    DtFechaHora(); // Devuelve la fecha actual.
     DtFechaHora(int, int, int, int, int, int);
     int getAnio();
     int getMes();
     int getDia();
     int getHora();
-    int getMin();
+    int getMinuto();
     int getSegundo();
-    string getFechaHora(); // Retorna un string con el formato correcto para la fecha.
+    float diffHoras(DtFechaHora); // Devuelve la diferencia entre fechas en horas. ATENCION: La fecha ingresada debe ser mayor a la actual.
 };
+
+// Sobrecarga del operador de flujo.
+ostream& operator<<(ostream&, DtFechaHora);
 
 #endif

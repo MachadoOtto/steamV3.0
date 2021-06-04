@@ -10,8 +10,10 @@
 #ifndef DT_PRECIOS
 #define DT_PRECIOS
 
+#include <iostream>
 #include <string>
 
+using std::ostream;
 using std::string;
 
 class DtPrecios {
@@ -23,7 +25,9 @@ public:
     float getTrimestral();
     float getAnual();
     float getVitalicia();
-    string getPrecios(); // Retorna un string con el formato correcto para los precios.
 };
+
+// Sobrecarga del operador de flujo.
+ostream& operator<<(ostream&, DtPrecios);
 
 #endif

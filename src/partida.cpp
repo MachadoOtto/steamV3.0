@@ -35,6 +35,6 @@ bool Partida::esIgualVideojuego(Videojuego* vid) {
     return (videogame.getNombre() == vid.getNombre());
 }
 
-void Partida::asignarHoraFinalizacion(DtFechaHora horaFinal) {
-    duracion = horaFinal - fecha;
+void Partida::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
+    duracion = fecha.diffHoras(fechaFinal);
 }

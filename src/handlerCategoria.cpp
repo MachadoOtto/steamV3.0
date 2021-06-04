@@ -9,24 +9,48 @@
 
 #include <../include/handlerCategoria.h>
 
+#include <typeinfo>
+
+HandlerCategoria* HandlerCategoria::instancia = nullptr;
+
 HandlerCategoria::HandlerCategoria(){
     categorias = new map<string, Categoria*>;
 }
 
 static HandlerCategoria* HandlerCategoria::getInstance() {
-
+    if (instancia == nullptr)
+        instancia = new HandlerCategoria();
+    return instancia;
 }
 
 set<DtCategoria>* HandlerCategoria::getDtGenders() {
-
+    set<DtCategoria>* setGenero = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (dynamic_cast<Genero*>(it->second)) {
+            setGenero->insert(it->second->getDatos()); // Inserta un DtCategoria del Genero.
+        }
+    }
+    return setGenero;
 }
 
 set<DtCategoria>* HandlerCategoria::getDtPlatforms() {
-
+    set<DtCategoria>* setPlatform = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (dynamic_cast<Plataforma*>(it->second)) {
+            setPlatform->insert(it->second->getDatos()); // Inserta un DtCategoria de la Plataforma.
+        }
+    }
+    return setPlatform;
 }
 
 set<DtCategoria>* HandlerCategoria::getDtCategories() {
-
+    set<DtCategoria>* setCategOtro = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (!((dynamic_cast<Genero*>(it->second)) || (dynamic_cast<Plataforma*>(it->second)))) {
+            setCategOtro->insert(it->second->getDatos()); // Inserta un DtCategoria de CategoriaOtro.
+        }
+    }
+    return setCategOtro;
 }
 
 Genero* HandlerCategoria::findGender(string nombreGenero) {
@@ -46,7 +70,7 @@ void HandlerCategoria::addCategoria(Categoria* cat) {
 }
 
 HandlerCategoria::~HandlerCategoria() {
-    for (map<string, Categoria*>::iterator it = categorias.begin(); it! = categorias.end(); ++it) {
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
         delete it->second;
     }
     delete categorias;

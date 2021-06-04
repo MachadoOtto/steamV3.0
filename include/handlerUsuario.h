@@ -27,6 +27,7 @@ private:
     HandlerUsuario();
 public:
     static HandlerUsuario* getInstance();
+    void setLoggedUser(Usuario*);
     Usuario* getLoggedUser();
     Usuario* findUsuario(string);
     bool existeUsuario(string);

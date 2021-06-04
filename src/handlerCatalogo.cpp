@@ -9,18 +9,22 @@
 
 #include <../include/handlerCatalogo.h>
 
-HandlerCatalogo::HandlerCatalogo(){
+HandlerCatalogo* HandlerCatalogo::instancia = nullptr;
+
+HandlerCatalogo::HandlerCatalogo() {
     videojuegos = new map<string, Videojuego*>;
 }
 
 static HandlerCatalogo* HandlerCatalogo::getInstance() {
-
+    if (instancia == nullptr)
+        instancia = new HandlerCatalogo();
+    return instancia;
 }
 
 set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
     set<DtVideojuego> dtInactivos* = new set<DtVideojuego>;
-    for (map<string, Videojuego*>::iterator it = videojuegos.begin(); it! = videojuegos.end(); ++it) {
-        if (!(it->second.esActivo())) {
+    for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it! = videojuegos->end(); ++it) {
+        if (!(it->second->esActivo())) {
             dtInactivos->insert(it->second->obtenerDatoVideojuego());
         }
     }
@@ -28,22 +32,22 @@ set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
 }
 
 Videojuego HandlerCatalogo::findVideojuego(string nombreVideojuego) {
-    map<string, Videojuego*>::iterator it = videojuegos.find(nombreVideojuego);
+    map<string, Videojuego*>::iterator it = videojuegos->find(nombreVideojuego);
     return it->second;
 }
 
 void HandlerCatalogo::addVideojuego(Videojuego* vj) {
-    videojuegos[vj.getNombre()] = vj;
+    videojuegos[vj->getNombre()] = vj;
 }
 
 void HandlerCatalogo::remove(Videojuego* vj) {
-    map<string, Videojuego*>::iterator it = videojuegos.find(vj.getNombre());
+    map<string, Videojuego*>::iterator it = videojuegos->find(vj->getNombre());
     delete it->second;
-    videojuegos.erase(it); 
+    videojuegos->erase(it); 
 }
 
 HandlerCatalogo::~HandlerCatalogo() {
-    for (map<string, Videojuego*>::iterator it = videojuegos.begin(); it! = videojuegos.end(); ++it) {
+    for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it != videojuegos->end(); ++it) {
         delete it->second;
     }
     delete videojuegos;

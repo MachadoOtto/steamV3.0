@@ -9,12 +9,16 @@
 
 #include <../include/handlerEstadistica.h>
 
+HandlerEstadistica* HandlerEstadistica::instancia = nullptr;
+
 HandlerEstadistica::HandlerEstadistica(){
     estadisticas = new set<Estadistica*>;
 }
 
 static HandlerEstadistica* HandlerEstadistica::getInstance() {
-
+    if (instancia == nullptr)
+        instancia = new HandlerEstadistica();
+    return instancia;
 }
 
 set<Estadistica>* HandlerEstadistica::getEstadistica() {
@@ -22,7 +26,7 @@ set<Estadistica>* HandlerEstadistica::getEstadistica() {
 }
 
 HandlerEstadistica::~HandlerEstadistica() {
-    for (set<Estadistica*>::iterator it = estadisticas.begin(); it! = estadisticas.end(); ++it) {
+    for (set<Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
         delete *it;
     }
     delete estadisticas;

@@ -30,5 +30,5 @@ public:
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();
     virtual void remove(Jugador*);
-    virtual ~Partida();
+    ~PartidaIndividual();
 };
