@@ -20,7 +20,8 @@ class Jugador: public Usuario {
         std::set<Suscripcion *> * suscripciones;
         std::map<int,Partidaindividual *> * partidasInd;
         std::set<JugadorMulti *> * jMultis;
-        std::string empresa;
+        std::string nickname;
+        std::string descripcion;
     public:
         Jugador(DtVideojuego);
         std::set<std::string> * obtenerVidejuegosActivos();

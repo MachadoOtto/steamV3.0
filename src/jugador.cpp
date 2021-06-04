@@ -1,4 +1,5 @@
 #include "../include/jugador.h"
+#include "../include/dtJugador.h"
 #include "../include/dtVideojuego.h"
 #include "../include/dtPartida.h"
 #include "../include/dtPartidaindividual.h"
@@ -12,11 +13,12 @@
 #include <map>
 #include <iterator>
 
-Jugador::Jugador(DtVideojuego dvj) {
+Jugador::Jugador(DtJugador dtj) { //ABSTRACCION???
     suscripciones = new std::set<Suscripcion *>;
     partidasIndstd = new std::map<int,Partidaindividual *>;
     jMultis = new std::set<JugadorMulti *>;
-    empresa = dvj->empresa;
+    descripcion = dtj->descripcion;
+    nickname = dtj->descripcion;
 }
 
 std::set<std::string> * Jugador::obtenerVidejuegosActivos() {
