@@ -25,6 +25,11 @@ void Partida::setHost(Jugador* player) {
 
 Jugador* Partida::getHost() { return host; }
 
+void Partida::remove(Jugador* player) { 
+    if (player == host)
+        host = NULL; 
+}
+
 void Partida::setVideojuego(Videojuego* vj) {
     videogame = vj;
 }
@@ -33,8 +38,4 @@ Videojuego* Partida::getVideojuego() { return videogame; }
 
 bool Partida::esIgualVideojuego(Videojuego* vid) {
     return (videogame.getNombre() == vid.getNombre());
-}
-
-void Partida::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
-    duracion = fecha.diffHoras(fechaFinal);
 }

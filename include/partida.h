@@ -33,14 +33,14 @@ public:
     bool esActiva();
     void setHost(Jugador*);
     Jugador* getHost();
+    void remove(Jugador*);
     void setVideojuego(Videojuego*);
     Videojuego* getVideojuego();
     bool esIgualVideojuego(Videojuego*);
-    void asignarHoraFinalizacion(DtFechaHora);
     virtual DtPartida* obtenerDatosPartida()=0;
+    virtual void asignarHoraFinalizacion(DtFechaHora)=0;
     virtual void finalizarPartida()=0;
     virtual void eliminarAssoc()=0;
-    virtual void remove(Jugador*)=0;
     virtual ~Partida()=0;
 };
 

@@ -31,6 +31,7 @@ class PartidaMultijugador : public Partida {
 private:
     bool transmitidaEnVivo;
     set<JugadorMulti*>* jugadoresMultis;
+    map<string, Jugador*>* jugadoresUnidos;
     map<int, Comentario*>* comentarios;
 public:
     PartidaMultijugador(DtPartidaMultijugador*);
@@ -40,8 +41,8 @@ public:
     void addComentario(Comentario*);
     map<int, Comentario*>* getComentarios();
     virtual DtPartida* obtenerDatosPartida();
+    virtual void asignarHoraFinalizacion(DtFechaHora);
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();
-    virtual void remove(Jugador*);
     ~PartidaMultijugador();
 };

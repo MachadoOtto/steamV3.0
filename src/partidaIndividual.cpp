@@ -35,6 +35,10 @@ virtual DtPartida* PartidaIndividual::obtenerDatosPartida() {
     return datosP;
 }
 
+virtual void PartidaIndividual::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
+    duracion = fecha.diffHoras(fechaFinal);
+}
+
 virtual void PartidaIndividual::finalizarPartida(DtFechaHora horaFinal) {
     this.setActiva(false);
     this.asignarHoraFinalizacion(horafinal);
@@ -42,11 +46,6 @@ virtual void PartidaIndividual::finalizarPartida(DtFechaHora horaFinal) {
 
 virtual void PartidaIndividual::eliminarAssoc() {
     host.remove(this);
-}
-
-virtual void PartidaIndividual::remove(Jugador* player) { 
-    if (player == host)
-        host = NULL; 
 }
 
 PartidaIndividual::~PartidaIndividual() { }

@@ -17,7 +17,7 @@ PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador* datos) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
     host = NULL;
     videogame = NULL;
-    jugadoresUnidos = NULL;
+    jugadoresUnidos = new map<string, Jugador*>;
     comentarios = new map<int, Comentario*>;
 }
     
@@ -32,46 +32,41 @@ map<string, Jugador*>* PartidaMultijugador::getJugadoresUnidos() {
 }
 
 void PartidaMultijugador::addComentario(Comentario* comment) {
-    comentarios[comment.getId()] = comment;
+    comentarios[comment->getId()] = comment;
 }
 
 map<int, Comentario*>* PartidaMultijugador::getComentarios() { return comentarios; }
 
 virtual DtPartida* PartidaMultijugador::obtenerDatosPartida() {
-    return DtPartidaMultijugador(identificador, fecha, duracion, activa,
-        transmitidaEnVivo);
+    return DtPartidaMultijugador(identificador, fecha, duracion, activa, transmitidaEnVivo);
+}
+
+virtual void PartidaMultijugador::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
+    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it! = jugadoresUnidos->end(); ++it) {
+        duracion += fecha.diffHoras(it->second->getJugadorMulti(this)->getFecha());
+    }
+    duracion += fecha.diffHoras(fechaFinal);
 }
 
 virtual void PartidaMultijugador::finalizarPartida(DtFechaHora horaFinal) {
     this.setActiva(false);
-    for (map<string, Jugador*>::iterator it = jugadoresUnidos.begin(); it! = jugadoresUnidos.end(); ++it) {
-        it->second.abandonarPartidaMulti(this);
+    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it! = jugadoresUnidos->end(); ++it) {
+        it->second->abandonarPartidaMulti(this);
     }
     this.asignarHoraFinalizacion(horafinal);
 }
 
 virtual void PartidaMultijugador::eliminarAssoc() {
     host.remove(this);
-    for (map<int, Comentario*>::iterator it = comentarios.begin(); it! = comentarios.end(); ++it) {
-        it->second.eliminarComentario();
+    for (map<int, Comentario*>::iterator it = comentarios->begin(); it! = comentarios->end(); ++it) {
+        it->second->eliminarComentario();
         delete it->second;
     }
     comentarios.clear();
-    for (map<string, Jugador*>::iterator it = jugadoresUnidos.begin(); it! = jugadoresUnidos.end(); ++it) {
-        it->second.remove(this);
+    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it! = jugadoresUnidos->end(); ++it) {
+        it->second->remove(this);
     }
-    jugadoresUnidos.clear();
-}
-
-virtual void PartidaMultijugador::remove(Jugador* player) { 
-    if (player == host)
-        host = NULL;
-    else {
-        map<string, Jugador*>::iterator it = jugadoresUnidos->find(player.getNombre());
-        if (jugadoresUnidos.end != it) {
-            jugadoresUnidos.erase(it)
-        }
-    }
+    jugadoresUnidos->clear();
 }
 
 PartidaMultijugador::~Partida() { 

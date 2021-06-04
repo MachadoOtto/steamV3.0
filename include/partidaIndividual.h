@@ -27,8 +27,8 @@ public:
     void setPartidaAnterior(PartidaIndividual*);
     PartidaIndividual* getPartidaAnterior();
     virtual DtPartida* obtenerDatosPartida();
+    virtual void asignarHoraFinalizacion(DtFechaHora);
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();
-    virtual void remove(Jugador*);
     ~PartidaIndividual();
 };
