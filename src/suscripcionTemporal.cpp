@@ -18,7 +18,7 @@ void SuscripcionTemporal::cancelarSuscripcion(){
     estado = TipoEstado::Inactiva; //En el uml pusieron un estado llamada cancelada. Por que?
 }
 
-SuscripcionTemporal::SuscripcionTemporal(TipoValido t, TipoEstado v){
+SuscripcionTemporal::SuscripcionTemporal(TipoValido t, TipoEstado v,DtFechaHora *dt,TipoPago tp,Jugador *j,Videojuego *v): Suscripcion(dt,tp,j,v){
     validez = t;
     estado = v;
 }

@@ -15,6 +15,7 @@
 
 class SuscripcionVitalicia: public Suscripcion{
 public:
+    Suscripcion(DtFechaHora *, TipoPago, Jugador *, Videojuego *);
     virtual bool esActiva();
 };
 
