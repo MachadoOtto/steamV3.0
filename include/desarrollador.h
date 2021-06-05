@@ -19,6 +19,15 @@ class Desarrollador: public Usuario {
         std::map<std::string,Estadistica *> * estadisticas;
     public:
         Desarrollador(DtDesarrollador);
+        void setEmpresa(std::string);
+        std::string getEmpresa();
+        void add(Videojuego *);
+        void remove(Videojuego *);
+        Videojuego * find(std::string); 
+        void add(Estadistica *);
+        void remove(Estadistica *);
+        Estadistica * find(std::string);
+        
         std::set<std::string> * getVjSinPartidasActivas();
         std::set<std::string> * getVideojuegosDesarrollados();
         void remove(Videojuego *);
