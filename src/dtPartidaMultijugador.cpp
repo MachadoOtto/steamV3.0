@@ -6,5 +6,10 @@ DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float dura
     this->transmitidaEnVivo = transmitidaEnVivo;
 }
 
-//poner gets chaval
-//overloading como miguelillo (flujo) <<
+bool DtPartidaMultijugador::getTransmitidaEnVivo() {
+    return transmitidaEnVivo;
+}
+
+friend & operator << (std::ostream,DtPartida) {
+    
+}

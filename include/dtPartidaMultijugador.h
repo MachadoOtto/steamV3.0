@@ -9,6 +9,8 @@ class DtPartidaMultijugador: public DtPartida {
         bool transmitidaEnVivo;
     public:
         DtPartidaMultijugador(int,DtFechaHora,float,bool,bool transmitidaEnVivo);
+        bool getTransmitidaEnVivo();
+        friend & operator << (std::ostream,DtPartida); //falta
 };
 
 #endif
