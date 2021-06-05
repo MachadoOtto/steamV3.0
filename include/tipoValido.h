@@ -10,6 +10,6 @@
 #ifndef TIPO_VALIDO
 #define TIPO_VALIDO
 
-enum class TipoValido {UnMes, TresMeses, Anio};
+enum class TipoValido {UnMes, TresMeses, Anio, Vitalicio};
 
 #endif
