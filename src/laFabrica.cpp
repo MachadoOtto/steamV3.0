@@ -27,7 +27,7 @@ IIFPartidas * laFabrica::getIFPartidasInterface(){
 
 IVideojuego * laFabrica::getVideojuegoInterface(){
    videojuegoController * vj = videojuegoController::getInstance();
-   return vjc;
+   return vj;
 }
 
 IAltaUsuario * laFabrica::getAltaUSuarioInterface(){
