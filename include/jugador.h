@@ -18,7 +18,7 @@
 class Jugador: public Usuario {
     private:
         std::set<Suscripcion *> * suscripciones;
-        std::map<int,Partidaindividual *> * partidasInd;
+        std::map<int,Partida *> * partidas;
         std::set<JugadorMulti *> * jMultis;
         std::string nickname;
         std::string descripcion;
@@ -26,7 +26,6 @@ class Jugador: public Usuario {
         Jugador(DtVideojuego);
         std::set<std::string> * obtenerVidejuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
-        std::set<std::string> * getVjSinPartidasActivas();
         std::set<DtPartida> * obtenerPartidasActivas();
         std::set<DtPartidaindividual> * obtenerHistorialPartidas(Videojuego *);
         Partidaindividual * seleccionarContinuacionPartida(int);

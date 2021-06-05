@@ -7,3 +7,6 @@ DtPartida::DtPartida(int id,DtFechaHora fecha,float duracion, bool activa) {
     this->duracion = duracion;
     this->activa = activa;
 }
+
+//poner gets chaval
+//overloading como miguelillo (flujo) <<

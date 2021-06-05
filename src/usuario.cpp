@@ -1,5 +1,5 @@
 #include "../include/usuario.h"
-#include "dtUsuario.h"
+#include "../include/dtUsuario.h"
 
 #include <string>
 

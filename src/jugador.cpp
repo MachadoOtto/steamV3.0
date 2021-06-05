@@ -13,9 +13,9 @@
 #include <map>
 #include <iterator>
 
-Jugador::Jugador(DtJugador dtj) { //ABSTRACCION???
+Jugador::Jugador(DtJugador dtj) { //TERMINAR DERIVACION
     suscripciones = new std::set<Suscripcion *>;
-    partidasIndstd = new std::map<int,Partidaindividual *>;
+    partidas = new std::map<int,Partidaindividual *>;
     jMultis = new std::set<JugadorMulti *>;
     descripcion = dtj->descripcion;
     nickname = dtj->descripcion;
@@ -47,13 +47,9 @@ std::set<DtVideojuego> * Jugador::obtenerDatosVj() {
     return res;
 }
 
-std::set<std::string> * Jugador::getVjSinPartidasActivas() {
-    //DONDE ESTA ESTA OPERACION???
-}
-
 std::set<DtPartida> * Jugador::obtenerPartidasActivas() {
     std::set<DtPartida> * res = new std::set<DtPartida>;
-    for(std::map<int,Partida *>::const_iterator it = partidasInd->cbegin(); it != partidasInd->cend(); it++) {
+    for(std::map<int,Partida *>::const_iterator it = partidas->cbegin(); it != partidas->cend(); it++) {
         Partida * p = *it;
         bool ok = p->esActiva();
         if(ok) {
@@ -66,7 +62,7 @@ std::set<DtPartida> * Jugador::obtenerPartidasActivas() {
 
 std::set<DtPartidaindividual> * Jugador::obtenerHistorialPartidas(Videojuego * vj) {
     std::set<DtPartidaindividual> * res = new std::set<DtPartidaindividual>;
-    for(std::map<int,Partidaindividual *>::const_iterator it = partidasInd->cbegin(); it != partidasInd->cend(); it++) {
+    for(std::map<int,Partidaindividual *>::const_iterator it = partidas->cbegin(); it != partidas->cend(); it++) {
         PartidaIndividual * pi = *it;
         bool activa = pi->esActiva();
         bool esVj = pi->esIgualVideojuego(vj);
@@ -79,11 +75,11 @@ std::set<DtPartidaindividual> * Jugador::obtenerHistorialPartidas(Videojuego * v
 }
 
 Partidaindividual * Jugador::seleccionarContinuacionPartida(int identificador) {
-    return *(partidasInd->find(identificador));
+    return *(partidas->find(identificador));
 }
 
 void Jugador::agregarPartida(Partida * partida) {
-    partidasInd->insert(std::pair<int,Partida *>(partida->id,partida));
+    partidas->insert(std::pair<int,Partida *>(partida->id,partida));
 }
 
 void Jugador::agregarSuscripcion(Suscripcion * sNueva) {
@@ -91,14 +87,14 @@ void Jugador::agregarSuscripcion(Suscripcion * sNueva) {
 }
 
 void Jugador::abandonarPartidaMulti(PartidaMultijugador * p) {
-    partidasInd->erase(p->id);
+    partidas->erase(p->id);
     JugadorMulti * jm = new JugadorMulti(p->fecha);
     delete p;
     jMultis->insert(jm);
 }
 
 void Jugador::finPartida(int identificador) {
-    Partidas * p = *(partidasInd->find(identificador));
+    Partidas * p = *(partidas->find(identificador));
     p->finalizarPartida();
 }
 
@@ -112,20 +108,13 @@ void Jugador::removeSus(Suscripcion * s) {
 }
 
 void Jugador::remove(Partida * p) {
-    //QUE HAGOOOOOOOOOOOOOO
-    int ayuda = 1/0;
+    partidas->erase(p->getIdentificador());
 }
 
 Jugador::~Jugador() {
-    for(std::set<Suscripcion *>::iterator it = suscripciones->begin(); it != suscripciones->end(); it++) {
-        delete *it;
-    }
     delete suscripciones;
-    for(std::map<int,Partidaindividual *> it = partidasInd->begin(); it != partidasInd->end(); it++) {
-        delete it->second;
-    }
-    delete partidasInd;
-    for(std::set<Suscripcion *>::iterator it = jMultis->begin(); it != jMultis->end(); it++) {
+    delete partidas;
+    for(std::set<JugadorMulti *>::iterator it = jMultis->begin(); it != jMultis->end(); it++) {
         delete *it;
     }
     delete jMultis;

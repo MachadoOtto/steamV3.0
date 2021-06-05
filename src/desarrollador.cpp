@@ -60,18 +60,18 @@ std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videjuego * vj) {
     for(std::set<DtEstadistica>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
         Estadistica * es = *it;
         DtEstadistica val = es->procesarEstadistica(vj);
-        res->push_back(val);
+        res->push_back(val); //TERMINAR
     }
     return res;
 }
 
 Desarrollador::~Desarrollador() {
     for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {
-        delete *it;
+        delete it->second;
     }
     delete videojuegosDesarrollados;
     for(std::map<std::string,Estadistica *>::iterator it = estadisticas->begin(); it != estadisticas->end(); it++) {
-        delete *it;
+        delete it->second;
     }
     delete estadisticas;
 }
