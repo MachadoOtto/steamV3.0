@@ -19,39 +19,39 @@ Desarrollador::Desarrollador(DtDesarrollador des) {
     estadisticas = new std::map<std::string,Estadistica *>;
 }
 
-void setEmpresa(std::string empresa) {
+void Desarrollador::setEmpresa(std::string empresa) {
     this->empresa = empresa;
 }
 
-std::string getEmpresa() {
+std::string Desarrollador::getEmpresa() {
     return empresa;
 }
 
-void add(Videojuego * vj) {
+void Desarrollador::add(Videojuego * vj) {
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
 }
 
-void remove(Videojuego * vj) {
+void Desarrollador::remove(Videojuego * vj) {
     videojuegosDesarrollados->erase(vj);
 }
 
-Videojuego * find(std::string nombreVj) {
+Videojuego * Desarrollador::find(std::string nombreVj) {
     return videojuegosDesarrollados[nombreVj];
 }
 
-void add(Estadistica * est) {
+void Desarrollador::add(Estadistica * est) {
     estadisticas->insert(std::pair<std::string,Estadistica *>(est->getNombre(),est));
 }
 
-void remove(Estadistica * est) {
+void Desarrollador::remove(Estadistica * est) {
     estadisticas->erase(est);
 }
 
-Estadistica * find(std::string est) {
+Estadistica * Desarrollador::find(std::string est) {
     return estadisticas[est];
 }
 
-std::set<std::string> * getVjSinPartidasActivas() {
+std::set<std::string> * Desarrollador::getVjSinPartidasActivas() {
     std::set<std::string> * res = new std::set<std::string>;
     for(std::map<std::string,Videojuego *>::const_iterator it = videojuegosDesarrollados->cbegin(); it != videojuegosDesarrollados->cend(); it++) {
         Videojuego * vj = *it;
