@@ -12,6 +12,7 @@
 
 #include "Videojuego.h"
 #include "Partida.h"
+#include "Suscripcion.h"
 #include "PartidaIndividual.h"
 #include "PartidaMultijugador.h"
 
@@ -55,13 +56,34 @@ bool Videojuego::estaActivo() {
 
 void Videojuego::confirmarPartida(Jugador host,PartidaIndividual pCont,bool enVivo,set<Jugador> jUnidos) {
     if (pCont != NULL) {
-        PartidaIndividual pInd = new PartidaIndividual();
-        pInd->setId(pCont->obtenerDatosPartida()->getId());
-        pInd->setFecha(pCont->obtenerDatosPartida()->getFecha());
-        pInd->setDuracion(pCont->obtenerDatosPartida()->getDuracion());
-        pInd->setActiva(pCont->obtenerDatosPartida()->getActiva());
-        host->partidas->add(pInd); 
+        DtPartidaIndividual dtPInd();
+        dtPInd.setId(pCont->obtenerDatosPartida()->getId());
+        dtPInd.setFecha(pCont->obtenerDatosPartida()->getFecha());
+        dtPInd.setDuracion(pCont->obtenerDatosPartida()->getDuracion());
+        dtPInd.setActiva(pCont->obtenerDatosPartida()->getActiva());
+        PartidaIndividual pInd = new PartidaIndividual(dtPInd); 
+        host->partidasInd->insert(pInd); 
     } else {
-
+        DtPartidaMultijugador dtPMulti();
+        dtPMulti.setId(pCont->obtenerDatosPartida()->getId());
+        dtPMulti.setFecha(pCont->obtenerDatosPartida()->getFecha());
+        dtPMulti.setDuracion(pCont->obtenerDatosPartida()->getDuracion());
+        dtPMulti.setActiva(pCont->obtenerDatosPartida()->getActiva());
     }
+}
+
+void Videojuego::cancelarSuscripcion(Jugador host) {
+    for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
+        if (it->esDeJugador(host)) {
+            it->cancelarSuscripcion();
+        }
+    }
+}
+
+void Videojuego::confirmarSuscripcion(Jugador host,TipoSuscripcion tipoSus,TipoPago tipoPago) {
+    
+}
+
+void Videojuego::eliminarInfoAsociada(Videojuego videojuego) {
+
 }
