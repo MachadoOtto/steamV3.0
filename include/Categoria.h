@@ -15,14 +15,16 @@
 #include "dtCategoria.h"
 #include "tipoCategoria.h"
 
+using std::string
+
 class Categoria {
     private:
-        std::string nombre;
-        std::string descripcion;
+        string nombre;
+        string descripcion;
     public:
         Categoria(DtCategoria);
-        std::string getNombre();
-        std::string getDescripcion();
+        string getNombre();
+        string getDescripcion();
         ~Categoria();
         
         virtual DtCategoria getDt();

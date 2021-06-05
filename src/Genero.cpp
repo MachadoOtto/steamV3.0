@@ -10,6 +10,7 @@
 
 #include "Genero.h"
 #include "tipoGenero.h"
+#include "dtCategoria.h"
 
 Genero::Genero(DtCategoria dtCat) {
     nombre = dtCat.getNombre();

@@ -10,6 +10,7 @@
 
 #include "Categoria.h"
 #include "tipoCategoria.h"
+#include "dtCategoria.h"
 
 Categoria::Categoria(DtCategoria dtCat) {
     nombre = dtCat.getNombre();

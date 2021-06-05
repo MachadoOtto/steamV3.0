@@ -13,6 +13,8 @@
 
 #include <string>
 #include "tipoGenero.h"
+#include "DtCategoria.h"
+#include "Categoria.h"
 
 class Genero : public Categoria {
     private:

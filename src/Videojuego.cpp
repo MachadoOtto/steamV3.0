@@ -9,12 +9,19 @@
  */
 
 #include <string>
+#include <map>
+#include <set>
 
 #include "Videojuego.h"
 #include "Partida.h"
 #include "Suscripcion.h"
+#include "Categoria.h"
+#include "Jugador.h"
 #include "PartidaIndividual.h"
 #include "PartidaMultijugador.h"
+#include "dtVideojuego.h"
+#include "tipoSuscripcion.h"
+#include "tipoPago.h"
 
 using std::string
 using std::map

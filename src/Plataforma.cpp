@@ -10,6 +10,7 @@
 
 #include "Plataforma.h"
 #include "tipoPlataforma.h"
+#include "dtCategoria.h"
 
 Plataforma::Plataforma(DtCategoria dtCat) {
     nombre = dtCat.getNombre();

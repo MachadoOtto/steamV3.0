@@ -8,6 +8,7 @@
  * 	Mathias Ramilo
  */
 
+#include "Jugador-Multi.h"
 #include "dtFechaHora.h"
 
 JugadorMulti::JugadorMulti(DtFechaHora fechaHora) {

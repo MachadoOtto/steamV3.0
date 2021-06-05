@@ -13,6 +13,7 @@
 
 #include <string>
 #include "tipoPlataforma.h"
+#include "Categoria.h"
 
 class Plataforma : public Categoria {
     private:
