@@ -9,6 +9,9 @@
 #include <set>
 #include <map>
 #include <iterator>
+#include <pair>
+
+IFPController * IFPController::instancia = NULL;
 
 IFPController::IFPController() {
     host = NULL;
@@ -17,7 +20,59 @@ IFPController::IFPController() {
     jugadoresAUnir = new std::map<std::string,Jugador *>;
 }
 
-static IFPController * IFPController::getInstance() {
+void setHost(Jugador * host) {
+    this->host = host;
+}
+
+Jugador * getHost() {
+    return host;
+}
+
+void setVj(Videojuego * vj) {
+this->vj = vj;
+}
+
+Videojuego * getVj() {
+    return vj;
+}
+
+void setPartida(Partida * partida) {
+ this->partida = partida;
+}
+
+Partida * getPartida() {
+    return partida;
+}
+
+void setPCont(bool pCont) {
+    this->pCont = pCont;
+}
+
+bool getPCont() {
+    return pCont;
+}
+
+void setEnVivo(bool enVivo) {
+    this->enVivo = enVivo;
+}
+
+bool getEnVivo() {
+    return enVivo;
+}
+
+void add(Jugador * jugador) {
+    jugadoresAUnir->insert(std::pair<std::string,Jugador *>(jugador->getNombre(),jugador));
+}
+
+void remove(Jugador * jugador) {
+    jugadoresAUnir->erase(jugador);
+}
+
+Jugador * find(std::string nombreJugador) {
+    return jugadoresAUnir[nombreJugador];
+}
+
+IFPController * IFPController::getInstance() {
     if(instancia == NULL) {
         instancia = new IFPController;
     }
@@ -78,8 +133,5 @@ void IFPController::clearCache() {
     delete host;
     delete partida;
     delete vj;
-    for(std::map<std::string,Jugador *>::iterator it = jugadoresAUnir->begin(); it != jugadoresAUnir->end(); it++) {
-        delete it->second;
-    }
     delete jugadoresAUnir;
 }
