@@ -27,7 +27,7 @@ using std::string
 using std::map
 using std::set
 
-Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria> *categorias) {
+Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias) {
     this->nombre = datos.getNombre();
     this->descripcion = datos.getDescripcion();
     this->costoSuscripciones = datos.getCostos();
