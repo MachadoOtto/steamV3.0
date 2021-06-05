@@ -45,10 +45,15 @@ void altaUsuarioController::clearCache(){
 void altaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
-   if(empresa != NULL)
-      desarrollador * usu(email, contraseña, empresa);
-   else
-      jugador * usu(email, contraseña, nickname, descripcion);
+   if(empresa != NULL){
+      DtUsuario datos(email, contraseña, empresa);
+      desarrollador * usu(datos);
+   }
+   else{
+
+      DtUsuario datos(email, contraseña, nickname, descripcion);
+      jugador * usu(datos);
+   }
    hu->addUsuario(usu); 
 }
 
