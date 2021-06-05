@@ -94,3 +94,65 @@ void Videojuego::confirmarSuscripcion(Jugador host,TipoSuscripcion tipoSus,TipoP
 void Videojuego::eliminarInfoAsociada(Videojuego videojuego) {
 
 }
+
+//--- Getters ---
+string Videojuego::getNombre() {
+    return this->nombre;
+}
+
+string getDescripcion() {
+    return this->descripcion;
+}
+
+DtPrecios getCostoSuscripciones() {
+    return this->costoSuscripciones;
+}
+
+float getTotalHorasJugadas() {
+    return this->totalHorasJugadas;
+}
+
+float getPuntaje() {
+    return this->puntaje;
+}
+
+int getTotalJugadoresSuscriptos() {
+    return this->totalJugadoresSuscriptos;
+}
+
+Suscripcion* getSuscripciones() {
+    return this->suscripciones;
+}
+
+map<int,Partida> getPartidas() {
+    return this->partidas;
+}
+
+Categoria* getCategorias() {
+    return this->categorias;
+}
+
+//--- Setters ---
+void setNombre(string nombre) {
+    this->nombre = nombre;
+}
+
+void setDescripcion(string descripcion) {
+    this->descripcion = descripcion;
+}
+
+void setCostoSuscripciones(DtPrecios costoSuscripciones) {
+    this->costoSuscripciones = costoSuscripciones;
+}
+
+void setTotalHorasJugadas(float totalHorasJugadas) {
+    this->totalHorasJugadas = totalHorasJugadas;
+}
+
+void setPuntaje(float puntaje) {
+    this->puntaje = puntaje;
+}
+
+void setTotalJugadoresSuscriptos(int totalJugadoresSuscriptos) {
+    this->totalJugadoresSuscriptos = totalJugadoresSuscriptos;
+}
