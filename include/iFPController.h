@@ -22,19 +22,19 @@ class IFPController: public IIFPController {
         bool enVivo;
     public:
         static virtual IFPController * getInstance();
-        void setHost(Jugador *);
-        Jugador * getHost();
-        void setVj(Videojuego *);
-        Videojuego * getVj();
-        void setPartida(Partida *);
-        Partida * getPartida();
-        void setPCont(bool);
-        bool getPCont();
-        void setEnVivo(bool);
-        bool getEnVivo();
-        void add(Jugador *);
-        void remove(Jugador *);
-        Jugador * find(std::string);
+        virtual void setHost(Jugador *);
+        virtual Jugador * getHost();
+        virtual void setVj(Videojuego *);
+        virtual Videojuego * getVj();
+        virtual void setPartida(Partida *);
+        virtual Partida * getPartida();
+        virtual void setPCont(bool);
+        virtual bool getPCont();
+        virtual void setEnVivo(bool);
+        virtual bool getEnVivo();
+        virtual void add(Jugador *);
+        virtual void remove(Jugador *);
+        virtual Jugador * find(std::string);
 
         virtual std::set<std::string> * obtenerVideojuegosActivos();
         virtual std::set<DtPartida> * obtenerPartidasActivas();

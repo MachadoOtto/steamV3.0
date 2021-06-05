@@ -13,12 +13,58 @@
 #include <map>
 #include <iterator>
 
-Jugador::Jugador(DtJugador dtj) { //TERMINAR DERIVACION
+Jugador::Jugador(DtJugador dtj) {
     suscripciones = new std::set<Suscripcion *>;
     partidas = new std::map<int,Partidaindividual *>;
     jMultis = new std::set<JugadorMulti *>;
-    descripcion = dtj->descripcion;
-    nickname = dtj->descripcion;
+    descripcion = dtj.getDescripcion();
+    nickname = dtj.getNickname();
+    email = dtj.getEmail();
+    contrasenia = dtj.getContrasenia();
+}
+
+void Jugador::setNickname(std::string nickname) {
+    this->nickname = nickname;
+}
+
+std::string Jugador::getNickname() {
+    return nickname;
+}
+
+void Jugador::setDescripcion(std::string descripcion) {
+    this->descripcion = descripcion;
+}
+
+std::string Jugador::getDescripcion() {
+    return descripcion;
+}
+
+void Jugador::add(Suscripcion * suscripcion) {
+    suscripciones->insert(suscripcion);
+}
+
+void Jugador::remove(Suscripcion * suscripcion) {
+    suscripciones->erase(suscripcion);
+}
+
+void Jugador::add(Partida * partida) {
+    partidas->insert(std::pair<int,Partida *>(partida->getIdentificador(),partida));
+}
+
+void Jugador::remove(Partida * partida) {
+    partidas->erase(partida->getIdentificador());
+}
+
+Partida * Jugador::find(int identificador) {
+    return partidas[identificador];
+}
+
+void Jugador::add(JugadorMulti * jMulti) {
+    jMultis->insert(jMulti);
+}
+
+void Jugador::remove(JugadorMulti * jMulti) {
+    jMultis->erase(jMulti);
 }
 
 std::set<std::string> * Jugador::obtenerVidejuegosActivos() {

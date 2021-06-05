@@ -24,6 +24,18 @@ class Jugador: public Usuario {
         std::string descripcion;
     public:
         Jugador(DtVideojuego);
+        void setNickname(std::string);
+        std::string getNickname();
+        void setDescripcion(std::string);
+        std::string getDescripcion();
+        void add(Suscripcion *);
+        void remove(Suscripcion *);
+        void add(Partida *);
+        void remove(Partida *);
+        Partida * find(std::string);
+        void add(JugadorMulti *);
+        void remove(JugadorMulti *);
+
         std::set<std::string> * obtenerVidejuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
         std::set<DtPartida> * obtenerPartidasActivas();
