@@ -37,6 +37,13 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria> *categorias) {
     this->categorias = categorias;
 }
 
+Videojuego::~Videojuego() {
+    eliminarInfoAsociada();
+    delete this->categorias;
+    delete this->partidas;
+    delete this->suscripciones;
+}
+
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
     DtVideojuego dtVid();
     dtVid.nombre = this->getNombre();
@@ -61,25 +68,29 @@ bool Videojuego::estaActivo() {
     }
 }
 
-void Videojuego::confirmarPartida(Jugador host,PartidaIndividual pCont,bool enVivo,set<Jugador> jUnidos) {
+void Videojuego::confirmarPartida(Jugador* host,int id,DtFechaHora fechaHoraActual,PartidaIndividual* pCont,bool enVivo,map<string,Jugador*>* jUnidos) {
     if (pCont != NULL) {
-        DtPartidaIndividual dtPInd();
-        dtPInd.setId(pCont->obtenerDatosPartida()->getId());
-        dtPInd.setFecha(pCont->obtenerDatosPartida()->getFecha());
-        dtPInd.setDuracion(pCont->obtenerDatosPartida()->getDuracion());
-        dtPInd.setActiva(pCont->obtenerDatosPartida()->getActiva());
-        PartidaIndividual pInd = new PartidaIndividual(dtPInd); 
-        host->partidasInd->insert(pInd); 
+        DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true);
+        PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
+        pInd->setHost(host);
+        pInd->setPartidaAnterior(pCont);
+        pInd->setVideojuego(this);
+        host->agregarPartida(pInd); 
+        this->partidas->insert(pInd);
     } else {
-        DtPartidaMultijugador dtPMulti();
-        dtPMulti.setId(pCont->obtenerDatosPartida()->getId());
-        dtPMulti.setFecha(pCont->obtenerDatosPartida()->getFecha());
-        dtPMulti.setDuracion(pCont->obtenerDatosPartida()->getDuracion());
-        dtPMulti.setActiva(pCont->obtenerDatosPartida()->getActiva());
+        DtPartidaMultijugador dtPMulti(id,fechaHoraActual,0,true,enVivo);
+        PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti);
+        pMulti->setHost(host);
+        pMulti->setJugadoresUnidos(jUnidos);
+        host->agregarPartida(pMulti);
+        for (map<string,Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
+            it->second->associate(pMulti);
+        }
+        this->partidas->insert(pMulti);
     }
 }
 
-void Videojuego::cancelarSuscripcion(Jugador host) {
+void Videojuego::cancelarSuscripcion(Jugador* host) {
     for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
         if (it->esDeJugador(host)) {
             it->cancelarSuscripcion();
@@ -87,12 +98,27 @@ void Videojuego::cancelarSuscripcion(Jugador host) {
     }
 }
 
-void Videojuego::confirmarSuscripcion(Jugador host,TipoSuscripcion tipoSus,TipoPago tipoPago) {
-    
+void Videojuego::confirmarSuscripcion(Jugador* host,TipoValido tipoVal,TipoPago tipoPago) {
+    Suscripcion* nuevaSus;
+    DtFechaHora fechaHoraActual(); 
+    if (tipoVal != TipoValido::Vitalicio) {
+        SuscripcionTemporal* nuevaSus = new SuscripcionTemporal(tipoVal,TipoEstado::Activa,fechaHoraActual,host,this,tipoPago);
+    } else {
+        SuscripcionVitalicia* nuevaSus = new SuscripcionVitalicia(fechaHoraActual,host,this,tipoPago);
+    }
+    host->agregarSuscripcion(nuevaSus);
+    this->suscripciones->insert(nuevaSus);
 }
 
-void Videojuego::eliminarInfoAsociada(Videojuego videojuego) {
-
+void Videojuego::eliminarInfoAsociada() {
+    for (map<int,Partida*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
+        it->second->eliminarAssoc();
+        delete it->second;
+    }
+    for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
+        it->eliminarAssoc();
+        delete it;
+    }
 }
 
 //--- Getters ---

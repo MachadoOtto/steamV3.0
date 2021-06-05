@@ -40,13 +40,14 @@ class Videojuego {
         
     public:
         Videojuego(DtVideojuego,set<Categoria>);
+        ~Videojuego();
         DtVideojuego obtenerDatosVideojuego();
         set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
         void confirmarPartida(Jugador,bool,bool,set<Jugador>);
         void cancelarSuscripcion(Jugador);
-        void confirmarSuscripcion(Jugador,TipoSuscripcion,TipoPago);
-        void eliminarInfoAsociada(Videojuego);
+        void confirmarSuscripcion(Jugador,id,DtFechaHora,TipoSuscripcion,TipoPago);
+        void eliminarInfoAsociada();
 
         //Getters
         string getNombre();
