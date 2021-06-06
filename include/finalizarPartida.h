@@ -13,7 +13,7 @@
 #include "laFabrica.h"
 
 class IIFPController;
-class DtPartidaIndividual;
+class DtPartida;
 
 class FinalizarPartida {
 private:

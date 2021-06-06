@@ -30,7 +30,47 @@ static FinalizarPartida* FinalizarPartida::getInstance() {
 }
 
 void iniciar() {
-    // FALTA IMPLEMENTAR!!!
+    LaFabrica* factory = LaFabrica::getInstance();
+    IIFPController* interface = factory->getIFPartidasInterface();
+    set<DtPartida>* partidasActivas = interface->obtenerPartidasActivas();
+    cout << "Finalizar Partida \n \n";
+    cout << "Partidas actualmente activas: \n";
+    for (set<DtPartida>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+        cout << it << "\n";
+    }
+    cout << "Ingrese la Id de la Partida a finalizar: \n";
+    int id;
+    while (true) {
+        if (!(cin >> id)) {
+		    cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Porfavor, ingrese un Id correcto: ";
+        } else {
+            cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            bool exId = false;
+            set<DtPartida>::iterator it = partidasActivas->begin();
+            while (true) {
+                if (it.getIdentificador() == id) {
+                    exId = true;
+                    break;
+                }
+                if (it == partidasActivas->end()) {
+                    break;
+                }
+                ++it;
+            }
+            if (!exId) {
+                cout << "Porfavor, ingrese un Id correcto: ";
+            } else {
+                break;
+            }
+        }
+    }
+    delete partidasActivas;
+    interface->confirmarFinalizarPartida(id);
+    cout << "Se ha finalizado la Partida (ID: " << id << ") correctamente."
+    // CLEAR CACHE???
 }
 
 FinalizarPartida::~FinalizarPartida() { }

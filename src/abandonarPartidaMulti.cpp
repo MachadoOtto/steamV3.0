@@ -30,7 +30,47 @@ static AbandonarPartidaMulti* AbandonarPartidaMulti::getInstance() {
 }
 
 void iniciar() {
-    // FALTA IMPLEMENTAR!!!
+    LaFabrica* factory = LaFabrica::getInstance();
+    IIFPController* interface = factory->getIFPartidasInterface();
+    set<DtPartidaMultijugador>* multiActivas = interface->obtenerPartidasMultiActivas(); // IMPLEMENTAR EN EL CONTROLLER!!!!
+    cout << "Abandonar Partida Multijugador \n \n";
+    cout << "Partidas multijugador activas a las que se unio: \n";
+    for (set<DtPartidaMultijugador>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+        cout << it << "\n";
+    }
+    cout << "Ingrese la Id de la Partida Multijugador a abandonar: \n";
+    int id;
+    while (true) {
+        if (!(cin >> id)) {
+		    cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Porfavor, ingrese un Id correcto: ";
+        } else {
+            cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            bool exId = false;
+            set<DtPartidaMultijugador>::iterator it = multiActivas->begin();
+            while (true) {
+                if (it.getIdentificador() == id) {
+                    exId = true;
+                    break;
+                }
+                if (it == multiActivas->end()) {
+                    break;
+                }
+                ++it;
+            }
+            if (!exId) {
+                cout << "Porfavor, ingrese un Id correcto: ";
+            } else {
+                break;
+            }
+        }
+    }
+    delete multiActivas;
+    interface->confirmarAbandonarPartida(id); // IMPLEMENTAR EN EL CONTROLLER!!!
+    cout << "Se ha abandonado la Partida Multijugador (ID: " << id << ") correctamente."
+    // CLEAR CACHE???
 }
 
 AbandonarPartidaMulti::~AbandonarPartidaMulti() { }

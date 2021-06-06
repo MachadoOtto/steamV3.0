@@ -13,7 +13,7 @@
 #include "laFabrica.h"
 
 class IIFPController;
-class DtPartidaIndividual;
+class DtPartidaMultijugador;
 
 class AbandonarPartidaMulti {
 private:

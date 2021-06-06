@@ -36,6 +36,7 @@ void iniciar() {
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIFPartidasInterface();
     set<string>* vjActivos = interface->obtenerVideojuegosActivos();
+    cout << "Iniciar Partida \n \n";
     cout << "Videojuegos con suscripcion activa: \n";
     for (set<string>::iterator it = vjActivos->begin(); it != vjActivos->end(); ++it) {
         cout << it << "\n";
@@ -104,7 +105,9 @@ void iniciar() {
                     }
                     if (!exId) {
                         cout << "Porfavor, ingrese un Id correcto: ";
-                    } 
+                    } else {
+                        break;
+                    }
                 }
             }
             delete pAnteriores;
