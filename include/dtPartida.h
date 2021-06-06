@@ -15,7 +15,7 @@
 #include <iostream>
 
 class DtPartida {
-    private:
+    protected:
         int id;
         DtFechaHora fecha;
         float duracion;

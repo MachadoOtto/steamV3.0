@@ -15,7 +15,7 @@
 #include <string>
 
 class Usuario {
-    private:
+    protected:
         std::string email;
         std::string contrasenia;
     public:
