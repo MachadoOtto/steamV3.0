@@ -20,17 +20,17 @@ laFabrica laFabrica::getInstance(){
    return instancia;
 }
 
-IIFPartidas * laFabrica::getIFPartidasInterface(){
+IIFPartidas * laFabrica::getIIFPartidas(){
   IFPartidasController * IFP = IFPartidas::getInstance();
   return IFP; 
 }
 
-IVideojuego * laFabrica::getVideojuegoInterface(){
+IVideojuego * laFabrica::getIVideojuego(){
    videojuegoController * vj = videojuegoController::getInstance();
    return vj;
 }
 
-IAltaUsuario * laFabrica::getAltaUSuarioInterface(){
+IAltaUsuario * laFabrica::getIAltaUSuario(){
    altaUsuarioController * au = altaUSuarioController::getInstance();
    return au;  
 }
