@@ -10,8 +10,6 @@
 
 #include "../include/videojuegoController.h"
 
-VideojuegoController * VideojuegoController::instancia = nullptr;
-
 static Desarrollador * getDev(){
     HandlerUsuario * hu = HandlerUsuario::getInstance();
     return static_cast<Desarrollador *>(hu->getLoggedUser());
@@ -125,10 +123,9 @@ void VideojuegoController::setLoggedUser(Usuario * x){
     loggedUser=x;
 }
 
-VideojuegoController * VideojuegoController::getInstance(){
-    if(instancia==nullptr)
-	instancia = new VideojuegoController();
-    return instancia;
+static VideojuegoController * VideojuegoController::getInstance(){
+    static VideojuegoController instance();
+    return &instance;
 } 
 
 VideojuegoController::VideojuegoController(){

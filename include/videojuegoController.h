@@ -37,7 +37,6 @@ enum class TipoPago;
 
 class VideojuegoController: public IVideojuegoController{
 private:
-    VideojuegoController * instancia;
     DtVideojuego * datos;
     TipoPago tPago;
     TipoSuscripcion tSus; //SUS!?
