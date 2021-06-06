@@ -17,6 +17,7 @@ class DtPartidaIndividual: public DtPartida{
 
     public:
         DtPartidaIndividual(int,DtFechaHora,float,bool);
+        friend std::ostream & operator << (std::ostream &,DtPartidaIndividual);
 };
 
 #endif

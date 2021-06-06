@@ -27,7 +27,6 @@ class DtPartida {
         float getDuracion();
         bool getActiva();
         bool esActiva();
-        friend & operator << (std::ostream,DtPartida); //falta
 };
 
 #endif
