@@ -26,11 +26,10 @@ class IFPController: public IIFPController {
         Videojuego * vj;
         PartidaIndividual * partida;
         std::map<std::string,Jugador *> * jugadoresAUnir;
-        static IFPController * instancia;
         bool pCont;
         bool enVivo;
     public:
-        static virtual IFPController * getInstance();
+        virtual static IFPController * getInstance();
         virtual void setHost(Jugador *);
         virtual Jugador * getHost();
         virtual void setVj(Videojuego *);

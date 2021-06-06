@@ -20,13 +20,18 @@
 #include <iterator>
 #include <pair>
 
-IFPController * IFPController::instancia = NULL;
+//IFPController * IFPController::instancia = NULL;
 
 IFPController::IFPController() {
     host = NULL;
     vj = NULL;
     partida = NULL;
     jugadoresAUnir = new std::map<std::string,Jugador *>;
+}
+
+IFPController * IFPController::getInstance() {
+    static IFPController instancia();
+    return &instancia;
 }
 
 void setHost(Jugador * host) {
@@ -79,13 +84,6 @@ void remove(Jugador * jugador) {
 
 Jugador * find(std::string nombreJugador) {
     return jugadoresAUnir[nombreJugador];
-}
-
-IFPController * IFPController::getInstance() {
-    if(instancia == NULL) {
-        instancia = new IFPController;
-    }
-    return instancia;
 }
 
 std::set<std::string> * obtenerVideojuegosActivos() {
@@ -147,5 +145,4 @@ void IFPController::clearCache() {
 
 ~IFPController() {
     clearCache();
-    instancia = NULL;
 }
