@@ -16,9 +16,9 @@ private:
    laFabrica();
 
 public:
-   IVideojuego getVideojuegoInterface();
-   IIFPartidas getIFPartidasInterface();
-   IAltaUsuario getAltaUsuarioInterface(); 
+   IVideojuego getIVideojuego();
+   IIFPartidas getIIFPartidas();
+   IAltaUsuario getIAltaUsuario(); 
 };
 
 #endif
