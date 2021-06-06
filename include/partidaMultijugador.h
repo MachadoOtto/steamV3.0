@@ -34,13 +34,13 @@ private:
     map<string, Jugador*>* jugadoresUnidos;
     map<int, Comentario*>* comentarios;
 public:
-    PartidaMultijugador(DtPartidaMultijugador*);
+    PartidaMultijugador(DtPartidaMultijugador);
     bool getTransmitidaEnVivo;
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
     void addComentario(Comentario*);
     map<int, Comentario*>* getComentarios();
-    virtual DtPartida* obtenerDatosPartida();
+    virtual DtPartida obtenerDatosPartida();
     virtual void asignarHoraFinalizacion(DtFechaHora);
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();

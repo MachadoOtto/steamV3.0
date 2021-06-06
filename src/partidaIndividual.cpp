@@ -9,13 +9,9 @@
 
 #include <../include/partidaIndividual.h>
 
-PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) {
-    identificador = datos.getIdentificador();
-    fecha = datos.getFechaHora();
-    duracion = datos.getDuracion();
-    activa = datos.getActiva();
-    host = NULL;
-    videogame = NULL;
+PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPartida dpartida(datos.getIdentificador(), datos.getFechaHora(),
+        datos.getDuracion(), datos.getActiva())) { 
+    partidaAnterior = NULL;
 }
 
 PartidaIndividual* PartidaIndividual::create(datos, punteros*) {
@@ -30,8 +26,8 @@ void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
 
 PartidaIndividual* PartidaIndividual::getPartidaAnterior() { return partidaAnterior; }
 
-virtual DtPartida* PartidaIndividual::obtenerDatosPartida() {
-    DtPartida* datosP = new DtPartidaIndividual(identificador, fecha, duracion, activa);
+virtual DtPartida PartidaIndividual::obtenerDatosPartida() {
+    DtPartida datosP(identificador, fecha, duracion, activa);
     return datosP;
 }
 

@@ -9,14 +9,9 @@
 
 #include <../include/partidaMultijugador.h>
 
-PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador* datos) {
-    identificador = datos.getIdentificador();
-    fecha = datos.getFechaHora();
-    duracion = datos.getDuracion();
-    activa = datos.getActiva();
+PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(DtPartida dpartida(datos.getIdentificador(), datos.getFechaHora(),
+        datos.getDuracion(), datos.getActiva())) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
-    host = NULL;
-    videogame = NULL;
     jugadoresUnidos = new map<string, Jugador*>;
     comentarios = new map<int, Comentario*>;
 }
@@ -37,8 +32,9 @@ void PartidaMultijugador::addComentario(Comentario* comment) {
 
 map<int, Comentario*>* PartidaMultijugador::getComentarios() { return comentarios; }
 
-virtual DtPartida* PartidaMultijugador::obtenerDatosPartida() {
-    return DtPartidaMultijugador(identificador, fecha, duracion, activa, transmitidaEnVivo);
+virtual DtPartida PartidaMultijugador::obtenerDatosPartida() {
+    DtPartidaMultijugador datos(identificador, fecha, duracion, activa, transmitidaEnVivo);
+    return datos;
 }
 
 virtual void PartidaMultijugador::asignarHoraFinalizacion(DtFechaHora fechaFinal) {

@@ -24,8 +24,9 @@ private:
     bool activa;
     Jugador* host;
     Videojuego* videogame;
+protected:
+    Partida(DtPartida);
 public:
-    virtual Partida(DtPartida*)=0;
     int getId();
     DtFechaHora getDtFechaHora();
     float getDuracion();
@@ -37,11 +38,11 @@ public:
     void setVideojuego(Videojuego*);
     Videojuego* getVideojuego();
     bool esIgualVideojuego(Videojuego*);
-    virtual DtPartida* obtenerDatosPartida()=0;
+    virtual DtPartida obtenerDatosPartida()=0;
     virtual void asignarHoraFinalizacion(DtFechaHora)=0;
     virtual void finalizarPartida()=0;
     virtual void eliminarAssoc()=0;
-    virtual ~Partida()=0;
+    ~Partida();
 };
 
 #endif

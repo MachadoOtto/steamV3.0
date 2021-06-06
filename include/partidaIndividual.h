@@ -23,10 +23,10 @@ class PartidaIndividual : public Partida {
 private:
     PartidaIndividual* partidaAnterior;
 public:
-    PartidaIndividual(DtPartidaIndividual*);
+    PartidaIndividual(DtPartidaIndividual);
     void setPartidaAnterior(PartidaIndividual*);
     PartidaIndividual* getPartidaAnterior();
-    virtual DtPartida* obtenerDatosPartida();
+    virtual DtPartida obtenerDatosPartida();
     virtual void asignarHoraFinalizacion(DtFechaHora);
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();
