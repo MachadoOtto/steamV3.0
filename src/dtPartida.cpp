@@ -36,7 +36,3 @@ bool DtPartida::getActiva() {
 bool DtPartida::esActiva() { //alias
     return getActiva();
 }
-
-friend & DtPartida::operator << (std::ostream o,DtPartida dtp) {
-
-}

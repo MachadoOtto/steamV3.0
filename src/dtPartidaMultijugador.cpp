@@ -19,6 +19,14 @@ bool DtPartidaMultijugador::getTransmitidaEnVivo() {
     return transmitidaEnVivo;
 }
 
-friend & operator << (std::ostream,DtPartida) {
-    
+std::ostream & operator << (std::ostream &,DtPartidaMultijugador p) {
+        o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion()
+        << "\n" << "Es activa?: ";
+        if(p.getActiva()) o << "Si";
+        else o << "No";
+        o << "\n" << "Fecha de creacion: " << p.getFecha() << "Es una transmicion en vivo?: ";
+        if(p.getTransmitidaEnVivo()) o << "Si";
+        else o << "No";
+        o << "\n";
+    return o;
 }
