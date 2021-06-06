@@ -144,3 +144,8 @@ void IFPController::clearCache() {
     delete vj;
     delete jugadoresAUnir;
 }
+
+~IFPController() {
+    clearCache();
+    instancia = NULL;
+}
