@@ -41,7 +41,7 @@ class Desarrollador: public Usuario {
         std::set<std::string> * getVideojuegosDesarrollados();
         void remove(Videojuego *);
         void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
-        void suscribirEstadistica(Estadistica *); //POR HACER
+        void suscribirEstadistica(Estadistica *);
         std::set<DtEstadistica> * solicitarEstadisticas(Videjuego *);
         ~Desarrollador();
 };

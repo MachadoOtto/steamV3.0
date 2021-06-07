@@ -93,7 +93,7 @@ void Desarrollador::publishVideogame(DtVideojuego gameData, std::map<std::string
 }
 
 void Desarrollador::suscribirEstadistica(Estadistica * est) {
-//POR HACER
+    estadisticas->add(est);
 }
 
 std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videjuego * vj) {
