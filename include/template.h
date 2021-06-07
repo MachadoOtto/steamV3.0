@@ -1,4 +1,4 @@
-/* Laboratorio Programacion IV - INCO/FING/UDELAR
+/* Laboratorio Programacion IV - INCO/FING/UDELAR 
  * Laboratorio 4 - Class declaration
  * Autores (por nombre):
  * 	Alexis Baladon
