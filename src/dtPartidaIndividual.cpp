@@ -21,3 +21,4 @@ std::ostream & operator << (std::ostream &,DtPartidaMultijugador p) {
     else o << "No";
     o << "\n" << "Fecha de creacion: " << p.getFecha() << "\n";
     return o;
+}
