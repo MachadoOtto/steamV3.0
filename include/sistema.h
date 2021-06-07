@@ -11,6 +11,14 @@
 #ifndef SISTEMA
 #define SISTEMA
 
+#include <ctime>
+#include <iostream>
+#include <stdio.h>
+
+#include "../include/dtFechaHora.h"
+#include "../include/menuUtilities.h"
+#include "../include/fechaSistema.h"
+
 class Sistema{
 
 public:
