@@ -13,7 +13,11 @@
 
 #include <string>
 #include "dtUsuario.h"
-
+#include "handlerUsuario.h"
+#include "dtDesarrollador.h"
+#include "dtJugador.h"
+#include "jugador.h"
+#include "desarrollador.h"
 using std::string;
 
 class AltaUsuarioController{
@@ -24,13 +28,13 @@ private:
 
 public:
    static AltaUsuarioController * getInstance();
-   virtual void ingresarUsuario(DtUsuario);
+   virtual void ingresarUsuario(DtUsuario *);
    virtual void ingresarEmpresa(string);
    virtual void ingresarNickname(string);
    virtual void ingresarDescripcion(string);
    virtual void clearCache();
    virtual void confirmarDarDeAltaUsuario();
-   ~altaUsuarioController();
+   ~AltaUsuarioController();
 };
 
 #endif

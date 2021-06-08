@@ -25,10 +25,10 @@ public:
     float getValor();
     string getDescripcion();
     string getNombre();
+    friend bool operator<(const DtEstadistica,const DtEstadistica);
 };
 
 // Sobrecarga del operador de flujo.
 ostream& operator<<(ostream&, DtEstadistica);
 
-bool operator<(const DtEstadistica,const DtEstadistica);
 #endif

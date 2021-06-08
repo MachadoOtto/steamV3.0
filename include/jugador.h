@@ -20,6 +20,7 @@
 #include "suscripcion.h"
 #include "dtVideojuego.h"
 #include "dtPartida.h"
+#include "dtJugador.h"
 #include "jugadorMulti.h"
 
 #include <string>
@@ -34,7 +35,7 @@ class Jugador: public Usuario {
         std::string nickname;
         std::string descripcion;
     public:
-        Jugador(DtVideojuego);
+        Jugador(DtJugador);
         void setNickname(std::string);
         std::string getNickname();
         void setDescripcion(std::string);

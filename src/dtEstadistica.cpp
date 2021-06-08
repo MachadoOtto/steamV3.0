@@ -30,6 +30,6 @@ ostream& operator<<(ostream& o, DtEstadistica p) {
 }
 
 bool operator<(const DtEstadistica v1,const DtEstadistica v2){
-    return (v1->getValor() < v2->getValor())
+    return (v1.valor() < v2.valor())
 
 

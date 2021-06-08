@@ -12,14 +12,15 @@
 
 AltaUsuarioController::AltaUsuarioController(){
     datos = NULL;
+    empresa = "";
 }
 
 AltaUsuarioController * AltaUsuarioController::getInstance(){
-    static AltaUsuarioController instancia();
+    static AltaUsuarioController instancia;
     return &instancia;
 }
 
-void AltaUsuarioController::ingresarUsuario(dtUsuario * d){
+void AltaUsuarioController::ingresarUsuario(DtUsuario * d){
    datos = d;   
 }
 
@@ -28,8 +29,8 @@ void AltaUsuarioController::ingresarEmpresa(string e){
 }
 
 void AltaUsuarioController::ingresarNickname(string n){
-   handlerUsuario * hc = handlerUsuario::getInstance();
-   if (!hc->existeJugador(n))
+   HandlerUsuario * hc = HandlerUsuario::getInstance();
+   if (!hc->existeUsuario(n))
       nickname = n;
 }
 
@@ -44,18 +45,19 @@ void AltaUsuarioController::clearCache(){
 void AltaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
-   if(empresa != NULL){
-      DtDesarrollador datos(empresa, email, contrasenia);
-      Desarrollador* usu = new Desarrollador(datos);
+   if(!empresa.empty()){
+	DtDesarrollador dat(empresa, datos->getEmail(), datos->getContrasenia());
+	Desarrollador* usu = new Desarrollador(dat);
+	hu->addUsuario(usu); 
    }
    else{
-      DtJugador datos(nickname, descripcion, email, contrasenia);
-      Jugador* usu = new Jugador(datos);
+	DtJugador dat(nickname, descripcion, datos->getEmail(), datos->getContrasenia());
+	Jugador* usu = new Jugador(dat);
+	hu->addUsuario(usu); 
    }
-   hu->addUsuario(usu); 
 }
 
-AltaUsuarioController::~altaUsuarioController(){
+AltaUsuarioController::~AltaUsuarioController(){
    this->clearCache();
 }
 
