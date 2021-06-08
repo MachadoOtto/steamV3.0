@@ -11,7 +11,7 @@
 #define DTPARTIDAMULTIJUGADOR
 
 #include "dtPartida.h"
-#include "dtFechaHora"
+#include "dtFechaHora.h"
 
 class DtPartidaMultijugador: public DtPartida {
     private:

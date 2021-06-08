@@ -13,7 +13,6 @@ PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(
         datos.getDuracion(), datos.getActiva())) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
     jugadoresUnidos = new map<string, Jugador*>;
-    comentarios = new map<int, Comentario*>;
 }
     
 bool PartidaMultijugador::getTransmitidaEnVivo { return transmitidaEnVivo; }
@@ -25,12 +24,6 @@ void PartidaMultijugador::setJugadoresUnidos(map<string, Jugador*>* jAUnir) {
 map<string, Jugador*>* PartidaMultijugador::getJugadoresUnidos() { 
     return jugadoresUnidos; 
 }
-
-void PartidaMultijugador::addComentario(Comentario* comment) {
-    comentarios[comment->getId()] = comment;
-}
-
-map<int, Comentario*>* PartidaMultijugador::getComentarios() { return comentarios; }
 
 virtual DtPartida PartidaMultijugador::obtenerDatosPartida() {
     DtPartidaMultijugador datos(identificador, fecha, duracion, activa, transmitidaEnVivo);
@@ -54,11 +47,6 @@ virtual void PartidaMultijugador::finalizarPartida(DtFechaHora horaFinal) {
 
 virtual void PartidaMultijugador::eliminarAssoc() {
     host.remove(this);
-    for (map<int, Comentario*>::iterator it = comentarios->begin(); it! = comentarios->end(); ++it) {
-        it->second->eliminarComentario();
-        delete it->second;
-    }
-    comentarios.clear();
     for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it! = jugadoresUnidos->end(); ++it) {
         it->second->remove(this);
     }
@@ -66,10 +54,5 @@ virtual void PartidaMultijugador::eliminarAssoc() {
 }
 
 PartidaMultijugador::~Partida() { 
-    for (map<int, Comentario*>::iterator it = comentarios->begin(); it != comentarios->end(); ++it) {
-        it->second->eliminarComentario();
-        delete it->second;
-    }
-    delete comentarios;
     delete jugadoresUnidos;
 }

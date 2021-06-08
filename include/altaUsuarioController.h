@@ -8,6 +8,9 @@
  * 	Mathias Ramilo
  */
 
+#ifndef ALTAUSUARIOCONTROLLER
+#define ALTAUSUARIOCONTROLLER
+
 #include <string>
 #include "dtUsuario.h"
 
@@ -15,14 +18,13 @@ using std::string;
 
 class altaUsuarioController{
 private:
-   altaUsuarioController * instancia;
-   dtUsuario * datos;
+   DtUsuario * datos;
    string empresa, nickname, descripcion;
    altaUsuarioController();
 
 public:
    static altaUsuarioController * getInstance();
-   virtual void ingresarUsuario(dtUsuario);
+   virtual void ingresarUsuario(DtUsuario);
    virtual void ingresarEmpresa(string);
    virtual void ingresarNickname(string);
    virtual void ingresarDescripcion(string);

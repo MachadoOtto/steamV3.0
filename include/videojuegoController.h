@@ -18,7 +18,6 @@
 #include "handlerEstadistica.h"
 #include "handlerCategoria.h"
 #include "handlerUsuario.h"
-#include "IVideojuegoController"
 
 #include "usuario.h"
 #include "jugador.h"
@@ -46,30 +45,30 @@ private:
 
     VideojuegoController();
 public:
-    virtual vector<string> *obtenerNombreVideojuegosDesarrollados();
-    virtual vector<string> *obtenerNombreVideojuegosInactivos();
-    virtual vector<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
-    virtual vector<DtCategoria> *obtenerCategoriasGenero();
-    virtual vector<DtCategoria> *obtenerCategoriasPlataforma();
-    virtual vector<DtCategoria> *obtenerCategoriasOtro();
-    virtual vector<DtEstadistica> *obtenerEstadisticas(string);
-    virtual void ingresarDatosVideojuego(DtVideojuego);
-    virtual void ingresarSuscripcion(TipoSuscripcion,TipoPago);
-    virtual void seleccionarVideojuego(string);
-    virtual void seleccionarGenero(string);
-    virtual void seleccionarPlataforma(string);
-    virtual void seleccionarCategoriaOtro(string);
-    virtual void confirmarPublicacion();
-    virtual void confirmarSuscripcion();
-    virtual void confirmarEliminarVideojuego();
-    virtual void cancelarSuscripcion();
-    virtual void clearCache();
+    vector<string> *obtenerNombreVideojuegosDesarrollados();
+    vector<string> *obtenerNombreVideojuegosInactivos();
+    vector<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
+    vector<DtCategoria> *obtenerCategoriasGenero();
+    vector<DtCategoria> *obtenerCategoriasPlataforma();
+    vector<DtCategoria> *obtenerCategoriasOtro();
+    vector<DtEstadistica> *obtenerEstadisticas(string);
+    void ingresarDatosVideojuego(DtVideojuego);
+    void ingresarSuscripcion(TipoSuscripcion,TipoPago);
+    void seleccionarVideojuego(string);
+    void seleccionarGenero(string);
+    void seleccionarPlataforma(string);
+    void seleccionarCategoriaOtro(string);
+    void confirmarPublicacion();
+    void confirmarSuscripcion();
+    void confirmarEliminarVideojuego();
+    void cancelarSuscripcion();
+    void clearCache();
     
     void setLoggedUser(Usuario *);
     //setDatos // Equivalente a ingresarDatosvideojuego  
     
     static VideojuegoController * getInstance();
-    ~videojuegoController();
+    ~VideojuegoController();
 };
 
 #endif

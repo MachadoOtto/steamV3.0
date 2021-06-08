@@ -14,14 +14,13 @@
 #include <map>
 #include <set>
 #include "partida.h"
-#include "comentario.h"
 #include "dtPartidaMultijugador.h"
+#include "jugadorMulti.h"
 
 using std::string;
 using std::map;
 using std::set;
 
-class Partida;
 class DtFechaHora;
 class Jugador;
 class Videojuego;
@@ -32,17 +31,16 @@ private:
     bool transmitidaEnVivo;
     set<JugadorMulti*>* jugadoresMultis;
     map<string, Jugador*>* jugadoresUnidos;
-    map<int, Comentario*>* comentarios;
 public:
     PartidaMultijugador(DtPartidaMultijugador);
     bool getTransmitidaEnVivo;
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
-    void addComentario(Comentario*);
-    map<int, Comentario*>* getComentarios();
     virtual DtPartida obtenerDatosPartida();
     virtual void asignarHoraFinalizacion(DtFechaHora);
     virtual void finalizarPartida(DtFechaHora);
     virtual void eliminarAssoc();
     ~PartidaMultijugador();
 };
+
+#endif

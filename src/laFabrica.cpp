@@ -10,27 +10,22 @@
 
 #include "../include/laFabrica.h"
 
-laFabrica::laFabrica(){
-   instancia = new laFabrica();
+LaFabrica LaFabrica::getInstance(){
+    static LaFabrica instancia();
+    return &instancia;
 }
 
-laFabrica laFabrica::getInstance(){
-   if (instancia == NULL) 
-      instancia = new laFabrica;
-   return instancia;
-}
-
-IIFPartidas * laFabrica::getIIFPartidas(){
+IIFPartidas * LaFabrica::getIIFPartidas(){
   IFPartidasController * IFP = IFPartidas::getInstance();
   return IFP; 
 }
 
-IVideojuego * laFabrica::getIVideojuego(){
+IVideojuego * LaFabrica::getIVideojuego(){
    videojuegoController * vj = videojuegoController::getInstance();
    return vj;
 }
 
-IAltaUsuario * laFabrica::getIAltaUSuario(){
+IAltaUsuario * LaFabrica::getIAltaUSuario(){
    altaUsuarioController * au = altaUSuarioController::getInstance();
    return au;  
 }

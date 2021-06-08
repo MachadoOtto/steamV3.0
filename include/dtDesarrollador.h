@@ -20,7 +20,7 @@ class DtDesarrollador: public DtUsuario{
 private:
     string empresa;
 public:
-    DtUsuario(string m,string name, string pass);
+    DtDesarrollador(string m,string name, string pass);
     string getEmpresa();
 };
 

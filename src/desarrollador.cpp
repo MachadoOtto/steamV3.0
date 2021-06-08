@@ -17,12 +17,8 @@
 #include <string>
 #include <set>
 #include <map>
-#include <pair>
-#include <iterator>
 
-Desarrollador::Desarrollador(DtDesarrollador des) {
-    email = des.getEmail();
-    contrasenia = des.getContrasenia();
+Desarrollador::Desarrollador(DtDesarrollador des): Usuario(DtUsuario(des.getEmail(),des.getContrasenia())){
     empresa = des.getEmpresa();
     videojuegosDesarrollados = new std::map<std::string,Videojuego *>;
     estadisticas = new std::map<std::string,Estadistica *>;
@@ -44,7 +40,7 @@ void Desarrollador::remove(Videojuego * vj) {
     videojuegosDesarrollados->erase(vj);
 }
 
-Videojuego * Desarrollador::find(std::string nombreVj) {
+Videojuego * Desarrollador::findVideojuego(std::string nombreVj) {
     return videojuegosDesarrollados[nombreVj];
 }
 
@@ -56,7 +52,7 @@ void Desarrollador::remove(Estadistica * est) {
     estadisticas->erase(est);
 }
 
-Estadistica * Desarrollador::find(std::string est) {
+Estadistica * Desarrollador::findEstadistica(std::string est) {
     return estadisticas[est];
 }
 

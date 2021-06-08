@@ -8,7 +8,7 @@
  * 	Mathias Ramilo
  */
 
-#include "Categoria.h"
+#include "categoria.h"
 #include "tipoCategoria.h"
 #include "dtCategoria.h"
 
@@ -30,6 +30,6 @@ Categoria::~Categoria() {
 }
 
 DtCategoria Categoria::getDt() {
-    DtCategoria dtCat(nombre,descripcion,tipoCategoria::Otro);
+    DtCategoria dtCat(nombre,descripcion,TipoCategoria::Otro);
     return dtCat;
 }

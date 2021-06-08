@@ -10,16 +10,15 @@
 #ifndef PARTIDA_INDIVIDUAL
 #define PARTIDA_INDIVIDUAL
 
+#include "dtPartidaIndividual.h"
 #include "partida.h"
-#include <../include/dtPartidaIndividual.h>
 
-class Partida;
 class DtFechaHora;
 class Jugador;
 class Videojuego;
 class DtPartida;
 
-class PartidaIndividual : public Partida {
+class PartidaIndividual: public Partida {
 private:
     PartidaIndividual* partidaAnterior;
 public:

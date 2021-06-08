@@ -15,14 +15,16 @@
 #include <set>
 #include <string>
 #include "suscripcion.h"
-#include "partida.h"
 #include "categoria.h"
 #include "jugador.h"
 #include "dtPrecios.h"
+#include "tipoValido.h"
 
-using std::string
-using std::map
-using std::set
+using std::string;
+using std::map;
+using std::set;
+
+class Partida;
 
 class Videojuego {
     private:
@@ -46,7 +48,7 @@ class Videojuego {
         bool estaActivo();
         void confirmarPartida(Jugador*,bool,bool,set<Jugador*>*);
         void cancelarSuscripcion(Jugador*);
-        void confirmarSuscripcion(Jugador*,id,DtFechaHora,TipoSuscripcion,TipoPago);
+        void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
 
         //Getters
@@ -67,5 +69,5 @@ class Videojuego {
         void setTotalHorasJugadas(float);
         void setPuntaje(float);
         void setTotalJugadoresSuscriptos(int);
-}
+};
 #endif

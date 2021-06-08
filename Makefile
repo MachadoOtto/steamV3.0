@@ -19,8 +19,8 @@ ODIR = obj
 #compilador
 CC = g++
 CCFLAGS = -Wall -Werror -I$(HDIR) -g
-
-MODULOS = sistema partida abandonarPartidaMulti altaUsuarioController categoria desarrollador dtCategoria dtDesarrollador dtFechaHora dtJugador dtPartida dtPartidaIndividual dtPartidaMultijugador dtPrecios dtUsuario dtVideojuego estadisitca estadisticaTotalHorasJugadas estadisticaTotalJugadoresSuscriptos fechaSistema finalizarPArtida genero handlerCatalogo handlerCategoria handlerEstadistica handlerUsuario jugador-Multi jugador laFabrica menuUtilities partida partidaIndividual partidaMultijugador plataforma sistema suscripcion iFPController suscripcionTemporal suscripcionVitalicia usuario videojuego videojuegoController#Add more here
+#luego agregar altaUsuarioController
+MODULOS = desarrollador sistema partida categoria dtCategoria dtDesarrollador dtFechaHora dtJugador dtPartida dtPartidaIndividual dtPartidaMultijugador dtPrecios dtUsuario dtVideojuego estadisitca estadisticaTotalHorasJugadas estadisticaTotalJugadoresSuscriptos fechaSistema genero handlerCatalogo handlerCategoria handlerEstadistica handlerUsuario jugador-Multi jugador laFabrica menuUtilities partida partidaIndividual partidaMultijugador plataforma sistema suscripcion iFPController suscripcionTemporal suscripcionVitalicia usuario videojuego videojuegoController#Add more here
 CONST_MODULES = tipoPago tipoCategoria iAltaUsuarioController iIFPController iVideojuegoController tipoCategoria tipoEstado tipoGenero tipoPago tipoValido #Add more here
 
 #lista de archivos

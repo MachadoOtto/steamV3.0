@@ -10,10 +10,12 @@
 #ifndef JUGADOR
 #define JUGADOR
 
+#include "usuario.h"
 #include "dtVideojuego.h"
 #include "dtPartida.h"
 #include "dtPartidaIndividual.h"
 #include "partidaIndividual.h"
+#include "partidaMultijugador.h"
 #include "partida.h"
 #include "suscripcion.h"
 #include "dtVideojuego.h"
@@ -40,7 +42,6 @@ class Jugador: public Usuario {
         void add(Suscripcion *);
         void remove(Suscripcion *);
         void add(Partida *);
-        void remove(Partida *);
         Partida * find(std::string);
         void add(JugadorMulti *);
         void remove(JugadorMulti *);
@@ -48,8 +49,8 @@ class Jugador: public Usuario {
         std::set<std::string> * obtenerVidejuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
         std::set<DtPartida> * obtenerPartidasActivas();
-        std::set<DtPartidaindividual> * obtenerHistorialPartidas(Videojuego *);
-        Partidaindividual * seleccionarContinuacionPartida(int);
+        std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego *);
+        PartidaIndividual * seleccionarContinuacionPartida(int);
         void agregarPartida(Partida *);
         void agregarSuscripcion(Suscripcion *);
         void abandonarPartidaMulti(PartidaMultijugador *);

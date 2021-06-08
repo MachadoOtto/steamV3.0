@@ -12,9 +12,9 @@
 
 #include "dtFechaHora.h"
 #include "dtPartida.h"
-#include "videojuego.h"
 
 class Jugador;
+class Videojuego;
 
 class Partida {
 private:
@@ -37,7 +37,7 @@ public:
     void remove(Jugador*);
     void setVideojuego(Videojuego*);
     Videojuego* getVideojuego();
-    bool esIgualVideojuego(Videojuego*);
+    //bool esIgualVideojuego(Videojuego*);
     virtual DtPartida obtenerDatosPartida()=0;
     virtual void asignarHoraFinalizacion(DtFechaHora)=0;
     virtual void finalizarPartida()=0;

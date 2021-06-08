@@ -8,6 +8,10 @@
  * 	Mathias Ramilo
  */
 
+/* LAS CLASES VAN EN MAYUSUCOLA CAMBIAR TODO!!!!!!!
+ * INCLUIDO EL .H
+ */
+
 #include "../include/altaUsuarioController.h"
 
 altaUsuarioController::altaUsuarioController(){
@@ -15,9 +19,8 @@ altaUsuarioController::altaUsuarioController(){
 }
 
 altaUsuarioController * altaUsuarioController::getInstance(){
-   if(instancia == NULL)
-      instancia = new altaUsuarioController;
-   return instancia;
+    static AltaUsuarioController instancia();
+    return &instancia;
 }
 
 void ingresarUsuario(dtUsuario * d){
@@ -41,12 +44,12 @@ void altaUsuarioController::ingresarDescripcion(string d){
 void altaUsuarioController::clearCache(){
    delete datos;
 }
-
+/*
 void altaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
    if(empresa != NULL){
-      DtUsuario datos(email, contraseña, empresa);
+      DtDesarrollador datos(email, contrasena, empresa);
       desarrollador * usu(datos);
    }
    else{
@@ -56,9 +59,11 @@ void altaUsuarioController::confirmarDarDeAltaUsuario(){
    }
    hu->addUsuario(usu); 
 }
+* Ta todo mal volver a hacer. Mirar los tipos de datatype dtUsuario dtDesarrollador y ver los constructores disponibles.
+NO USAR LA ENIE!!!
+*/
 
 altaUsuarioController::~altaUsuarioController(){
    this->clearCache();
-   instancia = NULL; 
 }
 

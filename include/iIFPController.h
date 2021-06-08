@@ -16,6 +16,10 @@
 #include <string>
 #include <set>
 
+class Jugador;
+class Videojuego;
+class Partida;
+
 class IIFPController {
     public:
         virtual void setHost(Jugador *) = 0;

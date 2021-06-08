@@ -11,16 +11,20 @@
 #define LAFABRICA
 
 #include <string>
+#include "iAltaUsuarioController.h"
+#include "altaUsuarioController.h"
+#include "iIFPController.h"
+#include "iFPController.h"
+#include "iVideojuegoController.h"
+#include "videojuegoController.h"
 
-class laFabrica{
+class LaFabrica{
 private:
-   laFabrica instancia;
-   laFabrica();
-
+   LaFabrica(){};
 public:
-   IVideojuego getIVideojuego();
-   IIFPartidas getIIFPartidas();
-   IAltaUsuario getIAltaUsuario(); 
+   IVideojuegoController *getIVideojuegoController();
+   IIFPController *getIIFPartidasController();
+   IAltaUsuario *getIAltaUsuarioController(); 
 };
 
 #endif

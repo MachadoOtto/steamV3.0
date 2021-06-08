@@ -16,9 +16,8 @@ HandlerEstadistica::HandlerEstadistica(){
 }
 
 static HandlerEstadistica* HandlerEstadistica::getInstance() {
-    if (instancia == nullptr)
-        instancia = new HandlerEstadistica();
-    return instancia;
+    static HandlerEstadistica instancia();
+    return &instancia;
 }
 
 set<Estadistica>* HandlerEstadistica::getEstadistica() {

@@ -11,14 +11,15 @@
 #ifndef SuScripcion
 #define SuScripcion
 
+#include <vector>
 #include "dtFechaHora.h"
 #include "dtVideojuego.h"
 
 using std::vector;
 
 enum class TipoPago;
-class Videojuego *;
-class Jugador *;
+class Videojuego;
+class Jugador;
 
 class Suscripcion{
 private:

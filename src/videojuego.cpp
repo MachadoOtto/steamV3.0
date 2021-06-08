@@ -101,7 +101,7 @@ void Videojuego::cancelarSuscripcion(Jugador* host) {
 void Videojuego::confirmarSuscripcion(Jugador* host,TipoValido tipoVal,TipoPago tipoPago) {
     Suscripcion* nuevaSus;
     DtFechaHora fechaHoraActual(); 
-    if (tipoVal != TipoValido::Vitalicio) {
+    if (tipoVal != TipoValido::Vitalicia) {
         SuscripcionTemporal* nuevaSus = new SuscripcionTemporal(tipoVal,TipoEstado::Activa,fechaHoraActual,host,this,tipoPago);
     } else {
         SuscripcionVitalicia* nuevaSus = new SuscripcionVitalicia(fechaHoraActual,host,this,tipoPago);

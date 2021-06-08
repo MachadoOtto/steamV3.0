@@ -32,17 +32,16 @@ class Desarrollador: public Usuario {
         std::string getEmpresa();
         void add(Videojuego *);
         void remove(Videojuego *);
-        Videojuego * find(std::string); 
+        Videojuego * findVideojuego(std::string); 
         void add(Estadistica *);
         void remove(Estadistica *);
-        Estadistica * find(std::string);
+        Estadistica * findEstadistica(std::string);
         
         std::set<std::string> * getVjSinPartidasActivas();
         std::set<std::string> * getVideojuegosDesarrollados();
-        void remove(Videojuego *);
         void publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
         void suscribirEstadistica(Estadistica *);
-        std::set<DtEstadistica> * solicitarEstadisticas(Videjuego *);
+        std::set<DtEstadistica> * solicitarEstadisticas(Videojuego *);
         ~Desarrollador();
 };
 

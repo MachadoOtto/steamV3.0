@@ -15,7 +15,7 @@
 #include "dtCategoria.h"
 #include "tipoCategoria.h"
 
-using std::string
+using std::string;
 
 class Categoria {
     private:
@@ -28,6 +28,6 @@ class Categoria {
         ~Categoria();
         
         virtual DtCategoria getDt();
-}
+};
 
 #endif

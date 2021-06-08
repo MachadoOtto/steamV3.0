@@ -16,9 +16,8 @@ HandlerCatalogo::HandlerCatalogo() {
 }
 
 static HandlerCatalogo* HandlerCatalogo::getInstance() {
-    if (instancia == nullptr)
-        instancia = new HandlerCatalogo();
-    return instancia;
+    static HandlerCatalogo instancia();
+    return &instancia;
 }
 
 set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {

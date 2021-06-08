@@ -45,8 +45,12 @@ void Partida::setVideojuego(Videojuego* vj) {
 
 Videojuego* Partida::getVideojuego() { return videogame; }
 
+/*
 bool Partida::esIgualVideojuego(Videojuego* vid) {
     return (videogame->getNombre() == vid->getNombre());
 }
-
+ADVERTENCIA!!!
+Partida no puede ver los videojuegos. Esto tendria que ir en el controlador o disenarlo de otra manera.
+Se tiene que reever el diagrama de comunicacion. Para ver si la partida es de un videojuego x, hay que buscarla en el set del videojuego x
+*/
 Partida::~Partida() { }

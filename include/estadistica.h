@@ -27,3 +27,4 @@ protected:
     Estadistica(string name,string desc);
 };
 
+#endif

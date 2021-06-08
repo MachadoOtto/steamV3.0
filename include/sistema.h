@@ -15,9 +15,12 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "../include/dtFechaHora.h"
-#include "../include/menuUtilities.h"
-#include "../include/fechaSistema.h"
+#include "laFabrica.h"
+#include "iAltaUsuarioController.h"
+#include "iIFPController.h"
+#include "iVideojuegoController.h"
+#include "fechaSistema.h"
+#include "menuUtilities.h"
 
 class Sistema{
 

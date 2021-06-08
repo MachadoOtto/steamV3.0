@@ -17,9 +17,8 @@ HandlerUsuario::HandlerUsuario(){
 }
 
 static HandlerUsuario* HandlerUsuario::getInstance() {
-    if (instancia == nullptr)
-        instancia = new HandlerUsuario();
-    return instancia;
+    static HandlerUsuario instancia();
+    return &instancia;
 }
 
 void HandlerUsuario::setLoggedUser(Usuario* user) {
