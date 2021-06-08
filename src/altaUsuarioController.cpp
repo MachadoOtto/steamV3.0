@@ -49,13 +49,12 @@ void AltaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
    Usuario* usu;
-   DtUsuario* datos;
    if(empresa != NULL){
-      DtDesarrollador* datos =new DtDesarrollador(empresa, email, contrasenia);
+      DtDesarrollador datos(empresa, email, contrasenia);
       Desarrollador* usu = new Desarrollador(datos);
    }
    else{
-      DtJugador* datos = new DtJugador(nickname, descripcion, email, contrasenia);
+      DtJugador datos(nickname, descripcion, email, contrasenia);
       Jugador* usu = new Jugador(datos);
    }
    hu->addUsuario(usu); 
