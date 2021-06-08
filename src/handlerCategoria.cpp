@@ -1,0 +1,77 @@
+/* Laboratorio Programacion IV - INCO/FING/UDELAR
+ * Integrantes:
+ *      Alexis Baladon (5.574.612-4) - alexis.baladon@fing.edu.uy
+ *      Guillermo Toyos (5.139.879-9) - guillermo.toyos@fing.edu.uy
+ *      Jorge Machado (4.876.616-9) - jorge.machado.ottonelli@fing.edu.uy
+ *      Juan Jose Mangado (5.535.227-0) - juan.mangado@fing.edu.uy
+ *      Mathias Ramilo (5.665.788-5) - mathias.ramilo@fing.edu.uy
+ */
+
+#include <../include/handlerCategoria.h>
+
+#include <typeinfo>
+
+HandlerCategoria* HandlerCategoria::instancia = nullptr;
+
+HandlerCategoria::HandlerCategoria(){
+    categorias = new map<string, Categoria*>;
+}
+
+static HandlerCategoria* HandlerCategoria::getInstance() {
+    if (instancia == nullptr)
+        instancia = new HandlerCategoria();
+    return instancia;
+}
+
+set<DtCategoria>* HandlerCategoria::getDtGenders() {
+    set<DtCategoria>* setGenero = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (dynamic_cast<Genero*>(it->second)) {
+            setGenero->insert(it->second->getDatos()); // Inserta un DtCategoria del Genero.
+        }
+    }
+    return setGenero;
+}
+
+set<DtCategoria>* HandlerCategoria::getDtPlatforms() {
+    set<DtCategoria>* setPlatform = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (dynamic_cast<Plataforma*>(it->second)) {
+            setPlatform->insert(it->second->getDatos()); // Inserta un DtCategoria de la Plataforma.
+        }
+    }
+    return setPlatform;
+}
+
+set<DtCategoria>* HandlerCategoria::getDtCategories() {
+    set<DtCategoria>* setCategOtro = new set<DtCategoria>;
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        if (!((dynamic_cast<Genero*>(it->second)) || (dynamic_cast<Plataforma*>(it->second)))) {
+            setCategOtro->insert(it->second->getDatos()); // Inserta un DtCategoria de CategoriaOtro.
+        }
+    }
+    return setCategOtro;
+}
+
+Genero* HandlerCategoria::findGender(string nombreGenero) {
+    return categorias->find(nombreGenero)->second;
+}
+
+Plataforma* HandlerCategoria::findPlatform(string nombrePlataforma) {
+    return categorias->find(nombrePlataforma)->second;
+}
+
+Categoria* HandlerCategoria::findCategory(string nombreCategoria) {
+    return categorias->find(nombreCategoria)->second;
+}
+
+void HandlerCategoria::addCategoria(Categoria* cat) {
+    categorias->insert(cat->getNombre(), cat);
+}
+
+HandlerCategoria::~HandlerCategoria() {
+    for (map<string, Categoria*>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        delete it->second;
+    }
+    delete categorias;
+}
