@@ -14,56 +14,51 @@
 
 #include "../include/altaUsuarioController.h"
 
-altaUsuarioController::altaUsuarioController(){
+AltaUsuarioController::AltaUsuarioController(){
     datos = NULL;
 }
 
-altaUsuarioController * altaUsuarioController::getInstance(){
+AltaUsuarioController * AltaUsuarioController::getInstance(){
     static AltaUsuarioController instancia();
     return &instancia;
 }
 
-void ingresarUsuario(dtUsuario * d){
+void AltaUsuarioController::ingresarUsuario(dtUsuario * d){
    datos = d;   
 }
 
-void altaUsuarioController::ingresarEmpresa(string e){
+void AltaUsuarioController::ingresarEmpresa(string e){
    empresa = e;
 }
 
-void altaUsuarioController::ingresarNickname(string n){
+void AltaUsuarioController::ingresarNickname(string n){
    handlerUsuario * hc = handlerUsuario::getInstance();
    if (!hc->existeJugador(n))
       nickname = n;
 }
 
-void altaUsuarioController::ingresarDescripcion(string d){
+void AltaUsuarioController::ingresarDescripcion(string d){
    descripcion = d;
 }
 
-void altaUsuarioController::clearCache(){
+void AltaUsuarioController::clearCache(){
    delete datos;
 }
-/*
-void altaUsuarioController::confirmarDarDeAltaUsuario(){
+
+void AltaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
+   Usuario* usu;
    if(empresa != NULL){
-      DtDesarrollador datos(email, contrasena, empresa);
-      desarrollador * usu(datos);
+      Desarrollador* usu = new Desarrollador(email, contrasenia, empresa);
    }
    else{
-
-      DtUsuario datos(email, contraseña, nickname, descripcion);
-      jugador * usu(datos);
+      jugador* usu = new Jugador(email, contrasenia, nickname, descripcion);
    }
    hu->addUsuario(usu); 
 }
-* Ta todo mal volver a hacer. Mirar los tipos de datatype dtUsuario dtDesarrollador y ver los constructores disponibles.
-NO USAR LA ENIE!!!
-*/
 
-altaUsuarioController::~altaUsuarioController(){
+AltaUsuarioController::~altaUsuarioController(){
    this->clearCache();
 }
 
