@@ -1,4 +1,4 @@
-/* Laboratorio Programacion IV - INCO/FING/UDELAR 
+/* Laboratorio Programacion IV - INCO/FING/UDELAR
  * Integrantes:
  *      Alexis Baladon (5.574.612-4) - alexis.baladon@fing.edu.uy
  *      Guillermo Toyos (5.139.879-9) - guillermo.toyos@fing.edu.uy

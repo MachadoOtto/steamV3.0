@@ -24,7 +24,7 @@ private:
     HandlerEstadistica();
 public:
     static HandlerEstadistica* getInstance();
-    set<Estadistica>* getEstadistica();
+    set<Estadistica*>* getEstadistica();
     ~HandlerEstadistica();
 };
 
