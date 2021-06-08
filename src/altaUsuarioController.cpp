@@ -8,10 +8,6 @@
  * 	Mathias Ramilo
  */
 
-/* LAS CLASES VAN EN MAYUSUCOLA CAMBIAR TODO!!!!!!!
- * INCLUIDO EL .H
- */
-
 #include "../include/altaUsuarioController.h"
 
 AltaUsuarioController::AltaUsuarioController(){
@@ -48,7 +44,6 @@ void AltaUsuarioController::clearCache(){
 void AltaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
-   Usuario* usu;
    if(empresa != NULL){
       DtDesarrollador datos(empresa, email, contrasenia);
       Desarrollador* usu = new Desarrollador(datos);
