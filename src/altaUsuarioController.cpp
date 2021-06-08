@@ -8,62 +8,54 @@
  * 	Mathias Ramilo
  */
 
-/* LAS CLASES VAN EN MAYUSUCOLA CAMBIAR TODO!!!!!!!
- * INCLUIDO EL .H
- */
-
 #include "../include/altaUsuarioController.h"
 
-altaUsuarioController::altaUsuarioController(){
+AltaUsuarioController::AltaUsuarioController(){
     datos = NULL;
 }
 
-altaUsuarioController * altaUsuarioController::getInstance(){
+AltaUsuarioController * AltaUsuarioController::getInstance(){
     static AltaUsuarioController instancia();
     return &instancia;
 }
 
-void ingresarUsuario(dtUsuario * d){
+void AltaUsuarioController::ingresarUsuario(dtUsuario * d){
    datos = d;   
 }
 
-void altaUsuarioController::ingresarEmpresa(string e){
+void AltaUsuarioController::ingresarEmpresa(string e){
    empresa = e;
 }
 
-void altaUsuarioController::ingresarNickname(string n){
+void AltaUsuarioController::ingresarNickname(string n){
    handlerUsuario * hc = handlerUsuario::getInstance();
    if (!hc->existeJugador(n))
       nickname = n;
 }
 
-void altaUsuarioController::ingresarDescripcion(string d){
+void AltaUsuarioController::ingresarDescripcion(string d){
    descripcion = d;
 }
 
-void altaUsuarioController::clearCache(){
+void AltaUsuarioController::clearCache(){
    delete datos;
 }
-/*
-void altaUsuarioController::confirmarDarDeAltaUsuario(){
+
+void AltaUsuarioController::confirmarDarDeAltaUsuario(){
      
    HandlerUsuario * hu = HandlerUsuario::getInstance();
    if(empresa != NULL){
-      DtDesarrollador datos(email, contrasena, empresa);
-      desarrollador * usu(datos);
+      DtDesarrollador datos(empresa, email, contrasenia);
+      Desarrollador* usu = new Desarrollador(datos);
    }
    else{
-
-      DtUsuario datos(email, contraseña, nickname, descripcion);
-      jugador * usu(datos);
+      DtJugador datos(nickname, descripcion, email, contrasenia);
+      Jugador* usu = new Jugador(datos);
    }
    hu->addUsuario(usu); 
 }
-* Ta todo mal volver a hacer. Mirar los tipos de datatype dtUsuario dtDesarrollador y ver los constructores disponibles.
-NO USAR LA ENIE!!!
-*/
 
-altaUsuarioController::~altaUsuarioController(){
+AltaUsuarioController::~altaUsuarioController(){
    this->clearCache();
 }
 

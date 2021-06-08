@@ -16,14 +16,14 @@
 
 using std::string;
 
-class altaUsuarioController{
+class AltaUsuarioController{
 private:
    DtUsuario * datos;
    string empresa, nickname, descripcion;
-   altaUsuarioController();
+   AltaUsuarioController();
 
 public:
-   static altaUsuarioController * getInstance();
+   static AltaUsuarioController * getInstance();
    virtual void ingresarUsuario(DtUsuario);
    virtual void ingresarEmpresa(string);
    virtual void ingresarNickname(string);
