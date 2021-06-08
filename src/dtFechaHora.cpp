@@ -58,7 +58,7 @@ float DtFechaHora::diffHoras(DtFechaHora fFinal) {
     ultimo.tm_year = fFinal.anio - 1900; 
     ultimo.tm_mon = fFinal.mes - 1; 
     ultimo.tm_mday = fFinal.dia;
-    return difftime(ultimo, inicial) / 60 / 60;
+    return difftime(mktime(&ultimo), mktime(&inicial)) / 60 / 60;
 }
 
 ostream& operator<<(ostream& o, DtFechaHora d) {

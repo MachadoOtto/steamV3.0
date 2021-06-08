@@ -15,3 +15,12 @@ Estadistica::Estadistica(string name,string desc){
     descripcion = desc;
 }
 
+string Estadistica::getNombre(){
+    return nombre;
+}
+
+string Estadistica::getDescripcion(){
+    return descripcion;
+}
+
+

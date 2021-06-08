@@ -30,4 +30,5 @@ public:
 // Sobrecarga del operador de flujo.
 ostream& operator<<(ostream&, DtEstadistica);
 
+bool operator<(const DtEstadistica,const DtEstadistica);
 #endif

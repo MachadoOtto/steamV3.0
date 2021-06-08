@@ -28,3 +28,8 @@ ostream& operator<<(ostream& o, DtEstadistica p) {
     o << "Lista de precios: en desarrollo...\n";
     return o;
 }
+
+bool operator<(const DtEstadistica v1,const DtEstadistica v2){
+    return (v1->getValor() < v2->getValor())
+
+
