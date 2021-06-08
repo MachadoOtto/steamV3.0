@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef Suscripcion
-#define Suscripcion
+#ifndef SuScripcion
+#define SuScripcion
 
 #include "dtFechaHora.h"
 #include "dtVideojuego.h"

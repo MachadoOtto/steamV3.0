@@ -8,10 +8,10 @@
  * 	Mathias Ramilo
  */
 
-#ifndef menuUtilities
-#define menuUtilities
+#ifndef MENUUTILITIES
+#define MENUUTILITIES 
 
-using menuUtilities{
+namespace menuUtilities{
     void cls();
     void clinupt();
     void pkey();
@@ -19,6 +19,5 @@ using menuUtilities{
     void reprintln();
     int takeInputRange(int min,int max);
 }
-
 
 #endif

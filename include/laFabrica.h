@@ -7,6 +7,8 @@
  * 	Juan Jose Mangado
  * 	Mathias Ramilo
  */
+#ifndef LAFABRICA
+#define LAFABRICA
 
 #include <string>
 

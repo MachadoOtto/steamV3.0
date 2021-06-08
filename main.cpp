@@ -17,15 +17,15 @@
 #include "include/fechaSistema.h" 
 #include "include/menuUtilities.h"
 
-using namespace std;
 using namespace menuUtilities;
+using namespace std;
 
-int menuUsuario(){
+int menuUsuario(Sistema * sys){
     int controlVar=0;    
     while (controlVar!=7){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << FechaSistema::Fecha << endl;
+	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
 	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "(Jugador)\n";
         cout << "──────────  Menu Jugador ──────────" << endl << endl;
         cout << "Por favor seleccione una opcion:" << endl;
@@ -61,7 +61,7 @@ int menuUsuario(){
 		break;
 	    }
 	    case 6:{
-		sys->verInformacionDeVideojuego();
+		sys->verInformacionVideojuego();
 		break;
 	    }
 	}
@@ -70,12 +70,12 @@ int menuUsuario(){
 
 }
 
-int menuDesarrollador(){
+int menuDesarrollador(Sistema * sys){
     int controlVar=0;    
     while (controlVar!=7){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << FechaSistema::Fecha << endl;
+	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
 	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "(Desarrollador)\n";
         cout << "──────────  Menu Desarrollador ──────────" << endl << endl;
         cout << "Por favor seleccione una opcion:" << endl;
@@ -91,7 +91,7 @@ int menuDesarrollador(){
 	controlVar = takeInputRange(1,7);
         switch (controlVar) {
 	    case 1:{
-		sys->agregarCategoria();
+		sys->cargarCategoria();
 		break;
 	    }
 	    case 2:{
@@ -126,7 +126,7 @@ int main() {
     while (controlVar!=5){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << FechaSistema::Fecha << endl;
+	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
         cout << "──────────  Menu Principal ──────────" << endl << endl;
         cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Alta de Usuario" << endl;
@@ -143,8 +143,9 @@ int main() {
 		break;
 	    }
 	    case 2: {
-		if ((x = sys->iniciarSesion()) == 1) menuUsusario();
-		else if (x==2) menuDesarrollador();
+		int x;
+		if ((x = sys->iniciarSesion()) == 1) menuUsuario(sys);
+		else if (x==2) menuDesarrollador(sys);
 		break;
 	    }
 	    case 3: {

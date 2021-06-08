@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef VideojuegoController
-#define VideojuegoController
+#ifndef VideojueGoController
+#define VideojueGoController
 
 #include <string>
 #include <vector>

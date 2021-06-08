@@ -10,15 +10,15 @@
 #include <../include/partida.h>
 
 Partida::Partida(DtPartida datos) {
-    identificador = datos.getIdentificador();
-    fecha = datos.getFechaHora();
+    identificador = datos.getId();
+    fecha = datos.getFecha();
     duracion = datos.getDuracion();
     activa = datos.getActiva();
     host = NULL;
     videogame = NULL;
 }
 
-int Partida::getId() { return id; }
+int Partida::getId() { return identificador; }
 
 DtFechaHora Partida::getDtFechaHora() { return fecha; }
 
@@ -46,7 +46,7 @@ void Partida::setVideojuego(Videojuego* vj) {
 Videojuego* Partida::getVideojuego() { return videogame; }
 
 bool Partida::esIgualVideojuego(Videojuego* vid) {
-    return (videogame.getNombre() == vid.getNombre());
+    return (videogame->getNombre() == vid->getNombre());
 }
 
 Partida::~Partida() { }

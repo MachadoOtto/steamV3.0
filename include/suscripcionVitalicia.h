@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef SuscripcionVitalicia
-#define SuscripcionVitalicia
+#ifndef SuScripcionVitalicia
+#define SuScripcionVitalicia
 
 #include "suscripcion.h"
 

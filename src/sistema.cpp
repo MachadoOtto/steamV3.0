@@ -21,7 +21,7 @@ int Sistema::modificarFecha(){
     cout << "Ingrese la fecha del sistema usando el formato dd/mm/yyyy hh:mm ." << endl;
     cout << "Si desea iniciar la partida con la fecha actual del sistema operativo (GNU/Linux) escriba 'ahora'." << endl;
     cout << "Fecha: ";
-
+    string date_input;
     int d,m,y,h,min;
     bool fecha_check=false;
     while(!fecha_check){
@@ -40,7 +40,7 @@ int Sistema::modificarFecha(){
 		if (sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min) != 5)
 		    throw invalid_argument("");
 	    }
-	    fechaSistema::fecha = DtFechaHora(d,m,y,h,min); 	//fechaSistema(dia, mes, anio, hora, min).
+	    fechaSistema::fecha = DtFechaHora(y,m,d,h,min); 	//fechaSistema(dia, mes, anio, hora, min).
 	    fecha_check=true;
 	}
 	catch(invalid_argument &e){

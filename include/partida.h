@@ -12,9 +12,9 @@
 
 #include "dtFechaHora.h"
 #include "dtPartida.h"
+#include "videojuego.h"
 
 class Jugador;
-class Videojuego;
 
 class Partida {
 private:
@@ -28,12 +28,12 @@ protected:
     Partida(DtPartida);
 public:
     int getId();
+    Jugador* getHost();
     DtFechaHora getDtFechaHora();
     float getDuracion();
     void setActiva(bool);
     bool esActiva();
     void setHost(Jugador*);
-    Jugador* getHost();
     void remove(Jugador*);
     void setVideojuego(Videojuego*);
     Videojuego* getVideojuego();

@@ -27,7 +27,8 @@ public:
 
     int altaUsuario();
     int modificarFecha();
-    int cargarDatosDePrueba();
+    int cargarDatosPrueba();
+    int iniciarSesion();
 
     int cargarCategoria();
     int publicarVideojuego();
@@ -42,5 +43,6 @@ public:
     int	abandonarPartidaMultijugador();
     int finalizarPartida();
 
+    string getLoggedUserEmail();
 };
 #endif

@@ -8,10 +8,10 @@
  * 	Mathias Ramilo
  */
 
-#ifndef fechaSistema
-#define fechaSistema
+#ifndef FECHASistema
+#define FECHASistema
 #include "dtFechaHora.h"
-using fechaSistema{
+namespace fechaSistema{
     DtFechaHora fecha;
 }
 #endif

@@ -12,13 +12,13 @@
 
 #include "dtVideojuego.h"
 #include "dtPartida.h"
-#include "dtPartidaindividual.h"
-#include "partidaindividual.h"
+#include "dtPartidaIndividual.h"
+#include "partidaIndividual.h"
 #include "partida.h"
-#include "suscripcion"
+#include "suscripcion.h"
 #include "dtVideojuego.h"
 #include "dtPartida.h"
-#include "../include/JugadorMulti.h"
+#include "jugadorMulti.h"
 
 #include <string>
 #include <set>

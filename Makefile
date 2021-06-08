@@ -20,8 +20,8 @@ ODIR = obj
 CC = g++
 CCFLAGS = -Wall -Werror -I$(HDIR) -g
 
-MODULOS = sistema partida #Add more here
-CONST_MODULES = tipoPago tipoCategoria #Add more here
+MODULOS = sistema partida abandonarPartidaMulti altaUsuarioController categoria desarrollador dtCategoria dtDesarrollador dtFechaHora dtJugador dtPartida dtPartidaIndividual dtPartidaMultijugador dtPrecios dtUsuario dtVideojuego estadisitca estadisticaTotalHorasJugadas estadisticaTotalJugadoresSuscriptos fechaSistema finalizarPArtida genero handlerCatalogo handlerCategoria handlerEstadistica handlerUsuario jugador-Multi jugador laFabrica menuUtilities partida partidaIndividual partidaMultijugador plataforma sistema suscripcion iFPController suscripcionTemporal suscripcionVitalicia usuario videojuego videojuegoController#Add more here
+CONST_MODULES = tipoPago tipoCategoria iAltaUsuarioController iIFPController iVideojuegoController tipoCategoria tipoEstado tipoGenero tipoPago tipoValido #Add more here
 
 #lista de archivos
 HS = $(MODULOS:%=$(HDIR)/%.h)

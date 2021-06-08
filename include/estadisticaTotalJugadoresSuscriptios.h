@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef Estadistica
-#define Estadistica
+#ifndef ESTADISTICATOTALJUGADORESSUSCRIPTOS 
+#define ESTADISTICATOTALJUGADORESSUSCRIPTOS 
 
 #include <string>
 #include "estadistica.h"

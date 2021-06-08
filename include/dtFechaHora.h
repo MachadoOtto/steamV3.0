@@ -18,16 +18,15 @@ using std::string;
 
 class DtFechaHora {
 private:
-    int anio, mes, dia, hora, min, segundo;
+    int anio, mes, dia, hora, min;
 public:
     DtFechaHora(); // Devuelve la fecha actual.
-    DtFechaHora(int, int, int, int, int, int);
+    DtFechaHora(int, int, int, int, int);
     int getAnio();
     int getMes();
     int getDia();
     int getHora();
     int getMinuto();
-    int getSegundo();
     float diffHoras(DtFechaHora); // Devuelve la diferencia entre fechas en horas. ATENCION: La fecha ingresada debe ser mayor a la actual.
 };
 

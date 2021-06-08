@@ -19,16 +19,16 @@ DtFechaHora::DtFechaHora() {
 	anio = time->tm_year + 1900; // tm_year devuelve los anios despues de 1900 (por lo tanto hay que sumarlos).
     hora = time->tm_hour;
 	min = time->tm_min;
-    segundo = time->tm_min;
+    //segundo = time->tm_min;
 }
 
-DtFechaHora::DtFechaHora(int a, int m, int d, int hh, int mm, int ss) {
+DtFechaHora::DtFechaHora(int a, int m, int d, int hh, int mm) {
     anio = a;
     mes = m;
     dia = d;
     hora = hh;
     min = mm;
-    segundo = ss;
+  //  segundo = ss;
 }
 
 int DtFechaHora::getAnio() { return anio; }
@@ -41,20 +41,20 @@ int DtFechaHora::getHora() { return hora; }
 
 int DtFechaHora::getMinuto() { return min; }
 
-int DtFechaHora::getSegundo() { return segundo; }
+//int DtFechaHora::getSegundo() { return segundo; }
 
 float DtFechaHora::diffHoras(DtFechaHora fFinal) {
     struct tm inicial = {0};
     inicial.tm_hour = hora;   
     inicial.tm_min = min; 
-    inicial.tm_sec = segundo;
+    //inicial.tm_sec = segundo;
     inicial.tm_year = anio - 1900; 
     inicial.tm_mon = mes - 1; 
     inicial.tm_mday = dia;
     struct tm ultimo = {0};
     ultimo.tm_hour = fFinal.hora;   
     ultimo.tm_min = fFinal.min; 
-    ultimo.tm_sec = fFinal.segundo;
+    //ultimo.tm_sec = fFinal.segundo;
     ultimo.tm_year = fFinal.anio - 1900; 
     ultimo.tm_mon = fFinal.mes - 1; 
     ultimo.tm_mday = fFinal.dia;
@@ -68,9 +68,9 @@ ostream& operator<<(ostream& o, DtFechaHora d) {
     o << d.getHora() << ":";
     if (d.getMinuto() < 10)
         o << "0";
-    o << d.getMinuto() << ":";
-    if (d.getSegundo() < 10)
-        o << "0";
-    o << d.getSegundo();
+    o << d.getMinuto();
+    //if (d.getSegundo() < 10)
+    //    o << "0";
+    //o << d.getSegundo();
     return o;
 }

@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef IAltaUsuario
-#define IAltaUsuario
+#ifndef IALTAUsuario
+#define IALTAUsuario
 
 #include <string>
 

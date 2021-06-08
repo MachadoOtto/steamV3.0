@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef Estadistica
-#define Estadistica
+#ifndef EStadistica
+#define EStadistica
 
 #include <string>
 #include "videojuego.h"

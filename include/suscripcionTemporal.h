@@ -8,8 +8,8 @@
  * 	Mathias Ramilo
  */
 
-#ifndef SuscripcionTemporal
-#define SuscripcionTemporal
+#ifndef SuScripcionTemporal
+#define SuScripcionTemporal
 
 #include "suscripcion.h"
 #include "tipoEstado.h"

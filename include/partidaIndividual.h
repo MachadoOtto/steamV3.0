@@ -32,3 +32,5 @@ public:
     virtual void eliminarAssoc();
     ~PartidaIndividual();
 };
+
+#endif
