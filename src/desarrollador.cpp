@@ -13,6 +13,7 @@
 #include "../include/estadistica.h"
 #include "../include/videojuego.h"
 #include "../include/dtEstadistica.h"
+#include "../include/handlerEstadistica.h"
 
 #include <string>
 #include <set>
@@ -37,11 +38,11 @@ void Desarrollador::add(Videojuego * vj) {
 }
 
 void Desarrollador::remove(Videojuego * vj) {
-    videojuegosDesarrollados->erase(vj);
+    videojuegosDesarrollados->erase(vj->getNombre());
 }
 
 Videojuego * Desarrollador::findVideojuego(std::string nombreVj) {
-    return videojuegosDesarrollados[nombreVj];
+    return (*videojuegosDesarrollados)[nombreVj];
 }
 
 void Desarrollador::add(Estadistica * est) {
@@ -49,17 +50,17 @@ void Desarrollador::add(Estadistica * est) {
 }
 
 void Desarrollador::remove(Estadistica * est) {
-    estadisticas->erase(est);
+    estadisticas->erase(est->getNombre());
 }
 
 Estadistica * Desarrollador::findEstadistica(std::string est) {
-    return estadisticas[est];
+    return (*estadisticas)[est];
 }
 
 std::set<std::string> * Desarrollador::getVjSinPartidasActivas() {
     std::set<std::string> * res = new std::set<std::string>;
     for(std::map<std::string,Videojuego *>::const_iterator it = videojuegosDesarrollados->cbegin(); it != videojuegosDesarrollados->cend(); it++) {
-        Videojuego * vj = *it;
+        Videojuego * vj = it->second;
         bool activo = vj->estaActivo();
         if(!activo) {
             std::string nombreVj = vj->getNombre();
@@ -72,31 +73,27 @@ std::set<std::string> * Desarrollador::getVjSinPartidasActivas() {
 std::set<std::string> * Desarrollador::getVideojuegosDesarrollados() {
     std::set<std::string> * res = new std::set<std::string>;
     for(std::map<std::string,Videojuego *>::const_iterator it = videojuegosDesarrollados->cbegin(); it != videojuegosDesarrollados->cend(); it++) {
-        Videojuego * vj = *it;
+        Videojuego * vj = it->second;
         std::string nombreVideojuego = vj->getNombre();
         res->insert(nombreVideojuego);
     }
     return res;
 }
 
-void Desarrollador::remove(Videojuego * vj) {
-    videojuegosDesarrollados->erase(vj->getNombre());
-}
-
-void Desarrollador::publishVideogame(DtVideojuego gameData, std::map<std::string,Categoria *> * categorias) {
-    Videjuego * vj = new Videojuego(gameData,categorias);
+void Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
+    Videojuego * vj = new Videojuego(gameData,categorias);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
 }
 
 void Desarrollador::suscribirEstadistica(Estadistica * est) {
-    estadisticas->add(est);
+    add(est);
 }
 
-std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videjuego * vj) {
+std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) {
     std::set<DtEstadistica> * res = new std::set<DtEstadistica>;
-    HandlerEstadistica * he = Handler::getInstance();
-    std::map<std::string,Estadistica *> * ests = he->getEstadisticas();
-    for(std::set<DtEstadistica>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
+    HandlerEstadistica * he = HandlerEstadistica::getInstance();
+    std::set<Estadistica *> * ests = he->getEstadistica();
+    for(std::set<Estadistica *>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
         Estadistica * es = *it;
         DtEstadistica val = es->procesarEstadistica(vj);
         res->insert(val);
