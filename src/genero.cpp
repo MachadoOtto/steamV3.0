@@ -8,28 +8,15 @@
  * 	Mathias Ramilo
  */
 
-#include "Genero.h"
-#include "tipoGenero.h"
-#include "dtCategoria.h"
+#include "../include/genero.h"
+#include "../include/tipoGenero.h"
+#include "../include/dtCategoria.h"
 
-Genero::Genero(DtCategoria dtCat) {
-    nombre = dtCat.getNombre();
-    descripcion = dtCat.getDescripcion();
-}
+Genero::Genero(DtCategoria dtCat): Categoria(dtCat){}
 
-std::string Genero::getNombre() {
-    return nombre;
-}
-
-std::string Genero::getDescripcion() {
-    return descripcion;
-}
-
-Genero::~Genero() {
-    
-}
+Genero::~Genero() {}
 
 DtCategoria Genero::getDt() {
-    DtCategoria dtCat(nombre,descripcion,tipoCategoria::Genero);
+    DtCategoria dtCat(this->getNombre(),this->getDescripcion(),TipoCategoria::Genero);
     return dtCat;
 }

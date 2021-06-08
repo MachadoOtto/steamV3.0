@@ -9,7 +9,7 @@
 
 #include "../include/dtPartidaMultijugador.h"
 #include "../include/dtPartida.h"
-#include "../include/dtFechaHora"
+#include "../include/dtFechaHora.h"
 
 DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa, bool transmitidaEnVivo): DtPartida(id,fecha,duracion,activa) {
     this->transmitidaEnVivo = transmitidaEnVivo;
@@ -19,7 +19,7 @@ bool DtPartidaMultijugador::getTransmitidaEnVivo() {
     return transmitidaEnVivo;
 }
 
-std::ostream & operator << (std::ostream &,DtPartidaMultijugador p) {
+std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
         o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion()
         << "\n" << "Es activa?: ";
         if(p.getActiva()) o << "Si";

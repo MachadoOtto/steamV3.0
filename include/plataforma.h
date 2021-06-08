@@ -13,7 +13,7 @@
 
 #include <string>
 #include "tipoPlataforma.h"
-#include "Categoria.h"
+#include "categoria.h"
 
 class Plataforma : public Categoria {
     private:
@@ -23,6 +23,6 @@ class Plataforma : public Categoria {
         ~Plataforma();
 
         virtual DtCategoria getDt();
-}
+};
 
 #endif

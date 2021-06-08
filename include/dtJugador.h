@@ -21,7 +21,7 @@ private:
     string descripcion;
     string nickname;
 public:
-    DtUsuario(string nick,string desc,string email, string cont);
+    DtJugador(string,string,string,string);
     string getNickname();
     string getDescripcion();
 };

@@ -20,7 +20,8 @@ using std::string;
 
 class EstadisticaTotalHorasJugadas: public Estadistica{
 public:
-    virtual DtEstadistica* procesarEstadistica(Videojuego*);
+    virtual DtEstadistica procesarEstadistica(Videojuego*);
     EstadisticaTotalHorasJugadas(string,string);
 };
 
+#endif

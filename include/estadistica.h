@@ -18,13 +18,15 @@
 using std::string;
 
 class Estadistica{
-private:
+protected:
     string nombre;
     string descripcion;
-public:
-    virtual DtEstadistica* procesarEstadistica(Videojuego*)=0;
-protected:
     Estadistica(string name,string desc);
+public:
+    virtual DtEstadistica procesarEstadistica(Videojuego*)=0;
+    string getNombre();
+    string getDescripcion();
+    virtual ~Estadistica();
 };
 
 #endif

@@ -13,17 +13,15 @@
 
 #include <string>
 #include "tipoGenero.h"
-#include "DtCategoria.h"
-#include "Categoria.h"
+#include "dtCategoria.h"
+#include "categoria.h"
 
 class Genero : public Categoria {
-    private:
-        
-    public:
-        Genero(DtCategoria);
-        ~Genero();
+public:
+    Genero(DtCategoria);
+    ~Genero();
+    virtual DtCategoria getDt();
+};
 
-        virtual DtCategoria getDt();
-}
 
 #endif

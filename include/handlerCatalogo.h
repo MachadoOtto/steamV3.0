@@ -23,7 +23,6 @@ class DtVideojuego;
 
 class HandlerCatalogo {
 private:
-    static HandlerCatalogo* instancia;
     map<string, Videojuego*>* videojuegos;
     HandlerCatalogo();
 public:

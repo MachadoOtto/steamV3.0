@@ -137,7 +137,6 @@ VideojuegoController::VideojuegoController(){
 
 VideojuegoController::~VideojuegoController(){
     this->clearCache();
-    instancia = nullptr;
 }
 
 

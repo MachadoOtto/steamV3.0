@@ -9,28 +9,26 @@
 
 #include <../include/handlerCatalogo.h>
 
-HandlerCatalogo* HandlerCatalogo::instancia = nullptr;
-
 HandlerCatalogo::HandlerCatalogo() {
     videojuegos = new map<string, Videojuego*>;
 }
 
-static HandlerCatalogo* HandlerCatalogo::getInstance() {
-    static HandlerCatalogo instancia();
+HandlerCatalogo* HandlerCatalogo::getInstance() {
+    static HandlerCatalogo instancia;
     return &instancia;
 }
 
 set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
-    set<DtVideojuego> dtInactivos* = new set<DtVideojuego>;
-    for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it! = videojuegos->end(); ++it) {
-        if (!(it->second->esActivo())) {
-            dtInactivos->insert(it->second->obtenerDatoVideojuego());
+    set<DtVideojuego> * dtInactivos = new set<DtVideojuego>;
+    for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it != videojuegos->end(); ++it) {
+        if (!(it->second->estaActivo())) {
+            dtInactivos->insert(it->second->obtenerDatosVideojuego());
         }
     }
     return dtInactivos;
 }
 
-Videojuego HandlerCatalogo::findVideojuego(string nombreVideojuego) {
+Videojuego* HandlerCatalogo::findVideojuego(string nombreVideojuego) {
     map<string, Videojuego*>::iterator it = videojuegos->find(nombreVideojuego);
     return it->second;
 }

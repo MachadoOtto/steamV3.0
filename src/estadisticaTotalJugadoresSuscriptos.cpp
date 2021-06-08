@@ -13,7 +13,7 @@
 EstadisticaTotalJugadoresSuscriptos::EstadisticaTotalJugadoresSuscriptos(string name,string desc):
     Estadistica(name,desc){}
 
-DtEstadistica* EstadisticaTotalJugadoresSuscriptos::procesarEstadistica(Videojuego * v){
-    return new DtEstadistica(nombre,descripcion,v->getTotalJugadoresSuscriptos());
+DtEstadistica EstadisticaTotalJugadoresSuscriptos::procesarEstadistica(Videojuego * v){
+    return DtEstadistica(nombre,descripcion,v->getTotalJugadoresSuscriptos());
 }
 
