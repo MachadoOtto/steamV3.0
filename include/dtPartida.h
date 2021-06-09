@@ -30,7 +30,7 @@ class DtPartida {
         float getDuracion();
         bool getActiva();
         bool esActiva();
-        std::string getEsHost();
+        std::string getHost();
         std::string getVideojuego();
 };
 
