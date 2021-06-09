@@ -24,7 +24,7 @@ class DtPartida {
         std::string host;
         std::string videojuego;
     public:
-        DtPartida(int,DtFechaHora,float,bool);
+        DtPartida(int,DtFechaHora,float,bool,std::string,std::string);
         int getId();
         DtFechaHora getFecha();
         float getDuracion();
