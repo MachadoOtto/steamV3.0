@@ -61,6 +61,13 @@ float DtFechaHora::diffHoras(DtFechaHora fFinal) {
     return difftime(mktime(&ultimo), mktime(&inicial)) / 60 / 60;
 }
 
+bool operator<(const DtFechaHora dt1, const DtFechaHora dt2) {
+    int min1, min2 = 0;
+    min1 = dt1.min + (dt1.hora + (dt1.dia + (dt1.mes + (dt1.anio) * 12) * 31) * 24) * 60;
+    min2 = dt2.min + (dt2.hora + (dt2.dia + (dt2.mes + (dt2.anio) * 12) * 31) * 24) * 60;
+    return (min1 < min2);
+}
+
 ostream& operator<<(ostream& o, DtFechaHora d) {
     o << d.getDia() << "/" << d.getMes() << "/" << d.getAnio() << " - ";
     if (d.getHora() < 10)

@@ -18,9 +18,8 @@ HandlerCategoria::HandlerCategoria(){
 }
 
 static HandlerCategoria* HandlerCategoria::getInstance() {
-    if (instancia == nullptr)
-        instancia = new HandlerCategoria();
-    return instancia;
+    static HandlerCategoria instancia;
+    return &instancia;
 }
 
 set<DtCategoria>* HandlerCategoria::getDtGenders() {

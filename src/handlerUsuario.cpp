@@ -36,7 +36,7 @@ bool HandlerUsuario::existeUsuario(string emailUsuario) {
 }
 
 void HandlerUsuario::addUsuario(Usuario* user) {
-    usuarios[user->getEmail()] = user;
+    usuarios->insert(map<string, Usuario*>::value_type(user->getEmail(), user));
 }
 
 HandlerUsuario::~HandlerUsuario() {

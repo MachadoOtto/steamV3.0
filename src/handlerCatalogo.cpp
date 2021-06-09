@@ -19,7 +19,7 @@ HandlerCatalogo* HandlerCatalogo::getInstance() {
 }
 
 set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
-    set<DtVideojuego> * dtInactivos = new set<DtVideojuego>;
+    set<DtVideojuego>* dtInactivos = new set<DtVideojuego>;
     for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it != videojuegos->end(); ++it) {
         if (!(it->second->estaActivo())) {
             dtInactivos->insert(it->second->obtenerDatosVideojuego());
@@ -34,7 +34,7 @@ Videojuego* HandlerCatalogo::findVideojuego(string nombreVideojuego) {
 }
 
 void HandlerCatalogo::addVideojuego(Videojuego* vj) {
-    videojuegos[vj->getNombre()] = vj;
+    videojuegos->insert(map<string, Videojuego*>::value_type(vj->getNombre(), vj));
 }
 
 void HandlerCatalogo::remove(Videojuego* vj) {

@@ -28,3 +28,6 @@ TipoCategoria DtCategoria::getTipoCategoria(){
     return tipo;
 }
     
+bool operator<(const DtCategoria dt1, const DtCategoria dt2) {
+    return (dt1.nombre < dt2.nombre);
+}
