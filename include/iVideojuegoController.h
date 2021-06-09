@@ -42,9 +42,9 @@ public:
     virtual void confirmarSuscripcion()=0;
     virtual void confirmarEliminarVideojuego()=0;
     virtual void cancelarSuscripcion()=0;
-    virtual void clearCache();
+    virtual void clearCache()=0;
 
-    virtual ~IVideojuegoController();
+    virtual ~IVideojuegoController(){}
 };
 
 #endif

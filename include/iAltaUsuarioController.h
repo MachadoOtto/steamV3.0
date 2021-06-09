@@ -26,7 +26,7 @@ public:
    virtual void confirmarDarDeAltaUsuario()=0;
    virtual void clearCache()=0;
    
-   virtual ~IAltaUsuarioController();
+   virtual ~IAltaUsuarioController(){}
 };
 
 #endif
