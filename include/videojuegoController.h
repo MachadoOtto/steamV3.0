@@ -18,7 +18,7 @@
 #include "handlerEstadistica.h"
 #include "handlerCategoria.h"
 #include "handlerUsuario.h"
-
+#include "iVideojuegoController.h"
 #include "usuario.h"
 #include "jugador.h"
 #include "desarrollador.h"
@@ -36,24 +36,24 @@ enum class TipoPago;
 
 class VideojuegoController: public IVideojuegoController{
 private:
-    DtVideojuego * datos;
+    DtVideojuego datos;
     TipoPago tPago;
-    TipoSuscripcion tSus; //SUS!?
+    TipoValido tSus; //SUS!?
     Usuario * loggedUser; //Player OR Dev. depening on usecase under execution.
     Videojuego * videoCache;
-    vector<Categoria*> * categoriaCache;
+    set<Categoria*> * categoriaCache;
 
     VideojuegoController();
 public:
-    vector<string> *obtenerNombreVideojuegosDesarrollados();
-    vector<string> *obtenerNombreVideojuegosInactivos();
-    vector<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
-    vector<DtCategoria> *obtenerCategoriasGenero();
-    vector<DtCategoria> *obtenerCategoriasPlataforma();
-    vector<DtCategoria> *obtenerCategoriasOtro();
-    vector<DtEstadistica> *obtenerEstadisticas(string);
+    set<string> *obtenerNombreVideojuegosDesarrollados();
+    set<string> *obtenerNombreVideojuegosInactivos();
+    set<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
+    set<DtCategoria> *obtenerCategoriasGenero();
+    set<DtCategoria> *obtenerCategoriasPlataforma();
+    set<DtCategoria> *obtenerCategoriasOtro();
+    set<DtEstadistica> *obtenerEstadisticas(string);
     void ingresarDatosVideojuego(DtVideojuego);
-    void ingresarSuscripcion(TipoSuscripcion,TipoPago);
+    void ingresarSuscripcion(TipoValido,TipoPago);
     void seleccionarVideojuego(string);
     void seleccionarGenero(string);
     void seleccionarPlataforma(string);

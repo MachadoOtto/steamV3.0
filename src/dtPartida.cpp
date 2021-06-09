@@ -36,3 +36,8 @@ bool DtPartida::getActiva() {
 bool DtPartida::esActiva() { //alias
     return getActiva();
 }
+
+bool operator<(const DtPartida p1,const DtPartida p2){
+    return p1.fecha<p2.fecha;
+}
+

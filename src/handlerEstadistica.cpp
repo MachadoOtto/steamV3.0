@@ -9,18 +9,16 @@
 
 #include <../include/handlerEstadistica.h>
 
-HandlerEstadistica* HandlerEstadistica::instancia = nullptr;
-
 HandlerEstadistica::HandlerEstadistica(){
     estadisticas = new map<string, Estadistica*>;
 }
 
-static HandlerEstadistica* HandlerEstadistica::getInstance() {
-    static HandlerEstadistica instancia();
+HandlerEstadistica* HandlerEstadistica::getInstance() {
+    static HandlerEstadistica instancia;
     return &instancia;
 }
 
-map<string, Estadistica>* HandlerEstadistica::getEstadistica() {
+map<string, Estadistica*>* HandlerEstadistica::getEstadistica() {
     return estadisticas;
 }
 
@@ -29,12 +27,12 @@ Estadistica* HandlerEstadistica::findEstadistica(string nombreEstadistica) {
 }
 
 void HandlerEstadistica::addEstadistica(Estadistica* est) {
-    Estadisticas->insert(map<string, Estadistica*>::value_type(est->getNombre(), est));
+    estadisticas->insert(map<string, Estadistica*>::value_type(est->getNombre(), est));
 }
 
 HandlerEstadistica::~HandlerEstadistica() {
     for (map<string, Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
-        delete *it;
+        delete it->second;
     }
     delete estadisticas;
 }

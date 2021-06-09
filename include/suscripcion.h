@@ -23,18 +23,19 @@ class Jugador;
 
 class Suscripcion{
 private:
-    DtFechaHora * fecha;
+    DtFechaHora fecha;
     TipoPago pago;
     Jugador * comprador;
     Videojuego * vj;
 public:
     DtVideojuego * obtenerVideojuego();
+    Jugador * getComprador();
     virtual bool esActiva()=0;
     bool esDeJugador(Jugador *);
     void eliminarAssoc();
-    ~Suscripcion();
+    virtual ~Suscripcion();
 protected:
-    Suscripcion(DtFechaHora *,TipoPago,Jugador *,Videojuego *);
+    Suscripcion(DtFechaHora, TipoPago,Jugador *,Videojuego *);
 };
 
 #endif

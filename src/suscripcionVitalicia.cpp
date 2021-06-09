@@ -10,10 +10,10 @@
 
 #include "../include/suscripcionVitalicia.h"
 
-SuscripcionVitalicia::SuscripcionVitalicia(DtFechaHora * dt, TipoPago tp, Jugador *j, Videojuego *v):
+SuscripcionVitalicia::SuscripcionVitalicia(DtFechaHora dt, TipoPago tp, Jugador *j, Videojuego *v):
     Suscripcion(dt,tp,j,v){}
 
-virtual bool SuscripcionVitalicia::esActiva(){
+bool SuscripcionVitalicia::esActiva(){
     return true;
 }
 

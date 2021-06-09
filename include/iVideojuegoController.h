@@ -20,20 +20,20 @@ using std::string;
 class DtVideojuego;
 class DtCategoria;
 class DtEstadistica;
-enum class TipoSuscripcion;
+enum class TipoValido;
 enum class TipoPago;
 
 class IVideojuegoController{
 public:
-    virtual vector<string> *obtenerNombreVideojuegosDesarrollados()=0;
-    virtual vector<string> *obtenerNombreVideojuegosInactivos()=0;
-    virtual vector<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos()=0;
-    virtual vector<DtCategoria> *obtenerCategoriasGenero()=0;
-    virtual vector<DtCategoria> *obtenerCategoriasPlataforma()=0;
-    virtual vector<DtCategoria> *obtenerCategoriasOtros()=0;
-    virtual vector<DtEstadistica> *obtenerEstadisticas(string)=0;
+    virtual set<string> *obtenerNombreVideojuegosDesarrollados()=0;
+    virtual set<string> *obtenerNombreVideojuegosInactivos()=0;
+    virtual set<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos()=0;
+    virtual set<DtCategoria> *obtenerCategoriasGenero()=0;
+    virtual set<DtCategoria> *obtenerCategoriasPlataforma()=0;
+    virtual set<DtCategoria> *obtenerCategoriasOtro()=0;
+    virtual set<DtEstadistica> *obtenerEstadisticas(string)=0;
     virtual void ingresarDatosVideojuego(DtVideojuego)=0;
-    virtual void ingresarSuscripcion(TipoSuscripcion, TipoPago)=0;
+    virtual void ingresarSuscripcion(TipoValido, TipoPago)=0;
     virtual void seleccionarVideojuego(string)=0;
     virtual void seleccionarGenero(string)=0;
     virtual void seleccionarPlataforma(string)=0;
