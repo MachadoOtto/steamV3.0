@@ -14,14 +14,14 @@
 #include <map>
 #include <set>
 #include "categoria.h"
+#include "genero.h"
+#include "plataforma.h"
 
 using std::string;
 using std::map;
 using std::set;
 
 class DtCategoria;
-class Genero;
-class Plataforma;
 
 class HandlerCategoria {
 private:

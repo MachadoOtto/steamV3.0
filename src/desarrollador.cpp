@@ -89,6 +89,7 @@ void Desarrollador::suscribirEstadistica(Estadistica * est) {
     add(est);
 }
 
+/* Esta funcion no hace lo que debiera hacer. Ver caso de uso
 std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) {
     std::set<DtEstadistica> * res = new std::set<DtEstadistica>;
     HandlerEstadistica * he = HandlerEstadistica::getInstance();
@@ -100,6 +101,7 @@ std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) 
     }
     return res;
 }
+*/
 
 Desarrollador::~Desarrollador() { //messi?
     for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {

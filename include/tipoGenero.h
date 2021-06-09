@@ -7,9 +7,9 @@
  *      Mathias Ramilo (5.665.788-5) - mathias.ramilo@fing.edu.uy
  */
 
-#ifndef TIPO_PLATAFORMA
-#define TIPO_PLATAFORMA
+#ifndef TIPOGENERO
+#define TIPOGENERO
 
-enum class TipoPlataforma {PC, Switch, PS4, PS5, XboxOne, XboxX};
+enum class TipoGenero {Accion, Aventura, Estrategia, Deporte};
 
 #endif

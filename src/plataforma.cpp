@@ -8,9 +8,7 @@
  * 	Mathias Ramilo
  */
 
-#include "Plataforma.h"
-#include "tipoPlataforma.h"
-#include "dtCategoria.h"
+#include "../include/plataforma.h"
 
 Plataforma::Plataforma(DtCategoria dtCat) {
     nombre = dtCat.getNombre();
