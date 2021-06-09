@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <set>
+#include <set>
 
 class DtPartida {
     protected:
