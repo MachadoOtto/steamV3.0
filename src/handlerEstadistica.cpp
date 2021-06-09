@@ -12,7 +12,7 @@
 HandlerEstadistica* HandlerEstadistica::instancia = nullptr;
 
 HandlerEstadistica::HandlerEstadistica(){
-    estadisticas = new set<Estadistica*>;
+    estadisticas = new map<string, Estadistica*>;
 }
 
 static HandlerEstadistica* HandlerEstadistica::getInstance() {
@@ -20,12 +20,20 @@ static HandlerEstadistica* HandlerEstadistica::getInstance() {
     return &instancia;
 }
 
-set<Estadistica>* HandlerEstadistica::getEstadistica() {
+map<string, Estadistica>* HandlerEstadistica::getEstadistica() {
     return estadisticas;
 }
 
+Estadistica* HandlerEstadistica::findEstadistica(string nombreEstadistica) {
+    return estadisticas->find(nombreEstadistica)->second;
+}
+
+void HandlerEstadistica::addEstadistica(Estadistica* est) {
+    Estadisticas->insert(map<string, Estadistica*>::value_type(est->getNombre(), est));
+}
+
 HandlerEstadistica::~HandlerEstadistica() {
-    for (set<Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
+    for (map<string, Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
         delete *it;
     }
     delete estadisticas;

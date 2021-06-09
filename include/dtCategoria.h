@@ -26,6 +26,7 @@ public:
     string getNombre();
     string getDescripcion();
     TipoCategoria getTipoCategoria();
+    friend bool operator<(const DtCategoria, const DtCategoria);
 };
 
 #endif

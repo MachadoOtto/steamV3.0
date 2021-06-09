@@ -10,10 +10,9 @@
 
 #include "../include/dtVideojuego.h"
 
-DtVideojuego::DtVideojuego(string n,string d,float men,float an,float tri,float vita){
+DtVideojuego::DtVideojuego(string n,string d,float men,float tri,float an,float vita):costos(men,tri,an,vita){
     nombre = n;
     descripcion = d;
-    costos = new DtPrecios(men,tri,an,vita);
 }
 
 string DtVideojuego::getNombre(){
@@ -24,11 +23,12 @@ string DtVideojuego::getDescripcion(){
     return descripcion;
 }
 
-DtPrecios* DtVideojuego::getDtPrecios(){
+DtPrecios DtVideojuego::getDtPrecios(){
     return costos;
 }
 
-DtVideojuego::~DtVideojuego(){
-    delete costos;
+DtVideojuego::~DtVideojuego(){ }
+
+bool operator<(const DtVideojuego dt1, const DtVideojuego dt2) {
+    return (dt1.nombre < dt2.nombre);
 }
-    

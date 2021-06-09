@@ -22,5 +22,3 @@ string Estadistica::getNombre(){
 string Estadistica::getDescripcion(){
     return descripcion;
 }
-
-
