@@ -10,6 +10,8 @@
 #include "../include/dtPartidaIndividual.h"
 #include "../include/dtFechaHora.h"
 
+#include <std::string>
+
 DtPartidaIndividual::DtPartidaIndividual(int id,DtFechaHora fecha,float duracion,bool activa, std::string host, std::string videojuego): DtPartida(id,fecha,duracion,activa,host,videojuego) {
 
 }
