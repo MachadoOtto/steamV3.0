@@ -12,11 +12,13 @@
 
 #include "dtPartida.h"
 
+#include <string>
+
 class DtPartidaIndividual: public DtPartida{
     private:
 
     public:
-        DtPartidaIndividual(int,DtFechaHora,float,bool);
+        DtPartidaIndividual(int,DtFechaHora,float,bool,std::string,std::string);
         friend std::ostream & operator << (std::ostream &,DtPartidaIndividual);
 };
 
