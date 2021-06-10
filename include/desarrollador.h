@@ -39,7 +39,7 @@ class Desarrollador: public Usuario {
         
         std::set<std::string> * getVjSinPartidasActivas();
         std::set<std::string> * getVideojuegosDesarrollados();
-        Videojuego * publishVideogame(DtVideojuego,std::map<std::string,Categoria *> *);
+        void publishVideogame(DtVideojuego,std::set<Categoria *> *);
         void suscribirEstadistica(Estadistica *);
         std::set<DtEstadistica> * solicitarEstadisticas(Videojuego *);
         ~Desarrollador();

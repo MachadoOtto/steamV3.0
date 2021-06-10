@@ -13,15 +13,11 @@
 #include "dtPartida.h"
 #include "dtFechaHora.h"
 
-#include <string>
-#include <set>
-
 class DtPartidaMultijugador: public DtPartida {
     private:
         bool transmitidaEnVivo;
-        std::set<std::string> jugadoresUnidos;
     public:
-        DtPartidaMultijugador(int,DtFechaHora,float,bool,std::string,std::string,bool transmitidaEnVivo);
+        DtPartidaMultijugador(int,DtFechaHora,float,bool,bool transmitidaEnVivo);
         bool getTransmitidaEnVivo();
         friend std::ostream & operator << (std::ostream &,DtPartidaMultijugador);
 };
