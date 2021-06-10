@@ -69,7 +69,7 @@ int Sistema::iniciarSesion(){
     IAltaUsuarioController * h = f->getIAltaUsuarioController();
     string u,p;
     int user_ok = 1;
-    cout << "Ingrese los siguientes datos para iniciar sesion.\nSi desea cancelar la operacion presione enter dos veces.\n\n\n";
+    cout << "Ingrese los siguientes datos para iniciar sesion.\nSi desea cancelar la operacion presione ENTER dos veces.\n\n\n";
     while(user_ok){
 	cout << "Usuario(email): ";
 	getline(cin,u);
