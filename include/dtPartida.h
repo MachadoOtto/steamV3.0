@@ -27,6 +27,7 @@ class DtPartida {
         float getDuracion();
         bool getActiva();
         bool esActiva();
+	friend bool operator<(const DtPartida,const DtPartida);
 };
 
 #endif

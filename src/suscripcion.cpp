@@ -11,7 +11,8 @@
 #include "../include/suscripcion.h"
 
 DtVideojuego * Suscripcion::obtenerVideojuego(){
-    return vj->obtenerDatoVideojuego();
+    //return vj->obtenerDatoVideojuego(); me parece que tenemos un problema de deise(enie)o 
+    return nullptr; 
 }
 
 bool Suscripcion::esDeJugador(Jugador *x){
@@ -19,16 +20,16 @@ bool Suscripcion::esDeJugador(Jugador *x){
 }
 
 void Suscripcion::eliminarAssoc(){
-    comprador->removeSus(this);
+    //comprador->removeSus(this); T_T
 }
-
-Suscripcion::Suscripcion(DtFechaHora *f,TipoPago x,Jugador * j,Videojuego * v){
+Jugador * Suscripcion::getComprador(){
+    return comprador;
+}
+Suscripcion::Suscripcion(DtFechaHora f,TipoPago x,Jugador * j,Videojuego * v){
     fecha = f;
     pago = x;
     comprador = j;
     vj = v;
 }
 
-Suscripcion::~Suscripcion(){
-    delete fecha;
-}
+Suscripcion::~Suscripcion(){}

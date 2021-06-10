@@ -14,57 +14,60 @@ static Desarrollador * getDev(){
     HandlerUsuario * hu = HandlerUsuario::getInstance();
     return static_cast<Desarrollador *>(hu->getLoggedUser());
 }
+/* Funcion desactivada, era usada por los bloques comentados
 static Jugador * getPlayer(){
     HandlerUsuario * hu = HandlerUsuario::getInstance();
     return static_cast<Jugador *>(hu->getLoggedUser());
 }
+*/
 
-vector<string> * VideojuegoController::obtenerNombreVideojuegosDesarrollados(){
+set<string> * VideojuegoController::obtenerNombreVideojuegosDesarrollados(){
     Desarrollador * dev = getDev();
     this->setLoggedUser(dev);
     return dev->getVideojuegosDesarrollados();
 }
 
-vector<string> * VideojuegoController::obtenerNombreVideojuegosInactivos(){
+set<string> * VideojuegoController::obtenerNombreVideojuegosInactivos(){
     Desarrollador * dev = getDev();
     this->setLoggedUser(dev);
     return dev->getVjSinPartidasActivas();
 }
-
-vector<DtVideojuego> * VideojuegoController::obtenerSuscripcionesVideojuegos(){
-    Jugador * player = getPlayer();
+//Esta funcion no hace lo que tenia que hacer de devolver las activas por un lado y las inactivas por otro...
+set<vector<DtVideojuego>> * VideojuegoController::obtenerSuscripcionesVideojuegos(){
+   /* Jugador * player = getPlayer();
     this->setLoggedUser(player);
-    return player->obtenerDatosVj();
+    return player->obtenerDatosVj(); */
+    return nullptr;
 }
 
-vector<DtCategoria> * VideojuegoController::obtenerCategoriasGenero(){
+set<DtCategoria> * VideojuegoController::obtenerCategoriasGenero(){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     return hc->getDtGenders();
 }
-vector<DtCategoria> * VideojuegoController::obtenerCategoriasPlataforma(){
+set<DtCategoria> * VideojuegoController::obtenerCategoriasPlataforma(){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     return hc->getDtPlatforms();
 }
 
-vector<DtCategoria> * VideojuegoController::obtenerCategoriasOtro(){
+set<DtCategoria> * VideojuegoController::obtenerCategoriasOtro(){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     return hc->getDtCategories();
 }
 
-vector<DtEstadistica> * VideojuegoController:obtenerEstadisticas(string x){
+set<DtEstadistica> * VideojuegoController::obtenerEstadisticas(string x){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
-    Videojuego * v = findVideojuego(x);
+    Videojuego * v = hc->findVideojuego(x);
     Desarrollador * dev = static_cast<Desarrollador *>(loggedUser);
-    vector<DtEstadistica> * y = dev->solicitarEstadisticas(v);
+    set<DtEstadistica> * y = dev->solicitarEstadisticas(v);
     this->clearCache();
     return y;
 }
 
-void VideojuegoController::ingresarDatosVideojuego(DtVideojuego * d){
+void VideojuegoController::ingresarDatosVideojuego(DtVideojuego d){
     datos = d; 
 }
 
-void VideojuegoController::ingresarSuscripcion(TipoSuscripcion ts, TipoPago d){
+void VideojuegoController::ingresarSuscripcion(TipoValido ts, TipoPago d){
     tPago = d; 
     tSus = ts;
 }
@@ -89,9 +92,10 @@ void VideojuegoController::seleccionarCategoriaOtro(string x){
 
 void VideojuegoController::confirmarPublicacion(){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
-    HandlerUsuario * hu = HandlerUsuario::getInstance();
-    Desarrollador * dev = static_cast<Desarrollador *>(hu->getLoggedUser());
-    Videojuego * v = dev->publishVideogame();
+    //HandlerUsuario * hu = HandlerUsuario::getInstance();
+    //Desarrollador * dev = static_cast<Desarrollador *>(hu->getLoggedUser());
+    //Videojuego * v = dev->publishVideogame(datos,categoriaCache); desactivado hasta que se corrija publisVideogame()
+    Videojuego * v =nullptr;
     hc->addVideojuego(v);
     this->clearCache();
 }
@@ -104,7 +108,7 @@ void VideojuegoController::confirmarSuscripcion(){
 void VideojuegoController::confirmarEliminarVideojuego(){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
     videoCache->eliminarInfoAsociada();
-    static_cast<Desarrollador *>(loggedUser)->removeVideojuego(videoCache);
+    static_cast<Desarrollador *>(loggedUser)->remove(videoCache);
     hc->remove(videoCache);
 }
 
@@ -114,29 +118,27 @@ void VideojuegoController::cancelarSuscripcion(){
 }
 
 void VideojuegoController::clearCache(){
-    delete datos;
     categoriaCache->clear(); //Supuestamente esto borraria los punteros pero no los objetos...
-    delete categoriaCache;
 }
 
 void VideojuegoController::setLoggedUser(Usuario * x){
     loggedUser=x;
 }
 
-static VideojuegoController * VideojuegoController::getInstance(){
-    static VideojuegoController instance();
+VideojuegoController * VideojuegoController::getInstance(){
+    static VideojuegoController instance;
     return &instance;
 } 
 
-VideojuegoController::VideojuegoController(){
-    categoriaCache = new vector<Categoria*>;
-    datos = nullptr;
+VideojuegoController::VideojuegoController():datos("","",0,0,0,0){
+    categoriaCache = new set<Categoria*>;
     loggedUser = nullptr;
     videoCache = nullptr;
 }
 
 VideojuegoController::~VideojuegoController(){
     this->clearCache();
+    delete categoriaCache;
 }
 
 

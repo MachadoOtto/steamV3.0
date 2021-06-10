@@ -9,15 +9,13 @@
 
 #include <../include/handlerUsuario.h>
 
-HandlerUsuario* HandlerUsuario::instancia = nullptr;
-
 HandlerUsuario::HandlerUsuario(){
     usuarios = new map<string, Usuario*>;
     loggedUser = nullptr;
 }
 
-static HandlerUsuario* HandlerUsuario::getInstance() {
-    static HandlerUsuario instancia();
+HandlerUsuario* HandlerUsuario::getInstance() {
+    static HandlerUsuario instancia;
     return &instancia;
 }
 
@@ -32,7 +30,7 @@ Usuario* HandlerUsuario::findUsuario(string emailUsuario) {
 }
 
 bool HandlerUsuario::existeUsuario(string emailUsuario) {
-    return (usuarios->find(emailUsuario) != usuarios->end));
+    return (usuarios->find(emailUsuario) != usuarios->end());
 }
 
 void HandlerUsuario::addUsuario(Usuario* user) {

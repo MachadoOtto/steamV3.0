@@ -14,11 +14,17 @@
 #include <map>
 #include <set>
 #include <string>
-#include "suscripcion.h"
+#include "suscripcionTemporal.h"
+#include "suscripcionVitalicia.h"
 #include "categoria.h"
 #include "jugador.h"
 #include "dtPrecios.h"
+#include "dtVideojuego.h"
 #include "tipoValido.h"
+#include "tipoPago.h"
+#include "partidaIndividual.h"
+#include "partidaMultijugador.h"
+#include "suscripcion.h"
 
 using std::string;
 using std::map;
@@ -41,12 +47,12 @@ class Videojuego {
         map<string,Categoria*> *categorias;
         
     public:
-        Videojuego(DtVideojuego,set<Categoria*>*);
+        Videojuego(DtVideojuego,map<string,Categoria*>*);
         ~Videojuego();
         DtVideojuego obtenerDatosVideojuego();
         set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
-        void confirmarPartida(Jugador*,bool,bool,set<Jugador*>*);
+        void confirmarPartida(Jugador*,int,PartidaIndividual*,bool,map<string,Jugador*>*);
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
@@ -59,7 +65,7 @@ class Videojuego {
         float getPuntaje();
         int getTotalJugadoresSuscriptos();
         Suscripcion* getSuscripciones();
-        map<int,Partida> getPartidas();
+        map<int,Partida*>* getPartidas();
         Categoria* getCategorias();
 
         //Setters

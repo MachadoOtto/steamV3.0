@@ -8,19 +8,11 @@
  */
 
 #include "../include/iFPController.h"
-#include "../include/IIFPController.h"
-#include "../include/dtPartida.h"
-#include "../include/dtPartidaIndividual.h"
-#include "../include/usuario.h"
-#include "../include/handlerCatalogo"
 
 #include <string>
 #include <set>
 #include <map>
 #include <iterator>
-#include <pair>
-
-//IFPController * IFPController::instancia = NULL;
 
 IFPController::IFPController() {
     host = NULL;
@@ -30,85 +22,90 @@ IFPController::IFPController() {
 }
 
 IFPController * IFPController::getInstance() {
-    static IFPController instancia();
+    static IFPController instancia;
     return &instancia;
 }
 
-void setHost(Jugador * host) {
+void IFPController::setHost(Jugador * host) {
     this->host = host;
 }
 
-Jugador * getHost() {
+Jugador * IFPController::getHost() {
     return host;
 }
 
-void setVj(Videojuego * vj) {
-this->vj = vj;
+void IFPController::setVj(Videojuego * vj) {
+    this->vj = vj;
 }
 
-Videojuego * getVj() {
+Videojuego * IFPController::getVj() {
     return vj;
 }
 
-void setPartida(Partida * partida) {
- this->partida = partida;
+void IFPController::setPartida(Partida * partida) {
+    //this->partida = partida; this->partida es PartidaIndividual. Falto casteo o error de dise(enie)o?
 }
 
-Partida * getPartida() {
+Partida * IFPController::getPartida() {
     return partida;
 }
 
-void setPCont(bool pCont) {
+void IFPController::setPCont(bool pCont) {
     this->pCont = pCont;
 }
 
-bool getPCont() {
+bool IFPController::getPCont() {
     return pCont;
 }
 
-void setEnVivo(bool enVivo) {
+void IFPController::setEnVivo(bool enVivo) {
     this->enVivo = enVivo;
 }
 
-bool getEnVivo() {
+bool IFPController::getEnVivo() {
     return enVivo;
 }
 
-void add(Jugador * jugador) {
-    jugadoresAUnir->insert(std::pair<std::string,Jugador *>(jugador->getNombre(),jugador));
+void IFPController::add(Jugador * jugador) {
+    jugadoresAUnir->insert(std::pair<std::string,Jugador *>(jugador->getNickname(),jugador));
 }
 
-void remove(Jugador * jugador) {
-    jugadoresAUnir->erase(jugador);
+void IFPController::remove(Jugador * jugador) {
+    //jugadoresAUnir->erase(jugador); uso incorrecto del erase del map
 }
 
-Jugador * find(std::string nombreJugador) {
-    return jugadoresAUnir[nombreJugador];
+Jugador * IFPController::find(std::string nombreJugador) {
+    //return jugadoresAUnir[nombreJugador]; no match for operator[]. ver types.
+    return nullptr; //temporal
 }
 
-std::set<std::string> * obtenerVideojuegosActivos() {
+std::set<std::string> * IFPController::obtenerVideojuegosActivos() {
     HandlerUsuario * hu = HandlerUsuario::getInstance();
-    host = hu->getLoggedUser();
+    host = static_cast<Jugador*>(hu->getLoggedUser());
     return host->obtenerVideojuegosActivos();
 }
 
-std::set<DtPartida> * obtenerPartidasActivas() {
+std::set<DtPartida> * IFPController::obtenerPartidasActivas() {
     HandlerUsuario * hu = HandlerUsuario::getInstance();
-    Jugador * jSesion = hu->getLoggedUser();
+    Jugador * jSesion = static_cast<Jugador*>(hu->getLoggedUser());
+
     host = jSesion;
     return host->obtenerPartidasActivas();
 }
 
-std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego * vj) {
+std::set<DtPartidaIndividual> * IFPController::obtenerHistorialPartidas() {
+    //Se quiere las partidas de todos los videojuegos me parece... en el UML no se pide el parametro videojuego para esta operacion. corregir. 
+    Videojuego * vj = nullptr; //tmp
     return host->obtenerHistorialPartidas(vj);
 }
 
-std::set<std::string> * obtenerJugadoresSubscriptos() {
-    return vj->obtenerJugadoresSubscriptos();
+std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {
+    //return vj->obtenerJugadoresSuscriptos(); esto retorna el set de jugadores*... hay que hacer trabajooo
+    return nullptr;
 }
 
-void seleccionarVideojuego(std::string nombreVideojuego) {
-    HandlerCatalogo hc = HandlerCatalogo::getInstance();
+void IFPController::seleccionarVideojuego(std::string nombreVideojuego) {
+    HandlerCatalogo *hc = HandlerCatalogo::getInstance();
     vj = hc->findVideojuego(nombreVideojuego);
 }
 
@@ -122,12 +119,12 @@ void IFPController::partidaEnVivo(bool esTransmitidaEnVivo) {
 
 void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
     HandlerUsuario * hu = HandlerUsuario::getInstance();
-    Jugador * jAUnir = hu->findJugador(nicknameJugador);
+    Jugador * jAUnir = static_cast<Jugador*>(hu->findUsuario(nicknameJugador));
     jugadoresAUnir->insert(std::pair<std::string,Jugador *>(nicknameJugador,jAUnir));
 }
 
 void IFPController::confirmarPartida() {
-    vj->confirmarPartida(host,partida,enVivo,jugadoresAUnir);
+    //vj->confirmarPartida(host,partida,enVivo,jugadoresAUnir); se esperaba que jugadores a unir fuera un set, no un map. Que problema! 
     clearCache();
 }
 
@@ -137,12 +134,15 @@ void IFPController::confirmarFinalizarPartida(int identificador) {
 }
 
 void IFPController::clearCache() {
+   /* 
     delete host;
     delete partida;
     delete vj;
     delete jugadoresAUnir;
+
+    * Esto creo que no esta bien. Limpiar el cache vendira a ser borrar los datos temporales que fuiste guardando en le controlador, no eliminar los objetos que guardas referencia, lo que tenes que hacer es limpiar las referencias (nullptr) */ 
 }
 
-~IFPController() {
+IFPController::~IFPController() {
     clearCache();
 }

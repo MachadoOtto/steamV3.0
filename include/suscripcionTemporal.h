@@ -23,7 +23,7 @@ private:
 public:
     virtual bool esActiva();
     void cancelarSuscripcion();
-    SuscripcionTemporal(TipoValido,TipoEstado,DtFechaHora *, TipoPago, Jugador *, Videojuego *);
+    SuscripcionTemporal(TipoValido,TipoEstado,DtFechaHora , TipoPago, Jugador *, Videojuego *);
 };
 
 #endif

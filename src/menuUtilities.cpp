@@ -17,16 +17,18 @@
 
 using namespace std;
 
-void menuUtilities::cls(){
+namespace menuUtilities{
+
+void cls(){
     cout << "\033[2J\033[1;1H";
 }
 
-void menuUtilities::clinput(){
+void clinput(){
     cin.clear(); 
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
 }
 
-void menuUtilities::pkey(){
+void pkey(){
     char t;
     cout << "Presione ENTER para volver al menu principal...\n";
     t = cin.get();
@@ -34,23 +36,24 @@ void menuUtilities::pkey(){
 	clinput();
 }
 
-void menuUtilities::ptitle(){
+void ptitle(){
     cout << "\nBienvenido a,\n\n"
- "  $$$$$$\\    $$\\                                                              /$$$$$$       /$$$$$$  \n"
- " $$  __$$\\   $$ |                                                             /$$__  $$     /$$$_  $$ \n"
- " $$ /  \\__|$$$$$$\\    $$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\         /$$    /$$|__/  \\ $$    | $$$$\\ $$ \n"
+ "  $$$$$$\\    $$\\                                                        /$$$$$$       /$$$$$$  \n"
+ " $$  __$$\\   $$ |                                                       /$$__  $$     /$$$_  $$ \n"
+ " $$ /  \\__|$$$$$$\\    $$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\        /$$    /$$|__/  \\ $$    | $$$$\\ $$ \n"
  " \\$$$$$$\\  \\_$$  _|  $$  __$$\\  \\____$$\\ $$  _$$  _$$\\      |  $$  /$$/   /$$$$$/    | $$ $$ $$ \n"
- "  \\____$$\\   $$ |    $$$$$$$$ | $$$$$$$ |$$ / $$ / $$ |           \\  $$/$$/   |___  $$    | $$\\ $$$$ \n"
- " $$\\   $$ |  $$ |$$\\ $$   ____|$$  __$$ |$$ | $$ | $$ |            \\  $$$/   /$$  \\ $$    | $$ \\ $$$ \n"
- " \\$$$$$$  |  \\$$$$  |\\$$$$$$$\\ \\$$$$$$$ |$$ | $$ | $$ |          \\  $/   |  $$$$$$/ /$$|  $$$$$$/ \n"
+ "  \\____$$\\   $$ |    $$$$$$$$ | $$$$$$$ |$$ / $$ / $$ |      \\  $$/$$/   |___  $$    | $$\\ $$$$ \n"
+ " $$\\   $$ |  $$ |$$\\ $$   ____|$$  __$$ |$$ | $$ | $$ |       \\  $$$/   /$$  \\ $$    | $$ \\ $$$ \n"
+ " \\$$$$$$  |  \\$$$$  |\\$$$$$$$\\ \\$$$$$$$ |$$ | $$ | $$ |        \\  $/   |  $$$$$$/ /$$|  $$$$$$/ \n"
  "  \\______/    \\____/  \\_______| \\_______|\\__| \\__| \\__|         \\_/     \\______/ |__/ \\______/  \n";
 }
 
 
-void menuUtilities::reprintln(){
+void reprintln(){
     cout << "\033[A                                                                                                 \r";
 }
-int menuUtilities::takeInputrange(int min, int max){
+int takeInputRange(int min, int max){
+    int controlVar;
     while(true){
         if (!(cin >> controlVar) || (controlVar > max || controlVar < min)) {
 	    clinput();
@@ -63,4 +66,6 @@ int menuUtilities::takeInputrange(int min, int max){
     clinput();
     cout << endl;
     return controlVar;
+}
+
 }

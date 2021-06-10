@@ -22,8 +22,9 @@
 #include "fechaSistema.h"
 #include "menuUtilities.h"
 
-class Sistema{
+using std::string;
 
+class Sistema{
 public:
     Sistema();
     ~Sistema();
