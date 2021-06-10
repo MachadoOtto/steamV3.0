@@ -11,8 +11,8 @@
 #define USUARIO
 
 #include "dtUsuario.h"
-
 #include <string>
+using std::string;
 
 class Usuario {
     protected:
@@ -22,6 +22,8 @@ class Usuario {
         Usuario(DtUsuario);
 	Usuario(std::string,std::string);
 	string getEmail();
+	string getContrasenia();
+	virtual ~Usuario(){}
 };
 
 #endif

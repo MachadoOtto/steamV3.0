@@ -23,17 +23,18 @@ using std::string;
 
 class AltaUsuarioController: public IAltaUsuarioController{
 private:
-   DtUsuario * datos;
+   DtUsuario datos;
    string empresa, nickname, descripcion;
    AltaUsuarioController();
 
 public:
    static AltaUsuarioController * getInstance();
-   virtual void ingresarUsuario(DtUsuario *);
+   virtual void ingresarUsuario(DtUsuario);
    virtual void ingresarEmpresa(string);
    virtual void ingresarNickname(string);
    virtual void ingresarDescripcion(string);
    virtual void clearCache();
+   virtual int iniciarSesion();
    virtual void confirmarDarDeAltaUsuario();
    ~AltaUsuarioController();
 };

@@ -22,6 +22,8 @@
 #include "fechaSistema.h"
 #include "menuUtilities.h"
 
+#include "dtUsuario.h"
+
 using std::string;
 
 class Sistema{

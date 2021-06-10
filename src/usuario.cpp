@@ -23,3 +23,6 @@ Usuario::Usuario(string nam, string pass){
 std::string Usuario::getEmail(){
     return email;
 }
+std::string Usuario::getContrasenia(){
+    return contrasenia;
+}

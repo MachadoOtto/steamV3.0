@@ -63,8 +63,46 @@ int Sistema::altaUsuario(){
     return 0;
 }
 int Sistema::iniciarSesion(){
-    return 0;
+    LaFabrica * f = LaFabrica::getInstance();
+    IAltaUsuarioController * h = f->getIAltaUsuarioController();
+    string u,p;
+    int user_ok = 1;
+    cout << "Ingrese los siguientes datos para iniciar sesion.\nSi desea cancelar la operacion presione enter dos veces.\n\n\n";
+    while(user_ok){
+	cout << "Usuario(email): ";
+	getline(cin,u);
+	cout << "Contrasenia: ";
+	getline(cin,p);
+	if(u.length()==p.length() && u.length()==0){
+	    cout << "Se ha cancelado el inicio de sesion.\n";
+	    user_ok = 4;
+	    break;
+	}
+	DtUsuario du(u,p);
+	h->ingresarUsuario(du);
+	user_ok = h->iniciarSesion();
+	if(user_ok == 2){
+	    reprintln();
+	    reprintln();
+	    reprintln();
+	    cout << "ERROR: El usuario no existe en el sistema.\n";
+	}
+	if(user_ok == 3){
+	    cout << "ERROR: La contrasenia ingresada no es correcta.\n";
+	}    
+	if(user_ok == 0 || user_ok == 1){
+	    cout << "Inicio de sesion exitoso. Bienvenido " << u << ".\n";
+	}
+    }
+    pkey();
+    if
+	(user_ok == 0) return 2;
+    else if
+	(user_ok == 1) return 1;
+    else
+	return 0;
 }
+
 int Sistema::cargarCategoria(){
     return 0;
 }
