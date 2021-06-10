@@ -59,6 +59,57 @@ int Sistema::cargarDatosPrueba(){
     
     return 0;
 }
+int Sistema::altaUsuario(){
+    return 0;
+}
+int Sistema::iniciarSesion(){
+    return 0;
+}
+int Sistema::cargarCategoria(){
+    return 0;
+}
+int Sistema::publicarVideojuego(){
+    return 0;
+}
+int Sistema::eliminarVideojuego(){
+    return 0;
+}
+
+int Sistema::seleccionarEstadistica(){
+    return 0;
+}
+
+int Sistema::consultarEstadisticas(){
+    return 0;
+}
+
+int Sistema::verInformacionVideojuego(){
+    return 0;
+}
+
+int Sistema::suscribirseVideojuego(){
+    return 0;
+}
+
+int Sistema::asignarPuntajeVideojuego(){
+    return 0;
+}
+
+int Sistema::iniciarPartida(){
+    return 0;
+}
+
+int Sistema::abandonarPartidaMultijugador(){
+    return 0;
+}
+
+int Sistema::finalizarPartida(){
+    return 0;
+}
+
+string Sistema::getLoggedUserEmail(){
+    return "lol";
+}
 
 Sistema::~Sistema(){
 //Hago las cosas pertinentes para cerrar el sistema... (se libera memoria)

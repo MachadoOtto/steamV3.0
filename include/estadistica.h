@@ -26,7 +26,7 @@ public:
     virtual DtEstadistica procesarEstadistica(Videojuego*)=0;
     string getNombre();
     string getDescripcion();
-    virtual ~Estadistica();
+    virtual ~Estadistica(){}
 };
 
 #endif

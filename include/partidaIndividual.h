@@ -12,6 +12,7 @@
 
 #include "dtPartidaIndividual.h"
 #include "partida.h"
+#include "fechaSistema.h"
 
 class DtFechaHora;
 class Jugador;

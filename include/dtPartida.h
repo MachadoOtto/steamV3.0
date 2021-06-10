@@ -31,8 +31,7 @@ class DtPartida {
         float getDuracion();
         bool getActiva();
         bool esActiva();
-        std::string getHost();
-        std::string getVideojuego();
+	friend bool operator<(const DtPartida,const DtPartida);
 };
 
 #endif

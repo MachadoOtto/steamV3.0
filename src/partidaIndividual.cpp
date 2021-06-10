@@ -9,16 +9,18 @@
 
 #include <../include/partidaIndividual.h>
 
-PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPartida dpartida(datos.getIdentificador(), datos.getFechaHora(),
-        datos.getDuracion(), datos.getActiva())) { 
+PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
+        datos.getDuracion(), datos.esActiva())) { 
     partidaAnterior = NULL;
 }
 
+/* se colo un create xd
 PartidaIndividual* PartidaIndividual::create(datos, punteros*) {
     PartidaIndividual* nuevo = new PartidaIndividual(datos)
     nuevo->apunto = punteros;
     return nuevo;
 }
+*/
 
 void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
     partidaAnterior = pAnt;
@@ -26,22 +28,23 @@ void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
 
 PartidaIndividual* PartidaIndividual::getPartidaAnterior() { return partidaAnterior; }
 
-virtual DtPartida PartidaIndividual::obtenerDatosPartida() {
-    DtPartida datosP(identificador, fecha, duracion, activa);
+DtPartida PartidaIndividual::obtenerDatosPartida() {
+    DtPartida datosP(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva());
     return datosP;
 }
 
-virtual void PartidaIndividual::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
-    duracion = fecha.diffHoras(fechaFinal);
+void PartidaIndividual::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
+    //duracion = fecha.diffHoras(fechaFinal);
+    this->setDuracion(this->getDtFechaHora().diffHoras(fechaSistema::fecha));
 }
 
-virtual void PartidaIndividual::finalizarPartida(DtFechaHora horaFinal) {
-    this.setActiva(false);
-    this.asignarHoraFinalizacion(horafinal);
+void PartidaIndividual::finalizarPartida(DtFechaHora horaFinal) {
+    this->setActiva(false);
+    this->asignarHoraFinalizacion(fechaSistema::fecha);
 }
 
-virtual void PartidaIndividual::eliminarAssoc() {
-    host.remove(this);
+void PartidaIndividual::eliminarAssoc() {
+    //this->getHost()->remove(this) revisar esto. partida no tendria que hablar con jugador... generaria una dependencia circular. Se tendria que hacer de otra manera esto
 }
 
 PartidaIndividual::~PartidaIndividual() { }

@@ -22,9 +22,10 @@ class LaFabrica{
 private:
    LaFabrica(){};
 public:
+   static LaFabrica * getInstance();
    IVideojuegoController *getIVideojuegoController();
-   IIFPController *getIIFPartidasController();
-   IAltaUsuario *getIAltaUsuarioController(); 
+   IIFPController *getIIFPController();
+   IAltaUsuarioController *getIAltaUsuarioController(); 
 };
 
 #endif

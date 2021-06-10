@@ -16,6 +16,7 @@
 #include "partida.h"
 #include "dtPartidaMultijugador.h"
 #include "jugadorMulti.h"
+#include "fechaSistema.h"
 
 using std::string;
 using std::map;
@@ -33,7 +34,7 @@ private:
     map<string, Jugador*>* jugadoresUnidos;
 public:
     PartidaMultijugador(DtPartidaMultijugador);
-    bool getTransmitidaEnVivo;
+    bool getTransmitidaEnVivo();
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
     virtual DtPartida obtenerDatosPartida();

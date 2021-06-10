@@ -19,7 +19,6 @@ using std::set;
 
 class HandlerEstadistica {
 private:
-    static HandlerEstadistica* instancia;
     map<string, Estadistica*>* estadisticas;
     HandlerEstadistica();
 public:

@@ -10,24 +10,12 @@
 
 #include "../include/plataforma.h"
 
-Plataforma::Plataforma(DtCategoria dtCat) {
-    nombre = dtCat.getNombre();
-    descripcion = dtCat.getDescripcion();
+Plataforma::Plataforma(DtCategoria dtCat):Categoria(dtCat){
 }
 
-std::string Plataforma::getNombre() {
-    return nombre;
-}
-
-std::string Plataforma::getDescripcion() {
-    return descripcion;
-}
-
-Plataforma::~Plataforma() {
-    
-}
+Plataforma::~Plataforma() {}
 
 DtCategoria Plataforma::getDt() {
-    DtCategoria dtCat(nombre,descripcion,tipoCategoria::Genero);
+    DtCategoria dtCat(this->getNombre(),this->getDescripcion(),TipoCategoria::Plataforma);
     return dtCat;
 }

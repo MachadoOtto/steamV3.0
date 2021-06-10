@@ -31,6 +31,7 @@ public:
     Jugador* getHost();
     DtFechaHora getDtFechaHora();
     float getDuracion();
+    void setDuracion(float);
     void setActiva(bool);
     bool esActiva();
     void setHost(Jugador*);
@@ -42,7 +43,7 @@ public:
     virtual void asignarHoraFinalizacion(DtFechaHora)=0;
     virtual void finalizarPartida()=0;
     virtual void eliminarAssoc()=0;
-    ~Partida();
+    virtual ~Partida();
 };
 
 #endif

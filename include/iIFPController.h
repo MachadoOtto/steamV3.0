@@ -47,11 +47,7 @@ class IIFPController {
         virtual void confirmarPartida() = 0;
         virtual void confirmarFinalizarPartida(int) = 0;
         virtual void clearCache() = 0;
-        
-        //abandonarPartidaMulti.cpp
-
-        virtual std::set<DtPartidaMultijugador> * obtenerPartidasMultiActivas() = 0;
-        virtual void confirmarAbandonarPartida(int) = 0;
+	virtual ~IIFPController(){}
 };
 
 #endif

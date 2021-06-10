@@ -8,8 +8,7 @@
  * 	Mathias Ramilo
  */
 
-#include "Jugador-Multi.h"
-#include "dtFechaHora.h"
+#include "../include/jugadorMulti.h"
 
 JugadorMulti::JugadorMulti(DtFechaHora fechaHora) {
     this->desconexion = fechaHora;

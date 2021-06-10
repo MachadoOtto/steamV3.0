@@ -13,6 +13,13 @@
 #include <string>
 
 Usuario::Usuario(DtUsuario du) {
-    email = du.email();
-    contrasenia = du.contrasenia();
+    email = du.getEmail();
+    contrasenia = du.getContrasenia();
+}
+Usuario::Usuario(string nam, string pass){
+    email = nam;
+    contrasenia = pass;
+}
+std::string Usuario::getEmail(){
+    return email;
 }

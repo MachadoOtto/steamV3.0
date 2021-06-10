@@ -10,22 +10,22 @@
 
 #include "../include/laFabrica.h"
 
-LaFabrica LaFabrica::getInstance(){
-    static LaFabrica instancia();
+LaFabrica *LaFabrica::getInstance(){
+    static LaFabrica instancia;
     return &instancia;
 }
 
-IIFPartidas * LaFabrica::getIIFPartidas(){
-  IFPartidasController * IFP = IFPartidas::getInstance();
+IIFPController * LaFabrica::getIIFPController(){
+  IFPController * IFP = IFPController::getInstance();
   return IFP; 
 }
 
-IVideojuego * LaFabrica::getIVideojuego(){
-   videojuegoController * vj = videojuegoController::getInstance();
+IVideojuegoController * LaFabrica::getIVideojuegoController(){
+   IVideojuegoController * vj = VideojuegoController::getInstance();
    return vj;
 }
 
-IAltaUsuario * LaFabrica::getIAltaUSuario(){
-   altaUsuarioController * au = altaUSuarioController::getInstance();
+IAltaUsuarioController * LaFabrica::getIAltaUsuarioController(){
+   IAltaUsuarioController * au = AltaUsuarioController::getInstance();
    return au;  
 }

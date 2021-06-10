@@ -12,25 +12,15 @@
 #include <map>
 #include <set>
 
-#include "Videojuego.h"
-#include "Partida.h"
-#include "Suscripcion.h"
-#include "Categoria.h"
-#include "Jugador.h"
-#include "PartidaIndividual.h"
-#include "PartidaMultijugador.h"
-#include "dtVideojuego.h"
-#include "tipoSuscripcion.h"
-#include "tipoPago.h"
+#include "../include/videojuego.h"
 
-using std::string
-using std::map
-using std::set
+using std::string;
+using std::map;
+using std::set;
 
-Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias) {
+Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): costoSuscripciones(datos.getDtPrecios()){
     this->nombre = datos.getNombre();
     this->descripcion = datos.getDescripcion();
-    this->costoSuscripciones = datos.getCostos();
     this->totalHorasJugadas = 0;
     this->puntaje = 0;
     this->totalJugadoresSuscriptos = 0;
@@ -45,17 +35,20 @@ Videojuego::~Videojuego() {
 }
 
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
+    /*No se puede acceder asi a los miembros ni instanciarlos. ver constructores en los .h
     DtVideojuego dtVid();
     dtVid.nombre = this->getNombre();
     dtVid.descripcion = this->getDescripcion();
     dtVid.costos = this->getCostoSuscripciones();
     return dtVid;
+    */
+    return DtVideojuego("","",0,0,0,0);
 }
 
 set<Jugador*>* Videojuego::obtenerJugadoresSuscriptos() {
     set<Jugador*>* setJugadores = new set<Jugador*>;
     for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
-        setJugadores->insert(it->getComprador());
+        setJugadores->insert((*it)->getComprador()); 
     }
     return setJugadores;
 }
@@ -67,9 +60,9 @@ bool Videojuego::estaActivo() {
         return true;
     }
 }
-
-void Videojuego::confirmarPartida(Jugador* host,int id,DtFechaHora fechaHoraActual,PartidaIndividual* pCont,bool enVivo,map<string,Jugador*>* jUnidos) {
-    if (pCont != NULL) {
+//Las partidas individuales no necesariamente tienen que tener una continuacion. Hay que aplicar la el  overloading a la funcion. Es decir un confirmar para individual y otro para multijugador con parametros distintos
+void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont,bool enVivo,map<string,Jugador*>* jUnidos) {
+   /* if (pCont != NULL) {
         DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true);
         PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
         pInd->setHost(host);
@@ -88,26 +81,28 @@ void Videojuego::confirmarPartida(Jugador* host,int id,DtFechaHora fechaHoraActu
         }
         this->partidas->insert(pMulti);
     }
+    */
 }
 
 void Videojuego::cancelarSuscripcion(Jugador* host) {
     for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
-        if (it->esDeJugador(host)) {
-            it->cancelarSuscripcion();
+        if ((*it)->esDeJugador(host)) {
+            static_cast<SuscripcionTemporal*>((*it))->cancelarSuscripcion();
         }
     }
 }
 
 void Videojuego::confirmarSuscripcion(Jugador* host,TipoValido tipoVal,TipoPago tipoPago) {
-    Suscripcion* nuevaSus;
     DtFechaHora fechaHoraActual(); 
     if (tipoVal != TipoValido::Vitalicia) {
-        SuscripcionTemporal* nuevaSus = new SuscripcionTemporal(tipoVal,TipoEstado::Activa,fechaHoraActual,host,this,tipoPago);
+        SuscripcionTemporal* nuevaSus = new SuscripcionTemporal(tipoVal,TipoEstado::Activa,fechaSistema::fecha,tipoPago,host,this);
+	host->agregarSuscripcion(nuevaSus);
+	this->suscripciones->insert(nuevaSus);
     } else {
-        SuscripcionVitalicia* nuevaSus = new SuscripcionVitalicia(fechaHoraActual,host,this,tipoPago);
+        SuscripcionVitalicia* nuevaSus = new SuscripcionVitalicia(fechaSistema::fecha,tipoPago,host,this);
+	host->agregarSuscripcion(nuevaSus);
+        this->suscripciones->insert(nuevaSus);
     }
-    host->agregarSuscripcion(nuevaSus);
-    this->suscripciones->insert(nuevaSus);
 }
 
 void Videojuego::eliminarInfoAsociada() {
@@ -116,8 +111,8 @@ void Videojuego::eliminarInfoAsociada() {
         delete it->second;
     }
     for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
-        it->eliminarAssoc();
-        delete it;
+        (*it)->eliminarAssoc();
+        delete *it;
     }
 }
 
@@ -126,59 +121,63 @@ string Videojuego::getNombre() {
     return this->nombre;
 }
 
-string getDescripcion() {
+string Videojuego::getDescripcion() {
     return this->descripcion;
 }
 
-DtPrecios getCostoSuscripciones() {
+DtPrecios Videojuego::getCostoSuscripciones() {
     return this->costoSuscripciones;
 }
 
-float getTotalHorasJugadas() {
+float Videojuego::getTotalHorasJugadas() {
     return this->totalHorasJugadas;
 }
 
-float getPuntaje() {
+float Videojuego::getPuntaje() {
     return this->puntaje;
 }
 
-int getTotalJugadoresSuscriptos() {
+int Videojuego::getTotalJugadoresSuscriptos() {
     return this->totalJugadoresSuscriptos;
 }
 
-Suscripcion* getSuscripciones() {
-    return this->suscripciones;
+//Aca habria que retornar un set?
+Suscripcion* Videojuego::getSuscripciones() {
+    //return this->suscripciones;
+    return nullptr; //temporal para que compile
 }
 
-map<int,Partida> getPartidas() {
+map<int,Partida*>* Videojuego::getPartidas() {
     return this->partidas;
 }
 
-Categoria* getCategorias() {
-    return this->categorias;
+//Mismop problema que en get suscripciones. retorno nullptr para que compile...
+Categoria* Videojuego::getCategorias() {
+//    return this->categorias;
+    return nullptr;
 }
 
 //--- Setters ---
-void setNombre(string nombre) {
+void Videojuego::setNombre(string nombre) {
     this->nombre = nombre;
 }
 
-void setDescripcion(string descripcion) {
+void Videojuego::setDescripcion(string descripcion) {
     this->descripcion = descripcion;
 }
 
-void setCostoSuscripciones(DtPrecios costoSuscripciones) {
+void Videojuego::setCostoSuscripciones(DtPrecios costoSuscripciones) {
     this->costoSuscripciones = costoSuscripciones;
 }
 
-void setTotalHorasJugadas(float totalHorasJugadas) {
+void Videojuego::setTotalHorasJugadas(float totalHorasJugadas) {
     this->totalHorasJugadas = totalHorasJugadas;
 }
 
-void setPuntaje(float puntaje) {
+void Videojuego::setPuntaje(float puntaje) {
     this->puntaje = puntaje;
 }
 
-void setTotalJugadoresSuscriptos(int totalJugadoresSuscriptos) {
+void Videojuego::setTotalJugadoresSuscriptos(int totalJugadoresSuscriptos) {
     this->totalJugadoresSuscriptos = totalJugadoresSuscriptos;
 }

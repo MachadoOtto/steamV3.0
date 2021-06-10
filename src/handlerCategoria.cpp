@@ -63,7 +63,7 @@ Categoria* HandlerCategoria::findCategory(string nombreCategoria) {
 }
 
 void HandlerCategoria::addCategoria(Categoria* cat) {
-    categorias->insert(cat->getNombre(), cat);
+    categorias->insert(std::pair<std::string,Categoria *>(cat->getNombre(), cat));
 }
 
 HandlerCategoria::~HandlerCategoria() {

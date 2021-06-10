@@ -20,6 +20,8 @@ class Usuario {
         std::string contrasenia;
     public:
         Usuario(DtUsuario);
+	Usuario(std::string,std::string);
+	string getEmail();
 };
 
 #endif

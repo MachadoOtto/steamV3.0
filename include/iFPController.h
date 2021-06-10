@@ -15,6 +15,8 @@
 #include "dtPartidaIndividual.h"
 #include "jugador.h"
 #include "partidaIndividual.h"
+#include "handlerCatalogo.h"
+#include "handlerUsuario.h"
 
 #include <string>
 #include <set>
@@ -46,7 +48,7 @@ class IFPController: public IIFPController {
 
         std::set<std::string> * obtenerVideojuegosActivos();
         std::set<DtPartida> * obtenerPartidasActivas();
-        std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego *);
+        std::set<DtPartidaIndividual> * obtenerHistorialPartidas();
         std::set<std::string> * obtenerJugadoresSubscriptos();
         void seleccionarVideojuego(std::string);
         void seleccionarContinuacionPartida(int);

@@ -43,11 +43,11 @@ class Jugador: public Usuario {
         void add(Suscripcion *);
         void remove(Suscripcion *);
         void add(Partida *);
-        Partida * find(std::string);
+        Partida * find(int);
         void add(JugadorMulti *);
         void remove(JugadorMulti *);
 
-        std::set<std::string> * obtenerVidejuegosActivos();
+        std::set<std::string> * obtenerVideojuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
         std::set<DtPartida> * obtenerPartidasActivas();
         std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego *);

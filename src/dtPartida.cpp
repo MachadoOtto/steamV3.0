@@ -39,11 +39,7 @@ bool DtPartida::esActiva() { //alias
     return getActiva();
 }
 
-bool DtPartida::getHost() {
-    return host;
-}
-
-bool DtPartida::getVideojuego() {
-    return videojuego;
+bool operator<(const DtPartida p1,const DtPartida p2){
+    return p1.fecha<p2.fecha;
 }
 

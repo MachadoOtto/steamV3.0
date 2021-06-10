@@ -25,7 +25,7 @@ class Categoria {
         Categoria(DtCategoria);
         string getNombre();
         string getDescripcion();
-        ~Categoria();
+	virtual ~Categoria();
         
         virtual DtCategoria getDt();
 };

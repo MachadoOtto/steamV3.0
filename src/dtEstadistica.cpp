@@ -12,16 +12,16 @@
 using std::string;
 
 DtEstadistica::DtEstadistica(string nom, string des, float vit) {
-    vitalicia = vit;
+    valor = vit;
     nombre = nom;
     descripcion = des;
 }
 
 float DtEstadistica::getValor() { return valor; }
 
-float DtEstadistica::getNombre() { return nombre; }
+string DtEstadistica::getNombre() { return nombre; }
 
-float DtEstadistica::getDescripcion() { return descripcion; }
+string DtEstadistica::getDescripcion() { return descripcion; }
 
 //corregir luego :^)
 ostream& operator<<(ostream& o, DtEstadistica p) {
@@ -30,6 +30,7 @@ ostream& operator<<(ostream& o, DtEstadistica p) {
 }
 
 bool operator<(const DtEstadistica v1,const DtEstadistica v2){
-    return (v1.valor() < v2.valor())
+    return (v1.valor < v2.valor);
+}
 
 

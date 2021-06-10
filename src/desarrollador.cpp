@@ -79,11 +79,12 @@ std::set<std::string> * Desarrollador::getVideojuegosDesarrollados() {
     }
     return res;
 }
-
-Videojuego * Desarrollador::publishVideogame(DtVideojuego gameData, std::map<std::string,Categoria *> * categorias) {
+/* pusblishVideogame tiene que retornar el puntero del nuevo videojuego creado... cambiar void a Videojuego* */
+void Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
+    /* ERROR: videojuego se construye con un map no con un set... que agradable problema
     Videojuego * vj = new Videojuego(gameData,categorias);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
-    return vj;
+    */
 }
 
 void Desarrollador::suscribirEstadistica(Estadistica * est) {
@@ -93,15 +94,16 @@ void Desarrollador::suscribirEstadistica(Estadistica * est) {
 // Esta funcion no hace lo que debiera hacer. Ver caso de uso
 std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) {
     std::set<DtEstadistica> * res = new std::set<DtEstadistica>;
-    HandlerEstadistica * he = HandlerEstadistica::getInstance();
-    std::set<Estadistica *> * ests = he->getEstadistica();
-    for(std::set<Estadistica *>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
-        Estadistica * es = *it;
-        DtEstadistica val = es->procesarEstadistica(vj);
-        res->insert(val);
-    }
+//    HandlerEstadistica * he = HandlerEstadistica::getInstance();
+//    std::set<Estadistica *> * ests = he->getEstadistica();
+ //   for(std::set<Estadistica *>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
+  //      Estadistica * es = *it;
+   //     DtEstadistica val = es->procesarEstadistica(vj);
+    //    res->insert(val);
+    //}
     return res;
 }
+
 
 Desarrollador::~Desarrollador() { //messi?
     for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {

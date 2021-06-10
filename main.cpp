@@ -25,7 +25,7 @@ int menuUsuario(Sistema * sys){
     while (controlVar!=7){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
+	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl<< endl;
 	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "(Jugador)\n";
         cout << "──────────  Menu Jugador ──────────" << endl << endl;
         cout << "Por favor seleccione una opcion:" << endl;
@@ -126,7 +126,7 @@ int main() {
     while (controlVar!=5){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
+	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl<<endl;
         cout << "──────────  Menu Principal ──────────" << endl << endl;
         cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Alta de Usuario" << endl;

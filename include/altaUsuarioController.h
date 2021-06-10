@@ -18,9 +18,10 @@
 #include "dtJugador.h"
 #include "jugador.h"
 #include "desarrollador.h"
+#include "iAltaUsuarioController.h"
 using std::string;
 
-class AltaUsuarioController{
+class AltaUsuarioController: public IAltaUsuarioController{
 private:
    DtUsuario * datos;
    string empresa, nickname, descripcion;
