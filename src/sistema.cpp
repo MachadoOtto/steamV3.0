@@ -62,7 +62,45 @@ int Sistema::cargarDatosPrueba(){
     return 0;
 }
 int Sistema::altaUsuario(){
-    return 0;
+   LaFabrica laFabrica = LaFabrica::getInstance();
+   IAltaUsuario IUsuario = laFabrica->getIAltaUsuario();
+
+   string mail, pass;
+   cout<< "Ingrese su mail y contraseña: "<< endl;
+   cin >> mail;
+   cin >> pass;
+   DtUsuario datos(mail, pass);
+   IUsuario->ingresarUsuario(datos);
+
+   cout<<"Seleccione que tipo de usuario desea iniciar"<< endl;
+   cout << " 1. Jugador" << endl;
+   cout << " 2. Desarrollador" << endl;
+
+   controlVar = takeInputRange(1,2);
+      switch (controlVar) {
+	 case 1: {
+	    string name;
+            cin >> name;
+            HandlerUsuario * hc = HandlerUsuario::getInstance();
+            while (hc->existeUsuario(name)){
+               cout << "Ese nickname ya está en uso, por favor ingrese otro. " << endl;
+               cin >> name;
+            }
+            IUsuario->ingresarNickname(name);
+            string des;
+            IUsuario->ingresarDescripcion(des);
+            break;
+	}
+
+	case 2: {
+           string emp;
+           cout << "Ingrese el nombre de su empresa: " << endl;
+           cin >> emp;
+           IUsuario->ingresarEmpresa(emp);
+	       break;
+	}
+   IUsuario->confirmarDarDeAltaUsuario();	
+   return 0;
 }
 int Sistema::iniciarSesion(){
     LaFabrica * f = LaFabrica::getInstance();
@@ -186,6 +224,14 @@ int Sistema::seleccionarEstadistica(){
 }
 
 int Sistema::consultarEstadisticas(){
+  LaFabrica laFabrica = LaFabrica::getInstance();
+  IVideojuego IVideo = laFabrica->getIVideojuego();
+  set<string> vjDes = iVideojuego->obtenerNombreVideojuegosDesarrollados();
+  string vid;
+  cout << "Ingrese el nombre del videojuego al cual quiere consultar sus estadisticas: " endl;
+  cin >> vid;
+  iVideojuego->obtenerEstadisticas(vid);
+
     return 0;
 }
 
