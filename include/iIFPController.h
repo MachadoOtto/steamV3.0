@@ -50,7 +50,7 @@ class IIFPController {
         
         //abandonarPartidaMulti.cpp
 
-        virtual std::set<DtPartidaMultijugador> obtenerPartidasMultiActivas() = 0;
+        virtual std::set<DtPartidaMultijugador> * obtenerPartidasMultiActivas() = 0;
         virtual void confirmarAbandonarPartida(int) = 0;
 };
 
