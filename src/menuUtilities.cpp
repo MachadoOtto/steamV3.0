@@ -58,7 +58,7 @@ int takeInputRange(int min, int max){
         if (!(cin >> controlVar) || (controlVar > max || controlVar < min)) {
 	    clinput();
 	    reprintln();
-	    cout << "Por favor ingrese una opcion valida: ";
+	    cout << "Por favor ingrese una opcion valida("<<min<<"-"<<max<<"): " ;
 	}
 	else
 	    break;
@@ -66,6 +66,22 @@ int takeInputRange(int min, int max){
     clinput();
     cout << endl;
     return controlVar;
+}
+
+bool boolSelect(){
+    string x;
+    while(true){
+	getline(cin,x);
+	if(x=="Si" || x=="1" || x== "si" || x == "s" || x=="y" || x=="Y" || x=="yes" || x=="yeah")
+	    return true;
+	if(x=="No" || x=="0" || x== "no" || x == "n" || x=="N")
+	    return false;
+	else{
+	    clinput();
+	    reprintln();
+	    cout << "Por favor ingrese una opcion valida (y/n): ";
+	}
+    }
 }
 
 }

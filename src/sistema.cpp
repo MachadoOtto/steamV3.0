@@ -15,6 +15,8 @@ using namespace std;
 
 Sistema::Sistema(){
 //Hago las cosas pertinentes para iniciar el sistema...
+
+    //Hay que crear las categorias que ya vienen en el sistema: generos y plataformas
 }
 
 int Sistema::modificarFecha(){
@@ -104,6 +106,72 @@ int Sistema::iniciarSesion(){
 }
 
 int Sistema::cargarCategoria(){
+    LaFabrica * f = LaFabrica::getInstance();
+    IVideojuegoController * h = f->getIVideojuegoController();
+    string n,d,t;
+    TipoCategoria tcat;
+    bool conf;
+    int fin=0,i=0;
+    cls();
+    ptitle();
+    cout << "El sistema cuenta con las siguientes categorias:\n";
+    set<string>* namae = h->obtenerNombreCategorias();
+    for(set<string>::iterator it = namae->begin(); it != namae->end(); it++)
+	cout << "\t" << i << ". " << *(it) << "\n";
+    delete namae;
+    cout << "\nIngrese los siguientes datos para agregar una nueva categoria al sistema:\n\n\n";
+    while(!fin){
+	cout << "Nombre: ";
+	getline(cin,n);
+	bool nOk=true;
+	for(set<string>::iterator it = namae->begin(); it != namae->end() && nOk; it++)
+	    if(n==*(it)){
+		reprintln();
+		reprintln();
+		cout << "ERROR: El nombre de la categoria a crear ya existe en el sistema.\n";
+		nOk = false;
+	    }
+	if(!nOk)
+	    break;
+	cout << "Descripcion: ";
+	getline(cin,d);
+	cout << "Tipo (Genero/Plataforma/Otro):";
+	getline(cin,t);
+	cls();
+	ptitle();
+	if (t=="Genero"||t=="genero"){
+	    tcat = TipoCategoria::Genero;
+	    t = "Genero";
+	}
+	if (t=="Plataforma"||t=="plataforma"){
+	    tcat = TipoCategoria::Plataforma;
+	    t = "Plataforma";
+	}
+	if (t=="Otro"||t=="otro"){
+	    tcat = TipoCategoria::Otro;
+	    t = "Otro";
+	}
+	else{
+	    tcat = TipoCategoria::Otro;
+	    cout << "Advertencia: El tipo categoria \""<<t<<"\" no existe como tal en el sistema. Se le ha asignado el tipo \"Otro\".\n";   
+	    t = "Otro";
+	}	
+	cout << "\nLa siguiente categoria sera agregada al sistema:\n\n";
+	cout << "Nombre: "<<n<<endl;
+	cout << "Descripcion: "<<d<<endl;
+	cout << "Tipo: "<<t<<endl<<endl;
+	cout << "Desea confirmar su creacion? (y/n)>";
+	conf = boolSelect();
+	if (conf){
+	    h->cargarCategoria(DtCategoria(n,d,tcat));
+	    h->confirmarAgregarCategoria();		    
+	    cout << "Se ha creado una nueva categoria de manera exitosa.\n";
+	}
+	else
+	    cout << "La operacion para agregar una nueva categoria ha sido cancelada.\n";
+	fin = 1;
+    }
+    pkey();
     return 0;
 }
 int Sistema::publicarVideojuego(){

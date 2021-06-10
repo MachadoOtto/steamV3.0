@@ -125,12 +125,38 @@ void VideojuegoController::setLoggedUser(Usuario * x){
     loggedUser=x;
 }
 
+set<string>* VideojuegoController::obtenerNombreCategorias(){
+    set<string>* s = new set<string>;
+    HandlerCategoria * hc = HandlerCategoria::getInstance();
+    
+    set<DtCategoria>* g = hc->getDtGenders();
+    for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
+	s->insert((*it).getNombre());	
+    g = hc->getDtPlatforms();
+    for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
+	s->insert((*it).getNombre()); 
+    g = hc->getDtCategories();
+    for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
+	s->insert((*it).getNombre()); 
+    return s;
+}
+int VideojuegoController::cargarCategoria(DtCategoria c){
+    catData = c;
+    return 0;
+}
+
+void VideojuegoController::confirmarAgregarCategoria(){
+    Categoria * c = new Categoria(catData);
+    HandlerCategoria * hc = HandlerCategoria::getInstance();
+    hc->addCategoria(c);
+}
+
 VideojuegoController * VideojuegoController::getInstance(){
     static VideojuegoController instance;
     return &instance;
 } 
 
-VideojuegoController::VideojuegoController():datos("","",0,0,0,0){
+VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",TipoCategoria::Otro){
     categoriaCache = new set<Categoria*>;
     loggedUser = nullptr;
     videoCache = nullptr;

@@ -24,6 +24,7 @@
 #include "desarrollador.h"
 #include "videojuego.h"
 #include "categoria.h"
+#include "dtCategoria.h"
 
 using std::vector;
 using std::string;
@@ -37,6 +38,7 @@ enum class TipoPago;
 class VideojuegoController: public IVideojuegoController{
 private:
     DtVideojuego datos;
+    DtCategoria catData;
     TipoPago tPago;
     TipoValido tSus; //SUS!?
     Usuario * loggedUser; //Player OR Dev. depening on usecase under execution.
@@ -67,6 +69,11 @@ public:
     void setLoggedUser(Usuario *);
     //setDatos // Equivalente a ingresarDatosvideojuego  
     
+    //Caso de uso AgregarCategoria:
+    set<string>* obtenerNombreCategorias();
+    int cargarCategoria(DtCategoria);
+    void confirmarAgregarCategoria();
+
     static VideojuegoController * getInstance();
     ~VideojuegoController();
 };

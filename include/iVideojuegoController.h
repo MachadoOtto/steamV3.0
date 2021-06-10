@@ -44,6 +44,11 @@ public:
     virtual void cancelarSuscripcion()=0;
     virtual void clearCache()=0;
 
+    //Caso de uso AgregarCategoria:
+    virtual set<string> *obtenerNombreCategorias()=0;
+    virtual int cargarCategoria(DtCategoria)=0;
+    virtual void confirmarAgregarCategoria()=0;
+
     virtual ~IVideojuegoController(){}
 };
 

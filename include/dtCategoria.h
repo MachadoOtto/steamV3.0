@@ -11,6 +11,7 @@
 #ifndef DTcategoria
 #define DTcategoria
 
+#include <set>
 #include <string>
 #include "tipoCategoria.h"
 
@@ -23,7 +24,7 @@ private:
     TipoCategoria tipo;
 public:
     DtCategoria(string nom, string desc, TipoCategoria);
-    string getNombre();
+    string getNombre() const;
     string getDescripcion();
     TipoCategoria getTipoCategoria();
     friend bool operator<(const DtCategoria, const DtCategoria);

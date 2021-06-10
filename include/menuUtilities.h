@@ -18,6 +18,7 @@ namespace menuUtilities{
     void ptitle();
     void reprintln();
     int takeInputRange(int min,int max);
+    bool boolSelect();
 }
 
 #endif

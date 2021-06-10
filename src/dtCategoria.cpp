@@ -16,7 +16,7 @@ DtCategoria::DtCategoria(string n,string d,TipoCategoria t){
     tipo = t;
 }
 
-string DtCategoria::getNombre(){
+string DtCategoria::getNombre() const{
     return nombre;
 }
 

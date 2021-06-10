@@ -21,7 +21,7 @@
 #include "iVideojuegoController.h"
 #include "fechaSistema.h"
 #include "menuUtilities.h"
-
+#include "tipoCategoria.h"
 #include "dtUsuario.h"
 
 using std::string;
