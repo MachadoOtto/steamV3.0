@@ -11,10 +11,6 @@
 #include "../include/dtPartida.h"
 #include "../include/dtFechaHora.h"
 
-#include <string>
-#include <set>
-#include <iterator>
-
 DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa, bool transmitidaEnVivo): DtPartida(id,fecha,duracion,activa) {
     this->transmitidaEnVivo = transmitidaEnVivo;
 }
@@ -31,9 +27,6 @@ std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
         o << "\n" << "Fecha de creacion: " << p.getFecha() << "Es una transmicion en vivo?: ";
         if(p.getTransmitidaEnVivo()) o << "Si";
         else o << "No";
-        o << "\n" << "Host: " << p.getHost() << "\n" << "Videojuego: " << getVideojuego() << "\n" << "Jugadores Unidos: \n";
-        for(std::set<std::string>::const_iterator it = jugadoresUnidos.cbegin(); it != jugadoresUnidos.cend(); it++) {
-            o << (*it) << "\n";
-        }
+        o << "\n";
     return o;
 }
