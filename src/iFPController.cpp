@@ -143,6 +143,14 @@ void IFPController::clearCache() {
     * Esto creo que no esta bien. Limpiar el cache vendira a ser borrar los datos temporales que fuiste guardando en le controlador, no eliminar los objetos que guardas referencia, lo que tenes que hacer es limpiar las referencias (nullptr) */ 
 }
 
+std::set<DtPartidaMultijugador>* IFPController::obtenerPartidasMultiActivas(){
+    return nullptr;
+}
+
+void IFPController::confirmarAbandonarPartida(int i){
+
+}
+
 IFPController::~IFPController() {
     clearCache();
 }

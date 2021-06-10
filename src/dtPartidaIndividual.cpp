@@ -10,15 +10,17 @@
 #include "../include/dtPartidaIndividual.h"
 #include "../include/dtFechaHora.h"
 
-DtPartidaIndividual::DtPartidaIndividual(int id,DtFechaHora fecha,float duracion,bool activa): DtPartida(id,fecha,duracion,activa) {
-
+DtPartidaIndividual::DtPartidaIndividual(int id,DtFechaHora fecha,float duracion,bool activa,string h,string vj,int w): DtPartida(id,fecha,duracion,activa,h,vj) {
+    idPartidaAnterior = w;
 }
 
 std::ostream & operator << (std::ostream &o,DtPartidaIndividual p) {
+    /*
     o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion()
     << "\n" << "Es activa?: ";
     if(p.getActiva()) o << "Si";
     else o << "No";
     o << "\n" << "Fecha de creacion: " << p.getFecha() << "\n";
+    */
     return o;
 }

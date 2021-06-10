@@ -162,6 +162,7 @@ int main() {
 	    }
 	}
     }
+    cout << "Gracias por utilizar Steam v3.0.\n";
     return 0;
 }
 

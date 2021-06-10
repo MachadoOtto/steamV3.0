@@ -57,6 +57,10 @@ class IFPController: public IIFPController {
         void confirmarPartida();
         void confirmarFinalizarPartida(int);
         void clearCache();
+
+	std::set<DtPartidaMultijugador>* obtenerPartidasMultiActivas();
+	void confirmarAbandonarPartida(int);
+
         ~IFPController();
 };
 

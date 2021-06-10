@@ -10,8 +10,8 @@
 #ifndef IIFPCONTROLLER
 #define IIFPCONTROLLER
 
-#include "dtPartida.h"
 #include "dtPartidaIndividual.h"
+#include "dtPartidaMultijugador.h"
 
 #include <string>
 #include <set>
@@ -35,7 +35,7 @@ class IIFPController {
         virtual void add(Jugador *) = 0;
         virtual void remove(Jugador *) = 0;
         virtual Jugador * find(std::string) = 0;
-
+		
         virtual std::set<std::string> * obtenerVideojuegosActivos() = 0;
         virtual std::set<DtPartida> * obtenerPartidasActivas() = 0;
         virtual std::set<DtPartidaIndividual> * obtenerHistorialPartidas() = 0;
@@ -47,6 +47,9 @@ class IIFPController {
         virtual void confirmarPartida() = 0;
         virtual void confirmarFinalizarPartida(int) = 0;
         virtual void clearCache() = 0;
+    
+	virtual std::set<DtPartidaMultijugador>* obtenerPartidasMultiActivas()=0;
+	virtual void confirmarAbandonarPartida(int)=0;
 	virtual ~IIFPController(){}
 };
 

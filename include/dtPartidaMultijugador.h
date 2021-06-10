@@ -9,16 +9,21 @@
 
 #ifndef DTPARTIDAMULTIJUGADOR
 #define DTPARTIDAMULTIJUGADOR
-
+#include <string>
+#include <set>
 #include "dtPartida.h"
 #include "dtFechaHora.h"
+
+using std::set;
+using std::string;
 
 class DtPartidaMultijugador: public DtPartida {
     private:
         bool transmitidaEnVivo;
+	set<string> jugadoresUnidos;
     public:
-        DtPartidaMultijugador(int,DtFechaHora,float,bool,bool transmitidaEnVivo);
-        bool getTransmitidaEnVivo();
+        DtPartidaMultijugador(int,DtFechaHora,float,bool,string,string,bool,set<string>);
+	bool getTransmitidaEnVivo();
         friend std::ostream & operator << (std::ostream &,DtPartidaMultijugador);
 };
 

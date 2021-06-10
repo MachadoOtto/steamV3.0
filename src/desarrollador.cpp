@@ -81,6 +81,7 @@ std::set<std::string> * Desarrollador::getVideojuegosDesarrollados() {
 }
 /* pusblishVideogame tiene que retornar el puntero del nuevo videojuego creado... cambiar void a Videojuego* */
 void Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
+    //ALEXIS: BASTA CON CAMBIAR A MAP???
     /* ERROR: videojuego se construye con un map no con un set... que agradable problema
     Videojuego * vj = new Videojuego(gameData,categorias);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));

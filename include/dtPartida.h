@@ -13,6 +13,7 @@
 #include "dtFechaHora.h"
 
 #include <iostream>
+using std::string;
 
 class DtPartida {
     protected:
@@ -20,13 +21,18 @@ class DtPartida {
         DtFechaHora fecha;
         float duracion;
         bool activa;
+	string videojuego;
+	string host;
     public:
-        DtPartida(int,DtFechaHora,float,bool);
+        DtPartida(int,DtFechaHora,float,bool,string,string);
         int getId();
         DtFechaHora getFecha();
         float getDuracion();
         bool getActiva();
         bool esActiva();
+	string getHost();
+	string getVideojuego();
+	
 	friend bool operator<(const DtPartida,const DtPartida);
 };
 

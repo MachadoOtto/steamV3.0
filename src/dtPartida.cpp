@@ -10,11 +10,13 @@
 #include "../include/dtPartida.h"
 #include "../include/dtFechaHora.h"
 
-DtPartida::DtPartida(int id,DtFechaHora fecha,float duracion, bool activa) {
+DtPartida::DtPartida(int id,DtFechaHora fecha,float duracion, bool activa,string h,string vj) {
     this->id = id;
     this->fecha = fecha;
     this->duracion = duracion;
     this->activa = activa;
+    host = h;
+    videojuego = vj;
 }
 
 int DtPartida::getId() {
@@ -35,6 +37,12 @@ bool DtPartida::getActiva() {
 
 bool DtPartida::esActiva() { //alias
     return getActiva();
+}
+string DtPartida::getHost(){
+    return host;
+}
+string DtPartida::getVideojuego(){
+    return videojuego;
 }
 
 bool operator<(const DtPartida p1,const DtPartida p2){

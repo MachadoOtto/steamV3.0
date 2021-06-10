@@ -8,9 +8,9 @@
  */
 
 #include <../include/partidaIndividual.h>
-
+//ATENCION "" ""
 PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
-        datos.getDuracion(), datos.esActiva())) { 
+        datos.getDuracion(), datos.esActiva(),"","")) { 
     partidaAnterior = NULL;
 }
 
@@ -29,7 +29,10 @@ void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
 PartidaIndividual* PartidaIndividual::getPartidaAnterior() { return partidaAnterior; }
 
 DtPartida PartidaIndividual::obtenerDatosPartida() {
+    /*
     DtPartida datosP(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva());
+    */
+    DtPartida datosP(0,this->getDtFechaHora(),0,true,"","");
     return datosP;
 }
 

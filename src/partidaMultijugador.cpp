@@ -8,9 +8,9 @@
  */
 
 #include "../include/partidaMultijugador.h"
-
+//ATENCION """"
 PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
-        datos.getDuracion(), datos.getActiva())) {
+        datos.getDuracion(), datos.getActiva(),"","")) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
     jugadoresUnidos = new map<string, Jugador*>;
 }
@@ -24,9 +24,10 @@ void PartidaMultijugador::setJugadoresUnidos(map<string, Jugador*>* jAUnir) {
 map<string, Jugador*>* PartidaMultijugador::getJugadoresUnidos() { 
     return jugadoresUnidos; 
 }
-
+//CORREGIR
 DtPartida PartidaMultijugador::obtenerDatosPartida() {
-    DtPartidaMultijugador datos(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(), transmitidaEnVivo);
+    set<string> w;
+    DtPartidaMultijugador datos(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(),"","",transmitidaEnVivo,w);
     return datos;
 }
 

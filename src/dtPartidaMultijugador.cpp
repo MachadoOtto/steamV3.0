@@ -11,15 +11,17 @@
 #include "../include/dtPartida.h"
 #include "../include/dtFechaHora.h"
 
-DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa, bool transmitidaEnVivo): DtPartida(id,fecha,duracion,activa) {
-    this->transmitidaEnVivo = transmitidaEnVivo;
+DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa,string h,string vj, bool trans,set<string> ss): DtPartida(id,fecha,duracion,activa,h,vj) {
+    transmitidaEnVivo = trans;
+    jugadoresUnidos = ss;
 }
 
-bool DtPartidaMultijugador::getTransmitidaEnVivo() {
+bool DtPartidaMultijugador::getTransmitidaEnVivo(){
     return transmitidaEnVivo;
 }
-
+//falta imprimir los jugadores unidos. videojuego y host y sacar los gets (no existen)
 std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
+	/*
         o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion()
         << "\n" << "Es activa?: ";
         if(p.getActiva()) o << "Si";
@@ -28,5 +30,6 @@ std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
         if(p.getTransmitidaEnVivo()) o << "Si";
         else o << "No";
         o << "\n";
+	*/
     return o;
 }
