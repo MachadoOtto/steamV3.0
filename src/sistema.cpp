@@ -62,53 +62,76 @@ int Sistema::cargarDatosPrueba(){
     return 0;
 }
 int Sistema::altaUsuario(){
-   LaFabrica * laFabrica = LaFabrica::getInstance();
-   IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();
+    LaFabrica * laFabrica = LaFabrica::getInstance();
+    IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();
 
-   string mail, pass;
-   cout<< "Ingrese su mail y contraseña: "<< endl;
-   cin >> mail;
-   cin >> pass;
-   DtUsuario datos(mail, pass);
-   IUsuario->ingresarUsuario(datos);
-
-   cout<<"Seleccione que tipo de usuario desea iniciar"<< endl;
-   cout << " 1. Jugador" << endl;
-   cout << " 2. Desarrollador" << endl;
-
-   int controlVar = takeInputRange(1,2);
-      switch (controlVar) {
-	     case 1: {
-	        string name;
-            cin >> name;
-            HandlerUsuario * hc = HandlerUsuario::getInstance();
+    string mail, pass;
+    cout<< "Ingrese los siguientes datos para crear su usuario: "<< endl;
+    cout<< "Email: ";
+    getline(cin,mail);
+    cout<< "Contrasenia: ";
+    getline(cin,pass);
+    DtUsuario datos(mail, pass);
+    IUsuario->ingresarUsuario(datos);
+    cout << endl;
+    cout<<"Seleccione el tipo de usuario que desea dar de alta:"<< endl;
+    cout << " 1. Jugador" << endl;
+    cout << " 2. Desarrollador" << endl;
+    cout << "(1-2)> ";
+    int controlVar = takeInputRange(1,2);
+    switch (controlVar) {
+	case 1: {
+	    string name;
+            HandlerUsuario * hc = HandlerUsuario::getInstance(); //Corregir: sistema no habla con handler
+	    cout << "Ingrese un nickname para su Jugador: ";
+	    getline(cin,name);
+	    //while (IUsuario->existeUsuario(name))
             while (hc->existeUsuario(name)){
-               cout << "Ese nickname ya está en uso, por favor ingrese otro. " << endl;
-               cin >> name;
+		reprintln();
+		cout << "Ese nickname ya está en uso, por favor ingrese otro: " << endl;
+		getline(cin,name);
             }
             IUsuario->ingresarNickname(name);
             string des;
+	    cout << "Ingrese una descripcion para su juguador: ";
+	    getline(cin,des);
             IUsuario->ingresarDescripcion(des);
+	    cout << "Se registrara un jugador con los siguientes datos en el sistema:\n\n";
+	    cout << "Email: "<<mail<<endl;
+	    cout << "Contrasenia: "<<pass<<endl;
+	    cout << "Nickname: "<<name<<endl;
+	    cout << "Descripcion: "<<des<<endl<<endl;
             break;
 	    }
-	     case 2: {
-            string emp;
-            cout << "Ingrese el nombre de su empresa: " << endl;
-            cin >> emp;
+	case 2: {
+	    string emp;
+            cout << "Ingrese el nombre de su empresa: ";
+	    getline(cin,emp);
             IUsuario->ingresarEmpresa(emp);
-	        break;
-	     }
-   }
-   IUsuario->confirmarDarDeAltaUsuario();	
-   return 0;
+	    cout << "Se registrara un jugador con los siguientes datos en el sistema:\n\n";
+	    cout << "Email: "<<mail<<endl;
+	    cout << "Contrasenia: "<<pass<<endl;
+	    cout << "Empresa: "<<emp<<endl<<endl;
+	    break;
+	    }
+    }
+    cout << "Desea darlo de alta? (y/n)>";
+    if(boolSelect()){
+	IUsuario->confirmarDarDeAltaUsuario();	
+	cout << "Se ha registrado su usuario exitosamente.\n";
+    }
+    else
+	cout << "Se ha cancelado la operacion Alta Usuario.\n";	
+    pkey();
+    return 0;
 }
 int Sistema::iniciarSesion(){
     LaFabrica * f = LaFabrica::getInstance();
     IAltaUsuarioController * h = f->getIAltaUsuarioController();
     string u,p;
-    int user_ok = 1;
+    int user_ok = 2;
     cout << "Ingrese los siguientes datos para iniciar sesion.\nSi desea cancelar la operacion presione ENTER dos veces.\n\n\n";
-    while(user_ok){
+    while(user_ok == 2 || user_ok == 3){
 	cout << "Usuario(email): ";
 	getline(cin,u);
 	cout << "Contrasenia: ";
