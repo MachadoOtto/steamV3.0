@@ -28,9 +28,7 @@ void AltaUsuarioController::ingresarEmpresa(string e){
 }
 
 void AltaUsuarioController::ingresarNickname(string n){
-   HandlerUsuario * hc = HandlerUsuario::getInstance();
-   if (!hc->existeUsuario(n))
-      nickname = n;
+   nickname = n;
 }
 
 void AltaUsuarioController::ingresarDescripcion(string d){
