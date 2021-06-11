@@ -74,6 +74,10 @@ public:
     int cargarCategoria(DtCategoria);
     void confirmarAgregarCategoria();
 
+    //Caso de uso PuntuarVideojuego
+    set<DtVideojuego>* verVideojuegos();
+    void puntuar(string,int);
+
     static VideojuegoController * getInstance();
     ~VideojuegoController();
 };

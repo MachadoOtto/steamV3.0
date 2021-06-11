@@ -25,6 +25,9 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): 
     this->puntaje = 0;
     this->totalJugadoresSuscriptos = 0;
     this->categorias = categorias;
+    //Wot. Parece que no se inicializan todas las estructuras de datos partidas,suscrip,categorias 
+    //AGREGARLAS
+    opiniones = new vector<int>;
 }
 
 Videojuego::~Videojuego() {
@@ -32,6 +35,7 @@ Videojuego::~Videojuego() {
     delete this->categorias;
     delete this->partidas;
     delete this->suscripciones;
+    delete opiniones;
 }
 
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
@@ -155,6 +159,10 @@ map<int,Partida*>* Videojuego::getPartidas() {
 Categoria* Videojuego::getCategorias() {
 //    return this->categorias;
     return nullptr;
+}
+
+void Videojuego::addOpinion(int i){
+    opiniones->push_back(i);
 }
 
 //--- Setters ---

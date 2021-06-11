@@ -28,6 +28,7 @@ private:
 public:
     static HandlerCatalogo* getInstance();
     set<DtVideojuego>* getDatosInactivos();
+    set<DtVideojuego>* getDtVideojuegos();
     Videojuego* findVideojuego(string);
     void addVideojuego(Videojuego*);
     void remove(Videojuego*);

@@ -15,11 +15,11 @@ DtVideojuego::DtVideojuego(string n,string d,float men,float tri,float an,float 
     descripcion = d;
 }
 
-string DtVideojuego::getNombre(){
+string DtVideojuego::getNombre() const{
     return nombre;
 }
 
-string DtVideojuego::getDescripcion(){
+string DtVideojuego::getDescripcion() const{
     return descripcion;
 }
 

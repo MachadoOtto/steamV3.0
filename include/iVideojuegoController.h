@@ -49,6 +49,10 @@ public:
     virtual int cargarCategoria(DtCategoria)=0;
     virtual void confirmarAgregarCategoria()=0;
 
+    //Caso de uso PuntuarVideojuego
+    virtual set<DtVideojuego>* verVideojuegos()=0;
+    virtual void puntuar(string,int)=0;
+
     virtual ~IVideojuegoController(){}
 };
 

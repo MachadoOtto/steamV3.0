@@ -28,6 +28,13 @@ set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
     return dtInactivos;
 }
 
+set<DtVideojuego>* HandlerCatalogo::getDtVideojuegos(){
+    set<DtVideojuego>* dts = new set<DtVideojuego>;
+    for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it != videojuegos->end(); ++it)
+	dts->insert(it->second->obtenerDatosVideojuego());
+    return dts;
+}
+
 Videojuego* HandlerCatalogo::findVideojuego(string nombreVideojuego) {
     map<string, Videojuego*>::iterator it = videojuegos->find(nombreVideojuego);
     return it->second;

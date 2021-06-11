@@ -23,6 +23,7 @@
 #include "menuUtilities.h"
 #include "tipoCategoria.h"
 #include "dtUsuario.h"
+#include "dtVideojuego.h"
 
 using std::string;
 
