@@ -8,19 +8,11 @@
  */
 
 #include <../include/partidaIndividual.h>
-//ATENCION "" ""
+
 PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
-        datos.getDuracion(), datos.esActiva(),"","")) { 
+        datos.getDuracion(), datos.esActiva())) { 
     partidaAnterior = NULL;
 }
-
-/* se colo un create xd
-PartidaIndividual* PartidaIndividual::create(datos, punteros*) {
-    PartidaIndividual* nuevo = new PartidaIndividual(datos)
-    nuevo->apunto = punteros;
-    return nuevo;
-}
-*/
 
 void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
     partidaAnterior = pAnt;
@@ -28,22 +20,13 @@ void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
 
 PartidaIndividual* PartidaIndividual::getPartidaAnterior() { return partidaAnterior; }
 
-DtPartida PartidaIndividual::obtenerDatosPartida() {
-    /*
-    DtPartida datosP(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva());
-    */
-    DtPartida datosP(0,this->getDtFechaHora(),0,true,"","");
+DtPartida* PartidaIndividual::obtenerDatosPartida() {
+    DtPartidaIndividual* datosP = new DtPartidaIndividual(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(), this->getPartidaAnterior()->getId());
     return datosP;
 }
 
-void PartidaIndividual::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
-    //duracion = fecha.diffHoras(fechaFinal);
+void PartidaIndividual::asignarHoraFinalizacion() {
     this->setDuracion(this->getDtFechaHora().diffHoras(fechaSistema::fecha));
-}
-
-void PartidaIndividual::finalizarPartida(DtFechaHora horaFinal) {
-    this->setActiva(false);
-    this->asignarHoraFinalizacion(fechaSistema::fecha);
 }
 
 void PartidaIndividual::eliminarAssoc() {

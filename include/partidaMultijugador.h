@@ -12,7 +12,7 @@
 
 #include <string>
 #include <map>
-#include <set>
+#include <vector>
 #include "partida.h"
 #include "dtPartidaMultijugador.h"
 #include "jugadorMulti.h"
@@ -20,7 +20,7 @@
 
 using std::string;
 using std::map;
-using std::set;
+using std::vector;
 
 class DtFechaHora;
 class Jugador;
@@ -30,17 +30,17 @@ class DtPartida;
 class PartidaMultijugador : public Partida {
 private:
     bool transmitidaEnVivo;
-    set<JugadorMulti*>* jugadoresMultis;
+    vector<JugadorMulti*>* jugadoresMultis;
     map<string, Jugador*>* jugadoresUnidos;
 public:
     PartidaMultijugador(DtPartidaMultijugador);
     bool getTransmitidaEnVivo();
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
-    virtual DtPartida obtenerDatosPartida();
-    virtual void asignarHoraFinalizacion(DtFechaHora);
-    virtual void finalizarPartida(DtFechaHora);
+    virtual DtPartida* obtenerDatosPartida();
+    virtual void asignarHoraFinalizacion();
     virtual void eliminarAssoc();
+    void abandonar(JugadorMulti*);
     ~PartidaMultijugador();
 };
 

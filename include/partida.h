@@ -12,38 +12,38 @@
 
 #include "dtFechaHora.h"
 #include "dtPartida.h"
+#include "fechaSistema.h"
 
 class Jugador;
 class Videojuego;
 
 class Partida {
-private:
-    int identificador;
-    DtFechaHora fecha;
-    float duracion;
-    bool activa;
-    Jugador* host;
-    Videojuego* videogame;
-protected:
-    Partida(DtPartida);
-public:
-    int getId();
-    Jugador* getHost();
-    DtFechaHora getDtFechaHora();
-    float getDuracion();
-    void setDuracion(float);
-    void setActiva(bool);
-    bool esActiva();
-    void setHost(Jugador*);
-    void remove(Jugador*);
-    void setVideojuego(Videojuego*);
-    Videojuego* getVideojuego();
-    //bool esIgualVideojuego(Videojuego*);
-    virtual DtPartida obtenerDatosPartida()=0;
-    virtual void asignarHoraFinalizacion(DtFechaHora)=0;
-    virtual void finalizarPartida()=0;
-    virtual void eliminarAssoc()=0;
-    virtual ~Partida();
+    private:
+        int identificador;
+        DtFechaHora fecha;
+        float duracion;
+        bool activa;
+        Jugador* host;
+        Videojuego* videogame;
+    protected:
+        Partida(DtPartida);
+    public:
+        int getId();
+        Jugador* getHost();
+        DtFechaHora getDtFechaHora();
+        float getDuracion();
+        void setDuracion(float);
+        void setActiva(bool);
+        bool esActiva();
+        void setHost(Jugador*);
+        void remove(Jugador*);
+        void setVideojuego(Videojuego*);
+        Videojuego* getVideojuego();
+        virtual DtPartida* obtenerDatosPartida()=0;
+        virtual void asignarHoraFinalizacion()=0;
+        void finalizarPartida();
+        virtual void eliminarAssoc()=0;
+        virtual ~Partida();
 };
 
 #endif
