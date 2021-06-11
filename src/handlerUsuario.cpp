@@ -37,6 +37,8 @@ void HandlerUsuario::addUsuario(Usuario* user) {
     usuarios->insert(map<string, Usuario*>::value_type(user->getEmail(), user));
 }
 
+map<string, Usuario*>* HandlerUsuario::obtenerUsuarios() { return usuarios; }
+
 HandlerUsuario::~HandlerUsuario() {
     for (map<string, Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); ++it) {
         delete it->second;

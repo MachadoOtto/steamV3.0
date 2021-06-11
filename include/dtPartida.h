@@ -21,19 +21,15 @@ class DtPartida {
         DtFechaHora fecha;
         float duracion;
         bool activa;
-	string videojuego;
-	string host;
     public:
-        DtPartida(int,DtFechaHora,float,bool,string,string);
+        DtPartida(int,DtFechaHora,float,bool);
         int getId();
         DtFechaHora getFecha();
         float getDuracion();
         bool getActiva();
         bool esActiva();
-	string getHost();
-	string getVideojuego();
-	
-	friend bool operator<(const DtPartida,const DtPartida);
+	    friend bool operator<(const DtPartida,const DtPartida);
+        virtual ~DtPartida() { }
 };
 
 #endif

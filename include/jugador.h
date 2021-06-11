@@ -22,6 +22,7 @@
 #include "dtPartida.h"
 #include "dtJugador.h"
 #include "jugadorMulti.h"
+#include "fechaSistema.h"
 
 #include <string>
 #include <set>
@@ -31,7 +32,7 @@ class Jugador: public Usuario {
     private:
         std::set<Suscripcion *> * suscripciones;
         std::map<int,Partida *> * partidas;
-        std::set<JugadorMulti *> * jMultis;
+        std::map<int,PartidaMultijugador *> * partidasUnido;
         std::string nickname;
         std::string descripcion;
     public:
@@ -43,14 +44,16 @@ class Jugador: public Usuario {
         void add(Suscripcion *);
         void remove(Suscripcion *);
         void add(Partida *);
-        Partida * find(int);
-        void add(JugadorMulti *);
-        void remove(JugadorMulti *);
+        Partida * findPartida(int);
+        void add(PartidaMultijugador *);
+        void remove(PartidaMultijugador *);
+        PartidaMultijugador * findPartidaMulti(int);
 
         std::set<std::string> * obtenerVideojuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
-        std::set<DtPartida> * obtenerPartidasActivas();
-        std::set<DtPartidaIndividual> * obtenerHistorialPartidas(Videojuego *);
+        std::map<DtFechaHora, DtPartida*> * obtenerPartidasActivas();
+        std::map<DtFechaHora, DtPartidaIndividual*> * obtenerHistorialPartidas();
+        std::map<DtFechaHora, DtPartidaMultijugador*> * obtenerPartidasUnido();
         PartidaIndividual * seleccionarContinuacionPartida(int);
         void agregarPartida(Partida *);
         void agregarSuscripcion(Suscripcion *);

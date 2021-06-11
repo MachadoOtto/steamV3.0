@@ -13,7 +13,7 @@
 
 namespace menuUtilities{
     void cls();
-    void clinupt();
+    void clinput();
     void pkey();
     void ptitle();
     void reprintln();

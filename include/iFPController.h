@@ -20,46 +20,46 @@
 
 #include <string>
 #include <set>
+#include <map>
 
 class IFPController: public IIFPController {
     private:
         IFPController();
-        Jugador * host;
-        Videojuego * vj;
-        PartidaIndividual * partida;
-        std::map<std::string,Jugador *> * jugadoresAUnir;
+        int contadorId;
+        Jugador* host;
+        Videojuego* vj;
+        PartidaIndividual* partidaAnterior;
+        std::map<std::string,Jugador*> * jugadoresAUnir;
         bool pCont;
         bool enVivo;
     public:
-        static IFPController * getInstance();
-        void setHost(Jugador *);
-        Jugador * getHost();
+        static IFPController* getInstance();
+        void iniciarSesion();
+        void setHost(Jugador*);
+        Jugador* getHost();
+        void seleccionarVideojuego(std::string);
         void setVj(Videojuego *);
-        Videojuego * getVj();
-        void setPartida(Partida *);
-        Partida * getPartida();
-        void setPCont(bool);
-        bool getPCont();
+        Videojuego* getVj();
+        void seleccionarContinuacionPartida(int);
+        void setPartidaAnterior(PartidaIndividual*);
+        Partida* getPartidaAnterior();
         void setEnVivo(bool);
         bool getEnVivo();
         void add(Jugador *);
         void remove(Jugador *);
-        Jugador * find(std::string);
+        void aniadirJugadorPartida(std::string);
+        Jugador* findJugador(std::string);
 
         std::set<std::string> * obtenerVideojuegosActivos();
-        std::set<DtPartida> * obtenerPartidasActivas();
-        std::set<DtPartidaIndividual> * obtenerHistorialPartidas();
+        std::map<DtFechaHora, DtPartida*>* obtenerPartidasActivas();
+        std::map<DtFechaHora, DtPartidaIndividual*>* obtenerHistorialPartidas();
+        std::map<DtFechaHora, DtPartidaMultijugador*>* obtenerPartidasMultiActivas();
         std::set<std::string> * obtenerJugadoresSubscriptos();
-        void seleccionarVideojuego(std::string);
-        void seleccionarContinuacionPartida(int);
-        void partidaEnVivo(bool);
-        void aniadirJugadorPartida(std::string);
+        
         void confirmarPartida();
         void confirmarFinalizarPartida(int);
+        void confirmarAbandonarPartida(int);
         void clearCache();
-
-	std::set<DtPartidaMultijugador>* obtenerPartidasMultiActivas();
-	void confirmarAbandonarPartida(int);
 
         ~IFPController();
 };
