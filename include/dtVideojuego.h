@@ -23,8 +23,8 @@ private:
     DtPrecios costos;
 public:
     DtVideojuego(string nombre,string desc,float men,float tri,float an, float vita);
-    string getNombre();
-    string getDescripcion();
+    string getNombre() const;
+    string getDescripcion() const;
     DtPrecios getDtPrecios();
     ~DtVideojuego();
     friend bool operator<(const DtVideojuego, const DtVideojuego);  

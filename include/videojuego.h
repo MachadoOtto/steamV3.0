@@ -12,6 +12,7 @@
 #define VIDEOJUEGO
 
 #include <map>
+#include <vector>
 #include <set>
 #include <string>
 #include "suscripcionTemporal.h"
@@ -29,6 +30,7 @@
 using std::string;
 using std::map;
 using std::set;
+using std::vector;
 
 class Partida;
 
@@ -45,6 +47,7 @@ class Videojuego {
         set<Suscripcion*> *suscripciones;
         map<int,Partida*> *partidas;
         map<string,Categoria*> *categorias;
+	vector<int>* opiniones; 
         
     public:
         Videojuego(DtVideojuego,map<string,Categoria*>*);
@@ -56,7 +59,7 @@ class Videojuego {
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
-
+	void addOpinion(int);
         //Getters
         string getNombre();
         string getDescripcion();

@@ -156,6 +156,17 @@ VideojuegoController * VideojuegoController::getInstance(){
     return &instance;
 } 
 
+set<DtVideojuego>* VideojuegoController::verVideojuegos(){
+    HandlerCatalogo * hc = HandlerCatalogo::getInstance();
+    return hc->getDtVideojuegos();
+}
+
+void VideojuegoController::puntuar(string v,int p){
+    HandlerCatalogo * hc = HandlerCatalogo::getInstance();
+    Videojuego * vp = hc->findVideojuego(v);
+    vp->addOpinion(p);
+}
+
 VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",TipoCategoria::Otro){
     categoriaCache = new set<Categoria*>;
     loggedUser = nullptr;

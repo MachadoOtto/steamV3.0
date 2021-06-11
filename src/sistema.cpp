@@ -154,9 +154,8 @@ int Sistema::cargarCategoria(){
     ptitle();
     cout << "El sistema cuenta con las siguientes categorias:\n";
     set<string>* namae = h->obtenerNombreCategorias();
-    for(set<string>::iterator it = namae->begin(); it != namae->end(); it++)
+    for(set<string>::iterator it = namae->begin(); it != namae->end(); ++i,++it)
 	cout << "\t" << i << ". " << *(it) << "\n";
-    delete namae;
     cout << "\nIngrese los siguientes datos para agregar una nueva categoria al sistema:\n\n\n";
     while(!fin){
 	cout << "Nombre: ";
@@ -209,9 +208,11 @@ int Sistema::cargarCategoria(){
 	    cout << "La operacion para agregar una nueva categoria ha sido cancelada.\n";
 	fin = 1;
     }
+    delete namae;
     pkey();
     return 0;
 }
+
 int Sistema::publicarVideojuego(){
     return 0;
 }
@@ -324,6 +325,39 @@ int Sistema::suscribirseVideojuego(){
 }
 
 int Sistema::asignarPuntajeVideojuego(){
+    int i=0;
+    bool nok=false;
+    string p;
+    int kp;
+
+    LaFabrica * f = LaFabrica::getInstance();
+    IVideojuegoController * h = f->getIVideojuegoController();
+    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n";
+    set<DtVideojuego>* namae = h->verVideojuegos();
+    for(set<DtVideojuego>::iterator it = namae->begin(); it != namae->end(); i++,it++){
+	cout << "\t" << i << ". Nombre: " << it->getNombre() << "\n";
+	for(int j=0;j<i/10;j++)
+	    cout << " ";
+	cout << "Descripcion: " << it->getDescripcion() << "\n";
+    }
+    cout << "\nIngrese el nombre de la partida que desea puntuar: ";
+    while(!nok){
+	getline(cin,p);
+	for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
+	    if(it->getNombre() == p)
+		return true;
+	else{
+	    clinput();
+	    reprintln();
+	    cout << "Por favor ingrese una opcion valida: ";
+	}
+    }	
+    cout << "\n Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
+    kp = takeInputRange(1,5);
+    h->puntuar(p,kp);   	
+    cout << "Se ha registrado su puntaje exitosamente\n";
+    delete namae;
+    pkey();
     return 0;
 }
 
