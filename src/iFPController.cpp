@@ -9,15 +9,11 @@
 
 #include "../include/iFPController.h"
 
-#include <string>
-#include <set>
-#include <map>
-#include <iterator>
-
 IFPController::IFPController() {
+    contadorId = 0;
     host = NULL;
     vj = NULL;
-    partida = NULL;
+    partidaAnterior = NULL;
     jugadoresAUnir = new std::map<std::string,Jugador *>;
 }
 
@@ -26,12 +22,22 @@ IFPController * IFPController::getInstance() {
     return &instancia;
 }
 
-void IFPController::setHost(Jugador * host) {
-    this->host = host;
+void IFPController::iniciarSesion() {
+    HandlerUsuario* hu = HandlerUsuario::getInstance();
+    this->setHost(static_cast<Jugador*>(hu->getLoggedUser()));
+}
+
+void IFPController::setHost(Jugador * player) {
+    this->host = player;
 }
 
 Jugador * IFPController::getHost() {
     return host;
+}
+
+void IFPController::seleccionarVideojuego(std::string nombreVideojuego) {
+    HandlerCatalogo *hc = HandlerCatalogo::getInstance();
+    this->setVj(hc->findVideojuego(nombreVideojuego));
 }
 
 void IFPController::setVj(Videojuego * vj) {
@@ -42,20 +48,16 @@ Videojuego * IFPController::getVj() {
     return vj;
 }
 
-void IFPController::setPartida(Partida * partida) {
-    //this->partida = partida; this->partida es PartidaIndividual. Falto casteo o error de dise(enie)o?
+void IFPController::seleccionarContinuacionPartida(int identificador) {
+    this->setPartidaAnterior(host->seleccionarContinuacionPartida(identificador));
 }
 
-Partida * IFPController::getPartida() {
-    return partida;
+void IFPController::setPartidaAnterior(PartidaIndividual * partidaAnt) {
+    this->partidaAnterior = partidaAnt;
 }
 
-void IFPController::setPCont(bool pCont) {
-    this->pCont = pCont;
-}
-
-bool IFPController::getPCont() {
-    return pCont;
+Partida * IFPController::getPartidaAnterior() {
+    return partidaAnterior;
 }
 
 void IFPController::setEnVivo(bool enVivo) {
@@ -71,50 +73,32 @@ void IFPController::add(Jugador * jugador) {
 }
 
 void IFPController::remove(Jugador * jugador) {
-    //jugadoresAUnir->erase(jugador); uso incorrecto del erase del map
+    jugadoresAUnir->erase(jugador->getNickname());
 }
 
-Jugador * IFPController::find(std::string nombreJugador) {
-    //return jugadoresAUnir[nombreJugador]; no match for operator[]. ver types.
-    return nullptr; //temporal
+Jugador * IFPController::findJugador(std::string nombreJugador) {
+    return jugadoresAUnir->find(nombreJugador)->second;
 }
 
-std::set<std::string> * IFPController::obtenerVideojuegosActivos() {
-    HandlerUsuario * hu = HandlerUsuario::getInstance();
-    host = static_cast<Jugador*>(hu->getLoggedUser());
+std::set<std::string>* IFPController::obtenerVideojuegosActivos() {
     return host->obtenerVideojuegosActivos();
 }
 
-std::set<DtPartida> * IFPController::obtenerPartidasActivas() {
-    HandlerUsuario * hu = HandlerUsuario::getInstance();
-    Jugador * jSesion = static_cast<Jugador*>(hu->getLoggedUser());
-
-    host = jSesion;
+std::map<DtFechaHora, DtPartida*>* IFPController::obtenerPartidasActivas() {
     return host->obtenerPartidasActivas();
 }
 
-std::set<DtPartidaIndividual> * IFPController::obtenerHistorialPartidas() {
-    //Se quiere las partidas de todos los videojuegos me parece... en el UML no se pide el parametro videojuego para esta operacion. corregir. 
-    Videojuego * vj = nullptr; //tmp
-    return host->obtenerHistorialPartidas(vj);
+std::map<DtFechaHora, DtPartidaIndividual*>* IFPController::obtenerHistorialPartidas() {
+    return host->obtenerHistorialPartidas();
 }
 
 std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {
-    //return vj->obtenerJugadoresSuscriptos(); esto retorna el set de jugadores*... hay que hacer trabajooo
-    return nullptr;
-}
-
-void IFPController::seleccionarVideojuego(std::string nombreVideojuego) {
-    HandlerCatalogo *hc = HandlerCatalogo::getInstance();
-    vj = hc->findVideojuego(nombreVideojuego);
-}
-
-void IFPController::seleccionarContinuacionPartida(int identificador) {
-    partida = host->seleccionarContinuacionPartida(identificador);
-}
-
-void IFPController::partidaEnVivo(bool esTransmitidaEnVivo) {
-    enVivo = esTransmitidaEnVivo;
+    std::set<std::string>* res = new std::set<std::string>; 
+    std::set<Jugador*>* jSus = vj->obtenerJugadoresSuscriptos();
+    for (std::set<Jugador*>::iterator it = jSus->begin(); it != jSus->end(); ++it) {
+        res->insert((*it)->getNickname());
+    }
+    return res;
 }
 
 void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
@@ -124,33 +108,39 @@ void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
 }
 
 void IFPController::confirmarPartida() {
-    //vj->confirmarPartida(host,partida,enVivo,jugadoresAUnir); se esperaba que jugadores a unir fuera un set, no un map. Que problema! 
-    clearCache();
+    vj->confirmarPartida(host, contadorId++, partidaAnterior, enVivo, jugadoresAUnir);
 }
 
 void IFPController::confirmarFinalizarPartida(int identificador) {
-    host->finPartida(identificador);
-    clearCache();
+    Partida* p = host->findPartida(identificador);
+    PartidaMultijugador* pMulti = nullptr;
+    if ((pMulti = dynamic_cast<PartidaMultijugador*>(p))) {
+        std::map<std::string, Jugador*>* jUnidos = pMulti->getJugadoresUnidos();
+        for (std::map<std::string, Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
+            if (it->second->findPartidaMulti(identificador) == pMulti) {
+                it->second->abandonarPartidaMulti(pMulti);
+            }
+        }
+    }
+    p->finalizarPartida();   
 }
 
 void IFPController::clearCache() {
-   /* 
-    delete host;
-    delete partida;
-    delete vj;
-    delete jugadoresAUnir;
-
-    * Esto creo que no esta bien. Limpiar el cache vendira a ser borrar los datos temporales que fuiste guardando en le controlador, no eliminar los objetos que guardas referencia, lo que tenes que hacer es limpiar las referencias (nullptr) */ 
+    host = NULL;
+    partidaAnterior = NULL;
+    vj = NULL;
+    jugadoresAUnir->clear();
 }
 
-std::set<DtPartidaMultijugador>* IFPController::obtenerPartidasMultiActivas(){
-    return nullptr;
+std::map<DtFechaHora, DtPartidaMultijugador*>* IFPController::obtenerPartidasMultiActivas() {
+    return host->obtenerPartidasUnido();
 }
 
-void IFPController::confirmarAbandonarPartida(int i){
-
+void IFPController::confirmarAbandonarPartida(int i) {
+    PartidaMultijugador* p = dynamic_cast<PartidaMultijugador*>(host->findPartida(i));
+    host->abandonarPartidaMulti(p);
 }
 
 IFPController::~IFPController() {
-    clearCache();
+    delete jugadoresAUnir;
 }

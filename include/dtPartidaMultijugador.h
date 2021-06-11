@@ -20,11 +20,11 @@ using std::string;
 class DtPartidaMultijugador: public DtPartida {
     private:
         bool transmitidaEnVivo;
-	set<string> jugadoresUnidos;
     public:
-        DtPartidaMultijugador(int,DtFechaHora,float,bool,string,string,bool,set<string>);
-	bool getTransmitidaEnVivo();
-        friend std::ostream & operator << (std::ostream &,DtPartidaMultijugador);
+        DtPartidaMultijugador(int,DtFechaHora,float,bool,bool);
+	    bool getTransmitidaEnVivo();
 };
+
+std::ostream& operator<<(std::ostream&, DtPartidaMultijugador);
 
 #endif

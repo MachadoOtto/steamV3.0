@@ -17,7 +17,7 @@
 Jugador::Jugador(DtJugador dtj):Usuario(dtj.getEmail(),dtj.getContrasenia()) {
     suscripciones = new std::set<Suscripcion *>;
     partidas = new std::map<int,Partida *>;
-    jMultis = new std::set<JugadorMulti *>;
+    partidasUnido = new std::map<int,PartidaMultijugador *>;
     descripcion = dtj.getDescripcion();
     nickname = dtj.getNickname();
 }
@@ -54,21 +54,26 @@ void Jugador::remove(Partida * partida) {
     partidas->erase(partida->getId());
 }
 
-Partida * Jugador::find(int identificador) {
+Partida * Jugador::findPartida(int identificador) {
     return partidas->find(identificador)->second;
 }
 
-void Jugador::add(JugadorMulti * jMulti) {
-    jMultis->insert(jMulti);
+void Jugador::add(PartidaMultijugador * pMulti) {
+    partidasUnido->insert(map<int, PartidaMultijugador*>::value_type(pMulti->getId(), pMulti));
 }
 
-void Jugador::remove(JugadorMulti * jMulti) {
-    jMultis->erase(jMulti);
+void Jugador::remove(PartidaMultijugador * pMulti) {
+    partidasUnido->erase(pMulti->getId());
+}
+
+PartidaMultijugador * Jugador::findPartidaMulti(int id) {
+    return partidasUnido->find(id)->second;
 }
 
 std::set<std::string> * Jugador::obtenerVideojuegosActivos() {
     std::set<std::string> * res = new std::set<std::string>;
-    /* Esto no funciona bien. Revisar que es exactamente lo que se quiere mandar...
+    // Migue y Alexis: No funciona bien, porque estan devolviendo un puntero a DT!!!!
+    /*
     for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
         Suscripcion * sus = *it;
         bool ok = sus->esActiva();
@@ -83,46 +88,53 @@ std::set<std::string> * Jugador::obtenerVideojuegosActivos() {
 
 std::set<DtVideojuego> * Jugador::obtenerDatosVj() {
     std::set<DtVideojuego> * res = new std::set<DtVideojuego>;
-    /* No se utilizan correctamente las funciones de suscripcion. Suscripcion devuelve el objeto videojuego no un dt... 
-    for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
+    // Migue - Alexis: Esto esta bien, obtenerVideojuego() es una operacion de Suscripcion que tiene que devolver un DtVideojuego.
+    //  @GUILLE Ver diagrama de comunicacion! P.D: El que hizo suscripcion no puede devolver un puntero a DtVideojuego!!!!
+/*  for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
         Suscripcion * s = *it;
         bool esAct = s->esActiva();
         if(esAct) {
             DtVideojuego dtvjAct = s->obtenerVideojuego();
             res->insert(dtvjAct);
         }
-    }
-    */
+    } */
     return res;
 }
 
-std::set<DtPartida> * Jugador::obtenerPartidasActivas() {
-    std::set<DtPartida> * res = new std::set<DtPartida>;
-    for(std::map<int,Partida *>::const_iterator it = partidas->cbegin(); it != partidas->cend(); it++) {
-        Partida * p = it->second;
+std::map<DtFechaHora, DtPartida*>* Jugador::obtenerPartidasActivas() {
+    std::map<DtFechaHora, DtPartida*>* res = new std::map<DtFechaHora, DtPartida*>;
+    for(std::map<int,Partida*>::iterator it = partidas->begin(); it != partidas->end(); it++) {
+        Partida* p = it->second;
         bool ok = p->esActiva();
         if(ok) {
-            DtPartida dvj = p->obtenerDatosPartida();
-            res->insert(dvj);
+            DtPartida* dvj = p->obtenerDatosPartida();
+            res->insert(map<DtFechaHora, DtPartida*>::value_type(dvj->getFecha(), dvj));
         }
     }
     return res;
 }
 
-std::set<DtPartidaIndividual> * Jugador::obtenerHistorialPartidas(Videojuego * vj) {
-    std::set<DtPartidaIndividual> * res = new std::set<DtPartidaIndividual>;
-    /* Hay problemas de polimorfismo en la iteracion del map, revisar todo 
-    for(std::map<int,PartidaIndividual *>::const_iterator it = partidas->cbegin(); it != partidas->cend(); it++) {
-        PartidaIndividual * pi = it->second;
-        bool activa = pi->esActiva();
-        //bool esVj = pi->esIgualVideojuego(vj); Esta funcion no es valida. No utilizar.
-	bool esVj = false; //provisorio
-        if(!activa && esVj) {
-            //DtPartidaIndividual datosPartida = pi->getDtPartidaIndividual(); esta funcion noexiste...
-            //res->insert(dtvjAct); dtvj was not declared in this scope
+// Lista en orden cronologico todas las partidas individuales finalizadas del jugador. (No distingue entre videojuegos).
+// Se utiliza un puntero al DtPartida para poder castearlo a DtPartidaIndividual.
+std::map<DtFechaHora, DtPartidaIndividual*>* Jugador::obtenerHistorialPartidas() {
+    std::map<DtFechaHora, DtPartidaIndividual*>* res = new std::map<DtFechaHora, DtPartidaIndividual*>;
+    for (std::map<int, Partida*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
+        if (dynamic_cast<PartidaIndividual*>(it->second)) {
+            if (!(it->second->esActiva())) {
+                DtPartidaIndividual* aInsertar = dynamic_cast<DtPartidaIndividual*>(it->second->obtenerDatosPartida());
+                res->insert(map<DtFechaHora, DtPartidaIndividual*>::value_type(aInsertar->getFecha(), aInsertar));
+            }
         }
     }
-    */
+    return res;
+}
+
+std::map<DtFechaHora, DtPartidaMultijugador*>* Jugador::obtenerPartidasUnido() {
+    std::map<DtFechaHora, DtPartidaMultijugador*>* res = new std::map<DtFechaHora, DtPartidaMultijugador*>;
+    for (std::map<int, PartidaMultijugador*>::iterator it = partidasUnido->begin(); it != partidasUnido->end(); ++it) {
+        DtPartidaMultijugador* aInsertar = dynamic_cast<DtPartidaMultijugador*>(it->second->obtenerDatosPartida());
+        res->insert(map<DtFechaHora, DtPartidaMultijugador*>::value_type(aInsertar->getFecha(), aInsertar));
+    }
     return res;
 }
 
@@ -139,10 +151,9 @@ void Jugador::agregarSuscripcion(Suscripcion * sNueva) {
 }
 
 void Jugador::abandonarPartidaMulti(PartidaMultijugador * p) {
-    partidas->erase(p->getId());
-    JugadorMulti * jm = new JugadorMulti(p->getDtFechaHora());
-    delete p;
-    jMultis->insert(jm);
+    partidasUnido->erase(p->getId());
+    JugadorMulti* jMulti = new JugadorMulti(fechaSistema::fecha);
+    p->abandonar(jMulti);
 }
 
 void Jugador::finPartida(int identificador) {
@@ -162,8 +173,5 @@ void Jugador::removeSus(Suscripcion * s) {
 Jugador::~Jugador() {
     delete suscripciones;
     delete partidas;
-    for(std::set<JugadorMulti *>::iterator it = jMultis->begin(); it != jMultis->end(); it++) {
-        delete *it;
-    }
-    delete jMultis;
+    delete partidasUnido;
 }

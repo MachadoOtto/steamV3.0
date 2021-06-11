@@ -8,11 +8,12 @@
  */
 
 #include "../include/partidaMultijugador.h"
-//ATENCION """"
+
 PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
-        datos.getDuracion(), datos.getActiva(),"","")) {
+        datos.getDuracion(), datos.getActiva())) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
     jugadoresUnidos = new map<string, Jugador*>;
+    jugadoresMultis = new vector<JugadorMulti*>;
 }
     
 bool PartidaMultijugador::getTransmitidaEnVivo(){ return transmitidaEnVivo; }
@@ -24,31 +25,19 @@ void PartidaMultijugador::setJugadoresUnidos(map<string, Jugador*>* jAUnir) {
 map<string, Jugador*>* PartidaMultijugador::getJugadoresUnidos() { 
     return jugadoresUnidos; 
 }
-//CORREGIR
-DtPartida PartidaMultijugador::obtenerDatosPartida() {
-    set<string> w;
-    DtPartidaMultijugador datos(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(),"","",transmitidaEnVivo,w);
+
+DtPartida* PartidaMultijugador::obtenerDatosPartida() {
+    DtPartidaMultijugador* datos = new DtPartidaMultijugador(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(),transmitidaEnVivo);
     return datos;
 }
 
-/* quien es fechaFinal? La fecha del sistema? Creo que el param. no es necesario*/
-void PartidaMultijugador::asignarHoraFinalizacion(DtFechaHora fechaFinal) {
-    /* DEP. CIRCULAR se precisa conocer jugador para calcular la fecha? Error en it->second->getJugadorMulti(this) considerar reestructurar logica
+void PartidaMultijugador::asignarHoraFinalizacion() {
     float sum=0;
-    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it != jugadoresUnidos->end(); ++it) {
-        sum += this->getDtFechaHora().diffHoras(it->second->getJugadorMulti(this)->getFecha());
+    for (vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it != jugadoresMultis->end(); ++it) {
+        sum += this->getDtFechaHora().diffHoras((*it)->getDesconexion());
     }
     sum += this->getDtFechaHora().diffHoras(fechaSistema::fecha); //Correccion para usar fechaSistema
     this->setDuracion(sum);
-    */
-}
-// el param ya no es necesario
-void PartidaMultijugador::finalizarPartida(DtFechaHora horaFinal) {
-    this->setActiva(false);
-    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it != jugadoresUnidos->end(); ++it) {
-        //it->second->abandonarPartidaMulti(this); mismo problema que el anterior sobre req. jugador
-    }
-    this->asignarHoraFinalizacion(fechaSistema::fecha);
 }
 
 void PartidaMultijugador::eliminarAssoc() {
@@ -61,6 +50,14 @@ void PartidaMultijugador::eliminarAssoc() {
     */
 }
 
-PartidaMultijugador::~PartidaMultijugador() { 
+void PartidaMultijugador::abandonar(JugadorMulti* jMulti) {
+    jugadoresMultis->insert(jugadoresMultis->begin(), jMulti);
+}
+
+PartidaMultijugador::~PartidaMultijugador() {
+    for (vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it != jugadoresMultis->end(); ++it) {
+        delete *it;
+    }
+    delete jugadoresMultis;
     delete jugadoresUnidos;
 }

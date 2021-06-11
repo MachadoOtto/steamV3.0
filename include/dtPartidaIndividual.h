@@ -14,10 +14,12 @@
 
 class DtPartidaIndividual: public DtPartida{
     private:
-	int idPartidaAnterior;		
+	    int idPartidaAnterior;
     public:
-        DtPartidaIndividual(int,DtFechaHora,float,bool,string,string,int);
-        friend std::ostream & operator << (std::ostream &,DtPartidaIndividual);
+        DtPartidaIndividual(int,DtFechaHora,float,bool,int);
+        int getIdPartidaAnterior();
 };
+
+std::ostream& operator<<(std::ostream&,DtPartidaIndividual);
 
 #endif

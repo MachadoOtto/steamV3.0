@@ -11,25 +11,25 @@
 #include "../include/dtPartida.h"
 #include "../include/dtFechaHora.h"
 
-DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa,string h,string vj, bool trans,set<string> ss): DtPartida(id,fecha,duracion,activa,h,vj) {
+DtPartidaMultijugador::DtPartidaMultijugador(int id,DtFechaHora fecha,float duracion,bool activa,bool trans): DtPartida(id,fecha,duracion,activa) {
     transmitidaEnVivo = trans;
-    jugadoresUnidos = ss;
 }
 
 bool DtPartidaMultijugador::getTransmitidaEnVivo(){
     return transmitidaEnVivo;
 }
-//falta imprimir los jugadores unidos. videojuego y host y sacar los gets (no existen)
+
 std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
-	/*
-        o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion()
-        << "\n" << "Es activa?: ";
-        if(p.getActiva()) o << "Si";
-        else o << "No";
-        o << "\n" << "Fecha de creacion: " << p.getFecha() << "Es una transmicion en vivo?: ";
-        if(p.getTransmitidaEnVivo()) o << "Si";
-        else o << "No";
-        o << "\n";
-	*/
+    o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion() 
+    << "\n" << "Fecha de creacion: " << p.getFecha() << "\n" << "Es activa?: ";
+    if (p.getActiva()) 
+        o << "Si" << "\n";
+    else 
+        o << "No" << "\n";
+    if(p.getTransmitidaEnVivo()) 
+        o << "Se esta transmitiendo en vivo\n";
+    else 
+        o << "No se ha transmitido en vivo\n";
+    o << "\n";
     return o;
 }

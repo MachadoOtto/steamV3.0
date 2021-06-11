@@ -20,17 +20,16 @@ class Videojuego;
 class DtPartida;
 
 class PartidaIndividual: public Partida {
-private:
-    PartidaIndividual* partidaAnterior;
-public:
-    PartidaIndividual(DtPartidaIndividual);
-    void setPartidaAnterior(PartidaIndividual*);
-    PartidaIndividual* getPartidaAnterior();
-    virtual DtPartida obtenerDatosPartida();
-    virtual void asignarHoraFinalizacion(DtFechaHora);
-    virtual void finalizarPartida(DtFechaHora);
-    virtual void eliminarAssoc();
-    ~PartidaIndividual();
+    private:
+        PartidaIndividual* partidaAnterior;
+    public:
+        PartidaIndividual(DtPartidaIndividual);
+        void setPartidaAnterior(PartidaIndividual*);
+        PartidaIndividual* getPartidaAnterior();
+        virtual DtPartida* obtenerDatosPartida();
+        virtual void asignarHoraFinalizacion();
+        virtual void eliminarAssoc();
+        ~PartidaIndividual();
 };
 
 #endif
