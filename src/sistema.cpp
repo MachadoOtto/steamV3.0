@@ -92,13 +92,13 @@ int Sistema::altaUsuario(){
             break;
 	    }
 	     case 2: {
-           string emp;
-           cout << "Ingrese el nombre de su empresa: " << endl;
-           cin >> emp;
-           IUsuario->ingresarEmpresa(emp);
-	       break;
+            string emp;
+            cout << "Ingrese el nombre de su empresa: " << endl;
+            cin >> emp;
+            IUsuario->ingresarEmpresa(emp);
+	        break;
 	     }
-    }
+   }
    IUsuario->confirmarDarDeAltaUsuario();	
    return 0;
 }
