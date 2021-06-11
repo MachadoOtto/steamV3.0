@@ -62,8 +62,8 @@ int Sistema::cargarDatosPrueba(){
     return 0;
 }
 int Sistema::altaUsuario(){
-   LaFabrica laFabrica = LaFabrica::getInstance();
-   IAltaUsuario IUsuario = laFabrica->getIAltaUsuario();
+   LaFabrica * laFabrica = LaFabrica::getInstance();
+   IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();
 
    string mail, pass;
    cout<< "Ingrese su mail y contraseña: "<< endl;
@@ -76,10 +76,10 @@ int Sistema::altaUsuario(){
    cout << " 1. Jugador" << endl;
    cout << " 2. Desarrollador" << endl;
 
-   controlVar = takeInputRange(1,2);
+   int controlVar = takeInputRange(1,2);
       switch (controlVar) {
-	 case 1: {
-	    string name;
+	     case 1: {
+	        string name;
             cin >> name;
             HandlerUsuario * hc = HandlerUsuario::getInstance();
             while (hc->existeUsuario(name)){
@@ -90,15 +90,15 @@ int Sistema::altaUsuario(){
             string des;
             IUsuario->ingresarDescripcion(des);
             break;
-	}
-
-	case 2: {
+	    }
+	     case 2: {
            string emp;
            cout << "Ingrese el nombre de su empresa: " << endl;
            cin >> emp;
            IUsuario->ingresarEmpresa(emp);
 	       break;
-	}
+	     }
+    }
    IUsuario->confirmarDarDeAltaUsuario();	
    return 0;
 }
@@ -224,13 +224,14 @@ int Sistema::seleccionarEstadistica(){
 }
 
 int Sistema::consultarEstadisticas(){
-  LaFabrica laFabrica = LaFabrica::getInstance();
-  IVideojuego IVideo = laFabrica->getIVideojuego();
-  set<string> vjDes = iVideojuego->obtenerNombreVideojuegosDesarrollados();
+  LaFabrica * laFabrica = LaFabrica::getInstance();
+  IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
+  set<string>  * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
   string vid;
-  cout << "Ingrese el nombre del videojuego al cual quiere consultar sus estadisticas: " endl;
+  cout << "Ingrese el nombre del videojuego al cual quiere consultar sus estadisticas: "<< endl;
   cin >> vid;
-  iVideojuego->obtenerEstadisticas(vid);
+  delete vjDes;
+  IVideo->obtenerEstadisticas(vid);
 
     return 0;
 }
@@ -240,7 +241,86 @@ int Sistema::verInformacionVideojuego(){
 }
 
 int Sistema::suscribirseVideojuego(){
-    return 0;
+   LaFabrica *laFabrica = LaFabrica::getInstance();
+   IVideojuegoController *IVid = laFabrica->getIVideojuegoController();
+   set<vector<DtVideojuego>> * vj = IVid->obtenerSuscripcionesVideojuegos();
+   string vjSus;
+   cout << "Ingrese el nombre del videojuego al que se quiere suscribir: "<<endl;
+   cin >> vjSus;
+   delete vj;
+   IVid->seleccionarVideojuego(vjSus);
+//   if (!Tiene susc activa){
+      cout <<"Seleccione el tipo de suscripcion que desea: "<<endl; 
+      cout <<"1 = 1 mes"<< endl;
+      cout <<"2 = 3 meses"<< endl;
+      cout <<"3 = 1 año"<< endl;
+      cout <<"4 = vitalicia"<< endl;
+      TipoValido sus;
+      int controlVar = takeInputRange(1,4);
+         switch (controlVar){
+            case 1: {
+               sus  = TipoValido::UnMes;
+               break;
+            }
+            case 2: {
+               sus = TipoValido::TresMeses;
+               break;
+            }
+            case 3: {
+               sus = TipoValido::Anio;
+               break;
+            }
+            case 4: {
+               sus = TipoValido::Vitalicia;
+               break;
+            }
+         }
+ //        }
+      cout <<"Ingrese el metodo de pago"<< endl;
+      cout <<"Ingrese 1 si desea pagar con paypal o 2 para usar tarjeta"<<endl;
+      TipoPago pago;
+      int var = takeInputRange(1,2);
+         switch (var){
+            case 1: {
+               pago  = TipoPago::Paypal;
+               break;
+            }
+            case 2: {
+               pago = TipoPago::Tarjeta;
+               break;
+            }
+         }
+      IVid->ingresarSuscripcion(sus, pago);
+      cout <<"¿Desea confirmar su compra?"<< endl;
+      cout <<"Ingrese 1 para confirmar o 0 para cancelar"<<endl;
+      int x = takeInputRange(0,1);
+            switch (x) {
+               case 0:{ 
+                   break;
+               }
+               case 1: {
+                  IVid->confirmarSuscripcion();
+                  break;
+               }
+   }
+  // else {
+     // if (es temporal){ 
+         cout <<"¿Desea cancelar la suscricpion? "<<endl;
+         cout <<"Ingrese 1 si desea cancelar o 0 si no quiere cancelarla "<<endl;
+
+         int y = takeInputRange(0,1);
+            switch (y) {
+               case 0: {
+                   break;
+               }
+               case 1: {
+                  IVid->cancelarSuscripcion();
+                  break;
+               }
+         }
+     // }
+  // }   
+   return 0;
 }
 
 int Sistema::asignarPuntajeVideojuego(){
