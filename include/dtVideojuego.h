@@ -11,9 +11,11 @@
 #ifndef DTvideojuego
 #define DTvideojuego
 
+#include <iostream>
 #include <string>
 #include "dtPrecios.h"
 
+using std::ostream;
 using std::string;
 
 class DtVideojuego{
@@ -29,5 +31,8 @@ public:
     ~DtVideojuego();
     friend bool operator<(const DtVideojuego, const DtVideojuego);  
 };
+
+// Sobrecarga del operador de flujo.
+ostream& operator<<(ostream&, DtVideojuego);
 
 #endif

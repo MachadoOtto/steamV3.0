@@ -237,6 +237,194 @@ int Sistema::cargarCategoria(){
 }
 
 int Sistema::publicarVideojuego(){
+    LaFabrica* factory = LaFabrica::getInstance();
+    IVideojuegoController* interface = factory->getIVideojuegoController();
+    string nombreVj;
+    string descripcion;
+    set<string>* catAgregadas = new set<string>; 
+    cout << "Publicar Videojuego \n \n";
+    cout << "Ingrese el nombre del videojuego a publicar: \n";
+    while (true) {
+        reprintln();
+        getline(cin, nombreVj);
+        if (interface->existeVideojuego(nombreVj)) {
+            reprintln();
+            cout << "Este nombre ya esta registrado en el sistema, porfavor ingrese otro: ";
+        } else {
+            break;
+        }
+    }
+    cout << "Ingrese la descripcion del videojuego a publicar: \n";
+    getline(cin, descripcion);
+    cout << "Ingrese el precio de la suscripcion mensual: \n";
+    float mensual;
+    while (true) {
+        reprintln();
+        if (!(cin >> mensual)) {
+			clinput();
+            cout << "Porfavor, ingrese un precio correcto: ";
+        } else {
+            break;
+        }
+    }
+    clinput();
+    float trimestral;
+    cout << "Ingrese el precio de la suscripcion trimestral: \n";
+    while (true) {
+        reprintln();
+        if (!(cin >> trimestral)) {
+			clinput();
+            cout << "Porfavor, ingrese un precio correcto: ";
+        } else {
+            break;
+        }
+    }
+    clinput();
+    float anual;
+    cout << "Ingrese el precio de la suscripcion anual: \n";
+    while (true) {
+        reprintln();
+        if (!(cin >> anual)) {
+			clinput();
+            cout << "Porfavor, ingrese un precio correcto: ";
+        } else {
+            break;
+        }
+    }
+    clinput();
+    float vitalicia;
+    cout << "Ingrese el precio de la suscripcion vitalicia: \n";
+    while (true) {
+        reprintln();
+        if (!(cin >> vitalicia)) {
+			clinput();
+            cout << "Porfavor, ingrese un precio correcto: ";
+        } else {
+            break;
+        }
+    }
+    clinput();
+    DtVideojuego nuevoVj(nombreVj, descripcion, mensual, trimestral, anual, vitalicia);
+    interface->ingresarDatosVideojuego(nuevoVj);
+    string catAgregar;    
+    bool exCat = false;
+    bool primero = true;
+    set<DtCategoria>* generos = interface->obtenerCategoriasGenero();
+    cout << "Generos presentes en el sistema: \n";
+    for (set<DtCategoria>::iterator it = generos->begin(); it != generos->end(); ++it) {
+        cout << *it << "\n";
+    }
+    cout << "Ingrese un genero a agregar: \n";
+    getline(cin, catAgregar);
+    do {
+        reprintln();
+        for (set<DtCategoria>::iterator it = generos->begin(); it != generos->end(); ++it) {
+            if (catAgregar == it->getNombre()) {
+                exCat = true;
+                break;
+            }
+        }
+        if (!primero) {
+            if (exCat) {
+                interface->seleccionarGenero(catAgregar);
+                catAgregadas->insert(catAgregar);
+                cout << "Se agrego el genero " << catAgregar << " exitosamente.\n";
+            } else {
+                cout << "El genero ingresado no existe en el sistema.\n";
+            }
+            cout << "Ingrese un nuevo genero a agregar, si no quiere agregar mas generos presione 'Enter' sin ingresar nada: \n";
+        } else {
+            primero = false;
+            cout << "El genero ingresado no existe en el sistema. Por favor ingrese otro: \n";
+        }
+        getline(cin, catAgregar);
+    } while (catAgregar != "");
+    primero = true;
+    delete generos;
+    set<DtCategoria>* plataformas = interface->obtenerCategoriasPlataforma();
+    cout << "Plataformas presentes en el sistema: \n";
+    for (set<DtCategoria>::iterator it = plataformas->begin(); it != plataformas->end(); ++it) {
+        cout << *it << "\n";
+    }
+    cout << "Ingrese la plataforma a agregar: \n";
+    getline(cin, catAgregar);
+    do {
+        reprintln();
+        for (set<DtCategoria>::iterator it = plataformas->begin(); it != plataformas->end(); ++it) {
+            if (catAgregar == it->getNombre()) {
+                exCat = true;
+                break;
+            }
+        }
+        if (!primero) {
+            if (exCat) {
+                interface->seleccionarPlataforma(catAgregar);
+                catAgregadas->insert(catAgregar);
+                cout << "Se agrego la plataforma " << catAgregar << " exitosamente.\n";
+            } else {
+                cout << "La plataforma ingresado no existe en el sistema.\n";
+            }
+            cout << "Ingrese una nueva plataforma a agregar, si no quiere agregar mas plataformas presione 'Enter' sin ingresar nada: \n";
+        } else {
+            primero = false;
+            cout << "La plataforma ingresada no existe en el sistema. Por favor ingrese otro: \n";
+        }
+        getline(cin, catAgregar);
+    } while (catAgregar != "");
+    delete plataformas;
+    set<DtCategoria>* categorias = interface->obtenerCategoriasOtro();
+    cout << "Categorias presentes en el sistema: \n";
+    for (set<DtCategoria>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+        cout << *it << "\n";
+    }
+    cout << "Ingrese las categorias a agregar, si no quiere agregar categorias presione 'Enter' sin ingresar nada: \n";
+    getline(cin, catAgregar);
+    while (catAgregar != "") {
+        reprintln();
+        for (set<DtCategoria>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
+            if (catAgregar == it->getNombre()) {
+                exCat = true;
+                break;
+            }
+        }
+        if (exCat) {
+            interface->seleccionarCategoriaOtro(catAgregar);
+            catAgregadas->insert(catAgregar);
+            cout << "Se agrego la categoria " << catAgregar << " exitosamente.\n";
+        } else {
+            cout << "La categoria ingresada no existe en el sistema.\n";
+        }
+        cout << "Ingrese una nueva categoria a agregar, si no quiere agregar mas categorias presione 'Enter' sin ingresar nada: \n";
+        getline(cin, catAgregar);
+    }
+    delete categorias;
+    cout << "Los datos ingresados del videojuego a publicar son: \n";
+    cout << nuevoVj << "\n";
+    cout << "Los generos, plataformas y demas categorias ingresadas son: \n";
+    for (set<string>::iterator it = catAgregadas->begin(); it != catAgregadas->end(); ++it) {
+        cout << "  " << *it << ".\n";
+    }
+    delete catAgregadas;
+    cout << "\n Confirma la publicacion del videojuego? (1. Si, 2. No)";
+    string confirmar;
+    while (true) {
+        getline(cin, confirmar);
+        reprintln();
+        if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "2") 
+                || (confirmar == "No") || (confirmar == "no")) {
+            break;
+        } else {
+            cout << "Porfavor, ingrese una opcion valida: ";
+        }
+    }
+    if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si")) {
+        interface->confirmarPublicacion();
+        cout << "El videojuego se ha publicado en el sistema de manera exitosa. \n";
+    } else {
+        cout << "Se ha cancelado la publicacion del videojuego.\n";
+    }
+    interface->clearCache();
+    pkey();
     return 0;
 }
 int Sistema::eliminarVideojuego(){
@@ -436,10 +624,10 @@ int Sistema::iniciarPartida(){
             }
         }
         if ((esCont == "1") || (esCont == "Si") || (esCont == "si")) {
-            map<DtFechaHora, DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
+            vector<DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
             cout << "Partidas anteriores: \n";
-            for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                cout << it->second;
+            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                cout << *(*it);
             }
             cout << "Ingrese el Id de la partida a continuar: \n";
             while (true) {
@@ -449,12 +637,12 @@ int Sistema::iniciarPartida(){
                 } else {
                     clinput();
                     bool exId = false;
-                    for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                        if (it->second->getId() == idAnterior) {
+                    for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                        if ((*it)->getId() == idAnterior) {
                             exId = true;
                             break;
                         }
-                        cout << it->second;
+                        cout << *(*it);
                     }
                     if (!exId) {
                         reprintln();
@@ -464,8 +652,8 @@ int Sistema::iniciarPartida(){
                     }
                 }
             }
-            for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                delete it->second;
+            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                delete *it;
             }
             delete pAnteriores;
             interface->seleccionarContinuacionPartida(idAnterior);
@@ -534,7 +722,7 @@ int Sistema::iniciarPartida(){
         }
     }
     delete jIngresados;
-    cout << "Confirma el Alta de la Partida? (1. Si, 2. No)";
+    cout << "\n Confirma el Alta de la Partida? (1. Si, 2. No)";
     string confirmar;
     while (true) {
         getline(cin, confirmar);
@@ -558,11 +746,11 @@ int Sistema::iniciarPartida(){
 int Sistema::abandonarPartidaMultijugador(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    map<DtFechaHora, DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
+    vector<DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
     cout << "Abandonar Partida Multijugador \n \n";
     cout << "Partidas multijugador activas a las que se unio: \n";
-    for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        cout << *it->second << "\n";
+    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+        cout << *(*it) << "\n";
     }
     cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
     int id;
@@ -577,8 +765,8 @@ int Sistema::abandonarPartidaMultijugador(){
             }
             clinput();
             bool exId = false;
-            for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-                if (it->second->getId() == id) {
+            for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+                if ((*it)->getId() == id) {
                     exId = true;
                     break;
                 }
@@ -591,8 +779,8 @@ int Sistema::abandonarPartidaMultijugador(){
             }
         }
     }
-    for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        delete it->second;
+    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+        delete *it;
     }
     delete multiActivas;
     if (id != -1) {
@@ -609,16 +797,16 @@ int Sistema::abandonarPartidaMultijugador(){
 int Sistema::finalizarPartida(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    map<DtFechaHora, DtPartida*>* partidasActivas = interface->obtenerPartidasActivas();
+    vector<DtPartida*>* partidasActivas = interface->obtenerPartidasActivas();
     cout << "Finalizar Partida \n \n";
     cout << "Partidas actualmente activas: \n";
     DtPartidaIndividual* pInd;
     DtPartidaMultijugador* pMulti;
-    for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        if ((pInd = dynamic_cast<DtPartidaIndividual*>(it->second))) {
+    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+        if ((pInd = dynamic_cast<DtPartidaIndividual*>(*it))) {
             cout << *pInd << "\n";
         } else {
-            pMulti = dynamic_cast<DtPartidaMultijugador*>(it->second);
+            pMulti = dynamic_cast<DtPartidaMultijugador*>(*it);
             cout << *pMulti << "\n";
         }
     }
@@ -632,8 +820,8 @@ int Sistema::finalizarPartida(){
         } else {
             clinput();
             bool exId = false;
-            for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-                if (it->second->getId() == id) {
+            for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+                if ((*it)->getId() == id) {
                     exId = true;
                     break;
                 }
@@ -646,8 +834,8 @@ int Sistema::finalizarPartida(){
             }
         }
     }
-    for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        delete it->second;
+    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+        delete *it;
     }
     delete partidasActivas;
     if (id != -1) {
@@ -668,5 +856,3 @@ string Sistema::getLoggedUserEmail(){
 Sistema::~Sistema(){
 //Hago las cosas pertinentes para cerrar el sistema... (se libera memoria)
 }
-
-

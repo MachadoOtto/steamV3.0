@@ -13,8 +13,10 @@
 
 #include <set>
 #include <string>
+#include <iostream>
 #include "tipoCategoria.h"
 
+using std::ostream;
 using std::string;
 
 class DtCategoria{
@@ -28,6 +30,9 @@ public:
     string getDescripcion();
     TipoCategoria getTipoCategoria();
     friend bool operator<(const DtCategoria, const DtCategoria);
+
+    // Sobrecarga del operador de flujo.
+    friend ostream& operator<<(ostream&, DtCategoria);
 };
 
 #endif

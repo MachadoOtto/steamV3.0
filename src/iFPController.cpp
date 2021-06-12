@@ -84,11 +84,11 @@ std::set<std::string>* IFPController::obtenerVideojuegosActivos() {
     return host->obtenerVideojuegosActivos();
 }
 
-std::map<DtFechaHora, DtPartida*>* IFPController::obtenerPartidasActivas() {
+std::vector<DtPartida*>* IFPController::obtenerPartidasActivas() {
     return host->obtenerPartidasActivas();
 }
 
-std::map<DtFechaHora, DtPartidaIndividual*>* IFPController::obtenerHistorialPartidas() {
+std::vector<DtPartidaIndividual*>* IFPController::obtenerHistorialPartidas() {
     return host->obtenerHistorialPartidas();
 }
 
@@ -132,7 +132,7 @@ void IFPController::clearCache() {
     jugadoresAUnir->clear();
 }
 
-std::map<DtFechaHora, DtPartidaMultijugador*>* IFPController::obtenerPartidasMultiActivas() {
+std::vector<DtPartidaMultijugador*>* IFPController::obtenerPartidasMultiActivas() {
     return host->obtenerPartidasUnido();
 }
 

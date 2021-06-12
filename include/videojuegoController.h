@@ -67,7 +67,10 @@ public:
     void clearCache();
     
     void setLoggedUser(Usuario *);
-    //setDatos // Equivalente a ingresarDatosvideojuego  
+    //setDatos // Equivalente a ingresarDatosvideojuego
+
+    //Caso de uso PublicarVideojuego:
+    bool existeVideojuego(string);  
     
     //Caso de uso AgregarCategoria:
     set<string>* obtenerNombreCategorias();

@@ -44,6 +44,9 @@ public:
     virtual void cancelarSuscripcion()=0;
     virtual void clearCache()=0;
 
+    //Caso de uso PublicarVideojuego:
+    virtual bool existeVideojuego(string)=0;
+
     //Caso de uso AgregarCategoria:
     virtual set<string> *obtenerNombreCategorias()=0;
     virtual int cargarCategoria(DtCategoria)=0;

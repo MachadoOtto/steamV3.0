@@ -32,3 +32,9 @@ DtVideojuego::~DtVideojuego(){ }
 bool operator<(const DtVideojuego dt1, const DtVideojuego dt2) {
     return (dt1.nombre < dt2.nombre);
 }
+
+ostream& operator<<(ostream& o, DtVideojuego game) {
+    o << "Nombre: " << game.getNombre() << ".\n" << "Descripcion: " << game.getDescripcion()
+        << ".\n" << game.getDtPrecios();
+    return o;
+}

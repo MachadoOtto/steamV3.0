@@ -27,6 +27,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 
 class Jugador: public Usuario {
     private:
@@ -51,9 +52,9 @@ class Jugador: public Usuario {
 
         std::set<std::string> * obtenerVideojuegosActivos();
         std::set<DtVideojuego> * obtenerDatosVj();
-        std::map<DtFechaHora, DtPartida*> * obtenerPartidasActivas();
-        std::map<DtFechaHora, DtPartidaIndividual*> * obtenerHistorialPartidas();
-        std::map<DtFechaHora, DtPartidaMultijugador*> * obtenerPartidasUnido();
+        std::vector<DtPartida*> * obtenerPartidasActivas();
+        std::vector<DtPartidaIndividual*> * obtenerHistorialPartidas();
+        std::vector<DtPartidaMultijugador*> * obtenerPartidasUnido();
         PartidaIndividual * seleccionarContinuacionPartida(int);
         void agregarPartida(Partida *);
         void agregarSuscripcion(Suscripcion *);

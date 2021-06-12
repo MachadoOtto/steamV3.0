@@ -13,6 +13,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 
 class Jugador;
 class Videojuego;
@@ -42,9 +43,9 @@ class IIFPController {
         virtual Jugador* findJugador(std::string) = 0;
 		
         virtual std::set<std::string> * obtenerVideojuegosActivos() = 0;
-        virtual std::map<DtFechaHora, DtPartida*>* obtenerPartidasActivas() = 0;
-        virtual std::map<DtFechaHora, DtPartidaIndividual*>* obtenerHistorialPartidas() = 0;
-        virtual std::map<DtFechaHora, DtPartidaMultijugador*>* obtenerPartidasMultiActivas() = 0;
+        virtual std::vector<DtPartida*>* obtenerPartidasActivas() = 0;
+        virtual std::vector<DtPartidaIndividual*>* obtenerHistorialPartidas() = 0;
+        virtual std::vector<DtPartidaMultijugador*>* obtenerPartidasMultiActivas() = 0;
         virtual std::set<std::string> * obtenerJugadoresSubscriptos() = 0;
         
         virtual void confirmarPartida() = 0;
