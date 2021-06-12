@@ -51,9 +51,9 @@ class IFPController: public IIFPController {
         Jugador* findJugador(std::string);
 
         std::set<std::string> * obtenerVideojuegosActivos();
-        std::map<DtFechaHora, DtPartida*>* obtenerPartidasActivas();
-        std::map<DtFechaHora, DtPartidaIndividual*>* obtenerHistorialPartidas();
-        std::map<DtFechaHora, DtPartidaMultijugador*>* obtenerPartidasMultiActivas();
+        std::vector<DtPartida*>* obtenerPartidasActivas();
+        std::vector<DtPartidaIndividual*>* obtenerHistorialPartidas();
+        std::vector<DtPartidaMultijugador*>* obtenerPartidasMultiActivas();
         std::set<std::string> * obtenerJugadoresSubscriptos();
         
         void confirmarPartida();

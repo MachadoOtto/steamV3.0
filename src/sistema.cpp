@@ -436,10 +436,10 @@ int Sistema::iniciarPartida(){
             }
         }
         if ((esCont == "1") || (esCont == "Si") || (esCont == "si")) {
-            map<DtFechaHora, DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
+            vector<DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
             cout << "Partidas anteriores: \n";
-            for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                cout << it->second;
+            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                cout << *(*it);
             }
             cout << "Ingrese el Id de la partida a continuar: \n";
             while (true) {
@@ -449,12 +449,12 @@ int Sistema::iniciarPartida(){
                 } else {
                     clinput();
                     bool exId = false;
-                    for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                        if (it->second->getId() == idAnterior) {
+                    for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                        if ((*it)->getId() == idAnterior) {
                             exId = true;
                             break;
                         }
-                        cout << it->second;
+                        cout << *(*it);
                     }
                     if (!exId) {
                         reprintln();
@@ -464,8 +464,8 @@ int Sistema::iniciarPartida(){
                     }
                 }
             }
-            for (map<DtFechaHora, DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                delete it->second;
+            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                delete *it;
             }
             delete pAnteriores;
             interface->seleccionarContinuacionPartida(idAnterior);
@@ -558,11 +558,11 @@ int Sistema::iniciarPartida(){
 int Sistema::abandonarPartidaMultijugador(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    map<DtFechaHora, DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
+    vector<DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
     cout << "Abandonar Partida Multijugador \n \n";
     cout << "Partidas multijugador activas a las que se unio: \n";
-    for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        cout << *it->second << "\n";
+    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+        cout << *(*it) << "\n";
     }
     cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
     int id;
@@ -577,8 +577,8 @@ int Sistema::abandonarPartidaMultijugador(){
             }
             clinput();
             bool exId = false;
-            for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-                if (it->second->getId() == id) {
+            for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+                if ((*it)->getId() == id) {
                     exId = true;
                     break;
                 }
@@ -591,8 +591,8 @@ int Sistema::abandonarPartidaMultijugador(){
             }
         }
     }
-    for (map<DtFechaHora, DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        delete it->second;
+    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+        delete *it;
     }
     delete multiActivas;
     if (id != -1) {
@@ -609,16 +609,16 @@ int Sistema::abandonarPartidaMultijugador(){
 int Sistema::finalizarPartida(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    map<DtFechaHora, DtPartida*>* partidasActivas = interface->obtenerPartidasActivas();
+    vector<DtPartida*>* partidasActivas = interface->obtenerPartidasActivas();
     cout << "Finalizar Partida \n \n";
     cout << "Partidas actualmente activas: \n";
     DtPartidaIndividual* pInd;
     DtPartidaMultijugador* pMulti;
-    for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        if ((pInd = dynamic_cast<DtPartidaIndividual*>(it->second))) {
+    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+        if ((pInd = dynamic_cast<DtPartidaIndividual*>(*it))) {
             cout << *pInd << "\n";
         } else {
-            pMulti = dynamic_cast<DtPartidaMultijugador*>(it->second);
+            pMulti = dynamic_cast<DtPartidaMultijugador*>(*it);
             cout << *pMulti << "\n";
         }
     }
@@ -632,8 +632,8 @@ int Sistema::finalizarPartida(){
         } else {
             clinput();
             bool exId = false;
-            for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-                if (it->second->getId() == id) {
+            for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+                if ((*it)->getId() == id) {
                     exId = true;
                     break;
                 }
@@ -646,8 +646,8 @@ int Sistema::finalizarPartida(){
             }
         }
     }
-    for (map<DtFechaHora, DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        delete it->second;
+    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+        delete *it;
     }
     delete partidasActivas;
     if (id != -1) {
