@@ -98,8 +98,8 @@ void Desarrollador::suscribirEstadistica(Estadistica * est) {
 
 std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) {
     std::set<DtEstadistica> * res = new std::set<DtEstadistica>;
-    for(std::set<Estadistica *>::const_iterator it = estadisticas->cbegin(); it != ests->cend(); it++) {
-        Estadistica * es = *it;
+    for(std::map<std::string,Estadistica *>::const_iterator it = estadisticas->cbegin(); it != estadisticas->cend(); it++) {
+        Estadistica * es = it->second;
         DtEstadistica val = es->procesarEstadistica(vj);
         res->insert(val);
     }
