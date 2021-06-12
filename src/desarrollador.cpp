@@ -89,6 +89,7 @@ Videojuego * Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Cat
     } //Seria mas agradable pasar un map y no un set :$
     Videojuego * vj = new Videojuego(gameData,setAMap);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
+    return vj;
 }
 
 void Desarrollador::suscribirEstadistica(Estadistica * est) {
