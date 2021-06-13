@@ -18,6 +18,8 @@
 #include <string>
 #include <set>
 #include <map>
+#include <iterator>
+#include <utility>
 
 Desarrollador::Desarrollador(DtDesarrollador des): Usuario(DtUsuario(des.getEmail(),des.getContrasenia())){
     empresa = des.getEmpresa();
@@ -79,29 +81,28 @@ std::set<std::string> * Desarrollador::getVideojuegosDesarrollados() {
     }
     return res;
 }
-/* pusblishVideogame tiene que retornar el puntero del nuevo videojuego creado... cambiar void a Videojuego* */
-void Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
-    //ALEXIS: BASTA CON CAMBIAR A MAP???
-    /* ERROR: videojuego se construye con un map no con un set... que agradable problema
-    Videojuego * vj = new Videojuego(gameData,categorias);
+
+Videojuego * Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
+    std::map<std::string,Categoria *> * setAMap = new std::map<std::string,Categoria *>;
+    for(std::set<Categoria *>::const_iterator it = categorias->cbegin(); it != categorias->cend(); it++) {
+        setAMap->insert(std::pair<std::string,Categoria *>((*it)->getNombre(),*it));
+    } //Seria mas agradable pasar un map y no un set :$
+    Videojuego * vj = new Videojuego(gameData,setAMap);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
-    */
+    return vj;
 }
 
 void Desarrollador::suscribirEstadistica(Estadistica * est) {
     add(est);
 }
 
-// Esta funcion no hace lo que debiera hacer. Ver caso de uso
 std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) {
     std::set<DtEstadistica> * res = new std::set<DtEstadistica>;
-//    HandlerEstadistica * he = HandlerEstadistica::getInstance();
-//    std::set<Estadistica *> * ests = he->getEstadistica();
- //   for(std::set<Estadistica *>::const_iterator it = ests->cbegin(); it != ests->cend(); it++) {
-  //      Estadistica * es = *it;
-   //     DtEstadistica val = es->procesarEstadistica(vj);
-    //    res->insert(val);
-    //}
+    for(std::map<std::string,Estadistica *>::const_iterator it = estadisticas->cbegin(); it != estadisticas->cend(); it++) {
+        Estadistica * es = it->second;
+        DtEstadistica val = es->procesarEstadistica(vj);
+        res->insert(val);
+    }
     return res;
 }
 
