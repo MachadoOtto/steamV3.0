@@ -125,7 +125,7 @@ void VideojuegoController::setLoggedUser(Usuario * x){
     loggedUser=x;
 }
 
-bool existeVideojuego(string nombreVj) {
+bool VideojuegoController::existeVideojuego(string nombreVj) {
     HandlerCatalogo* hc = HandlerCatalogo::getInstance();
     return (hc->findVideojuego(nombreVj) != NULL);
 }
