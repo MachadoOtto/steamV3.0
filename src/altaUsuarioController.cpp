@@ -68,6 +68,11 @@ int AltaUsuarioController::iniciarSesion(){
     } else return 2;
 }
 
+string AltaUsuarioController::getLoggedName(){
+    HandlerUsuario * hu = HandlerUsuario::getInstance();
+    return hu->getLoggedUser()->getEmail();
+}
+
 AltaUsuarioController::~AltaUsuarioController(){
    this->clearCache();
 }

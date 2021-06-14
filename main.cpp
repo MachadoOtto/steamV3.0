@@ -25,10 +25,9 @@ int menuUsuario(Sistema * sys){
     while (controlVar!=7){
 	cls();
 	ptitle();
-	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl<< endl;
-	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "(Jugador)\n";
+	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
+	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "\n\n";
         cout << "──────────  Menu Jugador ──────────" << endl << endl;
-        cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Suscribirse a videojuego" << endl;
         cout << " 2. Asignar puntaje a videojuego" << endl;
         cout << " 3. Iniciar partida" << endl;
@@ -36,7 +35,7 @@ int menuUsuario(Sistema * sys){
         cout << " 5. Finalizar partida" << endl;
         cout << " 6. Ver informacion de videojuego" << endl;
         cout << " 7. Salir" << endl;
-        cout << "Ingrese una opcion: ";		
+        cout << "Por favor ingrese una opcion: ";		
 	
 	controlVar = takeInputRange(1,7);
         switch (controlVar) {
@@ -75,10 +74,9 @@ int menuDesarrollador(Sistema * sys){
     while (controlVar!=7){
 	cls();
 	ptitle();
-	cout << "Fecha actual del sistema: " << fechaSistema::fecha << endl;
-	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "(Desarrollador)\n";
+	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
+	cout << "Usted ha iniciado sesion como: " << sys->getLoggedUserEmail() << "\n\n";
         cout << "──────────  Menu Desarrollador ──────────" << endl << endl;
-        cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Agregar categoria" << endl;
         cout << " 2. Publicar videojuego" << endl;
         cout << " 3. Eliminar videojuego" << endl;
@@ -86,7 +84,7 @@ int menuDesarrollador(Sistema * sys){
         cout << " 5. Consultar estadisticas" << endl;
         cout << " 6. Ver informacion de videojuego" << endl;
         cout << " 7. Salir" << endl;
-        cout << "Ingrese una opcion: ";		
+        cout << "Por favor ingrese una opcion: ";		
 	
 	controlVar = takeInputRange(1,7);
         switch (controlVar) {
@@ -128,13 +126,12 @@ int main() {
 	ptitle();
 	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl<<endl;
         cout << "──────────  Menu Principal ──────────" << endl << endl;
-        cout << "Por favor seleccione una opcion:" << endl;
         cout << " 1. Alta de Usuario" << endl;
         cout << " 2. Iniciar sesion" << endl;
         cout << " 3. Modificar fecha del sistema" << endl;
         cout << " 4. Cargar datos de prueba" << endl;
         cout << " 5. Salir" << endl;
-        cout << "Ingrese una opcion: ";		
+        cout << "Por favor ingrese una opcion: ";		
 	
 	controlVar = takeInputRange(1,5);
         switch (controlVar) {
