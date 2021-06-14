@@ -72,7 +72,7 @@ void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont)
     pInd->setPartidaAnterior(pCont);
     pInd->setVideojuego(this);
     host->agregarPartida(pInd); 
-    this->partidas->insert(pInd);
+    this->partidas->insert(map<int,Partida*>::value_type(pInd->getId(),pInd));
 }
 
 //--- confirmarPartida Multijugador ---
@@ -83,7 +83,7 @@ void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Ju
     pMulti->setPartidaAnterior(pCont);
     pMulti->setVideojuego(this);
     host->agregarPartida(pMulti); 
-    this->partidas->insert(pMulti);
+    this->partidas->insert(map<int,Partida*>::value_type(pMulti->getId(),pMulti));
 }
 
 void Videojuego::cancelarSuscripcion(Jugador* host) {
