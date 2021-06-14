@@ -67,9 +67,9 @@ class Videojuego {
         float getTotalHorasJugadas();
         float getPuntaje();
         int getTotalJugadoresSuscriptos();
-        Suscripcion* getSuscripciones();
+        set<Suscripcion*>* getSuscripciones();
         map<int,Partida*>* getPartidas();
-        Categoria* getCategorias();
+        map<string,Categoria*>* getCategorias();
 
         //Setters
         void setNombre(string);
