@@ -664,6 +664,7 @@ int Sistema::iniciarPartida(){
     }
     if ((tipoPartida == "1") || (tipoPartida == "Individual") || (tipoPartida == "individual")) {
         tipoPartida = "Individual";
+        interface->setTipo(true);
         cout << "Su Partida es continuacion de una Partida anterior? (1. Si, 2. No) \n";
         string esCont;
         while (true) {
@@ -712,6 +713,7 @@ int Sistema::iniciarPartida(){
         }
     } else {
         tipoPartida = "Multijugador";
+        interface->setTipo(false);
         cout << "Su Partida se transmitira en vivo? (1. Si, 2. No) \n";
         string tEnVivo;
         while (true) {

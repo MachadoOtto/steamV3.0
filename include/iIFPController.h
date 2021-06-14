@@ -27,6 +27,8 @@ class DtFechaHora;
 class IIFPController {
     public:
         virtual void iniciarSesion() = 0;
+        virtual void setTipo(bool) = 0;
+        virtual bool getTipo() = 0;
         virtual void setHost(Jugador*) = 0;
         virtual Jugador* getHost() = 0;
         virtual void seleccionarVideojuego(std::string) = 0;
