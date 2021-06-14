@@ -55,7 +55,8 @@ class Videojuego {
         DtVideojuego obtenerDatosVideojuego();
         set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
-        void confirmarPartida(Jugador*,int,PartidaIndividual*,bool,map<string,Jugador*>*);
+        void confirmarPartida(Jugador*,PartidaIndividual*);
+        void confirmarPartida(Jugador*,bool,map<string,Jugador*>*)
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
