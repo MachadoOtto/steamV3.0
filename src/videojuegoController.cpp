@@ -161,6 +161,32 @@ void VideojuegoController::confirmarAgregarCategoria(){
     hc->addCategoria(c);
 }
 
+void VideojuegoController::obtenerInfoVideojuego() {
+    cout << videoCache->obtenerDatosVideojuego();
+    cout << "\nCategorias: \n";
+	for (map<string,Categoria*>::iterator it = videoCache->getCategorias()->begin(); it != videoCache->getCategorias()->end(); it++) {
+		cout << "\t" << it->first << "\n";
+	}
+    HandlerUsuario* hUsuario = HandlerUsuario::getInstance();
+	map<string,Usuario*>* usuarios = hUsuario->obtenerUsuarios();
+	string empresaCreadora;
+    for (map<string,Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); it++) {
+        Desarrollador* des = dynamic_cast<Desarrollador*>(it->second);
+        if (des != NULL) {
+            set<string>* videojuegosDesarrollados = des->getVideojuegosDesarrollados();
+            if (videojuegosDesarrollados->find(videoCache->getNombre()) != videojuegosDesarrollados->end()) {
+                empresaCreadora = des->getEmpresa();
+                break;                
+            }
+        }
+    }
+	cout << "\nDesarrolladora: " << empresaCreadora;
+    cout << "\nPuntaje promedio: " << videoCache->getPuntaje() << "\n";
+	if (dynamic_cast<Desarrollador*>(hUsuario->getLoggedUser())) {
+		cout << "Total de horas jugadas: " << videoCache->getTotalHorasJugadas() << "\n";
+	}
+}
+
 VideojuegoController * VideojuegoController::getInstance(){
     static VideojuegoController instance;
     return &instance;

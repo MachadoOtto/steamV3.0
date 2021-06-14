@@ -12,6 +12,7 @@
 #define VideojueGoController
 
 #include <string>
+#include <iostream>
 #include <vector>
 
 #include "handlerCatalogo.h"
@@ -25,11 +26,12 @@
 #include "videojuego.h"
 #include "categoria.h"
 #include "dtCategoria.h"
+#include "dtVideojuego.h"
 
 using std::vector;
 using std::string;
+using std::cout;
 
-class DtVideojuego;
 class DtCategoria;
 class DtEstadistica;
 enum class TipoSuscripcion;
@@ -76,6 +78,9 @@ public:
     set<string>* obtenerNombreCategorias();
     int cargarCategoria(DtCategoria);
     void confirmarAgregarCategoria();
+
+    //Caso de uso VerInformacionVideojuego:
+    void obtenerInfoVideojuego();
 
     //Caso de uso PuntuarVideojuego
     set<DtVideojuego>* verVideojuegos();

@@ -541,41 +541,35 @@ int Sistema::consultarEstadisticas(){
 }
 
 int Sistema::verInformacionVideojuego(){
-    HandlerCatalogo* hCatalogo = HandlerCatalogo::getInstance();
-	set<DtVideojuego>* videojuegosSistema = hCatalogo->getDtVideojuegos();
+    LaFabrica* factory = LaFabrica::getInstance();
+    IVideojuegoController* interface = factory->getIVideojuegoController();
+	set<DtVideojuego>* videojuegosSistema = interface->verVideojuegos();
+    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n";
 	for (set<DtVideojuego>::iterator it = videojuegosSistema->begin(); it != videojuegosSistema->end(); it++) {
-		cout << it->getNombre() << endl;
+		cout << "\t" << it->getNombre() << endl;
 	}
-	string vjInfo;
-	cout << "Ingrese el nombre del videjuego a mostrar la informacion: ";
-	cin >> vjInfo;
-	Videojuego* oVjInfo = hCatalogo->findVideojuego(vjInfo);
-	DtVideojuego dtVjInfo(oVjInfo->getNombre(),oVjInfo->getDescripcion(),oVjInfo->getCostoSuscripciones().getMensual(),oVjInfo->getCostoSuscripciones().getTrimestral(),oVjInfo->getCostoSuscripciones().getAnual(),oVjInfo->getCostoSuscripciones().getVitalicia()); 
-	cout << dtVjInfo;
-	cout << "Categorias: " << endl;
-	for (map<string,Categoria*>::iterator it = oVjInfo->getCategorias()->begin(); it != oVjInfo->getCategorias()->end(); it++) {
-		cout << it->first << endl;
-	}
-    HandlerUsuario* hUsuario = HandlerUsuario::getInstance();
-	map<string,Usuario*>* usuarios = hUsuario->obtenerUsuarios();
-	string empresaCreadora;
-    for (map<string,Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); it++) {
-        Desarrollador* des = dynamic_cast<Desarrollador*>(it->second);
-        if (des != NULL) {
-            set<string>* videojuegosDesarrollados = des->getVideojuegosDesarrollados();
-            if (videojuegosDesarrollados->find(vjInfo) != videojuegosDesarrollados->end()) {
-                empresaCreadora = des->getEmpresa();
-                break;                
+    cout << "\nIngrese el nombre del videojuego al que desea ver su informacion: ";
+    bool existeVj = false;
+    string nombreVj;
+    while(!existeVj){
+	    getline(cin,nombreVj);
+	    for(set<DtVideojuego>::iterator it = videojuegosSistema->begin(); ((it!=videojuegosSistema->end()) && (!existeVj)); ++it) {
+	        if(it->getNombre() == nombreVj)
+		        existeVj = true;
+	        else {
+	            reprintln();
+	            cout << "Por favor ingrese una opcion valida: ";
             }
         }
     }
-	cout << "Empresa desarrollador: " << empresaCreadora << endl;
-    cout << "Puntaje promedio: " << oVjInfo->getPuntaje() << endl;
-	Usuario* user = hUsuario->getLoggedUser();
-	Desarrollador* desEnSesion = dynamic_cast<Desarrollador*>(user);
-	if (desEnSesion != NULL) {
-		cout << "Total de horas jugadas: " << oVjInfo->getTotalHorasJugadas();
-	}
+    delete videojuegosSistema;
+    interface->seleccionarVideojuego(nombreVj);
+    cls();
+    ptitle();
+    cout << "\n\nInformacion del videojuego " << nombreVj << "\n";
+    interface->obtenerInfoVideojuego();
+    interface->clearCache();
+    pkey();
     return 0;
 }
 
@@ -680,14 +674,14 @@ int Sistema::asignarPuntajeVideojuego(){
     }
     cout << "\nIngrese el nombre de la partida que desea puntuar: ";
     while(!nok){
-	getline(cin,p);
-	for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
-	    if(it->getNombre() == p)
-		return true;
-	else{
-	    reprintln();
-	    cout << "Por favor ingrese una opcion valida: ";
-	}
+	    getline(cin,p);
+	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
+	        if(it->getNombre() == p)
+		        return true;
+	    else {
+	        reprintln();
+	        cout << "Por favor ingrese una opcion valida: ";
+        }
     }	
     cout << "\n Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
     kp = takeInputRange(1,5);
