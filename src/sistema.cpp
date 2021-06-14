@@ -61,7 +61,7 @@ int Sistema::cargarDatosPrueba(){
     IVideojuegoController * iv = lf->getIVideojuegoController();
     DtUsuario datos("","");
 
-    //USUARIOS 
+    //DESARROLLADORES 
     datos=DtUsuario("ironhide@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarEmpresa("Ironhide Game Studio");
@@ -81,7 +81,8 @@ int Sistema::cargarDatosPrueba(){
     iu->ingresarUsuario(datos);
     iu->ingresarEmpresa("EA Sports");
     iu->confirmarDarDeAltaUsuario();
- 
+
+    //JUGADORES
     datos=DtUsuario("gamer@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarNickname("gamer");
@@ -134,6 +135,46 @@ int Sistema::cargarDatosPrueba(){
 
     iv->cargarCategoria(DtCategoria("E","Su contenido esta dirigido a todo publico",tcat)); 
     iv->confirmarAgregarCategoria();
+
+    //VIDEOJUEGOS
+    iv->clearCache();
+    
+	iu->ingresarUsuario(DtUsuario("ironhide@mail.com","123"));
+	iu->iniciarSesion();
+    iv->ingresarDatosVideojuego(DtVideojuego("KingdomRush", "Rush B manito!", 1, 2, 7, 14));
+    iv->seleccionarPlataforma("PC");
+    iv->seleccionarPlataforma("PS4");
+    iv->seleccionarGenero("Estrategia");
+    iv->seleccionarCategoriaOtro("E");
+    iv->confirmarPublicacion();
+    
+    iu->ingresarUsuario(DtUsuario("epic@mail.com","123"));
+	iu->iniciarSesion();
+    iv->ingresarDatosVideojuego(DtVideojuego("Fortnite", "El Free Fire de los noobs", 3, 8, 30, 60));
+    iv->seleccionarPlataforma("PC");
+    iv->seleccionarPlataforma("PS4");
+    iv->seleccionarPlataforma("Xbox One");
+    iv->seleccionarGenero("Supervivencia");
+    iv->seleccionarCategoriaOtro("Teen");
+    iv->confirmarPublicacion();
+
+    iu->ingresarUsuario(DtUsuario("mojang@mail.com","123"));
+	iu->iniciarSesion();
+    iv->ingresarDatosVideojuego(DtVideojuego("Minecraft", "Creeper goes BRRR", 2, 5, 20, 40));
+    iv->seleccionarPlataforma("PC");
+    iv->seleccionarGenero("Supervivencia");
+    iv->seleccionarCategoriaOtro("E");
+    iv->confirmarPublicacion();
+
+    iu->ingresarUsuario(DtUsuario("ea@mail.com","123"));
+	iu->iniciarSesion();
+    iv->ingresarDatosVideojuego(DtVideojuego("FIFA 21", "Hoy no puedo, tengo futbol VEINTIUNO", 3, 8, 28, 50));
+    iv->seleccionarPlataforma("PC");
+    iv->seleccionarPlataforma("PS4");
+    iv->seleccionarPlataforma("Xbox One");
+    iv->seleccionarGenero("Deporte");
+    iv->seleccionarCategoriaOtro("E");
+    iv->confirmarPublicacion();
 
     //Aqui se realizan la secuencia de operaciones para generar el estado predefinido del sistema
     //solicitado
@@ -480,7 +521,7 @@ int Sistema::publicarVideojuego(){
         cout << "\t" << *it << ".\n";
     }
     delete catAgregadas;
-    cout << "\n Confirma la publicacion del videojuego? (1. Si, 2. No)";
+    cout << "\nConfirma la publicacion del videojuego? (1. Si, 2. No)";
     string confirmar;
     while (true) {
         getline(cin, confirmar);
@@ -506,20 +547,46 @@ int Sistema::eliminarVideojuego(){
     LaFabrica* laFabrica = LaFabrica::getInstance();
 	IVideojuegoController* iVideojuego = laFabrica->getIVideojuegoController();
 	set<string>* vjInactivos = iVideojuego->obtenerNombreVideojuegosInactivos();
+    cout << "Videojuegos publicados:\n";
     for (set<string>::iterator it = vjInactivos->begin(); it != vjInactivos->end(); it++) {
-        cout << *it << endl;
+        cout << "\t" << *it << "\n";
     }
 	string vjEliminar;
 	cout << endl << "Ingrese el nombre del videojuego a eliminar: ";
-	cin >> vjEliminar;
+    bool existeVj = false;
+    while(!existeVj){
+	    getline(cin,vjEliminar);
+	    for(set<string>::iterator it = vjInactivos->begin(); ((it!=vjInactivos->end()) && (!existeVj)); ++it) {
+	        if(*it == vjEliminar)
+		        existeVj = true;
+	        else {
+	            reprintln();
+	            cout << "\nPor favor ingrese un videojuego listado: ";
+            }
+        }
+    }
+    delete vjInactivos;
+    cout << "\nConfirma la eliminacion del videojuego? (1. Si, 2. No)";
 	iVideojuego->seleccionarVideojuego(vjEliminar);
-	bool conf;
-	cout << "Confirmar eliminar Videojuego (1.Si/0.No): ";
-	cin >> conf;
-	if (conf) {
-		iVideojuego->confirmarEliminarVideojuego();
-    }    
+    string confirmar;
+    while (true) {
+        getline(cin, confirmar);
+        reprintln();
+        if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "2") 
+                || (confirmar == "No") || (confirmar == "no") || (confirmar == "yes") || (confirmar == "y") || (confirmar == "n")) {
+            break;
+        } else {
+            cout << "Porfavor, ingrese una opcion valida: ";
+        }
+    }
+    if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "yes") || (confirmar == "y")){
+        iVideojuego->confirmarEliminarVideojuego();
+        cout << "El videojuego '" << vjEliminar << "' se ha eliminado del sistema de manera exitosa. \n";
+    } else {
+        cout << "Se ha cancelado la operacion de eliminar videojuego.\n";
+    }
 	iVideojuego->clearCache();
+    pkey();
     return 0;
 }
 
