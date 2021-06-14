@@ -59,10 +59,9 @@ bool Videojuego::estaActivo() {
         return true;
     }
 }
-//Las partidas individuales no necesariamente tienen que tener una continuacion. Hay que aplicar la el  overloading a la funcion. Es decir un confirmar para individual y otro para multijugador con parametros distintos
+
 //--- ConfirmarPartida Individual ---
-void Videojuego::confirmarPartida(Jugador* host,PartidaIndividual* pCont) {
-    int id = 0;
+void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont) {
     DtFechaHora fechaHoraActual = sistema->getFechaSistema();
     if (pCont != NULL) {
         DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true,id Partida anterior);
@@ -78,16 +77,15 @@ void Videojuego::confirmarPartida(Jugador* host,PartidaIndividual* pCont) {
 }
 
 //--- confirmarPartida Multijugador ---
-void Videojuego::confirmarPartida(Jugador* host,bool enVivo,map<string,Jugador*>* jUnidos) {
-        int id = 0;
-        DtFechaHora fechaHoraActual = sistema->getFechaSistema();
-        DtPartidaMultijugador dtPMulti(id,fechaHoraActual,0,true,enVivo);
-        PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
-        pMulti->setHost(host);
-        pMulti->setPartidaAnterior(pCont);
-        pMulti->setVideojuego(this);
-        host->agregarPartida(pMulti); 
-        this->partidas->insert(pMulti);
+void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Jugador*>* jUnidos) {
+    DtFechaHora fechaHoraActual = sistema->getFechaSistema();
+    DtPartidaMultijugador dtPMulti(id,fechaHoraActual,0,true,enVivo);
+    PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
+    pMulti->setHost(host);
+    pMulti->setPartidaAnterior(pCont);
+    pMulti->setVideojuego(this);
+    host->agregarPartida(pMulti); 
+    this->partidas->insert(pMulti);
 }
 
 void Videojuego::cancelarSuscripcion(Jugador* host) {
