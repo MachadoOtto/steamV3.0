@@ -23,7 +23,7 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): 
     this->descripcion = datos.getDescripcion();
     this->totalHorasJugadas = 0;
     this->puntaje = 0;
-    this->totalJugadoresSuscriptos = 0;
+    this->totalJugadoresSuscriptos = 0; 
     this->categorias = categorias;
     this->partidas = new map<int,Partida*>;
     this->suscripciones = new set<Suscripcion*>;
