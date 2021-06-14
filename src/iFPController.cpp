@@ -108,8 +108,12 @@ void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
 }
 
 void IFPController::confirmarPartida() {
-    vj->confirmarPartida(host, contadorId++, partidaAnterior, enVivo, jugadoresAUnir);
+    if (partidaAnterior == NULL)
+        vj->confirmarPartida(host, contadorId++, partidaAnterior);
+    else
+        vj->confirmarPartida(host, contadorId++, enVivo, jugadoresAUnir);
 }
+
 
 void IFPController::confirmarFinalizarPartida(int identificador) {
     Partida* p = host->findPartida(identificador);
