@@ -62,6 +62,7 @@ bool Videojuego::estaActivo() {
 
 //--- ConfirmarPartida Individual ---
 void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont) {
+    DtPartidaIndividual dtPInd(0,fechaSistema::fecha,0,true,0);
     if (pCont != NULL) {
         DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,pCont->getId());
     } else {
