@@ -62,11 +62,10 @@ bool Videojuego::estaActivo() {
 
 //--- ConfirmarPartida Individual ---
 void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont) {
-    DtFechaHora fechaHoraActual = sistema->getFechaSistema();
     if (pCont != NULL) {
-        DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true,id Partida anterior);
+        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,pCont->getId());
     } else {
-        DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true,NULL);
+        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,-1);
     }
     PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
     pInd->setHost(host);
@@ -78,8 +77,7 @@ void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont)
 
 //--- confirmarPartida Multijugador ---
 void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Jugador*>* jUnidos) {
-    DtFechaHora fechaHoraActual = sistema->getFechaSistema();
-    DtPartidaMultijugador dtPMulti(id,fechaHoraActual,0,true,enVivo);
+    DtPartidaMultijugador dtPMulti(id,fechaSistema::fecha,0,true,enVivo);
     PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
     pMulti->setHost(host);
     pMulti->setPartidaAnterior(pCont);
