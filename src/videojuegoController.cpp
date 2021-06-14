@@ -92,10 +92,9 @@ void VideojuegoController::seleccionarCategoriaOtro(string x){
 
 void VideojuegoController::confirmarPublicacion(){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
-    //HandlerUsuario * hu = HandlerUsuario::getInstance();
-    //Desarrollador * dev = static_cast<Desarrollador *>(hu->getLoggedUser());
-    //Videojuego * v = dev->publishVideogame(datos,categoriaCache); desactivado hasta que se corrija publisVideogame()
-    Videojuego * v =nullptr;
+    HandlerUsuario * hu = HandlerUsuario::getInstance();
+    Desarrollador * dev = static_cast<Desarrollador *>(hu->getLoggedUser());
+    Videojuego * v = dev->publishVideogame(datos,categoriaCache); 
     hc->addVideojuego(v);
     this->clearCache();
 }
@@ -151,7 +150,13 @@ int VideojuegoController::cargarCategoria(DtCategoria c){
 }
 
 void VideojuegoController::confirmarAgregarCategoria(){
-    Categoria * c = new Categoria(catData);
+    Categoria * c = nullptr;
+    if (catData.getTipoCategoria() == TipoCategoria::Plataforma)
+	c = new Plataforma(catData);
+    else if (catData.getTipoCategoria() == TipoCategoria::Genero)
+	c = new Genero(catData);
+    else
+	c = new Categoria(catData);
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     hc->addCategoria(c);
 }

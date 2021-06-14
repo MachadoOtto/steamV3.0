@@ -66,7 +66,7 @@ int Sistema::cargarDatosPrueba(){
     iu->ingresarUsuario(datos);
     iu->ingresarEmpresa("Ironhide Game Studio");
     iu->confirmarDarDeAltaUsuario();
- 
+
     datos=DtUsuario("epic@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarEmpresa("EpicGames");
@@ -91,19 +91,19 @@ int Sistema::cargarDatosPrueba(){
     datos=DtUsuario("ari@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarNickname("ari");
-    iu->ingresarEmpresa("I am ari uwu");
+    iu->ingresarDescripcion("I am ari uwu");
     iu->confirmarDarDeAltaUsuario();
 
     datos=DtUsuario("ibai@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarNickname("ibai");
-    iu->ingresarEmpresa("wtf is ibai");
+    iu->ingresarDescripcion("wtf is ibai");
     iu->confirmarDarDeAltaUsuario();
 
     datos=DtUsuario("camila@mail.com","123");
     iu->ingresarUsuario(datos);
     iu->ingresarNickname("camila");
-    iu->ingresarEmpresa("XxxCamilaxxX");
+    iu->ingresarDescripcion("XxxCamilaxxX");
     iu->confirmarDarDeAltaUsuario();
 
     //CATEGORIAS
@@ -202,6 +202,7 @@ int Sistema::altaUsuario(){
     }
     else
 	cout << "Se ha cancelado la operacion Alta Usuario.\n";	
+    IUsuario->clearCache();
     pkey();
     return 0;
 }
@@ -238,6 +239,7 @@ int Sistema::iniciarSesion(){
 	}
     }
     pkey();
+    h->clearCache();
     if
 	(user_ok == 0) return 2;
     else if
@@ -323,8 +325,8 @@ int Sistema::publicarVideojuego(){
     string nombreVj;
     string descripcion;
     set<string>* catAgregadas = new set<string>; 
-    cout << "Publicar Videojuego \n \n";
-    cout << "Ingrese el nombre del videojuego a publicar: \n";
+    cout << "Ingrese los siguientes datos del videojuego a publicar:\n";
+    cout << "Nombre: ";
     while (true) {
         getline(cin, nombreVj);
         if (interface->existeVideojuego(nombreVj)) {
@@ -334,27 +336,26 @@ int Sistema::publicarVideojuego(){
             break;
         }
     }
-    reprintln();
-    cout << "Ingrese la descripcion del videojuego a publicar: \n";
+    cout << "Descripcion: ";
     getline(cin, descripcion);
-    cout << "Ingrese el precio de la suscripcion mensual: \n";
+    cout << "Ingrese los precios de las suscripciones:\n";
+    cout << "Mensual: ";
     float mensual;
     while (true) {
         if (!(cin >> mensual)) {
-			clinput();
-            reprintln();
-            cout << "Porfavor, ingrese un precio correcto: ";
+	    clinput();
+	    reprintln();
+            cout << "Porfavor, ingrese un precio razonable: ";
         } else {
             break;
         }
     }
     clinput();
-    reprintln();
     float trimestral;
-    cout << "Ingrese el precio de la suscripcion trimestral: \n";
+    cout << "Trimestral: ";
     while (true) {
         if (!(cin >> trimestral)) {
-			clinput();
+	    clinput();
             reprintln();
             cout << "Porfavor, ingrese un precio correcto: ";
         } else {
@@ -362,88 +363,85 @@ int Sistema::publicarVideojuego(){
         }
     }
     clinput();
-    reprintln();
     float anual;
-    cout << "Ingrese el precio de la suscripcion anual: \n";
+    cout << "Anual: ";
     while (true) {
         if (!(cin >> anual)) {
-			clinput();
+	    clinput();
             reprintln();
-            cout << "Porfavor, ingrese un precio correcto: ";
+            cout << "Porfavor, ingrese un precio interpretable: ";
         } else {
             break;
         }
     }
     clinput();
-    reprintln();
     float vitalicia;
-    cout << "Ingrese el precio de la suscripcion vitalicia: \n";
+    cout << "Vitalicia: ";
     while (true) {
         if (!(cin >> vitalicia)) {
-			clinput();
+	    clinput();
             reprintln();
-            cout << "Porfavor, ingrese un precio correcto: ";
+            cout << "Porfavor, ingrese un precio distinguible: ";
         } else {
             break;
         }
     }
     clinput();
-    reprintln();
     DtVideojuego nuevoVj(nombreVj, descripcion, mensual, trimestral, anual, vitalicia);
     interface->ingresarDatosVideojuego(nuevoVj);
     string catAgregar;    
     bool exCat = false;
     set<DtCategoria>* generos = interface->obtenerCategoriasGenero();
-    cout << "Generos presentes en el sistema: \n";
+    cout << "\nGeneros presentes en el sistema: \n\n";
     for (set<DtCategoria>::iterator it = generos->begin(); it != generos->end(); ++it) {
         cout << *it << "\n";
     }
-    cout << "Ingrese un genero a agregar: \n";
+    cout << "Ingrese un genero a agregar (Debe seleccionar al menos uno): ";
     getline(cin, catAgregar);
-    long unsigned int cantCat = catAgregadas->size();
-    while (!((cantCat == catAgregadas->size()) && (catAgregar != ""))) {
-        for (set<DtCategoria>::iterator it = generos->begin(); it != generos->end(); ++it) {
-            if (catAgregar == it->getNombre()) {
+    int cc=0;
+    while ( (cc == 0) || (catAgregar != "")) {
+	exCat=false;
+        for (set<DtCategoria>::iterator it = generos->begin(); it != generos->end() && exCat==false; ++it) {
+            if (catAgregar == it->getNombre()) 
                 exCat = true;
-                break;
-            }
         }
-        reprintln();
-        if (exCat) {
+        if(exCat){
             interface->seleccionarGenero(catAgregar);
             catAgregadas->insert(catAgregar);
-            cout << "Se agrego el genero " << catAgregar << " exitosamente.\n";
+	    cc++;
+	    cout << "Ingrese un nuevo genero (Presione ENTER si no desea agregar mas): ";
         } else {
-            cout << "El genero ingresado no existe en el sistema.\n";
+	    reprintln();
+            cout << "Por favor ingrese un genero perteneciente a la lista: ";
         }
-        cout << "Ingrese un nuevo genero a agregar, si no quiere agregar mas generos presione 'Enter' sin ingresar nada: \n";
         getline(cin, catAgregar);
     }
     delete generos;
     set<DtCategoria>* plataformas = interface->obtenerCategoriasPlataforma();
-    cout << "Plataformas presentes en el sistema: \n";
+    cout << "\nPlataformas presentes en el sistema: \n\n";
     for (set<DtCategoria>::iterator it = plataformas->begin(); it != plataformas->end(); ++it) {
         cout << *it << "\n";
     }
-    cout << "Ingrese la plataforma a agregar: \n";
+    cout << "Ingrese una plataforma a agregar (debe seleccionar al menos una): ";
     getline(cin, catAgregar);
-    cantCat = catAgregadas->size();
-    while (!((cantCat == catAgregadas->size()) && (catAgregar != ""))) {
+    cc = 0;
+    while ( cc == 0 || (catAgregar != "")) {
+	exCat=false;
         for (set<DtCategoria>::iterator it = plataformas->begin(); it != plataformas->end(); ++it) {
             if (catAgregar == it->getNombre()) {
                 exCat = true;
                 break;
             }
         }
-        reprintln();
         if (exCat) {
             interface->seleccionarPlataforma(catAgregar);
             catAgregadas->insert(catAgregar);
-            cout << "Se agrego la plataforma " << catAgregar << " exitosamente.\n";
+	    cc++;
+	    cout << "Ingrese una nueva plataforma (Presione ENTER si no desea agregar mas): ";
         } else {
-            cout << "La plataforma ingresado no existe en el sistema.\n";
+	    reprintln();
+            cout << "Por favor ingrese una plataforma perteneciente a la lista: ";
         }
-        cout << "Ingrese una nueva plataforma a agregar, si no quiere agregar mas plataformas presione 'Enter' sin ingresar nada: \n";
         getline(cin, catAgregar);
     }
     delete plataformas;
@@ -452,9 +450,10 @@ int Sistema::publicarVideojuego(){
     for (set<DtCategoria>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
         cout << *it << "\n";
     }
-    cout << "Ingrese las categorias a agregar, si no quiere agregar categorias presione 'Enter' sin ingresar nada: \n";
+    cout << "Ingrese una categoria (Presione ENTER si no desea agregar mas): ";
     getline(cin, catAgregar);
     while (catAgregar != "") {
+	exCat = false;
         for (set<DtCategoria>::iterator it = categorias->begin(); it != categorias->end(); ++it) {
             if (catAgregar == it->getNombre()) {
                 exCat = true;
@@ -464,19 +463,21 @@ int Sistema::publicarVideojuego(){
         if (exCat) {
             interface->seleccionarCategoriaOtro(catAgregar);
             catAgregadas->insert(catAgregar);
-            cout << "Se agrego la categoria " << catAgregar << " exitosamente.\n";
+	    cout << "Ingrese una nueva categoria (Presione ENTER si no desea agregar mas): ";
         } else {
-            cout << "La categoria ingresada no existe en el sistema.\n";
+	    reprintln();
+            cout << "Por favor ingrese una categoria perteneciente a la lista: ";
         }
-        cout << "Ingrese una nueva categoria a agregar, si no quiere agregar mas categorias presione 'Enter' sin ingresar nada: \n";
         getline(cin, catAgregar);
     }
     delete categorias;
-    cout << "Los datos ingresados del videojuego a publicar son: \n";
+    cls();
+    ptitle();
+    cout << "\n\nLos datos ingresados del videojuego a publicar son: \n\n";
     cout << nuevoVj << "\n";
     cout << "Los generos, plataformas y demas categorias ingresadas son: \n";
     for (set<string>::iterator it = catAgregadas->begin(); it != catAgregadas->end(); ++it) {
-        cout << "  " << *it << ".\n";
+        cout << "\t" << *it << ".\n";
     }
     delete catAgregadas;
     cout << "\n Confirma la publicacion del videojuego? (1. Si, 2. No)";
@@ -485,17 +486,17 @@ int Sistema::publicarVideojuego(){
         getline(cin, confirmar);
         reprintln();
         if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "2") 
-                || (confirmar == "No") || (confirmar == "no")) {
+                || (confirmar == "No") || (confirmar == "no") || (confirmar == "yes") || (confirmar == "y") || (confirmar == "n")) {
             break;
         } else {
             cout << "Porfavor, ingrese una opcion valida: ";
         }
     }
-    if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si")) {
+    if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "yes") || (confirmar == "y")){
         interface->confirmarPublicacion();
         cout << "El videojuego se ha publicado en el sistema de manera exitosa. \n";
     } else {
-        cout << "Se ha cancelado la publicacion del videojuego.\n";
+        cout << "Se ha cancelado la operacion de publicar videojuego.\n";
     }
     interface->clearCache();
     pkey();
@@ -675,7 +676,7 @@ int Sistema::asignarPuntajeVideojuego(){
 	cout << "\t" << i << ". Nombre: " << it->getNombre() << "\n";
 	for(int j=0;j<i/10;j++)
 	    cout << " ";
-	cout << "Descripcion: " << it->getDescripcion() << "\n";
+	cout << "\tDescripcion: " << it->getDescripcion() << "\n";
     }
     cout << "\nIngrese el nombre de la partida que desea puntuar: ";
     while(!nok){
@@ -684,7 +685,6 @@ int Sistema::asignarPuntajeVideojuego(){
 	    if(it->getNombre() == p)
 		return true;
 	else{
-	    clinput();
 	    reprintln();
 	    cout << "Por favor ingrese una opcion valida: ";
 	}

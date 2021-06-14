@@ -37,7 +37,10 @@ set<DtVideojuego>* HandlerCatalogo::getDtVideojuegos(){
 
 Videojuego* HandlerCatalogo::findVideojuego(string nombreVideojuego) {
     map<string, Videojuego*>::iterator it = videojuegos->find(nombreVideojuego);
-    return it->second;
+    if(it == videojuegos->end())
+	return nullptr;
+    else
+	return it->second;
 }
 
 void HandlerCatalogo::addVideojuego(Videojuego* vj) {

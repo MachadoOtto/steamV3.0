@@ -107,13 +107,17 @@ std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) 
 }
 
 
-Desarrollador::~Desarrollador() { //messi?
+Desarrollador::~Desarrollador() { //messi? messi nada. Migue dice que muy mal.
+    /*
     for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {
-        delete it->second;
-    }
+	h->remove(it->second);
+	videojuegosDesarrollados->erase(it);
+    } */
     delete videojuegosDesarrollados;
+    /*
     for(std::map<std::string,Estadistica *>::iterator it = estadisticas->begin(); it != estadisticas->end(); it++) {
         delete it->second;
-    }
+    } */
     delete estadisticas;
 }
+

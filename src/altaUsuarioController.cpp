@@ -37,6 +37,9 @@ void AltaUsuarioController::ingresarDescripcion(string d){
 
 void AltaUsuarioController::clearCache(){
     datos = DtUsuario("",""); 
+    empresa = "";
+    nickname = "";
+    descripcion = "";
 }
 
 void AltaUsuarioController::confirmarDarDeAltaUsuario(){
@@ -52,6 +55,7 @@ void AltaUsuarioController::confirmarDarDeAltaUsuario(){
 	Jugador* usu = new Jugador(dat);
 	hu->addUsuario(usu); 
    }
+   this->clearCache();
 }
 
 int AltaUsuarioController::iniciarSesion(){
@@ -62,10 +66,14 @@ int AltaUsuarioController::iniciarSesion(){
 	if(datos.getContrasenia() == u->getContrasenia()){
 	    hu->setLoggedUser(u);
 	    Jugador * j = dynamic_cast<Jugador *>(u);
-	    if(j == nullptr) return 0;
-	    else return 1;
-	} else return 3;
-    } else return 2;
+	    if(j == nullptr)
+		return 0;
+	    else
+		return 1;
+	} else
+	    return 3;
+    }else 
+	return 2;
 }
 
 string AltaUsuarioController::getLoggedName(){
