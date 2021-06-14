@@ -25,8 +25,8 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): 
     this->puntaje = 0;
     this->totalJugadoresSuscriptos = 0;
     this->categorias = categorias;
-    //Wot. Parece que no se inicializan todas las estructuras de datos partidas,suscrip,categorias 
-    //AGREGARLAS
+    this->partidas = new map<int,Partida*>;
+    this->suscripciones = new set<Suscripcion*>;
     opiniones = new vector<int>;
 }
 
@@ -39,14 +39,9 @@ Videojuego::~Videojuego() {
 }
 
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
-    /*No se puede acceder asi a los miembros ni instanciarlos. ver constructores en los .h
-    DtVideojuego dtVid();
-    dtVid.nombre = this->getNombre();
-    dtVid.descripcion = this->getDescripcion();
-    dtVid.costos = this->getCostoSuscripciones();
+    DtPrecios dtPrecios = this->getCostoSuscripciones();
+    DtVideojuego dtVid(this->nombre,this->descripcion,dtPrecios.getMensual(),dtPrecios.getTrimestral(),dtPrecios.getAnual(),dtPrecios.getVitalicia());
     return dtVid;
-    */
-    return DtVideojuego("","",0,0,0,0);
 }
 
 set<Jugador*>* Videojuego::obtenerJugadoresSuscriptos() {
@@ -145,20 +140,16 @@ int Videojuego::getTotalJugadoresSuscriptos() {
     return this->totalJugadoresSuscriptos;
 }
 
-//Aca habria que retornar un set?
-Suscripcion* Videojuego::getSuscripciones() {
-    //return this->suscripciones;
-    return nullptr; //temporal para que compile
+set<Suscripcion*>* Videojuego::getSuscripciones() {
+    return this->suscripciones;
 }
 
 map<int,Partida*>* Videojuego::getPartidas() {
     return this->partidas;
 }
 
-//Mismop problema que en get suscripciones. retorno nullptr para que compile...
-Categoria* Videojuego::getCategorias() {
-//    return this->categorias;
-    return nullptr;
+map<string,Categoria*>* Videojuego::getCategorias() {
+    return this->categorias;
 }
 
 void Videojuego::addOpinion(int i){
