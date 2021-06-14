@@ -10,7 +10,7 @@
 #include "../include/iFPController.h"
 
 IFPController::IFPController() {
-    bool esIndividual;
+    esIndividual = false;
     contadorId = 0;
     host = NULL;
     vj = NULL;
