@@ -36,6 +36,7 @@ public:
    virtual void clearCache();
    virtual int iniciarSesion();
    virtual void confirmarDarDeAltaUsuario();
+   string getLoggedName();
    ~AltaUsuarioController();
 };
 

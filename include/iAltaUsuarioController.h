@@ -25,7 +25,7 @@ public:
     virtual void ingresarDescripcion(string)=0;
     virtual void confirmarDarDeAltaUsuario()=0;
     virtual int iniciarSesion()=0;
-
+    virtual string getLoggedName()=0;
     virtual void clearCache()=0;
     
     virtual ~IAltaUsuarioController(){}

@@ -56,9 +56,89 @@ int Sistema::modificarFecha(){
 }
 
 int Sistema::cargarDatosPrueba(){
+    LaFabrica * lf = LaFabrica::getInstance();
+    IAltaUsuarioController * iu = lf->getIAltaUsuarioController();
+    IVideojuegoController * iv = lf->getIVideojuegoController();
+    DtUsuario datos("","");
+
+    //USUARIOS 
+    datos=DtUsuario("ironhide@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarEmpresa("Ironhide Game Studio");
+    iu->confirmarDarDeAltaUsuario();
+ 
+    datos=DtUsuario("epic@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarEmpresa("EpicGames");
+    iu->confirmarDarDeAltaUsuario();
+ 
+    datos=DtUsuario("mojang@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarEmpresa("Mojang Studios");
+    iu->confirmarDarDeAltaUsuario();
+ 
+    datos=DtUsuario("ea@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarEmpresa("EA Sports");
+    iu->confirmarDarDeAltaUsuario();
+ 
+    datos=DtUsuario("gamer@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarNickname("gamer");
+    iu->ingresarDescripcion("Usuario gamer, muy gamer.");
+    iu->confirmarDarDeAltaUsuario();
+
+    datos=DtUsuario("ari@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarNickname("ari");
+    iu->ingresarEmpresa("I am ari uwu");
+    iu->confirmarDarDeAltaUsuario();
+
+    datos=DtUsuario("ibai@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarNickname("ibai");
+    iu->ingresarEmpresa("wtf is ibai");
+    iu->confirmarDarDeAltaUsuario();
+
+    datos=DtUsuario("camila@mail.com","123");
+    iu->ingresarUsuario(datos);
+    iu->ingresarNickname("camila");
+    iu->ingresarEmpresa("XxxCamilaxxX");
+    iu->confirmarDarDeAltaUsuario();
+
+    //CATEGORIAS
+    TipoCategoria tcat;
+    tcat = TipoCategoria::Plataforma;
+    iv->cargarCategoria(DtCategoria("PC","PC Mastercace",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("PS4","Gr4t console m8",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Xbox One","cringe",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    tcat = TipoCategoria::Genero;
+    iv->cargarCategoria(DtCategoria("Deporte","balls",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Supervivencia","Juegos tipo maincra",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Estrategia","inb4 400 APM",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    tcat= TipoCategoria::Otro;
+    iv->cargarCategoria(DtCategoria("Teen","Su contenido esta dirigido a jovenes de 13 anos en adelante",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("E","Su contenido esta dirigido a todo publico",tcat)); 
+    iv->confirmarAgregarCategoria();
+
     //Aqui se realizan la secuencia de operaciones para generar el estado predefinido del sistema
     //solicitado
-    
+    cout << "Se han cargado todos los datos de prueba exitosamente.\n";
+    pkey();
     return 0;
 }
 int Sistema::altaUsuario(){
@@ -175,7 +255,7 @@ int Sistema::cargarCategoria(){
     int fin=0,i=0;
     cls();
     ptitle();
-    cout << "El sistema cuenta con las siguientes categorias:\n";
+    cout << "\nEl sistema cuenta con las siguientes categorias:\n";
     set<string>* namae = h->obtenerNombreCategorias();
     for(set<string>::iterator it = namae->begin(); it != namae->end(); ++i,++it)
 	cout << "\t" << i << ". " << *(it) << "\n";
@@ -199,15 +279,16 @@ int Sistema::cargarCategoria(){
 	getline(cin,t);
 	cls();
 	ptitle();
+	cout << endl << endl;
 	if (t=="Genero"||t=="genero"){
 	    tcat = TipoCategoria::Genero;
 	    t = "Genero";
 	}
-	if (t=="Plataforma"||t=="plataforma"){
+	else if (t=="Plataforma"||t=="plataforma"){
 	    tcat = TipoCategoria::Plataforma;
 	    t = "Plataforma";
 	}
-	if (t=="Otro"||t=="otro"){
+	else if (t=="Otro"||t=="otro"){
 	    tcat = TipoCategoria::Otro;
 	    t = "Otro";
 	}
@@ -216,11 +297,11 @@ int Sistema::cargarCategoria(){
 	    cout << "Advertencia: El tipo categoria \""<<t<<"\" no existe como tal en el sistema. Se le ha asignado el tipo \"Otro\".\n";   
 	    t = "Otro";
 	}	
-	cout << "\nLa siguiente categoria sera agregada al sistema:\n\n";
+	cout << "La siguiente categoria sera agregada al sistema:\n\n";
 	cout << "Nombre: "<<n<<endl;
 	cout << "Descripcion: "<<d<<endl;
 	cout << "Tipo: "<<t<<endl<<endl;
-	cout << "Desea confirmar su creacion? (y/n)>";
+	cout << "Desea confirmar su creacion? (y/n) ";
 	conf = boolSelect();
 	if (conf){
 	    h->cargarCategoria(DtCategoria(n,d,tcat));
@@ -904,7 +985,9 @@ int Sistema::finalizarPartida(){
 }
 
 string Sistema::getLoggedUserEmail(){
-    return "lol";
+    LaFabrica * laFabrica = LaFabrica::getInstance();
+    IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();
+    return IUsuario->getLoggedName();
 }
 
 Sistema::~Sistema(){
