@@ -80,7 +80,6 @@ void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Ju
     DtPartidaMultijugador dtPMulti(id,fechaSistema::fecha,0,true,enVivo);
     PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
     pMulti->setHost(host);
-    pMulti->setPartidaAnterior(pCont);
     pMulti->setVideojuego(this);
     host->agregarPartida(pMulti); 
     this->partidas->insert(map<int,Partida*>::value_type(pMulti->getId(),pMulti));
