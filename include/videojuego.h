@@ -26,6 +26,7 @@
 #include "partidaIndividual.h"
 #include "partidaMultijugador.h"
 #include "suscripcion.h"
+#include "../include/fechaSistema.h"
 
 using std::string;
 using std::map;
@@ -55,7 +56,8 @@ class Videojuego {
         DtVideojuego obtenerDatosVideojuego();
         set<Jugador*>* obtenerJugadoresSuscriptos();
         bool estaActivo();
-        void confirmarPartida(Jugador*,int,PartidaIndividual*,bool,map<string,Jugador*>*);
+        void confirmarPartida(Jugador*,int,PartidaIndividual*);
+        void confirmarPartida(Jugador*,int,bool,map<string,Jugador*>*);
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
@@ -67,9 +69,9 @@ class Videojuego {
         float getTotalHorasJugadas();
         float getPuntaje();
         int getTotalJugadoresSuscriptos();
-        Suscripcion* getSuscripciones();
+        set<Suscripcion*>* getSuscripciones();
         map<int,Partida*>* getPartidas();
-        Categoria* getCategorias();
+        map<string,Categoria*>* getCategorias();
 
         //Setters
         void setNombre(string);

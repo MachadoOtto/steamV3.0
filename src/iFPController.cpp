@@ -10,6 +10,7 @@
 #include "../include/iFPController.h"
 
 IFPController::IFPController() {
+    esIndividual = false;
     contadorId = 0;
     host = NULL;
     vj = NULL;
@@ -25,6 +26,14 @@ IFPController * IFPController::getInstance() {
 void IFPController::iniciarSesion() {
     HandlerUsuario* hu = HandlerUsuario::getInstance();
     this->setHost(static_cast<Jugador*>(hu->getLoggedUser()));
+}
+
+void IFPController::setTipo(bool tipo) {
+    esIndividual = tipo;
+}
+
+bool IFPController::getTipo() {
+    return esIndividual;
 }
 
 void IFPController::setHost(Jugador * player) {
@@ -108,8 +117,12 @@ void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
 }
 
 void IFPController::confirmarPartida() {
-    vj->confirmarPartida(host, contadorId++, partidaAnterior, enVivo, jugadoresAUnir);
+    if (esIndividual)
+        vj->confirmarPartida(host, contadorId++, partidaAnterior);
+    else
+        vj->confirmarPartida(host, contadorId++, enVivo, jugadoresAUnir);
 }
+
 
 void IFPController::confirmarFinalizarPartida(int identificador) {
     Partida* p = host->findPartida(identificador);

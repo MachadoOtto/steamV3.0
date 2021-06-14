@@ -25,6 +25,7 @@
 class IFPController: public IIFPController {
     private:
         IFPController();
+        bool esIndividual;
         int contadorId;
         Jugador* host;
         Videojuego* vj;
@@ -35,6 +36,8 @@ class IFPController: public IIFPController {
     public:
         static IFPController* getInstance();
         void iniciarSesion();
+        void setTipo(bool);
+        bool getTipo();
         void setHost(Jugador*);
         Jugador* getHost();
         void seleccionarVideojuego(std::string);

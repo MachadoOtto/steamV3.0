@@ -23,10 +23,10 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): 
     this->descripcion = datos.getDescripcion();
     this->totalHorasJugadas = 0;
     this->puntaje = 0;
-    this->totalJugadoresSuscriptos = 0;
+    this->totalJugadoresSuscriptos = 0; 
     this->categorias = categorias;
-    //Wot. Parece que no se inicializan todas las estructuras de datos partidas,suscrip,categorias 
-    //AGREGARLAS
+    this->partidas = new map<int,Partida*>;
+    this->suscripciones = new set<Suscripcion*>;
     opiniones = new vector<int>;
 }
 
@@ -39,14 +39,9 @@ Videojuego::~Videojuego() {
 }
 
 DtVideojuego Videojuego::obtenerDatosVideojuego() {
-    /*No se puede acceder asi a los miembros ni instanciarlos. ver constructores en los .h
-    DtVideojuego dtVid();
-    dtVid.nombre = this->getNombre();
-    dtVid.descripcion = this->getDescripcion();
-    dtVid.costos = this->getCostoSuscripciones();
+    DtPrecios dtPrecios = this->getCostoSuscripciones();
+    DtVideojuego dtVid(this->nombre,this->descripcion,dtPrecios.getMensual(),dtPrecios.getTrimestral(),dtPrecios.getAnual(),dtPrecios.getVitalicia());
     return dtVid;
-    */
-    return DtVideojuego("","",0,0,0,0);
 }
 
 set<Jugador*>* Videojuego::obtenerJugadoresSuscriptos() {
@@ -64,28 +59,31 @@ bool Videojuego::estaActivo() {
         return true;
     }
 }
-//Las partidas individuales no necesariamente tienen que tener una continuacion. Hay que aplicar la el  overloading a la funcion. Es decir un confirmar para individual y otro para multijugador con parametros distintos
-void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont,bool enVivo,map<string,Jugador*>* jUnidos) {
-   /* if (pCont != NULL) {
-        DtPartidaIndividual dtPInd(id,fechaHoraActual,0,true);
-        PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
-        pInd->setHost(host);
-        pInd->setPartidaAnterior(pCont);
-        pInd->setVideojuego(this);
-        host->agregarPartida(pInd); 
-        this->partidas->insert(pInd);
+
+//--- ConfirmarPartida Individual ---
+void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont) {
+    DtPartidaIndividual dtPInd(0,fechaSistema::fecha,0,true,0);
+    if (pCont != NULL) {
+        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,pCont->getId());
     } else {
-        DtPartidaMultijugador dtPMulti(id,fechaHoraActual,0,true,enVivo);
-        PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti);
-        pMulti->setHost(host);
-        pMulti->setJugadoresUnidos(jUnidos);
-        host->agregarPartida(pMulti);
-        for (map<string,Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
-            it->second->associate(pMulti);
-        }
-        this->partidas->insert(pMulti);
+        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,-1);
     }
-    */
+    PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
+    pInd->setHost(host);
+    pInd->setPartidaAnterior(pCont);
+    pInd->setVideojuego(this);
+    host->agregarPartida(pInd); 
+    this->partidas->insert(map<int,Partida*>::value_type(pInd->getId(),pInd));
+}
+
+//--- confirmarPartida Multijugador ---
+void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Jugador*>* jUnidos) {
+    DtPartidaMultijugador dtPMulti(id,fechaSistema::fecha,0,true,enVivo);
+    PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
+    pMulti->setHost(host);
+    pMulti->setVideojuego(this);
+    host->agregarPartida(pMulti); 
+    this->partidas->insert(map<int,Partida*>::value_type(pMulti->getId(),pMulti));
 }
 
 void Videojuego::cancelarSuscripcion(Jugador* host) {
@@ -145,20 +143,16 @@ int Videojuego::getTotalJugadoresSuscriptos() {
     return this->totalJugadoresSuscriptos;
 }
 
-//Aca habria que retornar un set?
-Suscripcion* Videojuego::getSuscripciones() {
-    //return this->suscripciones;
-    return nullptr; //temporal para que compile
+set<Suscripcion*>* Videojuego::getSuscripciones() {
+    return this->suscripciones;
 }
 
 map<int,Partida*>* Videojuego::getPartidas() {
     return this->partidas;
 }
 
-//Mismop problema que en get suscripciones. retorno nullptr para que compile...
-Categoria* Videojuego::getCategorias() {
-//    return this->categorias;
-    return nullptr;
+map<string,Categoria*>* Videojuego::getCategorias() {
+    return this->categorias;
 }
 
 void Videojuego::addOpinion(int i){

@@ -428,6 +428,23 @@ int Sistema::publicarVideojuego(){
     return 0;
 }
 int Sistema::eliminarVideojuego(){
+    LaFabrica* laFabrica = LaFabrica::getInstance();
+	IVideojuegoController* iVideojuego = laFabrica->getIVideojuegoController();
+	set<string>* vjInactivos = iVideojuego->obtenerNombreVideojuegosInactivos();
+    for (set<string>::iterator it = vjInactivos->begin(); it != vjInactivos->end(); it++) {
+        cout << *it << endl;
+    }
+	string vjEliminar;
+	cout << endl << "Ingrese el nombre del videojuego a eliminar: ";
+	cin >> vjEliminar;
+	iVideojuego->seleccionarVideojuego(vjEliminar);
+	bool conf;
+	cout << "Confirmar eliminar Videojuego (1.Si/0.No): ";
+	cin >> conf;
+	if (conf) {
+		iVideojuego->confirmarEliminarVideojuego();
+    }    
+	iVideojuego->clearCache();
     return 0;
 }
 
@@ -449,6 +466,41 @@ int Sistema::consultarEstadisticas(){
 }
 
 int Sistema::verInformacionVideojuego(){
+    HandlerCatalogo* hCatalogo = HandlerCatalogo::getInstance();
+	set<DtVideojuego>* videojuegosSistema = hCatalogo->getDtVideojuegos();
+	for (set<DtVideojuego>::iterator it = videojuegosSistema->begin(); it != videojuegosSistema->end(); it++) {
+		cout << it->getNombre() << endl;
+	}
+	string vjInfo;
+	cout << "Ingrese el nombre del videjuego a mostrar la informacion: ";
+	cin >> vjInfo;
+	Videojuego* oVjInfo = hCatalogo->findVideojuego(vjInfo);
+	DtVideojuego dtVjInfo(oVjInfo->getNombre(),oVjInfo->getDescripcion(),oVjInfo->getCostoSuscripciones().getMensual(),oVjInfo->getCostoSuscripciones().getTrimestral(),oVjInfo->getCostoSuscripciones().getAnual(),oVjInfo->getCostoSuscripciones().getVitalicia()); 
+	cout << dtVjInfo;
+	cout << "Categorias: " << endl;
+	for (map<string,Categoria*>::iterator it = oVjInfo->getCategorias()->begin(); it != oVjInfo->getCategorias()->end(); it++) {
+		cout << it->first << endl;
+	}
+    HandlerUsuario* hUsuario = HandlerUsuario::getInstance();
+	map<string,Usuario*>* usuarios = hUsuario->obtenerUsuarios();
+	string empresaCreadora;
+    for (map<string,Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); it++) {
+        Desarrollador* des = dynamic_cast<Desarrollador*>(it->second);
+        if (des != NULL) {
+            set<string>* videojuegosDesarrollados = des->getVideojuegosDesarrollados();
+            if (videojuegosDesarrollados->find(vjInfo) != videojuegosDesarrollados->end()) {
+                empresaCreadora = des->getEmpresa();
+                break;                
+            }
+        }
+    }
+	cout << "Empresa desarrollador: " << empresaCreadora << endl;
+    cout << "Puntaje promedio: " << oVjInfo->getPuntaje() << endl;
+	Usuario* user = hUsuario->getLoggedUser();
+	Desarrollador* desEnSesion = dynamic_cast<Desarrollador*>(user);
+	if (desEnSesion != NULL) {
+		cout << "Total de horas jugadas: " << oVjInfo->getTotalHorasJugadas();
+	}
     return 0;
 }
 
@@ -612,6 +664,7 @@ int Sistema::iniciarPartida(){
     }
     if ((tipoPartida == "1") || (tipoPartida == "Individual") || (tipoPartida == "individual")) {
         tipoPartida = "Individual";
+        interface->setTipo(true);
         cout << "Su Partida es continuacion de una Partida anterior? (1. Si, 2. No) \n";
         string esCont;
         while (true) {
@@ -660,6 +713,7 @@ int Sistema::iniciarPartida(){
         }
     } else {
         tipoPartida = "Multijugador";
+        interface->setTipo(false);
         cout << "Su Partida se transmitira en vivo? (1. Si, 2. No) \n";
         string tEnVivo;
         while (true) {
