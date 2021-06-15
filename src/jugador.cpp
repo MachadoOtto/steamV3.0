@@ -70,22 +70,6 @@ PartidaMultijugador * Jugador::findPartidaMulti(int id) {
     return partidasUnido->find(id)->second;
 }
 
-std::set<std::string> * Jugador::obtenerVideojuegosActivos() {
-    std::set<std::string> * res = new std::set<std::string>;
-    // Migue y Alexis: No funciona bien, porque estan devolviendo un puntero a DT!!!!
-    /*
-    for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
-        Suscripcion * sus = *it;
-        bool ok = sus->esActiva();
-        if(ok) {
-            std::string nombreVj = sus->obtenerVideojuego()->getNombre();
-            res->insert(dtvjAct);
-        }
-    }
-    */
-    return res;
-}
-
 std::set<Videojuego *> * Jugador::obtenerDatosVj() {
     std::set<Videojuego*> * res = new std::set<Videojuego*>;
     // Migue - Alexis: Esto esta bien, obtenerVideojuego() es una operacion de Suscripcion que tiene que devolver un DtVideojuego.

@@ -18,7 +18,6 @@
 #include "partidaMultijugador.h"
 #include "partida.h"
 #include "suscripcion.h"
-#include "dtVideojuego.h"
 #include "dtPartida.h"
 #include "dtJugador.h"
 #include "jugadorMulti.h"
@@ -50,7 +49,6 @@ class Jugador: public Usuario {
         void remove(PartidaMultijugador *);
         PartidaMultijugador * findPartidaMulti(int);
 
-        std::set<std::string> * obtenerVideojuegosActivos();
         std::set<Videojuego*> * obtenerDatosVj();
         std::vector<DtPartida*> * obtenerPartidasActivas();
         std::vector<DtPartidaIndividual*> * obtenerHistorialPartidas();
