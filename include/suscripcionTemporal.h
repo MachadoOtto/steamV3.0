@@ -11,6 +11,7 @@
 #ifndef SuScripcionTemporal
 #define SuScripcionTemporal
 
+#include "fechaSistema.h"
 #include "suscripcion.h"
 #include "tipoEstado.h"
 
@@ -22,6 +23,7 @@ private:
     TipoEstado estado;
 public:
     virtual bool esActiva();
+    DtSuscripcion getDt();
     void cancelarSuscripcion();
     SuscripcionTemporal(TipoValido,TipoEstado,DtFechaHora , TipoPago, Jugador *, Videojuego *);
 };

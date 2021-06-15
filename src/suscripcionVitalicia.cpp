@@ -13,6 +13,10 @@
 SuscripcionVitalicia::SuscripcionVitalicia(DtFechaHora dt, TipoPago tp, Jugador *j, Videojuego *v):
     Suscripcion(dt,tp,j,v){}
 
+DtSuscripcion SuscripcionVitalicia::getDt(){
+    return DtSuscripcion(this->getFecha(),pago,TipoValido::Vitalicia,TipoEstado::Activa);
+}
+
 bool SuscripcionVitalicia::esActiva(){
     return true;
 }

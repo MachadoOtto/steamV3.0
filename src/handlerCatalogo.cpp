@@ -17,7 +17,7 @@ HandlerCatalogo* HandlerCatalogo::getInstance() {
     static HandlerCatalogo instancia;
     return &instancia;
 }
-
+/* Guille: Esta funcion no estaba bien hecha (Desde el propio UML) Lo que tiene que retornar es el complemento del set de videojuegos activos que DEBIO haberse pasado por parametro
 set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
     set<DtVideojuego>* dtInactivos = new set<DtVideojuego>;
     for (map<string, Videojuego*>::iterator it = videojuegos->begin(); it != videojuegos->end(); ++it) {
@@ -26,6 +26,15 @@ set<DtVideojuego>* HandlerCatalogo::getDatosInactivos() {
         }
     }
     return dtInactivos;
+}
+*/
+set<Videojuego*> * HandlerCatalogo::getSetComplement(set<Videojuego*> * actv){
+    set<Videojuego*>* x = new set<Videojuego*>;
+    for(map<string,Videojuego*>::iterator it = videojuegos->begin();it!=videojuegos->end();++it){
+	if(actv->find(it->second) == actv->end())
+	    x->insert(it->second);
+    }
+    return x;
 }
 
 set<DtVideojuego>* HandlerCatalogo::getDtVideojuegos(){

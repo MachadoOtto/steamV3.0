@@ -27,7 +27,9 @@ private:
     HandlerCatalogo();
 public:
     static HandlerCatalogo* getInstance();
-    set<DtVideojuego>* getDatosInactivos();
+    //set<DtVideojuego>* getDatosInactivos(); funcion deshabilitada
+    set<Videojuego*>* getSetComplement(set<Videojuego*>*);
+
     set<DtVideojuego>* getDtVideojuegos();
     Videojuego* findVideojuego(string);
     void addVideojuego(Videojuego*);

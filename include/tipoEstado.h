@@ -10,6 +10,6 @@
 #ifndef TIPO_ESTADO
 #define TIPO_ESTADO
 
-enum class TipoEstado {Activa, Inactiva, Cancelada};
+enum class TipoEstado {Activa, Inactiva};
 
 #endif

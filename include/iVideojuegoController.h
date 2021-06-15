@@ -13,6 +13,7 @@
 
 #include <string>
 #include <vector>
+#include "dtSuscripcion.h"
 
 using std::vector;
 using std::string;
@@ -27,7 +28,7 @@ class IVideojuegoController{
 public:
     virtual set<string> *obtenerNombreVideojuegosDesarrollados()=0;
     virtual set<string> *obtenerNombreVideojuegosInactivos()=0;
-    virtual set<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos()=0;
+    virtual vector<set<DtVideojuego>> *obtenerSuscripcionesVideojuegos()=0;
     virtual set<DtCategoria> *obtenerCategoriasGenero()=0;
     virtual set<DtCategoria> *obtenerCategoriasPlataforma()=0;
     virtual set<DtCategoria> *obtenerCategoriasOtro()=0;
@@ -59,6 +60,9 @@ public:
     //Caso de uso PuntuarVideojuego
     virtual set<DtVideojuego>* verVideojuegos()=0;
     virtual void puntuar(string,int)=0;
+
+    //Caso de uso SuscribirseVideojuego
+    virtual DtSuscripcion getSuscripcion(string)=0;
 
     virtual ~IVideojuegoController(){}
 };

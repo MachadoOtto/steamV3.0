@@ -23,7 +23,7 @@ string DtVideojuego::getDescripcion() const{
     return descripcion;
 }
 
-DtPrecios DtVideojuego::getDtPrecios(){
+DtPrecios DtVideojuego::getDtPrecios() const{
     return costos;
 }
 

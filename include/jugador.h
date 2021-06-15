@@ -51,7 +51,7 @@ class Jugador: public Usuario {
         PartidaMultijugador * findPartidaMulti(int);
 
         std::set<std::string> * obtenerVideojuegosActivos();
-        std::set<DtVideojuego> * obtenerDatosVj();
+        std::set<Videojuego*> * obtenerDatosVj();
         std::vector<DtPartida*> * obtenerPartidasActivas();
         std::vector<DtPartidaIndividual*> * obtenerHistorialPartidas();
         std::vector<DtPartidaMultijugador*> * obtenerPartidasUnido();
@@ -63,6 +63,9 @@ class Jugador: public Usuario {
         void associate(Partida *);
         void removeSus(Suscripcion *);
         void remove(Partida *);
+	
+	set<Suscripcion *>* getSuscripciones();
+
         ~Jugador();
 };
 

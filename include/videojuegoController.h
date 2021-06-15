@@ -27,6 +27,8 @@
 #include "categoria.h"
 #include "dtCategoria.h"
 #include "dtVideojuego.h"
+#include "dtSuscripcion.h"
+#include "suscripcion.h"
 
 using std::vector;
 using std::string;
@@ -52,7 +54,7 @@ private:
 public:
     set<string> *obtenerNombreVideojuegosDesarrollados();
     set<string> *obtenerNombreVideojuegosInactivos();
-    set<vector<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
+    vector<set<DtVideojuego>> *obtenerSuscripcionesVideojuegos();
     set<DtCategoria> *obtenerCategoriasGenero();
     set<DtCategoria> *obtenerCategoriasPlataforma();
     set<DtCategoria> *obtenerCategoriasOtro();
@@ -87,6 +89,9 @@ public:
     //Caso de uso PuntuarVideojuego
     set<DtVideojuego>* verVideojuegos();
     void puntuar(string,int);
+
+    //Caso de uso SuscribirseVideojuego
+    DtSuscripcion getSuscripcion(string);
 
     static VideojuegoController * getInstance();
     ~VideojuegoController();

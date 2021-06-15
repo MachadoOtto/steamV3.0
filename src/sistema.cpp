@@ -17,6 +17,7 @@ Sistema::Sistema(){
 //Hago las cosas pertinentes para iniciar el sistema...
 
     //Hay que crear las categorias que ya vienen en el sistema: generos y plataformas
+    //Hay que inicializar las estadisticas
 }
 
 int Sistema::modificarFecha(){
@@ -653,86 +654,137 @@ int Sistema::verInformacionVideojuego(){
 }
 
 int Sistema::suscribirseVideojuego(){
-   LaFabrica *laFabrica = LaFabrica::getInstance();
-   IVideojuegoController *IVid = laFabrica->getIVideojuegoController();
-   set<vector<DtVideojuego>> * vj = IVid->obtenerSuscripcionesVideojuegos();
-   string vjSus;
-   cout << "Ingrese el nombre del videojuego al que se quiere suscribir: "<<endl;
-   cin >> vjSus;
-   delete vj;
-   IVid->seleccionarVideojuego(vjSus);
-//   if (!Tiene susc activa){
-      cout <<"Seleccione el tipo de suscripcion que desea: "<<endl; 
-      cout <<"1 = 1 mes"<< endl;
-      cout <<"2 = 3 meses"<< endl;
-      cout <<"3 = 1 año"<< endl;
-      cout <<"4 = vitalicia"<< endl;
-      TipoValido sus;
-      int controlVar = takeInputRange(1,4);
-         switch (controlVar){
-            case 1: {
-               sus  = TipoValido::UnMes;
-               break;
-            }
-            case 2: {
-               sus = TipoValido::TresMeses;
-               break;
-            }
-            case 3: {
-               sus = TipoValido::Anio;
-               break;
-            }
-            case 4: {
-               sus = TipoValido::Vitalicia;
-               break;
-            }
-         }
- //        }
-      cout <<"Ingrese el metodo de pago"<< endl;
-      cout <<"Ingrese 1 si desea pagar con paypal o 2 para usar tarjeta"<<endl;
-      TipoPago pago;
-      int var = takeInputRange(1,2);
-         switch (var){
-            case 1: {
-               pago  = TipoPago::Paypal;
-               break;
-            }
-            case 2: {
-               pago = TipoPago::Tarjeta;
-               break;
-            }
-         }
-      IVid->ingresarSuscripcion(sus, pago);
-      cout <<"¿Desea confirmar su compra?"<< endl;
-      cout <<"Ingrese 1 para confirmar o 0 para cancelar"<<endl;
-      int x = takeInputRange(0,1);
-            switch (x) {
-               case 0:{ 
-                   break;
-               }
-               case 1: {
-                  IVid->confirmarSuscripcion();
-                  break;
-               }
-   }
-  // else {
-     // if (es temporal){ 
-         cout <<"¿Desea cancelar la suscricpion? "<<endl;
-         cout <<"Ingrese 1 si desea cancelar o 0 si no quiere cancelarla "<<endl;
+    LaFabrica *laFabrica = LaFabrica::getInstance();
+    IVideojuegoController *IVid = laFabrica->getIVideojuegoController();
 
-         int y = takeInputRange(0,1);
-            switch (y) {
-               case 0: {
-                   break;
-               }
-               case 1: {
-                  IVid->cancelarSuscripcion();
-                  break;
-               }
-         }
-     // }
-  // }   
-   return 0;
+    vector<set<DtVideojuego>> * vj = IVid->obtenerSuscripcionesVideojuegos();
+    cout << "Seleccione el juego al que desea contratar una suscripcion o, teniendo una suscripcion activa, desea desuscribirse.\n\n";
+    if((*vj)[0].size() == 0)
+	cout << "Usted no cuenta con ninguna suscripion activa de ningun videojuego.\n";
+    else
+	cout << "Usted tiene suscripciones activas de los siguientes videojuegos:\n";
+    int i = 1;
+    for(set<DtVideojuego>::iterator it = (*vj)[0].begin(); it != (*vj)[0].end(); ++it,++i){
+	cout << i << ". " << it->getNombre() << endl;
+	cout << it->getDtPrecios();
+	TipoValido tipo = IVid->getSuscripcion(it->getNombre()).getTipo();
+	cout << "Periodo de suscripcion: ";
+	if (tipo == TipoValido::UnMes)
+	    cout << "Un mes.\n";
+	if (tipo == TipoValido::TresMeses)
+	    cout << "Tres meses.\n";
+	if (tipo == TipoValido::Anio)
+	    cout << "Un anio.\n";
+	if (tipo == TipoValido::Vitalicia)
+	    cout << "Vitalicia.\n";
+	cout << "Fecha de compra: " << IVid->getSuscripcion(it->getNombre()).getFecha() << endl;
+	cout << endl;
+    }
+    if((*vj)[1].size() == 0)
+	cout << "No hay ningun videojuego al que pueda suscribirse en este momento.\n";
+    else
+	cout << "Usted no tiene suscripciones activas para los siguientes videojuegos:\n";
+    i = 1;
+    for(set<DtVideojuego>::iterator it = (*vj)[1].begin(); it != (*vj)[1].end(); ++it,++i){
+	cout << i << ". " << it->getNombre() << endl;
+        cout << it->getDtPrecios();
+    }
+
+    cout << "\nIngrese el nombre del videojuego (presione ENTER para salir): ";
+    string vjSus;
+    int vjSel = 0; 
+    while(!vjSel){
+	getline(cin,vjSus);
+	if(vjSus == ""){
+	    cout << "Se ha cancelado la operacion Suscribirse a videojuego.\n";
+	    delete vj;
+	    pkey();
+	    return 0;
+	}
+	for(set<DtVideojuego>::iterator it = (*vj)[0].begin(); it != (*vj)[0].end() && !vjSel; ++it)
+	    if(it->getNombre() == vjSus){
+		if(IVid->getSuscripcion(it->getNombre()).getTipo() == TipoValido::Vitalicia)
+		    vjSel=3;
+		else
+		    vjSel = 1;
+	    }
+	for(set<DtVideojuego>::iterator it = (*vj)[1].begin(); it != (*vj)[1].end() && !vjSel; ++it)
+	    if(it->getNombre() == vjSus)
+		vjSel = 2;
+	if(!vjSel){
+	    reprintln();
+	    cout << "Por favor ingrese un videojuego valido: ";
+	}
+	if(vjSel==3){
+	    reprintln();
+	    cout << "Error: Usted cuenta con una suscripccion vitalicia para el videojuego seleccionado, por lo que no es posible desuscribirse.\n";
+	    delete vj;
+	    pkey();
+	    return 0;
+	}
+    } 
+    IVid->seleccionarVideojuego(vjSus);
+    delete vj;
+
+    if(vjSel==2){ //Suscripcion inactiva
+	cout <<"\nTipos de suscripcion disponibles: "<<endl; 
+	cout <<"1. 1 mes"<< endl;
+	cout <<"2. 3 meses"<< endl;
+	cout <<"3. 1 año"<< endl;
+	cout <<"4. vitalicia"<< endl;
+	cout <<"Por favor seleccione el tipo de suscripcion que desea adquirir: "; 
+	TipoValido sus;
+	int ts = takeInputRange(1,4);
+	if(ts==1)
+	    sus = TipoValido::UnMes;
+	if(ts==2)
+	    sus = TipoValido::TresMeses;
+	if(ts==3)
+	    sus = TipoValido::Anio;
+	if(ts==4)
+	    sus = TipoValido::Vitalicia;
+
+	cout <<"Metodos de pago disponibles: "<< endl;
+	cout << "1. PayPal\n";
+	cout << "2. Tarjeta\n";
+	cout <<"Por favor seleccione un metodo de pago: ";
+	TipoPago pago;
+	int var = takeInputRange(1,2);
+	if(var==1)
+	    pago = TipoPago::Paypal;
+	if(var==2)
+	    pago = TipoPago::Tarjeta;
+	IVid->ingresarSuscripcion(sus, pago);
+	DtSuscripcion info(fechaSistema::fecha,pago,sus,TipoEstado::Activa);
+	cout << "Detalles de compra: \n";
+	cout << "Videojuego: " << vjSus << endl;
+	cout << info;
+	reprintln();
+	cout << " \n";
+	cout <<"Desea confirmar su compra (y/n)? ";
+	bool f = boolSelect();
+	if(f){
+	    IVid->confirmarSuscripcion();
+	    cout << "Se ha realizado la compra exitosamente. Gracias por utilizar STEAM v3.0\n";
+	}
+	else
+	    cout << "Se ha cancelado la compra.\n";
+    }
+    else{ //Suscripcion Activa temporal
+	DtSuscripcion old = IVid->getSuscripcion(vjSus);
+	cout << "\nInformacion suscripcion del videojuego " << vjSus <<":\n";
+	cout << old;
+	cout <<"¿Desea cancelar su suscricpion (y/n) ? ";
+	bool f = boolSelect();
+	if(f){
+	    IVid->cancelarSuscripcion();
+	    cout << "Se ha cancelado su suscripcion exitosamente.\n";
+	}
+	else
+	    cout << "Se ha cancelado la operacion para desuscribrise.\n";
+    }
+    pkey();
+    return 0;
 }
 
 int Sistema::asignarPuntajeVideojuego(){

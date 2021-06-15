@@ -14,12 +14,12 @@ static Desarrollador * getDev(){
     HandlerUsuario * hu = HandlerUsuario::getInstance();
     return static_cast<Desarrollador *>(hu->getLoggedUser());
 }
-/* Funcion desactivada, era usada por los bloques comentados
+
 static Jugador * getPlayer(){
     HandlerUsuario * hu = HandlerUsuario::getInstance();
     return static_cast<Jugador *>(hu->getLoggedUser());
 }
-*/
+
 
 set<string> * VideojuegoController::obtenerNombreVideojuegosDesarrollados(){
     Desarrollador * dev = getDev();
@@ -32,12 +32,44 @@ set<string> * VideojuegoController::obtenerNombreVideojuegosInactivos(){
     this->setLoggedUser(dev);
     return dev->getVjSinPartidasActivas();
 }
-//Esta funcion no hace lo que tenia que hacer de devolver las activas por un lado y las inactivas por otro...
-set<vector<DtVideojuego>> * VideojuegoController::obtenerSuscripcionesVideojuegos(){
-   /* Jugador * player = getPlayer();
+
+vector<set<DtVideojuego>> * VideojuegoController::obtenerSuscripcionesVideojuegos(){
+    Jugador * player = getPlayer();
+    HandlerCatalogo * cc = HandlerCatalogo::getInstance();
+    vector<set<DtVideojuego>> * x = new vector<set<DtVideojuego>>;
     this->setLoggedUser(player);
-    return player->obtenerDatosVj(); */
-    return nullptr;
+
+    set<Videojuego*> * t = player->obtenerDatosVj();
+    set<Videojuego*> * aBorrar = new set<Videojuego*>;
+    set<DtVideojuego> * da = new set<DtVideojuego>;
+    bool activeV=false;
+    for(set<Videojuego*>::iterator it=t->begin(); it != t->end();++it){
+	for(set<Suscripcion*>::iterator it2=(*it)->getSuscripciones()->begin(); it2 != (*it)->getSuscripciones()->end();++it2){
+	    if((*it2)->getComprador() == player && (*it2)->esActiva()){
+		da->insert((*it)->obtenerDatosVideojuego());
+		activeV = true;
+	    }
+	}
+	if(!activeV)
+	    aBorrar->insert(*it); 
+	activeV = false;
+    }
+    for(set<Videojuego*>::iterator it=aBorrar->begin(); it != aBorrar->end();++it){
+	t->erase(*it);
+    }
+    delete aBorrar;
+    x->push_back(*da);
+    delete da; 
+    set<Videojuego*>* tc = cc->getSetComplement(t);
+    da = new set<DtVideojuego>;
+    for(set<Videojuego*>::iterator it=tc->begin(); it != tc->end();++it){
+	da->insert((*it)->obtenerDatosVideojuego());
+    }
+    x->push_back(*da);
+    delete da;
+    delete t;
+    delete tc;
+    return x;
 }
 
 set<DtCategoria> * VideojuegoController::obtenerCategoriasGenero(){
@@ -206,6 +238,15 @@ void VideojuegoController::puntuar(string v,int p){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
     Videojuego * vp = hc->findVideojuego(v);
     vp->addOpinion(p);
+}
+
+DtSuscripcion VideojuegoController::getSuscripcion(string v){
+    set<Suscripcion*> * s = getPlayer()->getSuscripciones();
+    for(set<Suscripcion*>::iterator it = s->begin(); it != s->end(); ++it){
+	if ((*it)->obtenerVideojuego()->getNombre() == v && (*it)->esActiva())
+	    return (*it)->getDt();
+    }
+    return DtSuscripcion(DtFechaHora(0,0,0,0,0),TipoPago::Tarjeta,TipoValido::Vitalicia,TipoEstado::Inactiva); 
 }
 
 VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",TipoCategoria::Otro){

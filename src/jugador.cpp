@@ -86,18 +86,24 @@ std::set<std::string> * Jugador::obtenerVideojuegosActivos() {
     return res;
 }
 
-std::set<DtVideojuego> * Jugador::obtenerDatosVj() {
-    std::set<DtVideojuego> * res = new std::set<DtVideojuego>;
+std::set<Videojuego *> * Jugador::obtenerDatosVj() {
+    std::set<Videojuego*> * res = new std::set<Videojuego*>;
     // Migue - Alexis: Esto esta bien, obtenerVideojuego() es una operacion de Suscripcion que tiene que devolver un DtVideojuego.
     //  @GUILLE Ver diagrama de comunicacion! P.D: El que hizo suscripcion no puede devolver un puntero a DtVideojuego!!!!
-/*  for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
+    //  Guille: El diagrama esta mal. Se generan dependencias circulares. Me veo forzado a redise(niar) todo
+    /*for(std::set<Suscripcion *>::const_iterator it = suscripciones->cbegin(); it != suscripciones->cend(); it++) {
         Suscripcion * s = *it;
-        bool esAct = s->esActiva();
+	bool esAct = s->esActiva();
         if(esAct) {
             DtVideojuego dtvjAct = s->obtenerVideojuego();
             res->insert(dtvjAct);
         }
     } */
+    Videojuego * v = nullptr;
+    for (std::set<Suscripcion *>::iterator it = suscripciones->begin(); it != suscripciones->end(); it++){
+	v=(*it)->obtenerVideojuego();
+	res->insert(v);
+    }	 
     return res;
 }
 
@@ -186,6 +192,10 @@ void Jugador::associate(Partida * pNueva) {
 void Jugador::removeSus(Suscripcion * s) {
     suscripciones->erase(s);
     delete s;
+}
+
+set<Suscripcion *>* Jugador::getSuscripciones(){
+    return suscripciones;
 }
 
 Jugador::~Jugador() {
