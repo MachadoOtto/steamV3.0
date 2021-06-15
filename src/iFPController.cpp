@@ -90,7 +90,14 @@ Jugador * IFPController::findJugador(std::string nombreJugador) {
 }
 
 std::set<std::string>* IFPController::obtenerVideojuegosActivos() {
-    return host->obtenerVideojuegosActivos();
+    std::set<std::string>* res = new std::set<std::string>;
+    std::set<Suscripcion*>* suscripciones = host->getSuscripciones();
+    for(std::set<Suscripcion *>::iterator it = suscripciones->begin(); it != suscripciones->end(); it++) {
+        if((*it)->esActiva()) {
+            res->insert((*it)->obtenerVideojuego()->getNombre());
+        }
+    }  
+    return res;
 }
 
 std::vector<DtPartida*>* IFPController::obtenerPartidasActivas() {
@@ -107,6 +114,7 @@ std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {
     for (std::set<Jugador*>::iterator it = jSus->begin(); it != jSus->end(); ++it) {
         res->insert((*it)->getNickname());
     }
+    delete jSus;
     return res;
 }
 

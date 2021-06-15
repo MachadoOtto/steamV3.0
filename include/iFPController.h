@@ -17,6 +17,7 @@
 #include "partidaIndividual.h"
 #include "handlerCatalogo.h"
 #include "handlerUsuario.h"
+#include "suscripcion.h"
 
 #include <string>
 #include <set>

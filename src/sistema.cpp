@@ -248,6 +248,7 @@ int Sistema::altaUsuario(){
     pkey();
     return 0;
 }
+
 int Sistema::iniciarSesion(){
     LaFabrica * f = LaFabrica::getInstance();
     IAltaUsuarioController * h = f->getIAltaUsuarioController();
@@ -552,6 +553,7 @@ int Sistema::publicarVideojuego(){
     pkey();
     return 0;
 }
+
 int Sistema::eliminarVideojuego(){
     LaFabrica* laFabrica = LaFabrica::getInstance();
 	IVideojuegoController* iVideojuego = laFabrica->getIVideojuegoController();
@@ -826,170 +828,185 @@ int Sistema::asignarPuntajeVideojuego(){
 int Sistema::iniciarPartida(){
     int idAnterior = -1;
     bool enVivo;
+    string confirmar = "2";
     set<string>* jIngresados = new set<string>;
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
     interface->iniciarSesion();
     set<string>* vjActivos = interface->obtenerVideojuegosActivos();
-    cout << "Iniciar Partida \n \n";
-    cout << "Videojuegos con suscripcion activa: \n";
-    for (set<string>::iterator it = vjActivos->begin(); it != vjActivos->end(); ++it) {
-        cout << *it << "\n";
-    }
-    cout << "Ingrese el nombre del Videojuego al que quiera iniciar su Partida: ";
-    string nombreVj;
-    while (true) {
-        getline(cin, nombreVj);
-        if (vjActivos->find(nombreVj) == vjActivos->end()) {
-            reprintln();
-            cout << "Porfavor, ingrese un Videojuego valido: ";
-        } else {
-            break;
+    if (!(vjActivos->empty())) {
+        cout << "Videojuegos con suscripcion activa: \n";
+        for (set<string>::iterator it = vjActivos->begin(); it != vjActivos->end(); ++it) {
+            cout << "\t" << *it << "\n";
         }
-    }
-    delete vjActivos;
-    interface->seleccionarVideojuego(nombreVj);
-    cout << "Seleccione un tipo de Partida a iniciar: (1. Individual, 2. Multijugador) \n";
-    string tipoPartida;
-    while (true) {
-        getline(cin, tipoPartida);
-        if ((tipoPartida == "1") || (tipoPartida == "2") || (tipoPartida == "Individual") || (tipoPartida == "Multijugador") 
-                || (tipoPartida == "individual") || (tipoPartida == "multijugador")) {
-            break;
-        } else {
-            reprintln();
-            cout << "Porfavor, ingrese una opcion valida: ";
-        }
-    }
-    if ((tipoPartida == "1") || (tipoPartida == "Individual") || (tipoPartida == "individual")) {
-        tipoPartida = "Individual";
-        interface->setTipo(true);
-        cout << "Su Partida es continuacion de una Partida anterior? (1. Si, 2. No) \n";
-        string esCont;
+        cout << "\nIngrese el nombre de un videojuego de la lista: ";
+        string nombreVj;
         while (true) {
-            getline(cin, esCont);
-            if ((esCont == "1") || (esCont == "Si") || (esCont == "si") || (esCont == "2") || (esCont == "No") || (esCont == "no")) {
+            getline(cin, nombreVj);
+            if (vjActivos->find(nombreVj) == vjActivos->end()) {
+                reprintln();
+                cout << "Porfavor, ingrese un Videojuego valido: ";
+            } else {
+                break;
+            }
+        }
+        interface->seleccionarVideojuego(nombreVj);
+        cout << "Tipo de Partida a iniciar (1. Individual, 2. Multijugador): ";
+        string tipoPartida;
+        while (true) {
+            getline(cin, tipoPartida);
+            if ((tipoPartida == "1") || (tipoPartida == "2") || (tipoPartida == "Individual") || (tipoPartida == "Multijugador") 
+                    || (tipoPartida == "individual") || (tipoPartida == "multijugador")) {
                 break;
             } else {
                 reprintln();
                 cout << "Porfavor, ingrese una opcion valida: ";
             }
         }
-        if ((esCont == "1") || (esCont == "Si") || (esCont == "si")) {
-            vector<DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
-            cout << "Partidas anteriores: \n";
-            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                cout << *(*it);
-            }
-            cout << "Ingrese el Id de la partida a continuar: \n";
+        if ((tipoPartida == "1") || (tipoPartida == "Individual") || (tipoPartida == "individual")) {
+            tipoPartida = "Individual";
+            interface->setTipo(true);
+            cout << "Su Partida es continuacion de una Partida anterior? (1. Si, 2. No): ";
+            string esCont;
             while (true) {
-                if (!(cin >> idAnterior)) {
-			        clinput();
-                    cout << "Porfavor, ingrese un Id correcto: ";
+                getline(cin, esCont);
+                if ((esCont == "1") || (esCont == "Si") || (esCont == "si") || (esCont == "2") || (esCont == "No") || (esCont == "no")) {
+                    break;
                 } else {
-                    clinput();
-                    bool exId = false;
+                    reprintln();
+                    cout << "Porfavor, ingrese una opcion valida: ";
+                }
+            }
+            if ((esCont == "1") || (esCont == "Si") || (esCont == "si")) {
+                vector<DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
+                if (!(pAnteriores->empty())) {
+                    cout << "Partidas anteriores: \n";
                     for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                        if ((*it)->getId() == idAnterior) {
-                            exId = true;
-                            break;
-                        }
                         cout << *(*it);
                     }
-                    if (!exId) {
-                        reprintln();
-                        cout << "Porfavor, ingrese un Id correcto: ";
+                    cout << "Ingrese el Id de la partida a continuar: \n";
+                    while (true) {
+                        if (!(cin >> idAnterior)) {
+                            clinput();
+                            cout << "Porfavor, ingrese un Id correcto: ";
+                        } else {
+                            clinput();
+                            bool exId = false;
+                            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                                if ((*it)->getId() == idAnterior) {
+                                    exId = true;
+                                    break;
+                                }
+                                cout << *(*it);
+                            }
+                            if (!exId) {
+                                reprintln();
+                                cout << "Porfavor, ingrese un Id correcto: ";
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                    interface->seleccionarContinuacionPartida(idAnterior);
+                    for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                        delete *it;
+                    }
+                } else {
+                    cout << "\nERROR: Usted no tiene partidas finalizadas. Su partida no sera continuacion de otra.\n";
+                }
+                delete pAnteriores;
+            }
+        } else {
+            tipoPartida = "Multijugador";
+            interface->setTipo(false);
+            cout << "Su Partida se transmitira en vivo? (1. Si, 2. No): ";
+            string tEnVivo;
+            while (true) {
+                getline(cin, tEnVivo);
+                if ((tEnVivo == "1") || (tEnVivo == "Si") || (tEnVivo == "si") || (tEnVivo == "2") || (tEnVivo == "No") || (tEnVivo == "no")) {
+                    if ((tEnVivo == "1") || (tEnVivo == "Si") || (tEnVivo == "si")) {
+                        enVivo = true;
                     } else {
+                        enVivo = false;
+                    }
+                    break;
+                } else {
+                    reprintln();
+                    cout << "Porfavor, ingrese una opcion valida: ";
+                }
+            }
+            interface->setEnVivo(enVivo);
+            set<string>* jugadoresSus = interface->obtenerJugadoresSubscriptos();
+            if (!(jugadoresSus->empty())) {
+                cout << "Los Jugadores con suscripciones activas actualmente son: \n";
+                for (set<string>::iterator it = jugadoresSus->begin(); it != jugadoresSus->end(); ++it) {
+                    cout << "\t" << *it << "\n";
+                }
+                cout << "\nIngrese los nicknames de los jugadores que se unen a su partida. Para finalizar presione ENTER: ";
+                string nick;
+                getline(cin, nick);
+                while (nick != "") {
+                    if (jugadoresSus->find(nick) == jugadoresSus->end()) {
+                        reprintln();
+                        cout << "Porfavor, ingrese un nickname valido. Presione ENTER para finalizar: ";
+                    } else {
+                        jIngresados->insert(nick);
+                        interface->aniadirJugadorPartida(nick);
+                        cout << "Jugador unido con exito. Ingrese otro o presione ENTER para finalizar: ";
                         break;
                     }
+                    getline(cin, nick);
                 }
+            } else {
+                cout << "\nERROR: No hay jugadores que puedan unirse en el sistema. La partida se iniciara sin jugadores unidos.\n";
             }
-            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                delete *it;
-            }
-            delete pAnteriores;
-            interface->seleccionarContinuacionPartida(idAnterior);
+            delete jugadoresSus;
         }
-    } else {
-        tipoPartida = "Multijugador";
-        interface->setTipo(false);
-        cout << "Su Partida se transmitira en vivo? (1. Si, 2. No) \n";
-        string tEnVivo;
-        while (true) {
-            getline(cin, tEnVivo);
-            if ((tEnVivo == "1") || (tEnVivo == "Si") || (tEnVivo == "si") || (tEnVivo == "2") || (tEnVivo == "No") || (tEnVivo == "no")) {
-                if ((tEnVivo == "1") || (tEnVivo == "Si") || (tEnVivo == "si")) {
-                    enVivo = true;
-                } else {
-                    enVivo = false;
+        cout << "\nLos datos ingresados de la partida a Iniciar son: \n";
+        cout << "  Videojuego: " << nombreVj << "\n";
+        cout << "  Tipo Partida: " << tipoPartida << "\n";
+        if (tipoPartida == "Individual") {
+            if (idAnterior != -1) {
+                cout << "  Id Partida anterior: " << idAnterior << "\n";
+            } else {
+                cout << "  No es continuacion de otra Partida \n";
+            }
+        } else {
+            if (enVivo) {
+                cout << "  La partida se transmite en vivo. \n";
+            } else {
+                cout << "  La partida no esta siendo transmitida. \n";
+            }
+            if (!(jIngresados->empty())) {
+                cout << "  Los jugadores unidos son: \n";
+                for (set<string>::iterator it = jIngresados->begin(); it != jIngresados->end(); ++it) {
+                    cout << "    " << *it << "\n";
                 }
+            } else {
+                cout << "  No hay jugadores unidos.\n";
+            }
+        }
+        cout << "\n Confirma el Alta de la Partida? (1. Si, 2. No): ";
+        while (true) {
+            getline(cin, confirmar);
+            if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "2") 
+                    || (confirmar == "No") || (confirmar == "no")) {
                 break;
             } else {
                 reprintln();
                 cout << "Porfavor, ingrese una opcion valida: ";
             }
         }
-        interface->setEnVivo(enVivo);
-        cout << "Los Jugadores con suscripciones activas actualmente son: \n";
-        set<string>* jugadoresSus = interface->obtenerJugadoresSubscriptos();
-        for (set<string>::iterator it = jugadoresSus->begin(); it != jugadoresSus->end(); ++it) {
-            cout << *it << "\n";
-        }
-        cout << "Ingrese los nicknames de los jugadores a agregar a la partida. Para finalizar ingrese '0' : \n";
-        string nick;
-        while (true) {
-            getline(cin, nick);
-            if (nick != "0") {
-                if (jugadoresSus->find(nick) == jugadoresSus->end()) {
-                    reprintln();
-                    cout << "Porfavor, ingrese un Nickname valido: ";
-                } else {
-                    jIngresados->insert(nick);
-                    interface->aniadirJugadorPartida(nick);
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
-        delete jugadoresSus;
-    }
-    cout << "Los datos ingresados de la partida a Iniciar son: \n";
-    cout << "  Videojuego: " << nombreVj << "\n";
-    cout << "  Tipo Partida: " << tipoPartida << "\n";
-    if (tipoPartida == "Individual") {
-        if (idAnterior != -1) {
-            cout << "  Id Partida anterior: " << idAnterior << "\n";
-        } else {
-            cout << "  No es continuacion de otra Partida \n";
-        }
     } else {
-        if (enVivo) {
-            cout << "  La partida se transmite en vivo. \n";
-        } else {
-            cout << "  La partida no esta siendo transmitida. \n";
-        }
-        cout << "  Los jugadores unidos son: \n";
-        for (set<string>::iterator it = jIngresados->begin(); it != jIngresados->end(); ++it) {
-            cout << "    " << *it << "\n";
-        }
+        cout << "\nERROR: Usted no presenta una suscripcion activa a ningun videojuego.";
     }
     delete jIngresados;
-    cout << "\n Confirma el Alta de la Partida? (1. Si, 2. No)";
-    string confirmar;
-    while (true) {
-        getline(cin, confirmar);
-        if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si") || (confirmar == "2") 
-                || (confirmar == "No") || (confirmar == "no")) {
-            break;
-        } else {
-            reprintln();
-            cout << "Porfavor, ingrese una opcion valida: ";
-        }
-    }
+    delete vjActivos;
     if ((confirmar == "1") || (confirmar == "Si") || (confirmar == "si")) {
         interface->confirmarPartida();
-        cout << "La partida se ha dado de alta exitosamente. \n";
+        cout << "\nLa partida se ha dado de alta exitosamente. \n";
+    } else {
+        cout << "\nSe ha cancelado el inicio de partida.\n";
     }
     interface->clearCache();
     pkey();
