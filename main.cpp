@@ -22,7 +22,7 @@ using namespace std;
 
 int menuUsuario(Sistema * sys){
     int controlVar=0;    
-    while (controlVar!=7){
+    while (controlVar!=8){
 	cls();
 	ptitle();
 	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
@@ -75,7 +75,7 @@ int menuUsuario(Sistema * sys){
 
 int menuDesarrollador(Sistema * sys){
     int controlVar=0;    
-    while (controlVar!=7){
+    while (controlVar!=8){
 	cls();
 	ptitle();
 	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
@@ -91,7 +91,7 @@ int menuDesarrollador(Sistema * sys){
         cout << " 8. Salir" << endl;
         cout << "Por favor ingrese una opcion: ";		
 	
-	controlVar = takeInputRange(1,7);
+	controlVar = takeInputRange(1,8);
         switch (controlVar) {
 	    case 1:{
 		sys->cargarCategoria();
