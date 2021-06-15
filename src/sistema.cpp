@@ -613,7 +613,7 @@ int Sistema::seleccionarEstadistica(){
     //Desarrollador ingresa los nombres de las que esta interesado
     HandlerUsuario * hUsuario = HandlerUsuario::getInstance();
     Usuario * user = hUsuario->getLoggedUser();
-    Desarrollador * des = dynamic_cast<Desarrollador>(user);
+    Desarrollador * des = dynamic_cast<Desarrollador*>(user);
     cout << "Ingrese los nombres de las estadisticas que quiere (0. Para no seleccionar ninguna) : " << endl << endl;
     bool loopControl = 1;
     int i = 1;
@@ -622,8 +622,8 @@ int Sistema::seleccionarEstadistica(){
         cout << "Nombre estadistica "<< i <<": ";
         cin >> nombreEstadistica;
         cout << endl;
-        if (estadisticas->findEstadistica(nombreEstadistica) != NULL) {
-            des->add(estadisticas->findEstadistica(nombreEstadistica));
+        if (hEstadistica->findEstadistica(nombreEstadistica) != NULL) {
+            des->add(hEstadistica->findEstadistica(nombreEstadistica));
             i++;
         } else {
             cout << "ERROR: Ingrese un nombre de estadistica valido porfavor" << endl << endl;
