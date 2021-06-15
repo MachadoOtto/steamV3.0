@@ -626,7 +626,7 @@ int Sistema::seleccionarEstadistica(){
             des->add(hEstadistica->findEstadistica(nombreEstadistica));
             i++;
         } else {
-            cout << "ERROR: Ingrese un nombre de estadistica valido porfavor" << endl << endl;
+            cout << "ERROR: Ingrese un nombre de estadistica valido porfavor" << endl << endl; 
         }
         cout << "Desea seleccionar otra estadistica? (1.Si/0.No): ";
         cin >> loopControl;
