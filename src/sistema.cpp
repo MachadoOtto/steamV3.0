@@ -603,6 +603,11 @@ int Sistema::eliminarVideojuego(){
 }
 
 int Sistema::seleccionarEstadistica(){
+    //Listar nombre y descripcion de cada estadistica presente en el sistema
+    
+    //Desarrollador ingresa los nombres de las que esta interesado
+
+    //Entre las estadísticas que estarán disponibles se encuentra una para obtener la cantidad total de horas jugadas de un videojuego, y otra para obtener la cantidad total de   jugadores que se han suscrito a cierto videojuego.
     return 0;
 }
 
