@@ -604,9 +604,20 @@ int Sistema::eliminarVideojuego(){
 
 int Sistema::seleccionarEstadistica(){
     //Listar nombre y descripcion de cada estadistica presente en el sistema
-    
+    HandlerEstadistica * hEstadistica = HandlerEstadistica::getInstance();
+    set<Estadistica*>* estadisticas = hEstadistica->getEstadisticas();
+    for (set<Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
+        cout << "Nombre: " << it->getNombre() << endl;
+        cout << "Descripcion: " << it->getDescripcion() << endl << endl;
+    }
     //Desarrollador ingresa los nombres de las que esta interesado
-
+    cout << "Ingrese los nombres de las estadisticas que quiere (0. Para no seleccionar ninguna) : " << endl << endl;
+    bool loopControl = 1;
+    int i = 1;
+    while (loopControl != 0) {
+        cout << "Nombre estadistica "<< i <<": ";
+        
+    }
     //Entre las estadísticas que estarán disponibles se encuentra una para obtener la cantidad total de horas jugadas de un videojuego, y otra para obtener la cantidad total de   jugadores que se han suscrito a cierto videojuego.
     return 0;
 }
