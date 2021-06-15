@@ -277,6 +277,9 @@ int Sistema::iniciarSesion(){
                 cout << "ERROR: El usuario no existe en el sistema.\n";
             }
             if(user_ok == 3){
+		reprintln();
+		reprintln();
+		reprintln();
                 cout << "ERROR: La contrasenia ingresada no es correcta.\n";
             }    
             if(user_ok == 0 || user_ok == 1){
@@ -798,26 +801,26 @@ int Sistema::asignarPuntajeVideojuego(){
 
     LaFabrica * f = LaFabrica::getInstance();
     IVideojuegoController * h = f->getIVideojuegoController();
-    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n";
+    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n\n";
     set<DtVideojuego>* namae = h->verVideojuegos();
     for(set<DtVideojuego>::iterator it = namae->begin(); it != namae->end(); i++,it++){
-	cout << "\t" << i << ". Nombre: " << it->getNombre() << "\n";
+	cout << i << ". Nombre: " << it->getNombre() << "\n";
 	for(int j=0;j<i/10;j++)
 	    cout << " ";
-	cout << "\tDescripcion: " << it->getDescripcion() << "\n";
+	cout << "\tDescripcion: " << it->getDescripcion() << "\n\n"; 
     }
-    cout << "\nIngrese el nombre de la partida que desea puntuar: ";
+    cout << "Ingrese el nombre de la partida que desea puntuar: ";
     while(!nok){
 	    getline(cin,p);
 	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
 	        if(it->getNombre() == p)
-		        return true;
-	    else {
+		        nok = true;
+	    if(!nok){
 	        reprintln();
 	        cout << "Por favor ingrese una opcion valida: ";
         }
     }	
-    cout << "\n Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
+    cout << "Ingrese su puntuacion para el videojuego \""<<p<<"\" (1-5): ";
     kp = takeInputRange(1,5);
     h->puntuar(p,kp);   	
     cout << "Se ha registrado su puntaje exitosamente\n";
