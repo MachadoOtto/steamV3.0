@@ -27,6 +27,7 @@ public:
     virtual int iniciarSesion()=0;
     virtual string getLoggedName()=0;
     virtual void clearCache()=0;
+    virtual bool hayUsuarios()=0; // Devuelve true si existen usuarios registrados en el sistema.
     
     virtual ~IAltaUsuarioController(){}
 };

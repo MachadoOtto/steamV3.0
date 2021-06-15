@@ -39,6 +39,8 @@ void HandlerUsuario::addUsuario(Usuario* user) {
 
 map<string, Usuario*>* HandlerUsuario::obtenerUsuarios() { return usuarios; }
 
+bool HandlerUsuario::hayUsuarios() { return (!(usuarios->empty())); }
+
 HandlerUsuario::~HandlerUsuario() {
     for (map<string, Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); ++it) {
         delete it->second;

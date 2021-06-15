@@ -43,7 +43,6 @@ void AltaUsuarioController::clearCache(){
 }
 
 void AltaUsuarioController::confirmarDarDeAltaUsuario(){
-     
    HandlerUsuario * hu = HandlerUsuario::getInstance();
    if(!empresa.empty()){
 	DtDesarrollador dat(empresa, datos.getEmail(), datos.getContrasenia());
@@ -56,6 +55,11 @@ void AltaUsuarioController::confirmarDarDeAltaUsuario(){
 	hu->addUsuario(usu); 
    }
    this->clearCache();
+}
+
+bool AltaUsuarioController::hayUsuarios() {
+    HandlerUsuario* hu = HandlerUsuario::getInstance();
+    return (hu->hayUsuarios());
 }
 
 int AltaUsuarioController::iniciarSesion(){
@@ -84,4 +88,3 @@ string AltaUsuarioController::getLoggedName(){
 AltaUsuarioController::~AltaUsuarioController(){
    this->clearCache();
 }
-

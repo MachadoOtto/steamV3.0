@@ -46,6 +46,7 @@ private:
     Usuario * loggedUser; //Player OR Dev. depening on usecase under execution.
     Videojuego * videoCache;
     set<Categoria*> * categoriaCache;
+    bool exGen, exPlatf;
 
     VideojuegoController();
 public:
@@ -73,6 +74,7 @@ public:
 
     //Caso de uso PublicarVideojuego:
     bool existeVideojuego(string);  
+    bool hayCategorias();
     
     //Caso de uso AgregarCategoria:
     set<string>* obtenerNombreCategorias();
