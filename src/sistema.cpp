@@ -555,7 +555,7 @@ int Sistema::eliminarVideojuego(){
     LaFabrica* laFabrica = LaFabrica::getInstance();
 	IVideojuegoController* iVideojuego = laFabrica->getIVideojuegoController();
 	set<string>* vjInactivos = iVideojuego->obtenerNombreVideojuegosInactivos();
-    if (vjInactivos->empty()) {
+    if (!(vjInactivos->empty())) {
         cout << "Videojuegos publicados:\n";
         for (set<string>::iterator it = vjInactivos->begin(); it != vjInactivos->end(); it++) {
             cout << "\t" << *it << "\n";
