@@ -13,11 +13,10 @@
 #include <string>
 #include <map>
 #include "usuario.h"
+#include "jugador.h"
 
 using std::string;
 using std::map;
-
-class Jugador;
 
 class HandlerUsuario {
 private:
@@ -30,6 +29,7 @@ public:
     void setLoggedUser(Usuario*);
     Usuario* getLoggedUser();
     Usuario* findUsuario(string);
+    Jugador* findJugador(string);
     bool existeUsuario(string);
     void addUsuario(Usuario*);
     bool hayUsuarios();

@@ -29,6 +29,22 @@ Usuario* HandlerUsuario::findUsuario(string emailUsuario) {
     return usuarios->find(emailUsuario)->second;
 }
 
+Jugador* HandlerUsuario::findJugador(string nick) {
+    bool siga = true;
+    Jugador* player = NULL;
+    for (map<string,Usuario*>::iterator it = usuarios->begin(); (it != usuarios->end()) && siga; ++it) {
+        if ((player = dynamic_cast<Jugador*>(it->second))) {
+            if (player->getNickname() == nick) {
+                siga = false;
+            }
+        }
+    }
+    if (siga) {
+        player = NULL;
+    }
+    return player;
+}
+
 bool HandlerUsuario::existeUsuario(string emailUsuario) {
     return (usuarios->find(emailUsuario) != usuarios->end());
 }
