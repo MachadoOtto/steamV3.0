@@ -248,6 +248,7 @@ int Sistema::altaUsuario(){
     pkey();
     return 0;
 }
+
 int Sistema::iniciarSesion(){
     LaFabrica * f = LaFabrica::getInstance();
     IAltaUsuarioController * h = f->getIAltaUsuarioController();
@@ -552,6 +553,7 @@ int Sistema::publicarVideojuego(){
     pkey();
     return 0;
 }
+
 int Sistema::eliminarVideojuego(){
     LaFabrica* laFabrica = LaFabrica::getInstance();
 	IVideojuegoController* iVideojuego = laFabrica->getIVideojuegoController();

@@ -23,12 +23,14 @@ DtFechaHora::DtFechaHora() {
 }
 
 DtFechaHora::DtFechaHora(int a, int m, int d, int hh, int mm) {
-    anio = a;
-    mes = m;
+    if( (d < 1 || d > 31) || (m < 1 || m > 12) || (a < 1900) ) {
+	    throw std::invalid_argument("La fecha indicada no es valida");
+    }
     dia = d;
+    mes = m;
+    anio = a;
     hora = hh;
     min = mm;
-  //  segundo = ss;
 }
 
 int DtFechaHora::getAnio() { return anio; }
@@ -44,21 +46,10 @@ int DtFechaHora::getMinuto() { return min; }
 //int DtFechaHora::getSegundo() { return segundo; }
 
 float DtFechaHora::diffHoras(DtFechaHora fFinal) {
-    struct tm inicial = {0};
-    inicial.tm_hour = hora;   
-    inicial.tm_min = min; 
-    //inicial.tm_sec = segundo;
-    inicial.tm_year = anio - 1900; 
-    inicial.tm_mon = mes - 1; 
-    inicial.tm_mday = dia;
-    struct tm ultimo = {0};
-    ultimo.tm_hour = fFinal.hora;   
-    ultimo.tm_min = fFinal.min; 
-    //ultimo.tm_sec = fFinal.segundo;
-    ultimo.tm_year = fFinal.anio - 1900; 
-    ultimo.tm_mon = fFinal.mes - 1; 
-    ultimo.tm_mday = fFinal.dia;
-    return difftime(mktime(&ultimo), mktime(&inicial)) / 60 / 60;
+    int min1, min2 = 0;
+    min1 = min + (hora + (dia + (mes + (anio) * 12) * 31) * 24) * 60;
+    min2 = fFinal.min + (fFinal.hora + (fFinal.dia + (fFinal.mes + (fFinal.anio) * 12) * 31) * 24) * 60;
+    return ((min1 - min2) / 60);
 }
 
 bool operator<(const DtFechaHora dt1, const DtFechaHora dt2) {
