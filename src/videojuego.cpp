@@ -53,11 +53,11 @@ set<Jugador*>* Videojuego::obtenerJugadoresSuscriptos() {
 }
 
 bool Videojuego::estaActivo() {
-    if (this->partidas->empty()) {
-        return false;
-    } else {
-        return true;
+    bool esActivo = false;
+    for (map<int,Partida*>::iterator it = partidas->begin(); ((it != partidas->end()) && (!esActivo)); ++it) {
+        esActivo = it->second->esActiva();
     }
+    return esActivo;
 }
 
 //--- ConfirmarPartida Individual ---

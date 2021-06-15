@@ -61,7 +61,7 @@ Estadistica * Desarrollador::findEstadistica(std::string est) {
 
 std::set<std::string> * Desarrollador::getVjSinPartidasActivas() {
     std::set<std::string> * res = new std::set<std::string>;
-    for(std::map<std::string,Videojuego *>::const_iterator it = videojuegosDesarrollados->cbegin(); it != videojuegosDesarrollados->cend(); it++) {
+    for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {
         Videojuego * vj = it->second;
         bool activo = vj->estaActivo();
         if(!activo) {

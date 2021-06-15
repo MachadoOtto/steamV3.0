@@ -46,6 +46,7 @@ public:
 
     //Caso de uso PublicarVideojuego:
     virtual bool existeVideojuego(string)=0;
+    virtual bool hayCategorias()=0;
 
     //Caso de uso AgregarCategoria:
     virtual set<string> *obtenerNombreCategorias()=0;

@@ -32,6 +32,7 @@ public:
     Usuario* findUsuario(string);
     bool existeUsuario(string);
     void addUsuario(Usuario*);
+    bool hayUsuarios();
     map<string, Usuario*>* obtenerUsuarios();
     ~HandlerUsuario();
 };

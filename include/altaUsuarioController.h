@@ -29,13 +29,15 @@ private:
 
 public:
    static AltaUsuarioController * getInstance();
-   virtual void ingresarUsuario(DtUsuario);
-   virtual void ingresarEmpresa(string);
-   virtual void ingresarNickname(string);
-   virtual void ingresarDescripcion(string);
-   virtual void clearCache();
-   virtual int iniciarSesion();
-   virtual void confirmarDarDeAltaUsuario();
+   void ingresarUsuario(DtUsuario);
+   void ingresarEmpresa(string);
+   void ingresarNickname(string);
+   void ingresarDescripcion(string);
+   void clearCache();
+   int iniciarSesion();
+   void confirmarDarDeAltaUsuario();
+   bool hayUsuarios();
+
    string getLoggedName();
    ~AltaUsuarioController();
 };

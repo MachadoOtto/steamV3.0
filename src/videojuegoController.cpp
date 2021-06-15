@@ -129,10 +129,11 @@ bool VideojuegoController::existeVideojuego(string nombreVj) {
     return (hc->findVideojuego(nombreVj) != NULL);
 }
 
+bool VideojuegoController::hayCategorias() { return (exGen && exPlatf); }
+
 set<string>* VideojuegoController::obtenerNombreCategorias(){
     set<string>* s = new set<string>;
     HandlerCategoria * hc = HandlerCategoria::getInstance();
-    
     set<DtCategoria>* g = hc->getDtGenders();
     for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
 	s->insert((*it).getNombre());	
@@ -151,12 +152,16 @@ int VideojuegoController::cargarCategoria(DtCategoria c){
 
 void VideojuegoController::confirmarAgregarCategoria(){
     Categoria * c = nullptr;
-    if (catData.getTipoCategoria() == TipoCategoria::Plataforma)
-	c = new Plataforma(catData);
-    else if (catData.getTipoCategoria() == TipoCategoria::Genero)
-	c = new Genero(catData);
+    if (catData.getTipoCategoria() == TipoCategoria::Plataforma) {
+    	c = new Plataforma(catData);
+        exPlatf = true;
+    }
+    else if (catData.getTipoCategoria() == TipoCategoria::Genero) {
+	    c = new Genero(catData);
+        exGen = true;
+    }
     else
-	c = new Categoria(catData);
+	    c = new Categoria(catData);
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     hc->addCategoria(c);
 }
@@ -207,6 +212,8 @@ VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",
     categoriaCache = new set<Categoria*>;
     loggedUser = nullptr;
     videoCache = nullptr;
+    exGen = false;
+    exPlatf = false;
 }
 
 VideojuegoController::~VideojuegoController(){
