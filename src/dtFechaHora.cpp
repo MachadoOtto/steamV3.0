@@ -49,7 +49,7 @@ float DtFechaHora::diffHoras(DtFechaHora fFinal) {
     int min1, min2 = 0;
     min1 = min + (hora + (dia + (mes + (anio) * 12) * 31) * 24) * 60;
     min2 = fFinal.min + (fFinal.hora + (fFinal.dia + (fFinal.mes + (fFinal.anio) * 12) * 31) * 24) * 60;
-    return ((min1 - min2) / 60);
+    return ((min2 - min1) / 60);
 }
 
 bool operator<(const DtFechaHora dt1, const DtFechaHora dt2) {

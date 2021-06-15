@@ -183,6 +183,7 @@ int Sistema::cargarDatosPrueba(){
     pkey();
     return 0;
 }
+
 int Sistema::altaUsuario(){
     LaFabrica * laFabrica = LaFabrica::getInstance();
     IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();

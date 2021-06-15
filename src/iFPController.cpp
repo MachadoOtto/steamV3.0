@@ -112,7 +112,8 @@ std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {
     std::set<std::string>* res = new std::set<std::string>; 
     std::set<Jugador*>* jSus = vj->obtenerJugadoresSuscriptos();
     for (std::set<Jugador*>::iterator it = jSus->begin(); it != jSus->end(); ++it) {
-        res->insert((*it)->getNickname());
+        if ((this->getHost()->getNickname()) != (*it)->getNickname())
+            res->insert((*it)->getNickname());
     }
     delete jSus;
     return res;
@@ -120,7 +121,7 @@ std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {
 
 void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
     HandlerUsuario * hu = HandlerUsuario::getInstance();
-    Jugador * jAUnir = static_cast<Jugador*>(hu->findUsuario(nicknameJugador));
+    Jugador * jAUnir = static_cast<Jugador*>(hu->findJugador(nicknameJugador));
     jugadoresAUnir->insert(std::pair<std::string,Jugador *>(nicknameJugador,jAUnir));
 }
 
