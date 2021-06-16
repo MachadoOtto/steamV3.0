@@ -27,8 +27,14 @@ void AltaUsuarioController::ingresarEmpresa(string e){
    empresa = e;
 }
 
-void AltaUsuarioController::ingresarNickname(string n){
-   nickname = n;
+bool AltaUsuarioController::ingresarNickname(string n){
+   bool exi = True;
+   HandlerUsuario hu = HandlerUsuario::getInstance();
+   if (!hu->existeJugador(n)){
+      nickname = n;
+      exi = false;
+   }
+   return exi;
 }
 
 void AltaUsuarioController::ingresarDescripcion(string d){

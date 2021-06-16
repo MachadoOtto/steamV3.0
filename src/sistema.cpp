@@ -205,17 +205,16 @@ int Sistema::altaUsuario(){
     switch (controlVar) {
 	case 1: {
 	    string name;
-            HandlerUsuario * hc = HandlerUsuario::getInstance(); //Corregir: sistema no habla con handler
 	    cout << "Ingrese un nickname para su Jugador: ";
 	    getline(cin,name);
-	    //while (IUsuario->existeUsuario(name))
-            while (hc->existeUsuario(name)){
-		reprintln();
-		cout << "Ese nickname ya está en uso, por favor ingrese otro: " << endl;
-		getline(cin,name);
-            }
-            IUsuario->ingresarNickname(name);
-            string des;
+        bool existe = IUsuario->ingresarNickname(name);
+	    while (existe){
+		   reprintln();
+		   cout << "Ese nickname ya está en uso, por favor ingrese otro: " << endl;
+		   getline(cin,name);
+           existe = IUsuario->ingresarNickname(name);
+        }
+        string des;
 	    cout << "Ingrese una descripcion para su juguador: ";
 	    getline(cin,des);
             IUsuario->ingresarDescripcion(des);
