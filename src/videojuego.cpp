@@ -155,8 +155,20 @@ map<string,Categoria*>* Videojuego::getCategorias() {
     return this->categorias;
 }
 
-void Videojuego::addOpinion(int i){
-    opiniones->push_back(i);
+void Videojuego::addOpinion(string email, int i) {
+    map<string,int>::iterator it = opiniones->begin();
+    for( ; ; ) {
+        if( (it == opiniones->end()) || (it->first == email) ) {
+            break;
+        }
+        it++;
+    }
+    if(it == opiniones->end()) {
+        opiniones->insert(map<string,int>(email,i));
+    }
+    else {
+        it->second = i;
+    }
 }
 
 //--- Setters ---
