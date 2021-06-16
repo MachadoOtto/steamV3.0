@@ -31,7 +31,7 @@ public:
    static AltaUsuarioController * getInstance();
    void ingresarUsuario(DtUsuario);
    void ingresarEmpresa(string);
-   void ingresarNickname(string);
+   bool ingresarNickname(string);
    void ingresarDescripcion(string);
    void clearCache();
    int iniciarSesion();

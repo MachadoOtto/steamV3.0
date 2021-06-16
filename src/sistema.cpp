@@ -230,7 +230,7 @@ int Sistema::altaUsuario(){
             cout << "Ingrese el nombre de su empresa: ";
 	    getline(cin,emp);
             IUsuario->ingresarEmpresa(emp);
-	    cout << "Se registrara un jugador con los siguientes datos en el sistema:\n\n";
+	    cout << "Se registrara un desarrollador con los siguientes datos en el sistema:\n\n";
 	    cout << "Email: "<<mail<<endl;
 	    cout << "Contrasenia: "<<pass<<endl;
 	    cout << "Empresa: "<<emp<<endl<<endl;

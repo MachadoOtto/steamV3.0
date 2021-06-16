@@ -21,7 +21,7 @@ class IAltaUsuarioController{
 public:
     virtual void ingresarUsuario(DtUsuario)=0;
     virtual void ingresarEmpresa(string)=0;
-    virtual void ingresarNickname(string)=0;
+    virtual bool ingresarNickname(string)=0;
     virtual void ingresarDescripcion(string)=0;
     virtual void confirmarDarDeAltaUsuario()=0;
     virtual int iniciarSesion()=0;
