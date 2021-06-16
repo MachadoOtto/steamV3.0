@@ -41,6 +41,7 @@ public:
     virtual void asignarHoraFinalizacion();
     virtual void eliminarAssoc();
     void abandonar(JugadorMulti*);
+    float calcularDuracion();
     ~PartidaMultijugador();
 };
 

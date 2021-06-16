@@ -26,7 +26,7 @@
 #include "partidaIndividual.h"
 #include "partidaMultijugador.h"
 #include "suscripcion.h"
-#include "../include/fechaSistema.h"
+#include "fechaSistema.h"
 
 using std::string;
 using std::map;
