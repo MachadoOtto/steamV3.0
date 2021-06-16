@@ -610,6 +610,36 @@ int Sistema::eliminarVideojuego(){
 }
 
 int Sistema::seleccionarEstadistica(){
+    //Listar nombre y descripcion de cada estadistica presente en el sistema
+    HandlerEstadistica * hEstadistica = HandlerEstadistica::getInstance();
+    map<string,Estadistica*>* estadisticas = hEstadistica->getEstadistica();
+    for (map<string,Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
+        cout << "Nombre: " << it->second->getNombre() << endl;
+        cout << "Descripcion: " << it->second->getDescripcion() << endl << endl;
+    }
+    //Desarrollador ingresa los nombres de las que esta interesado
+    HandlerUsuario * hUsuario = HandlerUsuario::getInstance();
+    Usuario * user = hUsuario->getLoggedUser();
+    Desarrollador * des = dynamic_cast<Desarrollador*>(user);
+    cout << "Ingrese los nombres de las estadisticas que quiere (0. Para no seleccionar ninguna) : " << endl << endl;
+    bool loopControl = 1;
+    int i = 1;
+    while (loopControl != 0) {
+        string nombreEstadistica;
+        cout << "Nombre estadistica "<< i <<": ";
+        cin >> nombreEstadistica;
+        cout << endl;
+        if (hEstadistica->findEstadistica(nombreEstadistica) != NULL) {
+            des->add(hEstadistica->findEstadistica(nombreEstadistica));
+            i++;
+        } else {
+            cout << "ERROR: Ingrese un nombre de estadistica valido porfavor" << endl << endl; 
+        }
+        cout << "Desea seleccionar otra estadistica? (1.Si/0.No): ";
+        cin >> loopControl;
+        cout << endl;
+    }
+    //Entre las estadísticas que estarán disponibles se encuentra una para obtener la cantidad total de horas jugadas de un videojuego, y otra para obtener la cantidad total de   jugadores que se han suscrito a cierto videojuego.
     return 0;
 }
 
