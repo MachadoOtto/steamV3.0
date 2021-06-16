@@ -14,6 +14,9 @@ EstadisticaTotalJugadoresSuscriptos::EstadisticaTotalJugadoresSuscriptos(string 
     Estadistica(name,desc){}
 
 DtEstadistica EstadisticaTotalJugadoresSuscriptos::procesarEstadistica(Videojuego * v){
-    return DtEstadistica(nombre,descripcion,v->getTotalJugadoresSuscriptos());
+    if(v==nullptr)
+	return DtEstadistica(nombre,descripcion,0);
+    else
+	return DtEstadistica(nombre,descripcion,v->getTotalJugadoresSuscriptos());
 }
 

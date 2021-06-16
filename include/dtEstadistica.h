@@ -22,9 +22,9 @@ private:
     float valor;
 public:
     DtEstadistica(string,string, float);
-    float getValor();
-    string getDescripcion();
-    string getNombre();
+    float getValor() const;
+    string getDescripcion() const;
+    string getNombre() const;
     friend bool operator<(const DtEstadistica,const DtEstadistica);
 };
 

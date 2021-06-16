@@ -13,6 +13,8 @@
 #include <string>
 #include <set>
 #include "estadistica.h"
+#include "estadisticaTotalHorasJugadas.h"
+#include "estadisticaTotalJugadoresSuscriptos.h"
 
 using std::string;
 using std::set;
