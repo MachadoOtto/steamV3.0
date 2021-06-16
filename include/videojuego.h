@@ -61,7 +61,7 @@ class Videojuego {
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
-	void addOpinion(int);
+	    void addOpinion(string,int);
         //Getters
         string getNombre();
         string getDescripcion();
