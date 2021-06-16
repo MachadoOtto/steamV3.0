@@ -54,6 +54,14 @@ void PartidaMultijugador::abandonar(JugadorMulti* jMulti) {
     jugadoresMultis->insert(jugadoresMultis->begin(), jMulti);
 }
 
+float PartidaMultijugador::calcularDuracion(){
+    float s = 0;
+    s += (this->getDtFechaHora().diffHoras(fechaSistema::fecha)) * (jugadoresUnidos->size()+1);
+    for(vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it!=jugadoresMultis->end();++it)
+	s+=(*it)->getDesconexion().diffHoras(fechaSistema::fecha); 
+    return s;
+}
+
 PartidaMultijugador::~PartidaMultijugador() {
     for (vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it != jugadoresMultis->end(); ++it) {
         delete *it;

@@ -134,14 +134,28 @@ DtPrecios Videojuego::getCostoSuscripciones() {
 }
 
 float Videojuego::getTotalHorasJugadas() {
-    return this->totalHorasJugadas;
+    float s = 0;
+    for(map<int,Partida*>::iterator it= partidas->begin(); it!=partidas->end();++it){
+	PartidaMultijugador * pm = dynamic_cast<PartidaMultijugador*>(it->second);
+	if(pm){
+	    s+= pm->calcularDuracion();
+	}
+	else{
+	    s+= it->second->getDtFechaHora().diffHoras(fechaSistema::fecha);
+	}
+    }
+    s = totalHorasJugadas;
+    return totalHorasJugadas;
 }
 
 float Videojuego::getPuntaje() {
     int s = 0;
     for(map<string,int>::iterator it = opiniones->begin(); it != opiniones->end(); ++it) 
 	s += it->second;
-    puntaje = ((float)s)/((float)(opiniones->size()));
+    if(!opiniones->size())
+	puntaje=0;
+    else
+	puntaje = ((float)s)/((float)(opiniones->size()));
     return puntaje;
 }
 
