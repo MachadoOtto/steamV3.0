@@ -58,7 +58,7 @@ float PartidaMultijugador::calcularDuracion(){
     float s = 0;
     s += (this->getDtFechaHora().diffHoras(fechaSistema::fecha)) * (jugadoresUnidos->size()+1);
     for(vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it!=jugadoresMultis->end();++it)
-	s+=(*it)->getDesconexion().diffHoras(fechaSistema::fecha); 
+	s+=this->getDtFechaHora().diffHoras((*it)->getDesconexion()); 
     return s;
 }
 
