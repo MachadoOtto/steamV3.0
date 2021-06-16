@@ -47,7 +47,7 @@ class IIFPController {
         virtual std::set<std::string> * obtenerVideojuegosActivos() = 0;
         virtual std::vector<DtPartida*>* obtenerPartidasActivas() = 0;
         virtual std::vector<DtPartidaIndividual*>* obtenerHistorialPartidas() = 0;
-        virtual std::vector<DtPartidaMultijugador*>* obtenerPartidasMultiActivas() = 0;
+        virtual std::map<int, std::string>* obtenerPartidasMultiActivas() = 0;
         virtual std::set<std::string> * obtenerJugadoresSubscriptos() = 0;
         
         virtual void confirmarPartida() = 0;

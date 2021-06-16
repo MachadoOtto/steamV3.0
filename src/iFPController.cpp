@@ -11,7 +11,7 @@
 
 IFPController::IFPController() {
     esIndividual = false;
-    contadorId = 0;
+    contadorId = 1;
     host = NULL;
     vj = NULL;
     partidaAnterior = NULL;
@@ -128,8 +128,10 @@ void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
 void IFPController::confirmarPartida() {
     if (esIndividual)
         vj->confirmarPartida(host, contadorId++, partidaAnterior);
-    else
+    else {
         vj->confirmarPartida(host, contadorId++, enVivo, jugadoresAUnir);
+        jugadoresAUnir = new std::map<std::string,Jugador *>;
+    }
 }
 
 
@@ -154,13 +156,29 @@ void IFPController::clearCache() {
     jugadoresAUnir->clear();
 }
 
-std::vector<DtPartidaMultijugador*>* IFPController::obtenerPartidasMultiActivas() {
-    return host->obtenerPartidasUnido();
+std::map<int, std::string>* IFPController::obtenerPartidasMultiActivas() {
+    std::map<int, std::string>* res = new std::map<int, std::string>;
+    std::map<int, PartidaMultijugador*>* pUnido = host->obtenerPartidasUnido();
+    std::string aInsertar = "";
+    for (std::map<int, PartidaMultijugador*>::iterator it = pUnido->begin(); it != pUnido->end(); ++it) {
+        DtPartidaMultijugador* dtMulti = dynamic_cast<DtPartidaMultijugador*>(it->second->obtenerDatosPartida());
+        aInsertar = aInsertar + dtMulti->getString();
+        delete dtMulti;
+        aInsertar = aInsertar + "Host: " + it->second->getHost()->getNickname() + ".\n";
+        aInsertar = aInsertar + "Videojuego: " + it->second->getVideojuego()->getNombre() + ".\n";
+        std::map<string, Jugador*>* jUnidos = it->second->getJugadoresUnidos();
+        aInsertar = aInsertar + "Jugadores unidos:\n";
+        for (std::map<string, Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
+            aInsertar = aInsertar + "\t" + it->first + "\n";
+        }
+        res->insert(map<int, std::string>::value_type(it->second->getId(), aInsertar));
+        aInsertar = "";
+    }
+    return res;
 }
 
 void IFPController::confirmarAbandonarPartida(int i) {
-    PartidaMultijugador* p = dynamic_cast<PartidaMultijugador*>(host->findPartida(i));
-    host->abandonarPartidaMulti(p);
+    host->abandonarPartidaMulti(host->findPartidaMulti(i));
 }
 
 IFPController::~IFPController() {
