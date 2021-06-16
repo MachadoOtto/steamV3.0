@@ -146,7 +146,17 @@ float Videojuego::getPuntaje() {
 }
 
 int Videojuego::getTotalJugadoresSuscriptos() {
-    return this->totalJugadoresSuscriptos;
+    int i=0;
+    set<Jugador*>* j = new set<Jugador*>;
+    for(set<Suscripcion*>::iterator it=suscripciones->begin();it!=suscripciones->end();++it){
+	if(j->find((*it)->getComprador()) == j->end()){
+	    i++;
+	    j->insert((*it)->getComprador());
+	}
+    }
+    delete j;
+    totalJugadoresSuscriptos = i; 
+    return totalJugadoresSuscriptos;
 }
 
 set<Suscripcion*>* Videojuego::getSuscripciones() {
