@@ -987,7 +987,6 @@ int Sistema::iniciarPartida(){
                         jIngresados->insert(nick);
                         interface->aniadirJugadorPartida(nick);
                         cout << "Jugador unido con exito. Ingrese otro o presione ENTER para finalizar: ";
-                        break;
                     }
                     getline(cin, nick);
                 }
@@ -1050,48 +1049,42 @@ int Sistema::iniciarPartida(){
 int Sistema::abandonarPartidaMultijugador(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    vector<DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
-    cout << "Abandonar Partida Multijugador \n \n";
-    cout << "Partidas multijugador activas a las que se unio: \n";
-    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        cout << *(*it) << "\n";
-    }
-    cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
-    int id;
-    while (true) {
-        if (!(cin >> id)) {
-		    clinput();
-            reprintln();
-            cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
-        } else {
-            if (id == -1) {
-                break;
-            }
-            clinput();
-            bool exId = false;
-            for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-                if ((*it)->getId() == id) {
-                    exId = true;
-                    break;
-                }
-            }
-            if (!exId) {
+    interface->iniciarSesion();
+    map<int, string>* multiActivas = interface->obtenerPartidasMultiActivas();
+    int id = -1;
+    if (!(multiActivas->empty())) {
+        cout << "Partidas multijugador unido: \n\n";
+        for (map<int, string>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+            cout << it->second << "\n";
+        }
+        cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
+        while (true) {
+            if (!(cin >> id)) {
+                clinput();
                 reprintln();
                 cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
             } else {
-                break;
+                if (id == -1) {
+                    break;
+                }
+                clinput();
+                if (multiActivas->find(id) == multiActivas->end()) {
+                    reprintln();
+                    cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
+                } else {
+                    break;
+                }
             }
         }
-    }
-    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        delete *it;
+    } else {
+        cout << "\nERROR: Usted no esta unido a ninguna partida.";
     }
     delete multiActivas;
     if (id != -1) {
         interface->confirmarAbandonarPartida(id);
-        cout << "Se ha abandonado la partida multijugador (ID: " << id << ") correctamente.";
+        cout << "\nSe ha abandonado la partida multijugador (ID: " << id << ") correctamente.\n";
     } else {
-        cout << "Se ha cancelado el abandono de la partida multijugador.";
+        cout << "\nSe ha cancelado el abandono de la partida multijugador.\n";
     }
     interface->clearCache();
     pkey();

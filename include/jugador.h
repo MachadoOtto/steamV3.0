@@ -52,7 +52,7 @@ class Jugador: public Usuario {
         std::set<Videojuego*> * obtenerDatosVj();
         std::vector<DtPartida*> * obtenerPartidasActivas();
         std::vector<DtPartidaIndividual*> * obtenerHistorialPartidas();
-        std::vector<DtPartidaMultijugador*> * obtenerPartidasUnido();
+        std::map<int,PartidaMultijugador *> * obtenerPartidasUnido();
         PartidaIndividual * seleccionarContinuacionPartida(int);
         void agregarPartida(Partida *);
         void agregarSuscripcion(Suscripcion *);

@@ -59,6 +59,18 @@ bool operator<(const DtFechaHora dt1, const DtFechaHora dt2) {
     return (min1 < min2);
 }
 
+string DtFechaHora::getString() {
+    string texto = "";
+    texto = texto + std::to_string(dia) + "/" + std::to_string(mes) + "/" + std::to_string(anio) + " - ";
+    if (hora < 10)
+        texto = texto + "0";
+    texto = texto + std::to_string(hora) + ":";
+    if (min < 10)
+        texto = texto + "0";
+    texto = texto + std::to_string(min);
+    return texto;
+}
+
 ostream& operator<<(ostream& o, DtFechaHora d) {
     o << d.getDia() << "/" << d.getMes() << "/" << d.getAnio() << " - ";
     if (d.getHora() < 10)
