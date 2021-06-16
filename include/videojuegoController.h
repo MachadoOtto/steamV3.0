@@ -88,7 +88,7 @@ public:
 
     //Caso de uso PuntuarVideojuego
     set<DtVideojuego>* verVideojuegos();
-    void puntuar(string,int);
+    void puntuar(string,string,int);
 
     //Caso de uso SuscribirseVideojuego
     DtSuscripcion getSuscripcion(string);
