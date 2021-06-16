@@ -139,8 +139,8 @@ float Videojuego::getTotalHorasJugadas() {
 
 float Videojuego::getPuntaje() {
     int s = 0;
-    for(vector<int>::iterator it = opiniones->begin(); it != opiniones->end(); ++it) 
-	s += (*it);
+    for(map<string,int>::iterator it = opiniones->begin(); it != opiniones->end(); ++it) 
+	s += it->second;
     puntaje = ((float)s)/((float)(opiniones->size()));
     return puntaje;
 }
