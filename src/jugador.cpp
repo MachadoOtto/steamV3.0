@@ -91,23 +91,8 @@ std::set<Videojuego *> * Jugador::obtenerDatosVj() {
     return res;
 }
 
-std::vector<DtPartida*>* Jugador::obtenerPartidasActivas() {
-    std::vector<DtPartida*>* res = new std::vector<DtPartida*>;
-    for(std::map<int,Partida*>::iterator it = partidas->begin(); it != partidas->end(); it++) {
-        Partida* p = it->second;
-        bool ok = p->esActiva();
-        if(ok) {
-            DtPartida* aInsertar = p->obtenerDatosPartida();
-            std::vector<DtPartida*>::iterator itVector = res->begin();
-            for ( ; itVector != res->end(); ++itVector) {
-                if ((*itVector)->getFecha() < aInsertar->getFecha()) {
-                    break;
-                }
-            }
-            res->insert(itVector, aInsertar);
-        }
-    }
-    return res;
+std::map<int, Partida*>* Jugador::obtenerPartidas() {
+    return partidas;
 }
 
 // Lista en orden cronologico todas las partidas individuales finalizadas del jugador. (No distingue entre videojuegos).
