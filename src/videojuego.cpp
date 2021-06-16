@@ -27,7 +27,7 @@ Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): 
     this->categorias = categorias;
     this->partidas = new map<int,Partida*>;
     this->suscripciones = new set<Suscripcion*>;
-    opiniones = new vector<int>;
+    opiniones = new map<string,int>;
 }
 
 Videojuego::~Videojuego() {
@@ -161,10 +161,14 @@ map<string,Categoria*>* Videojuego::getCategorias() {
     return this->categorias;
 }
 
-void Videojuego::addOpinion(int i){
-    opiniones->push_back(i);
+int Videojuego::addOpinion(string email, int i) {
+    int ex=0;
+    if(opiniones->find(email) != opiniones->end())
+	ex=1;
+    (*opiniones)[email]=i;
+    return ex;
 }
-
+   
 //--- Setters ---
 void Videojuego::setNombre(string nombre) {
     this->nombre = nombre;

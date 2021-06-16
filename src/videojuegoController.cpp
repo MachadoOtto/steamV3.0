@@ -234,10 +234,10 @@ set<DtVideojuego>* VideojuegoController::verVideojuegos(){
     return hc->getDtVideojuegos();
 }
 
-void VideojuegoController::puntuar(string v,int p){
+int VideojuegoController::puntuar(string v,int p){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
     Videojuego * vp = hc->findVideojuego(v);
-    vp->addOpinion(p);
+    return vp->addOpinion(getPlayer()->getEmail(),p);
 }
 
 DtSuscripcion VideojuegoController::getSuscripcion(string v){

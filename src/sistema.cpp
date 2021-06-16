@@ -883,7 +883,9 @@ int Sistema::asignarPuntajeVideojuego(){
     }	
     cout << "Ingrese su puntuacion para el videojuego \""<<p<<"\" (1-5): ";
     kp = takeInputRange(1,5);
-    h->puntuar(p,kp);   	
+    int s = h->puntuar(p,kp);   	
+    if(s)
+	cout << "Advertencia: Usted ya habia puntuado al videojuego seleccionado. Se ha sobreescrito dicho puntaje.\n";
     cout << "Se ha registrado su puntaje exitosamente\n";
     delete namae;
     pkey();
