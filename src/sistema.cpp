@@ -901,8 +901,24 @@ int Sistema::verInformacionVideojuego(){
     cls();
     ptitle();
     cout << "\n\nInformacion del videojuego " << nombreVj << "\n";
-    interface->obtenerInfoVideojuego();
+    set<DtVideojuego>* vnfo = interface->verVideojuegos();
+    DtVideojuego vdt("","",0,0,0,0);
+    for(set<DtVideojuego>::iterator it = vnfo->begin();it!=vnfo->end();++it)
+	if(it->getNombre() == nombreVj)
+	    vdt = *it;
+    cout << vdt;
+    delete vnfo;
+    cout << "Categorias: \n";
+    set<string> * namae = interface->obtenerNombreCatVideojuego(); 
+    for(set<string>::iterator it = namae->begin(); it != namae->end(); ++it)
+	cout << "\t" << *it << "\n";
+    delete namae;
+    vector<string> * extra = interface->obtenerInfoVideojuegoExtra();
+    for(vector<string>::iterator it = extra->begin(); it!=extra->end();++it)
+	cout << *it << "\n";
+    delete extra;
     interface->clearCache();
+    cout << "\nSe ha desplegado la informacion del videojuego exitosamente.\n";
     pkey();
     return 0;
 }

@@ -85,7 +85,8 @@ public:
     void confirmarAgregarCategoria();
 
     //Caso de uso VerInformacionVideojuego:
-    void obtenerInfoVideojuego();
+    set<string> * obtenerNombreCatVideojuego();
+    vector<string> * obtenerInfoVideojuegoExtra();
 
     //Caso de uso PuntuarVideojuego
     set<DtVideojuego>* verVideojuegos();

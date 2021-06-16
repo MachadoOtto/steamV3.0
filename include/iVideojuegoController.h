@@ -55,7 +55,8 @@ public:
     virtual void confirmarAgregarCategoria()=0;
 
     //Caso de uso VerInformacionVideojuego:
-    virtual void obtenerInfoVideojuego() = 0;
+    virtual set<string>* obtenerNombreCatVideojuego()=0;
+    virtual vector<string>* obtenerInfoVideojuegoExtra()=0;
 
     //Caso de uso PuntuarVideojuego
     virtual set<DtVideojuego>* verVideojuegos()=0;

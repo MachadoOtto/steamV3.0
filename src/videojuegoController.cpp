@@ -170,12 +170,15 @@ set<string>* VideojuegoController::obtenerNombreCategorias(){
     set<DtCategoria>* g = hc->getDtGenders();
     for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
 	s->insert((*it).getNombre());	
+    delete g;
     g = hc->getDtPlatforms();
     for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
 	s->insert((*it).getNombre()); 
+    delete g;
     g = hc->getDtCategories();
     for(set<DtCategoria>::iterator it = g->begin(); it != g->end(); ++it)
 	s->insert((*it).getNombre()); 
+    delete g;
     return s;
 }
 int VideojuegoController::cargarCategoria(DtCategoria c){
@@ -198,31 +201,34 @@ void VideojuegoController::confirmarAgregarCategoria(){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
     hc->addCategoria(c);
 }
-
-void VideojuegoController::obtenerInfoVideojuego() {
-    cout << videoCache->obtenerDatosVideojuego();
-    cout << "\nCategorias: \n";
-	for (map<string,Categoria*>::iterator it = videoCache->getCategorias()->begin(); it != videoCache->getCategorias()->end(); it++) {
-		cout << "\t" << it->first << "\n";
-	}
-    HandlerUsuario* hUsuario = HandlerUsuario::getInstance();
-	map<string,Usuario*>* usuarios = hUsuario->obtenerUsuarios();
-	string empresaCreadora;
-    for (map<string,Usuario*>::iterator it = usuarios->begin(); it != usuarios->end(); it++) {
-        Desarrollador* des = dynamic_cast<Desarrollador*>(it->second);
-        if (des != NULL) {
-            set<string>* videojuegosDesarrollados = des->getVideojuegosDesarrollados();
-            if (videojuegosDesarrollados->find(videoCache->getNombre()) != videojuegosDesarrollados->end()) {
-                empresaCreadora = des->getEmpresa();
-                break;                
-            }
-        }
+set<string> * VideojuegoController::obtenerNombreCatVideojuego(){
+    set<string> * x = new set<string>;
+    for (map<string,Categoria*>::iterator it = videoCache->getCategorias()->begin(); it != videoCache->getCategorias()->end(); it++) {
+	x->insert(it->first);
     }
-	cout << "\nDesarrolladora: " << empresaCreadora;
-    cout << "\nPuntaje promedio: " << videoCache->getPuntaje() << "\n";
-	if (dynamic_cast<Desarrollador*>(hUsuario->getLoggedUser())) {
-		cout << "Total de horas jugadas: " << videoCache->getTotalHorasJugadas() << "\n";
+    return x;
+}
+
+vector<string> *  VideojuegoController::obtenerInfoVideojuegoExtra() {
+    vector<string> * x = new vector<string>;
+    Desarrollador * des = nullptr;
+    HandlerUsuario* hUsuario = HandlerUsuario::getInstance();
+    map<string,Usuario*>* usuarios = hUsuario->obtenerUsuarios();
+    bool f = false;
+    for (map<string,Usuario*>::iterator it = usuarios->begin(); it != usuarios->end() && !f; it++){
+        if ((des = dynamic_cast<Desarrollador*>(it->second))){
+	    set<string>* vdd = des->getVideojuegosDesarrollados();
+	    if (vdd->find(videoCache->getNombre()) != vdd->end()){
+		x->push_back("Desarrolladora: "+des->getEmpresa());
+		f = true;
+	    }
+	    delete vdd;
 	}
+    }
+    x->push_back("Puntaje promedio: " + std::to_string(videoCache->getPuntaje()));
+    if(dynamic_cast<Desarrollador*>(hUsuario->getLoggedUser()))
+	x->push_back("Total de horas jugadas: " + std::to_string(videoCache->getTotalHorasJugadas()));
+    return x;
 }
 
 VideojuegoController * VideojuegoController::getInstance(){
