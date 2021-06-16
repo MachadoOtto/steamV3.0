@@ -132,7 +132,8 @@ void VideojuegoController::confirmarPublicacion(){
 }
 
 void VideojuegoController::confirmarSuscripcion(){
-    videoCache->confirmarSuscripcion(static_cast<Jugador *>(loggedUser),tSus,tPago);
+    HandlerUsuario * hu = HandlerUsuario::getInstance();
+    videoCache->confirmarSuscripcion(static_cast<Jugador *>(hu->getLoggedUser()),tSus,tPago);
     this->clearCache();
 }
 

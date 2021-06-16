@@ -37,6 +37,7 @@ class IFPController: public IIFPController {
     public:
         static IFPController* getInstance();
         void iniciarSesion();
+        int getIdSisActual();
         void setTipo(bool);
         bool getTipo();
         void setHost(Jugador*);
@@ -55,7 +56,7 @@ class IFPController: public IIFPController {
         Jugador* findJugador(std::string);
 
         std::set<std::string> * obtenerVideojuegosActivos();
-        std::vector<DtPartida*>* obtenerPartidasActivas();
+        std::map<int, std::string>* obtenerPartidasActivas();
         std::vector<DtPartidaIndividual*>* obtenerHistorialPartidas();
         std::map<int, std::string>* obtenerPartidasMultiActivas();
         std::set<std::string> * obtenerJugadoresSubscriptos();

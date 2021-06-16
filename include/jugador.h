@@ -50,7 +50,7 @@ class Jugador: public Usuario {
         PartidaMultijugador * findPartidaMulti(int);
 
         std::set<Videojuego*> * obtenerDatosVj();
-        std::vector<DtPartida*> * obtenerPartidasActivas();
+        std::map<int, Partida*>* obtenerPartidas();
         std::vector<DtPartidaIndividual*> * obtenerHistorialPartidas();
         std::map<int,PartidaMultijugador *> * obtenerPartidasUnido();
         PartidaIndividual * seleccionarContinuacionPartida(int);

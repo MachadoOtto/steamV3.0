@@ -27,6 +27,7 @@ class DtFechaHora;
 class IIFPController {
     public:
         virtual void iniciarSesion() = 0;
+        virtual int getIdSisActual() = 0;
         virtual void setTipo(bool) = 0;
         virtual bool getTipo() = 0;
         virtual void setHost(Jugador*) = 0;
@@ -45,7 +46,7 @@ class IIFPController {
         virtual Jugador* findJugador(std::string) = 0;
 		
         virtual std::set<std::string> * obtenerVideojuegosActivos() = 0;
-        virtual std::vector<DtPartida*>* obtenerPartidasActivas() = 0;
+        virtual std::map<int, std::string>* obtenerPartidasActivas() = 0;
         virtual std::vector<DtPartidaIndividual*>* obtenerHistorialPartidas() = 0;
         virtual std::map<int, std::string>* obtenerPartidasMultiActivas() = 0;
         virtual std::set<std::string> * obtenerJugadoresSubscriptos() = 0;

@@ -11,7 +11,7 @@
 
 IFPController::IFPController() {
     esIndividual = false;
-    contadorId = 1;
+    contadorId = 0;
     host = NULL;
     vj = NULL;
     partidaAnterior = NULL;
@@ -26,6 +26,10 @@ IFPController * IFPController::getInstance() {
 void IFPController::iniciarSesion() {
     HandlerUsuario* hu = HandlerUsuario::getInstance();
     this->setHost(static_cast<Jugador*>(hu->getLoggedUser()));
+}
+
+int IFPController::getIdSisActual() {
+    return contadorId;
 }
 
 void IFPController::setTipo(bool tipo) {
@@ -100,8 +104,37 @@ std::set<std::string>* IFPController::obtenerVideojuegosActivos() {
     return res;
 }
 
-std::vector<DtPartida*>* IFPController::obtenerPartidasActivas() {
-    return host->obtenerPartidasActivas();
+std::map<int, std::string>* IFPController::obtenerPartidasActivas() {
+    std::map<int, std::string>* res = new std::map<int, std::string>;
+    std::map<int, Partida*>* pActiva = host->obtenerPartidas();
+    std::string aInsertar = "";
+    for (std::map<int, Partida*>::iterator it = pActiva->begin(); it != pActiva->end(); ++it) {
+        if (it->second->esActiva()) {
+            aInsertar = aInsertar + "ID: " + std::to_string(it->second->getId()) + "\n" + "Fecha de creacion: " + it->second->getDtFechaHora().getString() + "\n"
+            + "Videojuego: " + it->second->getVideojuego()->getNombre() + ".\n";
+            if (dynamic_cast<PartidaIndividual*>(it->second)) {
+                PartidaIndividual* pInd = dynamic_cast<PartidaIndividual*>(it->second);
+                if (pInd->getPartidaAnterior() == NULL) 
+                    aInsertar = aInsertar + "No es continuacion de otra partida \n";
+                else 
+                    aInsertar = aInsertar + "ID partida anterior: " + std::to_string(pInd->getPartidaAnterior()->getId()) + "\n";
+            } else {
+                PartidaMultijugador* pMulti = dynamic_cast<PartidaMultijugador*>(it->second);
+                if (pMulti->getTransmitidaEnVivo()) 
+                    aInsertar = aInsertar + "Se esta transmitiendo en vivo\n";
+                else 
+                    aInsertar = aInsertar + "No se ha transmitido en vivo\n";
+                std::map<string, Jugador*>* jUnidos = pMulti->getJugadoresUnidos();
+                aInsertar = aInsertar + "Jugadores unidos:\n";
+                for (std::map<string, Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
+                    aInsertar = aInsertar + "\t" + it->first + "\n";
+                }
+            }
+        }
+        res->insert(map<int, std::string>::value_type(it->second->getId(), aInsertar));
+        aInsertar = "";
+    }
+    return res;
 }
 
 std::vector<DtPartidaIndividual*>* IFPController::obtenerHistorialPartidas() {
@@ -127,9 +160,9 @@ void IFPController::aniadirJugadorPartida(std::string nicknameJugador) {
 
 void IFPController::confirmarPartida() {
     if (esIndividual)
-        vj->confirmarPartida(host, contadorId++, partidaAnterior);
+        vj->confirmarPartida(host, ++contadorId, partidaAnterior);
     else {
-        vj->confirmarPartida(host, contadorId++, enVivo, jugadoresAUnir);
+        vj->confirmarPartida(host, ++contadorId, enVivo, jugadoresAUnir);
         jugadoresAUnir = new std::map<std::string,Jugador *>;
     }
 }
@@ -141,7 +174,7 @@ void IFPController::confirmarFinalizarPartida(int identificador) {
     if ((pMulti = dynamic_cast<PartidaMultijugador*>(p))) {
         std::map<std::string, Jugador*>* jUnidos = pMulti->getJugadoresUnidos();
         for (std::map<std::string, Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
-            if (it->second->findPartidaMulti(identificador) == pMulti) {
+            if ((!(it->second->obtenerPartidasUnido()->empty())) && (it->second->findPartidaMulti(identificador) == pMulti)) {
                 it->second->abandonarPartidaMulti(pMulti);
             }
         }

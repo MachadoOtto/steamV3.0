@@ -18,13 +18,28 @@ int DtPartidaIndividual::getIdPartidaAnterior() {
     return idPartidaAnterior;
 }
 
+string DtPartidaIndividual::getString() {
+    string texto = "";
+    texto = texto + "ID: " + std::to_string(id) + "\n" + "Duracion: " + std::to_string(duracion) 
+    + "\n" + "Fecha de creacion: " + fecha.getString() + "\n";
+    if (activa) 
+        texto = texto + "La partida se encuentra en curso.\n";
+    else 
+        texto = texto + "La partida ha finalizado.\n";
+    if (idPartidaAnterior == -1) 
+        texto = texto + "No es continuacion de otra partida \n";
+    else 
+        texto = texto + "ID partida anterior: " + std::to_string(idPartidaAnterior) + "\n";
+    return texto;
+}
+
 std::ostream & operator<<(std::ostream &o, DtPartidaIndividual p) {
     o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion() 
-    << "\n" << "Fecha de creacion: " << p.getFecha() << "\n" << "Es activa?: ";
+    << "\n" << "Fecha de creacion: " << p.getFecha() << "\n";
     if (p.getActiva()) 
-        o << "Si" << "\n";
+        o << "La partida se encuentra en curso.\n";
     else 
-        o << "No" << "\n";
+        o << "La partida ha finalizado.\n";
     if (p.getIdPartidaAnterior() == -1)
         o << "No es continuacion de otra partida \n";
     else

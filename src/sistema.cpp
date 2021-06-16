@@ -43,7 +43,7 @@ int Sistema::modificarFecha(){
 		if (sscanf(date_input.c_str(),"%d/%d/%d %d:%d",&d,&m,&y,&h,&min) != 5)
 		    throw invalid_argument("");
 	    }
-	    fechaSistema::fecha = DtFechaHora(y,m,d,h,min); 	//fechaSistema(dia, mes, anio, hora, min).
+	    fechaSistema::fecha = DtFechaHora(y,m,d,h,min); 	//fechaSistema(anio, mes, dia, hora, min).
 	    fecha_check=true;
 	}
 	catch(invalid_argument &e){
@@ -60,6 +60,7 @@ int Sistema::cargarDatosPrueba(){
     LaFabrica * lf = LaFabrica::getInstance();
     IAltaUsuarioController * iu = lf->getIAltaUsuarioController();
     IVideojuegoController * iv = lf->getIVideojuegoController();
+    IIFPController * iifp = lf->getIIFPController();
     DtUsuario datos("","");
 
     //DESARROLLADORES 
@@ -177,6 +178,184 @@ int Sistema::cargarDatosPrueba(){
     iv->seleccionarCategoriaOtro("E");
     iv->confirmarPublicacion();
 
+    //SUSCRIPCIONES A VIDEOJUEGOS
+
+    fechaSistema::fecha = DtFechaHora(2021,6,1,9,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("KingdomRush");
+    iv->ingresarSuscripcion(TipoValido::TresMeses, TipoPago::Paypal);
+    iv->confirmarSuscripcion();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,2,11,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("Fortnite");
+    iv->ingresarSuscripcion(TipoValido::TresMeses, TipoPago::Tarjeta);
+    iv->confirmarSuscripcion();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,4,9,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("Fortnite");
+    iv->ingresarSuscripcion(TipoValido::UnMes, TipoPago::Paypal);
+    iv->confirmarSuscripcion();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,11,9,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("Minecraft");
+    iv->ingresarSuscripcion(TipoValido::Anio, TipoPago::Tarjeta);
+    iv->confirmarSuscripcion();
+    
+    fechaSistema::fecha = DtFechaHora(2021,6,3,7,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ibai@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("Fortnite");
+    iv->ingresarSuscripcion(TipoValido::UnMes, TipoPago::Tarjeta);
+    iv->confirmarSuscripcion();
+
+    fechaSistema::fecha = DtFechaHora(2020,12,21,15,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ibai@mail.com","123"));
+    iu->iniciarSesion();
+    iv->seleccionarVideojuego("Fortnite");
+    iv->ingresarSuscripcion(TipoValido::Vitalicia, TipoPago::Tarjeta);
+    iv->confirmarSuscripcion();
+
+    //PUNTAJES A VIDEOJUEGOS
+    /*
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iv->puntuar("KingdomRush",4);
+    iv->clearCache();
+
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iv->puntuar("Fortnite",5);
+    iv->clearCache();
+
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iv->puntuar("Fornite",5);
+    iv->clearCache();
+
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iv->puntuar("Minecraft",3);
+    iv->clearCache();
+    */
+
+    //PARTIDAS INDIVIDUALES
+
+    fechaSistema::fecha = DtFechaHora(2021,6,2,9,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("KingdomRush");
+    iifp->setTipo(true); // true == individual ; false == multijugador.
+    iifp->confirmarPartida();
+    iifp->clearCache();
+    fechaSistema::fecha = DtFechaHora(2021,6,2,10,0);
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarFinalizarPartida(iifp->getIdSisActual());
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,3,15,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("KingdomRush");
+    iifp->setTipo(true); // true == individual ; false == multijugador.
+    iifp->seleccionarContinuacionPartida(iifp->getIdSisActual());
+    iifp->confirmarPartida();
+    iifp->clearCache();
+    fechaSistema::fecha = DtFechaHora(2021,6,3,16,0);
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarFinalizarPartida(iifp->getIdSisActual());
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,12,16,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("Minecraft");
+    iifp->setTipo(true); // true == individual ; false == multijugador.
+    iifp->confirmarPartida();
+    iifp->clearCache();
+
+    //PARTIDAS MULTIJUGADOR
+
+    fechaSistema::fecha = DtFechaHora(2021,6,5,17,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("Fortnite");
+    iifp->setTipo(false); // true == individual ; false == multijugador.
+    iifp->setEnVivo(true);
+    iifp->aniadirJugadorPartida("ari");
+    iifp->aniadirJugadorPartida("ibai");
+    iifp->confirmarPartida();
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,5,17,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("Fortnite");
+    iifp->setTipo(false); // true == individual ; false == multijugador.
+    iifp->setEnVivo(true);
+    iifp->aniadirJugadorPartida("ari");
+    iifp->aniadirJugadorPartida("ibai");
+    iifp->confirmarPartida();
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,12,20,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->seleccionarVideojuego("Minecraft");
+    iifp->setTipo(false); // true == individual ; false == multijugador.
+    iifp->setEnVivo(false);
+    iifp->aniadirJugadorPartida("ibai");
+    iifp->confirmarPartida();
+    iifp->clearCache();
+
+    //ABANDONA PARTIDA MULTIJUGADOR
+    
+    fechaSistema::fecha = DtFechaHora(2021,6,5,18,0); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarAbandonarPartida(iifp->getIdSisActual()-2);
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,6,17,30); // DtFechaHora(anio, mes, dia, hora, min).
+    iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarAbandonarPartida(iifp->getIdSisActual()-1);
+    iifp->clearCache();
+
+    //FINALIZAR PARTIDA MULTI
+
+    fechaSistema::fecha = DtFechaHora(2021,6,5,19,0);
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarFinalizarPartida(iifp->getIdSisActual() - 2);
+    iifp->clearCache();
+
+    fechaSistema::fecha = DtFechaHora(2021,6,6,19,0);
+    iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
+    iu->iniciarSesion();
+    iifp->iniciarSesion();
+    iifp->confirmarFinalizarPartida(iifp->getIdSisActual() - 1);
+    iifp->clearCache();
+    
     //Aqui se realizan la secuencia de operaciones para generar el estado predefinido del sistema
     //solicitado
     cout << "Se han cargado todos los datos de prueba exitosamente.\n";
@@ -692,7 +871,6 @@ int Sistema::verInformacionVideojuego(){
 int Sistema::suscribirseVideojuego(){
     LaFabrica *laFabrica = LaFabrica::getInstance();
     IVideojuegoController *IVid = laFabrica->getIVideojuegoController();
-
     vector<set<DtVideojuego>> * vj = IVid->obtenerSuscripcionesVideojuegos();
     cout << "Seleccione el juego al que desea contratar una suscripcion o, teniendo una suscripcion activa, desea desuscribirse.\n\n";
     if((*vj)[0].size() == 0)
@@ -839,7 +1017,7 @@ int Sistema::asignarPuntajeVideojuego(){
 	    cout << " ";
 	cout << "\tDescripcion: " << it->getDescripcion() << "\n\n"; 
     }
-    cout << "Ingrese el nombre de la partida que desea puntuar: ";
+    cout << "Ingrese el nombre del videojuego que desea puntuar: ";
     while(!nok){
 	    getline(cin,p);
 	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
@@ -1094,53 +1272,40 @@ int Sistema::abandonarPartidaMultijugador(){
 int Sistema::finalizarPartida(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    vector<DtPartida*>* partidasActivas = interface->obtenerPartidasActivas();
-    cout << "Finalizar Partida \n \n";
-    cout << "Partidas actualmente activas: \n";
-    DtPartidaIndividual* pInd;
-    DtPartidaMultijugador* pMulti;
-    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        if ((pInd = dynamic_cast<DtPartidaIndividual*>(*it))) {
-            cout << *pInd << "\n";
-        } else {
-            pMulti = dynamic_cast<DtPartidaMultijugador*>(*it);
-            cout << *pMulti << "\n";
+    interface->iniciarSesion();
+    map<int, std::string>* partidasActivas = interface->obtenerPartidasActivas();
+    if (!(partidasActivas->empty())) {
+        cout << "Partidas actualmente activas: \n";
+        for (map<int, std::string>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
+            cout << it->second;
         }
-    }
-    cout << "Ingrese la Id de la partida a finalizar (ingrese '-1' si desea cancelar): \n";
-    int id;
-    while (true) {
-        if (!(cin >> id)) {
-		    clinput();
-            reprintln();
-            cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
-        } else {
-            clinput();
-            bool exId = false;
-            for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-                if ((*it)->getId() == id) {
-                    exId = true;
-                    break;
-                }
-            }
-            if (!exId) {
+        cout << "\nIngrese la Id de la partida a finalizar (ingrese '-1' si desea cancelar): ";
+        int id;
+        while (true) {
+            if (!(cin >> id)) {
+                clinput();
                 reprintln();
                 cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
             } else {
-                break;
+                clinput();
+                if ((partidasActivas->find(id) == partidasActivas->end())) {
+                    reprintln();
+                    cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
+                } else {
+                    break;
+                }
             }
         }
-    }
-    for (vector<DtPartida*>::iterator it = partidasActivas->begin(); it != partidasActivas->end(); ++it) {
-        delete *it;
+        if (id != -1) {
+            interface->confirmarFinalizarPartida(id);
+            cout << "Se ha finalizado la partida (ID: " << id << ") correctamente.";
+        } else {
+            cout << "No se ha finalizado la partida.";
+        }
+    } else {
+        cout << "\nERROR: Usted no tiene partidas activas.\n";
     }
     delete partidasActivas;
-    if (id != -1) {
-        interface->confirmarAbandonarPartida(id);
-        cout << "Se ha finalizado la partida (ID: " << id << ") correctamente.";
-    } else {
-        cout << "No se ha finalizado la partida.";
-    }
     interface->clearCache();
     pkey();
     return 0;
