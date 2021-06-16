@@ -48,8 +48,8 @@ class Videojuego {
         set<Suscripcion*> *suscripciones;
         map<int,Partida*> *partidas;
         map<string,Categoria*> *categorias;
-	    map<string,int>* opiniones; 
-        
+	map<string,int>* opiniones; 
+	 
     public:
         Videojuego(DtVideojuego,map<string,Categoria*>*);
         ~Videojuego();
@@ -61,7 +61,7 @@ class Videojuego {
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
         void eliminarInfoAsociada();
-	    void addOpinion(string,int);
+	int addOpinion(string,int);
         //Getters
         string getNombre();
         string getDescripcion();

@@ -59,7 +59,7 @@ public:
 
     //Caso de uso PuntuarVideojuego
     virtual set<DtVideojuego>* verVideojuegos()=0;
-    virtual void puntuar(string,string,int)=0;
+    virtual int puntuar(string,int)=0;
 
     //Caso de uso SuscribirseVideojuego
     virtual DtSuscripcion getSuscripcion(string)=0;

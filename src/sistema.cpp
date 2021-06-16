@@ -277,6 +277,9 @@ int Sistema::iniciarSesion(){
                 cout << "ERROR: El usuario no existe en el sistema.\n";
             }
             if(user_ok == 3){
+		reprintln();
+		reprintln();
+		reprintln();
                 cout << "ERROR: La contrasenia ingresada no es correcta.\n";
             }    
             if(user_ok == 0 || user_ok == 1){
@@ -808,18 +811,20 @@ int Sistema::asignarPuntajeVideojuego(){
     }
     cout << "\nIngrese el nombre del videojuego que desea puntuar: ";
     while(!nok){
-	    getline(cin,p);
-	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
-	        if(it->getNombre() == p)
-		        return true;
-	    else {
-	        reprintln();
-	        cout << "Por favor ingrese una opcion valida: ";
+	getline(cin,p);
+	for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
+	    if(it->getNombre() == p)
+		nok = true;
+	if(!nok){
+	    reprintln();
+	    cout << "Por favor ingrese una opcion valida: ";
         }
     }	
-    cout << "\n Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
+    cout << "Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
     kp = takeInputRange(1,5);
-    h->puntuar(getLoggedUserEmail(),p,kp);   	
+    int s = h->puntuar(p,kp);   	
+    if(s)
+	cout << "Advertencia: Usted ya habia puntuado al videojuego seleccionado. Se ha sobreescrito dicho puntaje.\n";
     cout << "Se ha registrado su puntaje exitosamente\n";
     delete namae;
     pkey();
