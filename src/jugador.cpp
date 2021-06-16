@@ -96,21 +96,18 @@ std::map<int, Partida*>* Jugador::obtenerPartidas() {
 }
 
 // Lista en orden cronologico todas las partidas individuales finalizadas del jugador. (No distingue entre videojuegos).
-// Se utiliza un puntero al DtPartida para poder castearlo a DtPartidaIndividual.
-std::vector<DtPartidaIndividual*>* Jugador::obtenerHistorialPartidas() {
-    std::vector<DtPartidaIndividual*>* res = new std::vector<DtPartidaIndividual*>;
+std::vector<PartidaIndividual*>* Jugador::obtenerHistorialPartidas() {
+    std::vector<PartidaIndividual*>* res = new std::vector<PartidaIndividual*>;
     for (std::map<int, Partida*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
-        if (dynamic_cast<PartidaIndividual*>(it->second)) {
-            if (!(it->second->esActiva())) {
-                DtPartidaIndividual* aInsertar = dynamic_cast<DtPartidaIndividual*>(it->second->obtenerDatosPartida());
-                std::vector<DtPartidaIndividual*>::iterator itVector = res->begin();
-                for ( ; itVector != res->end(); ++itVector) {
-                    if ((*itVector)->getFecha() < aInsertar->getFecha()) {
-                        break;
-                    }
+        PartidaIndividual* aInsertar = NULL;
+        if ((!(it->second->esActiva())) && ((aInsertar = dynamic_cast<PartidaIndividual*>(it->second)))) {
+            std::vector<PartidaIndividual*>::iterator itVector = res->begin();
+            for ( ; itVector != res->end(); ++itVector) {
+                if ((*itVector)->getDtFechaHora() < aInsertar->getDtFechaHora()) {
+                    break;
                 }
-                res->insert(itVector, aInsertar);
             }
+            res->insert(itVector, aInsertar);
         }
     }
     return res;
