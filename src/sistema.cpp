@@ -1034,7 +1034,7 @@ int Sistema::suscribirseVideojuego(){
 	bool f = boolSelect();
 	if(f){
 	    IVid->confirmarSuscripcion();
-	    cout << "Se ha realizado la compra exitosamente. Gracias por utilizar STEAM v3.0\n";
+	    cout << "Se ha realizado la compra exitosamente. Gracias por su compra\n";
 	}
 	else
 	    cout << "Se ha cancelado la compra.\n";
