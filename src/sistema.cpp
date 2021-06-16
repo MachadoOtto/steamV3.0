@@ -806,7 +806,7 @@ int Sistema::asignarPuntajeVideojuego(){
 	    cout << " ";
 	cout << "\tDescripcion: " << it->getDescripcion() << "\n";
     }
-    cout << "\nIngrese el nombre de la partida que desea puntuar: ";
+    cout << "\nIngrese el nombre del videojuego que desea puntuar: ";
     while(!nok){
 	    getline(cin,p);
 	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
@@ -819,7 +819,7 @@ int Sistema::asignarPuntajeVideojuego(){
     }	
     cout << "\n Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
     kp = takeInputRange(1,5);
-    h->puntuar(p,kp);   	
+    h->puntuar(getLoggedUserEmail(),p,kp);   	
     cout << "Se ha registrado su puntaje exitosamente\n";
     delete namae;
     pkey();
