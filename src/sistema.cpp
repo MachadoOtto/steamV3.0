@@ -610,49 +610,80 @@ int Sistema::eliminarVideojuego(){
 }
 
 int Sistema::seleccionarEstadistica(){
-    //Listar nombre y descripcion de cada estadistica presente en el sistema
-    HandlerEstadistica * hEstadistica = HandlerEstadistica::getInstance();
-    map<string,Estadistica*>* estadisticas = hEstadistica->getEstadistica();
-    for (map<string,Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); ++it) {
-        cout << "Nombre: " << it->second->getNombre() << endl;
-        cout << "Descripcion: " << it->second->getDescripcion() << endl << endl;
+    LaFabrica* laFabrica = LaFabrica::getInstance();
+    IVideojuegoController* iv = laFabrica->getIVideojuegoController();
+    set<DtEstadistica> * es = iv->obtenerEstadisticas();
+
+    cout << "El sistema cuenta con las siguientes estadisticas:\n\n";
+    for(set<DtEstadistica>::iterator it = es->begin(); it != es->end(); ++it){
+        cout << "Nombre: " << it->getNombre() << endl;
+        cout << "Descripcion: " << it->getDescripcion() << endl << endl;
     }
-    //Desarrollador ingresa los nombres de las que esta interesado
-    HandlerUsuario * hUsuario = HandlerUsuario::getInstance();
-    Usuario * user = hUsuario->getLoggedUser();
-    Desarrollador * des = dynamic_cast<Desarrollador*>(user);
-    cout << "Ingrese los nombres de las estadisticas que quiere (0. Para no seleccionar ninguna) : " << endl << endl;
-    bool loopControl = 1;
-    int i = 1;
-    while (loopControl != 0) {
-        string nombreEstadistica;
-        cout << "Nombre estadistica "<< i <<": ";
-        cin >> nombreEstadistica;
-        cout << endl;
-        if (hEstadistica->findEstadistica(nombreEstadistica) != NULL) {
-            des->add(hEstadistica->findEstadistica(nombreEstadistica));
-            i++;
-        } else {
-            cout << "ERROR: Ingrese un nombre de estadistica valido porfavor" << endl << endl; 
-        }
-        cout << "Desea seleccionar otra estadistica? (1.Si/0.No): ";
-        cin >> loopControl;
-        cout << endl;
+    cout << "Ingrese el nombre de la estadistica (presione ENTER para finalizar): ";
+    set<string> seleccion;
+    string eststr;
+    bool fin=false;
+    bool inputOk=false;
+    long unsigned int counter = 0;
+    while(!fin && counter < es->size()){
+	getline(cin,eststr);
+	inputOk=false;
+	if(eststr == ""){
+	    fin = true;
+	    continue;
+	}
+	for(set<DtEstadistica>::iterator it = es->begin(); it != es->end() && !inputOk; ++it){
+	    if(eststr == it->getNombre()){
+		seleccion.insert(eststr);
+		inputOk=true;
+		counter++;
+		if(counter < es->size())
+		    cout << "Ingrese el nombre de una otra estadistica (ENTER para finalizar): ";
+	    }
+	}
+	if(!inputOk){	  
+	    reprintln();
+	    cout << "Por favor ingrese un nombre valido: ";
+	}	
     }
-    //Entre las estadísticas que estarán disponibles se encuentra una para obtener la cantidad total de horas jugadas de un videojuego, y otra para obtener la cantidad total de   jugadores que se han suscrito a cierto videojuego.
+    iv->cargarEstadisticas(seleccion);
+    delete es;
+    cout << "Se ha registrado su seleccion de estadisticas exitosamente.\n";
+    pkey();
     return 0;
 }
 
 int Sistema::consultarEstadisticas(){
-  LaFabrica * laFabrica = LaFabrica::getInstance();
-  IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
-  set<string>  * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
-  string vid;
-  cout << "Ingrese el nombre del videojuego al cual quiere consultar sus estadisticas: "<< endl;
-  cin >> vid;
-  delete vjDes;
-  IVideo->obtenerEstadisticas(vid);
-
+    LaFabrica * laFabrica = LaFabrica::getInstance();
+    IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
+    set<string> * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
+    cout << "Videojuegos desarrollados por " << this->getLoggedUserEmail() << " :\n";
+    int i=0;
+    for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end();++it,++i){
+	cout << i << ". " << *it << endl; 
+    }
+    string vid;
+    cout << "\nIngrese el nombre del videojuego del cual desea consultar sus estadisticas: ";
+    bool inok=false;
+    while(!inok){ 
+	getline(cin,vid);
+	for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end() && !inok;++it,++i){
+	    if(*it==vid)
+		inok=true;
+	}
+	if(!inok){
+	    reprintln();
+	    cout << "Por favor seleccione un nombre de videojuego valido: ";
+	}
+    }
+    delete vjDes;
+    set<DtEstadistica> * e = IVideo->obtenerEstadisticas(vid);
+    cout << "\nEstadisticas para " << vid << ":\n";
+    for(set<DtEstadistica>::iterator it = e->begin(); it!=e->end();++it)
+	cout << it->getNombre() << ": " << it->getValor() << endl;
+    cout << "\nSe han desplegado las estadisticas del videojuego exitosamente.\n";
+    delete e;
+    pkey();
     return 0;
 }
 

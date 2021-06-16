@@ -249,6 +249,51 @@ DtSuscripcion VideojuegoController::getSuscripcion(string v){
     return DtSuscripcion(DtFechaHora(0,0,0,0,0),TipoPago::Tarjeta,TipoValido::Vitalicia,TipoEstado::Inactiva); 
 }
 
+set<DtEstadistica> * VideojuegoController::obtenerEstadisticas(){
+    /* F
+    set<DtEstadistica> * x = new set<DtEstadistica>;
+    Desarrollador * dev = getDev();
+    set<Estadistica*> * deve = dev->getEstadisticas();
+    for(set<Estadistica*>::iterator it = deve->begin(); it != deve->end(); ++it){
+	x->insert((*it)->procesarEstadistica(nullptr));
+    }
+    
+    delete deve;
+    return x;
+    */
+    set<DtEstadistica> * x = new set<DtEstadistica>;
+    HandlerEstadistica * h = HandlerEstadistica::getInstance();
+    map<string,Estadistica*>* senbu = h->getEstadistica();
+    for(map<string,Estadistica*>::iterator it = senbu->begin(); it!=senbu->end();++it){
+	x->insert(it->second->procesarEstadistica(nullptr));
+    }
+    return x;
+}
+
+set<DtEstadistica> * VideojuegoController::obtenerEstadisticasInv(){
+    set<DtEstadistica> * x = new set<DtEstadistica>;
+    HandlerEstadistica * h = HandlerEstadistica::getInstance();
+    map<string,Estadistica*>* senbu = h->getEstadistica();
+    Desarrollador * dev = getDev();
+    set<Estadistica*> * deve = dev->getEstadisticas();
+    for(map<string,Estadistica*>::iterator it = senbu->begin(); it!=senbu->end();++it)
+	if(deve->find(it->second) == deve->end())
+	    x->insert(it->second->procesarEstadistica(nullptr));
+    delete deve;
+    return x;
+}
+
+void VideojuegoController::cargarEstadisticas(set<string> x){
+    Desarrollador * d = getDev();
+    HandlerEstadistica * h = HandlerEstadistica::getInstance();
+    map<string,Estadistica*>* senbu = h->getEstadistica();
+    //Resetea las estadisticas seleccionadas por el developer
+    d->resetEstadisticas();
+    for(map<string,Estadistica*>::iterator it = senbu->begin(); it!=senbu->end();++it)
+	if(x.find(it->first) != x.end())
+	    d->add(it->second);
+}
+
 VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",TipoCategoria::Otro){
     categoriaCache = new set<Categoria*>;
     loggedUser = nullptr;

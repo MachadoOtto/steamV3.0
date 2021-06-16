@@ -17,11 +17,17 @@ DtEstadistica::DtEstadistica(string nom, string des, float vit) {
     descripcion = des;
 }
 
-float DtEstadistica::getValor() { return valor; }
+float DtEstadistica::getValor() const{
+    return valor; 
+}
 
-string DtEstadistica::getNombre() { return nombre; }
+string DtEstadistica::getNombre() const{ 
+    return nombre;
+}
 
-string DtEstadistica::getDescripcion() { return descripcion; }
+string DtEstadistica::getDescripcion() const{
+    return descripcion;
+}
 
 //corregir luego :^)
 ostream& operator<<(ostream& o, DtEstadistica p) {
@@ -30,7 +36,7 @@ ostream& operator<<(ostream& o, DtEstadistica p) {
 }
 
 bool operator<(const DtEstadistica v1,const DtEstadistica v2){
-    return (v1.valor < v2.valor);
+    return (v1.nombre < v2.nombre);
 }
 
 

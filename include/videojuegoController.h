@@ -29,6 +29,7 @@
 #include "dtVideojuego.h"
 #include "dtSuscripcion.h"
 #include "suscripcion.h"
+#include "dtEstadistica.h"
 
 using std::vector;
 using std::string;
@@ -92,6 +93,11 @@ public:
 
     //Caso de uso SuscribirseVideojuego
     DtSuscripcion getSuscripcion(string);
+    
+    //Caso de uso seleccionarEstadisticas
+    set<DtEstadistica> * obtenerEstadisticas();
+    set<DtEstadistica> * obtenerEstadisticasInv();
+    void cargarEstadisticas(set<string>);
 
     static VideojuegoController * getInstance();
     ~VideojuegoController();

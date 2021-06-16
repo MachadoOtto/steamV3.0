@@ -36,12 +36,13 @@ class Desarrollador: public Usuario {
         void add(Estadistica *);
         void remove(Estadistica *);
         Estadistica * findEstadistica(std::string);
-        
+	std::set<Estadistica *> * getEstadisticas(); 
         std::set<std::string> * getVjSinPartidasActivas();
         std::set<std::string> * getVideojuegosDesarrollados();
         Videojuego * publishVideogame(DtVideojuego,std::set<Categoria *> *);
         void suscribirEstadistica(Estadistica *);
         std::set<DtEstadistica> * solicitarEstadisticas(Videojuego *);
+	void resetEstadisticas();
         ~Desarrollador();
 };
 

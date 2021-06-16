@@ -52,7 +52,7 @@ bool HandlerUsuario::existeUsuario(string emailUsuario) {
 void HandlerUsuario::addUsuario(Usuario* user) {
     usuarios->insert(map<string, Usuario*>::value_type(user->getEmail(), user));
 }
-
+//corregir si es necesario para que retorne una estructura deleteable
 map<string, Usuario*>* HandlerUsuario::obtenerUsuarios() { return usuarios; }
 
 bool HandlerUsuario::hayUsuarios() { return (!(usuarios->empty())); }

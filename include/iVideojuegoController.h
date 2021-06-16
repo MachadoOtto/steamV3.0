@@ -63,6 +63,11 @@ public:
 
     //Caso de uso SuscribirseVideojuego
     virtual DtSuscripcion getSuscripcion(string)=0;
+ 
+    //Caso de uso seleccionarEstadisticas
+    virtual set<DtEstadistica> * obtenerEstadisticas()=0;
+    virtual set<DtEstadistica> * obtenerEstadisticasInv()=0;
+    virtual void cargarEstadisticas(set<string>)=0;
 
     virtual ~IVideojuegoController(){}
 };
