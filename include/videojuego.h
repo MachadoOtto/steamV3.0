@@ -48,7 +48,7 @@ class Videojuego {
         set<Suscripcion*> *suscripciones;
         map<int,Partida*> *partidas;
         map<string,Categoria*> *categorias;
-	vector<int>* opiniones; 
+	    map<string,int>* opiniones; 
         
     public:
         Videojuego(DtVideojuego,map<string,Categoria*>*);
