@@ -301,7 +301,7 @@ int Sistema::cargarDatosPrueba(){
     iifp->confirmarPartida();
     iifp->clearCache();
 
-    fechaSistema::fecha = DtFechaHora(2021,6,5,17,0); // DtFechaHora(anio, mes, dia, hora, min).
+    fechaSistema::fecha = DtFechaHora(2021,6,6,17,0); // DtFechaHora(anio, mes, dia, hora, min).
     iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
     iu->iniciarSesion();
     iifp->iniciarSesion();
@@ -929,33 +929,33 @@ int Sistema::suscribirseVideojuego(){
     vector<set<DtVideojuego>> * vj = IVid->obtenerSuscripcionesVideojuegos();
     cout << "Seleccione el juego al que desea contratar una suscripcion o, teniendo una suscripcion activa, desea desuscribirse.\n\n";
     if((*vj)[0].size() == 0)
-	cout << "Usted no cuenta con ninguna suscripion activa de ningun videojuego.\n";
+	    cout << "Usted no cuenta con ninguna suscripion activa de ningun videojuego.\n";
     else
-	cout << "Usted tiene suscripciones activas de los siguientes videojuegos:\n";
+	    cout << "Usted tiene suscripciones activas de los siguientes videojuegos:\n";
     int i = 1;
     for(set<DtVideojuego>::iterator it = (*vj)[0].begin(); it != (*vj)[0].end(); ++it,++i){
-	cout << i << ". " << it->getNombre() << endl;
-	cout << it->getDtPrecios();
-	TipoValido tipo = IVid->getSuscripcion(it->getNombre()).getTipo();
-	cout << "Periodo de suscripcion: ";
-	if (tipo == TipoValido::UnMes)
-	    cout << "Un mes.\n";
-	if (tipo == TipoValido::TresMeses)
-	    cout << "Tres meses.\n";
-	if (tipo == TipoValido::Anio)
-	    cout << "Un anio.\n";
-	if (tipo == TipoValido::Vitalicia)
-	    cout << "Vitalicia.\n";
-	cout << "Fecha de compra: " << IVid->getSuscripcion(it->getNombre()).getFecha() << endl;
-	cout << endl;
+        cout << i << ". " << it->getNombre() << endl;
+        cout << it->getDtPrecios();
+        TipoValido tipo = IVid->getSuscripcion(it->getNombre()).getTipo();
+        cout << "Periodo de suscripcion: ";
+        if (tipo == TipoValido::UnMes)
+            cout << "Un mes.\n";
+        if (tipo == TipoValido::TresMeses)
+            cout << "Tres meses.\n";
+        if (tipo == TipoValido::Anio)
+            cout << "Un anio.\n";
+        if (tipo == TipoValido::Vitalicia)
+            cout << "Vitalicia.\n";
+        cout << "Fecha de compra: " << IVid->getSuscripcion(it->getNombre()).getFecha() << endl;
+        cout << endl;
     }
     if((*vj)[1].size() == 0)
-	cout << "No hay ningun videojuego al que pueda suscribirse en este momento.\n";
+	    cout << "No hay ningun videojuego al que pueda suscribirse en este momento.\n";
     else
-	cout << "Usted no tiene suscripciones activas para los siguientes videojuegos:\n";
+	    cout << "Usted no tiene suscripciones activas para los siguientes videojuegos:\n";
     i = 1;
     for(set<DtVideojuego>::iterator it = (*vj)[1].begin(); it != (*vj)[1].end(); ++it,++i){
-	cout << i << ". " << it->getNombre() << endl;
+	    cout << i << ". " << it->getNombre() << endl;
         cout << it->getDtPrecios();
     }
 
@@ -963,34 +963,34 @@ int Sistema::suscribirseVideojuego(){
     string vjSus;
     int vjSel = 0; 
     while(!vjSel){
-	getline(cin,vjSus);
-	if(vjSus == ""){
-	    cout << "Se ha cancelado la operacion Suscribirse a videojuego.\n";
-	    delete vj;
-	    pkey();
-	    return 0;
-	}
-	for(set<DtVideojuego>::iterator it = (*vj)[0].begin(); it != (*vj)[0].end() && !vjSel; ++it)
-	    if(it->getNombre() == vjSus){
-		if(IVid->getSuscripcion(it->getNombre()).getTipo() == TipoValido::Vitalicia)
-		    vjSel=3;
-		else
-		    vjSel = 1;
-	    }
-	for(set<DtVideojuego>::iterator it = (*vj)[1].begin(); it != (*vj)[1].end() && !vjSel; ++it)
-	    if(it->getNombre() == vjSus)
-		vjSel = 2;
-	if(!vjSel){
-	    reprintln();
-	    cout << "Por favor ingrese un videojuego valido: ";
-	}
-	if(vjSel==3){
-	    reprintln();
-	    cout << "Error: Usted cuenta con una suscripccion vitalicia para el videojuego seleccionado, por lo que no es posible desuscribirse.\n";
-	    delete vj;
-	    pkey();
-	    return 0;
-	}
+	    getline(cin,vjSus);
+        if(vjSus == ""){
+            cout << "Se ha cancelado la operacion Suscribirse a videojuego.\n";
+            delete vj;
+            pkey();
+            return 0;
+        }
+        for(set<DtVideojuego>::iterator it = (*vj)[0].begin(); it != (*vj)[0].end() && !vjSel; ++it)
+            if(it->getNombre() == vjSus){
+                if(IVid->getSuscripcion(it->getNombre()).getTipo() == TipoValido::Vitalicia)
+                    vjSel=3;
+                else
+                    vjSel = 1;
+            }
+        for(set<DtVideojuego>::iterator it = (*vj)[1].begin(); it != (*vj)[1].end() && !vjSel; ++it)
+            if(it->getNombre() == vjSus)
+                vjSel = 2;
+        if(!vjSel){
+            reprintln();
+            cout << "Por favor ingrese un videojuego valido: ";
+        }
+        if(vjSel==3){
+            reprintln();
+            cout << "Error: Usted cuenta con una suscripccion vitalicia para el videojuego seleccionado, por lo que no es posible desuscribirse.\n";
+            delete vj;
+            pkey();
+            return 0;
+        }
     } 
     IVid->seleccionarVideojuego(vjSus);
     delete vj;

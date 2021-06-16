@@ -34,6 +34,7 @@ private:
     map<string, Jugador*>* jugadoresUnidos;
 public:
     PartidaMultijugador(DtPartidaMultijugador);
+    float getDuracion();
     bool getTransmitidaEnVivo();
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
@@ -41,7 +42,6 @@ public:
     virtual void asignarHoraFinalizacion();
     virtual void eliminarAssoc();
     void abandonar(JugadorMulti*);
-    float calcularDuracion();
     ~PartidaMultijugador();
 };
 

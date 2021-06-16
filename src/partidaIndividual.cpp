@@ -14,6 +14,14 @@ PartidaIndividual::PartidaIndividual(DtPartidaIndividual datos) : Partida(DtPart
     partidaAnterior = NULL;
 }
 
+float PartidaIndividual::getDuracion() { 
+    if (this->esActiva()) {
+        return this->getDtFechaHora().diffHoras(fechaSistema::fecha);
+    } else {
+        return this->getDuracion();
+    }
+}
+
 void PartidaIndividual::setPartidaAnterior(PartidaIndividual* pAnt) {
     partidaAnterior = pAnt;
 }

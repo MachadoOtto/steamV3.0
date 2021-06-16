@@ -159,7 +159,7 @@ std::vector<std::string>* IFPController::obtenerHistorialPartidas() {
         if ((*it)->getVideojuego()->getNombre() == vj->getNombre()) {
             aInsertar = aInsertar + "ID: " + std::to_string((*it)->getId()) + "\n" + "Fecha de creacion: " + (*it)->getDtFechaHora().getString() + "\n"
             + "Duracion: " + std::to_string((*it)->getDuracion()) + ".\n";
-            res->insert(res->end(), aInsertar);
+            res->insert(res->begin(), aInsertar);
         }
         aInsertar = "";
     }
@@ -205,7 +205,7 @@ void IFPController::confirmarFinalizarPartida(int identificador) {
             }
         }
     }
-    p->finalizarPartida();   
+    p->finalizarPartida();
 }
 
 void IFPController::clearCache() {

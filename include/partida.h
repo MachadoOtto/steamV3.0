@@ -31,7 +31,7 @@ class Partida {
         int getId();
         Jugador* getHost();
         DtFechaHora getDtFechaHora();
-        float getDuracion();
+        virtual float getDuracion() = 0;
         void setDuracion(float);
         void setActiva(bool);
         bool esActiva();
