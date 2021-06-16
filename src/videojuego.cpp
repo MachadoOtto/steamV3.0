@@ -136,13 +136,7 @@ DtPrecios Videojuego::getCostoSuscripciones() {
 float Videojuego::getTotalHorasJugadas() {
     float s = 0;
     for(map<int,Partida*>::iterator it= partidas->begin(); it!=partidas->end();++it){
-	PartidaMultijugador * pm = dynamic_cast<PartidaMultijugador*>(it->second);
-	if(pm){
-	    s+= pm->calcularDuracion();
-	}
-	else{
-	    s+= it->second->getDtFechaHora().diffHoras(fechaSistema::fecha);
-	}
+	s+=it->second->getDuracion();
     }
     s = totalHorasJugadas;
     return totalHorasJugadas;
