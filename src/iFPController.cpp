@@ -130,15 +130,41 @@ std::map<int, std::string>* IFPController::obtenerPartidasActivas() {
                     aInsertar = aInsertar + "\t" + it->first + "\n";
                 }
             }
+            res->insert(map<int, std::string>::value_type(it->second->getId(), aInsertar));
         }
-        res->insert(map<int, std::string>::value_type(it->second->getId(), aInsertar));
         aInsertar = "";
     }
     return res;
 }
 
-std::vector<DtPartidaIndividual*>* IFPController::obtenerHistorialPartidas() {
-    return host->obtenerHistorialPartidas();
+std::set<int>* IFPController::obtenerHistorialIDPartidas() {
+    std::set<int>* res = new std::set<int>;
+    std::vector<PartidaIndividual*>* partidas = host->obtenerHistorialPartidas();
+    int aInsertar;
+    for (std::vector<PartidaIndividual*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
+        if ((*it)->getVideojuego()->getNombre() == vj->getNombre()) {
+            aInsertar = (*it)->getId();
+            res->insert(aInsertar);
+        }
+    }
+    delete partidas;
+    return res;
+}
+
+std::vector<std::string>* IFPController::obtenerHistorialPartidas() {
+    std::vector<std::string>* res = new std::vector<std::string>;
+    std::vector<PartidaIndividual*>* partidas = host->obtenerHistorialPartidas();
+    std::string aInsertar = "";
+    for (std::vector<PartidaIndividual*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
+        if ((*it)->getVideojuego()->getNombre() == vj->getNombre()) {
+            aInsertar = aInsertar + "ID: " + std::to_string((*it)->getId()) + "\n" + "Fecha de creacion: " + (*it)->getDtFechaHora().getString() + "\n"
+            + "Duracion: " + std::to_string((*it)->getDuracion()) + ".\n";
+            res->insert(res->end(), aInsertar);
+        }
+        aInsertar = "";
+    }
+    delete partidas;
+    return res;
 }
 
 std::set<std::string> * IFPController::obtenerJugadoresSubscriptos() {

@@ -1147,43 +1147,34 @@ int Sistema::iniciarPartida(){
                 }
             }
             if ((esCont == "1") || (esCont == "Si") || (esCont == "si")) {
-                vector<DtPartidaIndividual*>* pAnteriores = interface->obtenerHistorialPartidas();
+                vector<string>* pAnteriores = interface->obtenerHistorialPartidas();
+                set<int>* idList = interface->obtenerHistorialIDPartidas();
                 if (!(pAnteriores->empty())) {
-                    cout << "Partidas anteriores: \n";
-                    for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                        cout << *(*it);
+                    cout << "\nHistorial de partidas individuales finalizadas del videojuego " << nombreVj << " : \n\n";
+                    for (vector<string>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
+                        cout << *it << "\n";
                     }
-                    cout << "Ingrese el Id de la partida a continuar: \n";
+                    cout << "\nIngrese el ID de la partida a continuar: ";
                     while (true) {
                         if (!(cin >> idAnterior)) {
                             clinput();
-                            cout << "Porfavor, ingrese un Id correcto: ";
+                            cout << "Porfavor, ingrese un ID correcto: ";
                         } else {
                             clinput();
-                            bool exId = false;
-                            for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                                if ((*it)->getId() == idAnterior) {
-                                    exId = true;
-                                    break;
-                                }
-                                cout << *(*it);
-                            }
-                            if (!exId) {
+                            if (idList->find(idAnterior) == idList->end()) {
                                 reprintln();
-                                cout << "Porfavor, ingrese un Id correcto: ";
+                                cout << "Porfavor, ingrese un ID correcto: ";
                             } else {
                                 break;
                             }
                         }
                     }
                     interface->seleccionarContinuacionPartida(idAnterior);
-                    for (vector<DtPartidaIndividual*>::iterator it = pAnteriores->begin(); it != pAnteriores->end(); ++it) {
-                        delete *it;
-                    }
                 } else {
-                    cout << "\nERROR: Usted no tiene partidas finalizadas. Su partida no sera continuacion de otra.\n";
+                    cout << "\nADVERTENCIA: Usted no tiene partidas finalizadas. Su partida no sera continuacion de otra.\n";
                 }
                 delete pAnteriores;
+                delete idList;
             }
         } else {
             tipoPartida = "Multijugador";
@@ -1226,7 +1217,7 @@ int Sistema::iniciarPartida(){
                     getline(cin, nick);
                 }
             } else {
-                cout << "\nERROR: No hay jugadores que puedan unirse en el sistema. La partida se iniciara sin jugadores unidos.\n";
+                cout << "\nADVERTENCIA: No hay jugadores que puedan unirse en el sistema. La partida se iniciara sin jugadores unidos.\n";
             }
             delete jugadoresSus;
         }
@@ -1345,7 +1336,7 @@ int Sistema::finalizarPartida(){
                 cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
             } else {
                 clinput();
-                if ((partidasActivas->find(id) == partidasActivas->end())) {
+                if ((id != -1) && (partidasActivas->find(id) == partidasActivas->end())) {
                     reprintln();
                     cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
                 } else {
@@ -1355,9 +1346,9 @@ int Sistema::finalizarPartida(){
         }
         if (id != -1) {
             interface->confirmarFinalizarPartida(id);
-            cout << "Se ha finalizado la partida (ID: " << id << ") correctamente.";
+            cout << "Se ha finalizado la partida (ID: " << id << ") correctamente.\n";
         } else {
-            cout << "No se ha finalizado la partida.";
+            cout << "No se ha finalizado la partida.\n";
         }
     } else {
         cout << "\nERROR: Usted no tiene partidas activas.\n";

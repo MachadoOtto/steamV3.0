@@ -48,7 +48,7 @@ void Partida::setVideojuego(Videojuego* vj) {
 Videojuego* Partida::getVideojuego() { return videogame; }
 
 void Partida::finalizarPartida() {
-    this->setActiva(false);
+    activa = false;
     this->asignarHoraFinalizacion();
 }
 
