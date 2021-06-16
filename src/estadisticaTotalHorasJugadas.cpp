@@ -14,6 +14,9 @@ EstadisticaTotalHorasJugadas::EstadisticaTotalHorasJugadas(string name,string de
     Estadistica(name,desc){}
 
 DtEstadistica EstadisticaTotalHorasJugadas::procesarEstadistica(Videojuego * v){
-    return DtEstadistica(nombre,descripcion,v->getTotalHorasJugadas());
+    if(v==nullptr)
+	return DtEstadistica(nombre,descripcion,0);
+    else
+	return DtEstadistica(nombre,descripcion,v->getTotalHorasJugadas());
 }
 

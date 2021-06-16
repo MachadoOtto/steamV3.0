@@ -22,7 +22,7 @@ using namespace std;
 
 int menuUsuario(Sistema * sys){
     int controlVar=0;    
-    while (controlVar!=7){
+    while (controlVar!=8){
 	cls();
 	ptitle();
 	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
@@ -34,10 +34,11 @@ int menuUsuario(Sistema * sys){
         cout << " 4. Abandonar partida multijugador" << endl;
         cout << " 5. Finalizar partida" << endl;
         cout << " 6. Ver informacion de videojuego" << endl;
-        cout << " 7. Salir" << endl;
+        cout << " 7. Modificar fecha del sistema" << endl;
+        cout << " 8. Salir" << endl;
         cout << "Por favor ingrese una opcion: ";		
 	
-	controlVar = takeInputRange(1,7);
+	controlVar = takeInputRange(1,8);
         switch (controlVar) {
 	    case 1:{
 		sys->suscribirseVideojuego();
@@ -63,6 +64,9 @@ int menuUsuario(Sistema * sys){
 		sys->verInformacionVideojuego();
 		break;
 	    }
+	    case 7:{
+		sys->modificarFecha();
+	    }
 	}
     }
     return 0;
@@ -71,7 +75,7 @@ int menuUsuario(Sistema * sys){
 
 int menuDesarrollador(Sistema * sys){
     int controlVar=0;    
-    while (controlVar!=7){
+    while (controlVar!=8){
 	cls();
 	ptitle();
 	cout << "\nFecha actual del sistema: " << fechaSistema::fecha << endl;
@@ -83,10 +87,11 @@ int menuDesarrollador(Sistema * sys){
         cout << " 4. Seleccionar estadisticas" << endl;
         cout << " 5. Consultar estadisticas" << endl;
         cout << " 6. Ver informacion de videojuego" << endl;
-        cout << " 7. Salir" << endl;
+        cout << " 7. Modificar fecha del sistema" << endl;
+        cout << " 8. Salir" << endl;
         cout << "Por favor ingrese una opcion: ";		
 	
-	controlVar = takeInputRange(1,7);
+	controlVar = takeInputRange(1,8);
         switch (controlVar) {
 	    case 1:{
 		sys->cargarCategoria();
@@ -110,6 +115,10 @@ int menuDesarrollador(Sistema * sys){
 	    }
 	    case 6:{
 		sys->verInformacionVideojuego();
+		break;
+	    }
+	    case 7:{
+		sys->modificarFecha();
 		break;
 	    }
 	}

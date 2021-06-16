@@ -62,11 +62,9 @@ bool Videojuego::estaActivo() {
 
 //--- ConfirmarPartida Individual ---
 void Videojuego::confirmarPartida(Jugador* host,int id,PartidaIndividual* pCont) {
-    DtPartidaIndividual dtPInd(0,fechaSistema::fecha,0,true,0);
+    DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,-1);
     if (pCont != NULL) {
-        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,pCont->getId());
-    } else {
-        DtPartidaIndividual dtPInd(id,fechaSistema::fecha,0,true,-1);
+        dtPInd = DtPartidaIndividual(id,fechaSistema::fecha,0,true,pCont->getId());
     }
     PartidaIndividual* pInd = new PartidaIndividual(dtPInd); 
     pInd->setHost(host);
@@ -82,7 +80,11 @@ void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Ju
     PartidaMultijugador* pMulti = new PartidaMultijugador(dtPMulti); 
     pMulti->setHost(host);
     pMulti->setVideojuego(this);
+    pMulti->setJugadoresUnidos(jUnidos);
     host->agregarPartida(pMulti); 
+    for (map<string, Jugador*>::iterator it = jUnidos->begin(); it != jUnidos->end(); ++it) {
+        it->second->add(pMulti);
+    }
     this->partidas->insert(map<int,Partida*>::value_type(pMulti->getId(),pMulti));
 }
 
@@ -136,7 +138,11 @@ float Videojuego::getTotalHorasJugadas() {
 }
 
 float Videojuego::getPuntaje() {
-    return this->puntaje;
+    int s = 0;
+    for(vector<int>::iterator it = opiniones->begin(); it != opiniones->end(); ++it) 
+	s += (*it);
+    puntaje = ((float)s)/((float)(opiniones->size()));
+    return puntaje;
 }
 
 int Videojuego::getTotalJugadoresSuscriptos() {

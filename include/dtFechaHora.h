@@ -29,6 +29,7 @@ public:
     int getMinuto();
     float diffHoras(DtFechaHora); // Devuelve la diferencia entre fechas en horas. ATENCION: La fecha ingresada debe ser mayor a la actual.
     friend bool operator<(const DtFechaHora, const DtFechaHora);
+    string getString();
 };
 
 // Sobrecarga del operador de flujo.

@@ -131,19 +131,8 @@ std::vector<DtPartidaIndividual*>* Jugador::obtenerHistorialPartidas() {
     return res;
 }
 
-std::vector<DtPartidaMultijugador*>* Jugador::obtenerPartidasUnido() {
-    std::vector<DtPartidaMultijugador*>* res = new std::vector<DtPartidaMultijugador*>;
-    for (std::map<int, PartidaMultijugador*>::iterator it = partidasUnido->begin(); it != partidasUnido->end(); ++it) {
-        DtPartidaMultijugador* aInsertar = dynamic_cast<DtPartidaMultijugador*>(it->second->obtenerDatosPartida());
-        std::vector<DtPartidaMultijugador*>::iterator itVector = res->begin();
-        for ( ; itVector != res->end(); ++itVector) {
-            if ((*itVector)->getFecha() < aInsertar->getFecha()) {
-                break;
-            }
-        }
-        res->insert(itVector, aInsertar);
-    }
-    return res;
+std::map<int,PartidaMultijugador *>* Jugador::obtenerPartidasUnido() {
+    return partidasUnido;
 }
 
 PartidaIndividual * Jugador::seleccionarContinuacionPartida(int identificador) {

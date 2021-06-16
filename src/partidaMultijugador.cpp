@@ -12,7 +12,7 @@
 PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(DtPartida(datos.getId(), datos.getFecha(),
         datos.getDuracion(), datos.getActiva())) {
     transmitidaEnVivo = datos.getTransmitidaEnVivo();
-    jugadoresUnidos = new map<string, Jugador*>;
+    jugadoresUnidos = NULL;
     jugadoresMultis = new vector<JugadorMulti*>;
 }
     

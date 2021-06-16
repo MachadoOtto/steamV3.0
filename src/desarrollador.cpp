@@ -13,7 +13,6 @@
 #include "../include/estadistica.h"
 #include "../include/videojuego.h"
 #include "../include/dtEstadistica.h"
-#include "../include/handlerEstadistica.h"
 
 #include <string>
 #include <set>
@@ -45,6 +44,9 @@ void Desarrollador::remove(Videojuego * vj) {
 
 Videojuego * Desarrollador::findVideojuego(std::string nombreVj) {
     return (*videojuegosDesarrollados)[nombreVj];
+}
+void Desarrollador::resetEstadisticas(){
+    estadisticas->clear();
 }
 
 void Desarrollador::add(Estadistica * est) {
@@ -106,7 +108,14 @@ std::set<DtEstadistica> * Desarrollador::solicitarEstadisticas(Videojuego * vj) 
     return res;
 }
 
-
+std::set<Estadistica *> * Desarrollador::getEstadisticas(){
+    std::set<Estadistica *> *x = new std::set<Estadistica *>;
+    for(std::map<std::string,Estadistica*>::iterator it = estadisticas->begin(); it != estadisticas->end(); it++){
+	x->insert(it->second);
+    }
+    return x;
+}
+   
 Desarrollador::~Desarrollador() { //messi? messi nada. Migue dice que muy mal.
     /*
     for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {

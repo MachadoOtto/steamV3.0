@@ -610,19 +610,80 @@ int Sistema::eliminarVideojuego(){
 }
 
 int Sistema::seleccionarEstadistica(){
+    LaFabrica* laFabrica = LaFabrica::getInstance();
+    IVideojuegoController* iv = laFabrica->getIVideojuegoController();
+    set<DtEstadistica> * es = iv->obtenerEstadisticas();
+
+    cout << "El sistema cuenta con las siguientes estadisticas:\n\n";
+    for(set<DtEstadistica>::iterator it = es->begin(); it != es->end(); ++it){
+        cout << "Nombre: " << it->getNombre() << endl;
+        cout << "Descripcion: " << it->getDescripcion() << endl << endl;
+    }
+    cout << "Ingrese el nombre de la estadistica (presione ENTER para finalizar): ";
+    set<string> seleccion;
+    string eststr;
+    bool fin=false;
+    bool inputOk=false;
+    long unsigned int counter = 0;
+    while(!fin && counter < es->size()){
+	getline(cin,eststr);
+	inputOk=false;
+	if(eststr == ""){
+	    fin = true;
+	    continue;
+	}
+	for(set<DtEstadistica>::iterator it = es->begin(); it != es->end() && !inputOk; ++it){
+	    if(eststr == it->getNombre()){
+		seleccion.insert(eststr);
+		inputOk=true;
+		counter++;
+		if(counter < es->size())
+		    cout << "Ingrese el nombre de una otra estadistica (ENTER para finalizar): ";
+	    }
+	}
+	if(!inputOk){	  
+	    reprintln();
+	    cout << "Por favor ingrese un nombre valido: ";
+	}	
+    }
+    iv->cargarEstadisticas(seleccion);
+    delete es;
+    cout << "Se ha registrado su seleccion de estadisticas exitosamente.\n";
+    pkey();
     return 0;
 }
 
 int Sistema::consultarEstadisticas(){
-  LaFabrica * laFabrica = LaFabrica::getInstance();
-  IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
-  set<string>  * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
-  string vid;
-  cout << "Ingrese el nombre del videojuego al cual quiere consultar sus estadisticas: "<< endl;
-  cin >> vid;
-  delete vjDes;
-  IVideo->obtenerEstadisticas(vid);
-
+    LaFabrica * laFabrica = LaFabrica::getInstance();
+    IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
+    set<string> * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
+    cout << "Videojuegos desarrollados por " << this->getLoggedUserEmail() << " :\n";
+    int i=0;
+    for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end();++it,++i){
+	cout << i << ". " << *it << endl; 
+    }
+    string vid;
+    cout << "\nIngrese el nombre del videojuego del cual desea consultar sus estadisticas: ";
+    bool inok=false;
+    while(!inok){ 
+	getline(cin,vid);
+	for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end() && !inok;++it,++i){
+	    if(*it==vid)
+		inok=true;
+	}
+	if(!inok){
+	    reprintln();
+	    cout << "Por favor seleccione un nombre de videojuego valido: ";
+	}
+    }
+    delete vjDes;
+    set<DtEstadistica> * e = IVideo->obtenerEstadisticas(vid);
+    cout << "\nEstadisticas para " << vid << ":\n";
+    for(set<DtEstadistica>::iterator it = e->begin(); it!=e->end();++it)
+	cout << it->getNombre() << ": " << it->getValor() << endl;
+    cout << "\nSe han desplegado las estadisticas del videojuego exitosamente.\n";
+    delete e;
+    pkey();
     return 0;
 }
 
@@ -801,26 +862,26 @@ int Sistema::asignarPuntajeVideojuego(){
 
     LaFabrica * f = LaFabrica::getInstance();
     IVideojuegoController * h = f->getIVideojuegoController();
-    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n";
+    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n\n";
     set<DtVideojuego>* namae = h->verVideojuegos();
     for(set<DtVideojuego>::iterator it = namae->begin(); it != namae->end(); i++,it++){
-	cout << "\t" << i << ". Nombre: " << it->getNombre() << "\n";
+	cout << i << ". Nombre: " << it->getNombre() << "\n";
 	for(int j=0;j<i/10;j++)
 	    cout << " ";
-	cout << "\tDescripcion: " << it->getDescripcion() << "\n";
+	cout << "\tDescripcion: " << it->getDescripcion() << "\n\n"; 
     }
-    cout << "\nIngrese el nombre del videojuego que desea puntuar: ";
+    cout << "Ingrese el nombre de la partida que desea puntuar: ";
     while(!nok){
-	getline(cin,p);
-	for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
-	    if(it->getNombre() == p)
-		nok = true;
-	if(!nok){
-	    reprintln();
-	    cout << "Por favor ingrese una opcion valida: ";
+	    getline(cin,p);
+	    for(set<DtVideojuego>::iterator it = namae->begin(); it!=namae->end() && !nok; ++it)
+	        if(it->getNombre() == p)
+		        nok = true;
+	    if(!nok){
+	        reprintln();
+	        cout << "Por favor ingrese una opcion valida: ";
         }
     }	
-    cout << "Ingrese su puntuacion para el videojuego \""<<p<<"\"(1-5): ";
+    cout << "Ingrese su puntuacion para el videojuego \""<<p<<"\" (1-5): ";
     kp = takeInputRange(1,5);
     int s = h->puntuar(p,kp);   	
     if(s)
@@ -959,7 +1020,6 @@ int Sistema::iniciarPartida(){
                         jIngresados->insert(nick);
                         interface->aniadirJugadorPartida(nick);
                         cout << "Jugador unido con exito. Ingrese otro o presione ENTER para finalizar: ";
-                        break;
                     }
                     getline(cin, nick);
                 }
@@ -1022,48 +1082,42 @@ int Sistema::iniciarPartida(){
 int Sistema::abandonarPartidaMultijugador(){
     LaFabrica* factory = LaFabrica::getInstance();
     IIFPController* interface = factory->getIIFPController();
-    vector<DtPartidaMultijugador*>* multiActivas = interface->obtenerPartidasMultiActivas();
-    cout << "Abandonar Partida Multijugador \n \n";
-    cout << "Partidas multijugador activas a las que se unio: \n";
-    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        cout << *(*it) << "\n";
-    }
-    cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
-    int id;
-    while (true) {
-        if (!(cin >> id)) {
-		    clinput();
-            reprintln();
-            cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
-        } else {
-            if (id == -1) {
-                break;
-            }
-            clinput();
-            bool exId = false;
-            for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-                if ((*it)->getId() == id) {
-                    exId = true;
-                    break;
-                }
-            }
-            if (!exId) {
+    interface->iniciarSesion();
+    map<int, string>* multiActivas = interface->obtenerPartidasMultiActivas();
+    int id = -1;
+    if (!(multiActivas->empty())) {
+        cout << "Partidas multijugador unido: \n\n";
+        for (map<int, string>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
+            cout << it->second << "\n";
+        }
+        cout << "Ingrese la Id de la partida multijugador a abandonar (ingrese '-1' si desea cancelar): \n";
+        while (true) {
+            if (!(cin >> id)) {
+                clinput();
                 reprintln();
                 cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
             } else {
-                break;
+                if (id == -1) {
+                    break;
+                }
+                clinput();
+                if (multiActivas->find(id) == multiActivas->end()) {
+                    reprintln();
+                    cout << "Porfavor, ingrese un Id correcto (ingrese '-1' si desea cancelar): ";
+                } else {
+                    break;
+                }
             }
         }
-    }
-    for (vector<DtPartidaMultijugador*>::iterator it = multiActivas->begin(); it != multiActivas->end(); ++it) {
-        delete *it;
+    } else {
+        cout << "\nERROR: Usted no esta unido a ninguna partida.";
     }
     delete multiActivas;
     if (id != -1) {
         interface->confirmarAbandonarPartida(id);
-        cout << "Se ha abandonado la partida multijugador (ID: " << id << ") correctamente.";
+        cout << "\nSe ha abandonado la partida multijugador (ID: " << id << ") correctamente.\n";
     } else {
-        cout << "Se ha cancelado el abandono de la partida multijugador.";
+        cout << "\nSe ha cancelado el abandono de la partida multijugador.\n";
     }
     interface->clearCache();
     pkey();
