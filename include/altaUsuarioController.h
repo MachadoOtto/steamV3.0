@@ -29,7 +29,7 @@ private:
 
 public:
    static AltaUsuarioController * getInstance();
-   void ingresarUsuario(DtUsuario);
+   int ingresarUsuario(DtUsuario);
    void ingresarEmpresa(string);
    bool ingresarNickname(string);
    void ingresarDescripcion(string);

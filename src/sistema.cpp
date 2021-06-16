@@ -189,13 +189,22 @@ int Sistema::altaUsuario(){
     IAltaUsuarioController * IUsuario = laFabrica->getIAltaUsuarioController();
 
     string mail, pass;
+    int mailok;
     cout<< "Ingrese los siguientes datos para crear su usuario: "<< endl;
-    cout<< "Email: ";
-    getline(cin,mail);
-    cout<< "Contrasenia: ";
-    getline(cin,pass);
-    DtUsuario datos(mail, pass);
-    IUsuario->ingresarUsuario(datos);
+    do{
+	cout<< "Email: ";
+	getline(cin,mail);
+	cout<< "Contrasenia: ";
+	getline(cin,pass);
+	DtUsuario datos(mail, pass);
+	mailok = IUsuario->ingresarUsuario(datos);
+	if(mailok){
+	    reprintln();
+	    reprintln();
+	    reprintln();
+	    cout << "Error: Ya existe un usuario con dicho email. Por favor ingrese otro: \n";
+	}
+    }while(mailok);
     cout << endl;
     cout<<"Seleccione el tipo de usuario que desea dar de alta:"<< endl;
     cout << " 1. Jugador" << endl;
@@ -210,7 +219,7 @@ int Sistema::altaUsuario(){
         bool existe = IUsuario->ingresarNickname(name);
 	    while (existe){
 		   reprintln();
-		   cout << "Ese nickname ya está en uso, por favor ingrese otro: " << endl;
+		   cout << "El nickname seleccionado ya esta en uso. Por favor ingrese otro: ";
 		   getline(cin,name);
            existe = IUsuario->ingresarNickname(name);
         }
@@ -885,7 +894,7 @@ int Sistema::asignarPuntajeVideojuego(){
     int s = h->puntuar(p,kp);   	
     if(s)
 	cout << "Advertencia: Usted ya habia puntuado al videojuego seleccionado. Se ha sobreescrito dicho puntaje.\n";
-    cout << "Se ha registrado su puntaje exitosamente\n";
+    cout << "Se ha registrado su puntaje exitosamente.\n";
     delete namae;
     pkey();
     return 0;

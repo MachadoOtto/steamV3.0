@@ -19,8 +19,11 @@ AltaUsuarioController * AltaUsuarioController::getInstance(){
     return &instancia;
 }
 
-void AltaUsuarioController::ingresarUsuario(DtUsuario d){
-   datos = d;   
+int AltaUsuarioController::ingresarUsuario(DtUsuario d){
+    HandlerUsuario * hu = HandlerUsuario::getInstance();
+    bool x = hu->existeUsuario(d.getEmail());  
+    datos = d;   
+    return (int)x;
 }
 
 void AltaUsuarioController::ingresarEmpresa(string e){
@@ -38,7 +41,7 @@ bool AltaUsuarioController::ingresarNickname(string n){
 }
 
 void AltaUsuarioController::ingresarDescripcion(string d){
-   descripcion = d;
+    descripcion = d;
 }
 
 void AltaUsuarioController::clearCache(){
