@@ -22,8 +22,6 @@ int Partida::getId() { return identificador; }
 
 DtFechaHora Partida::getDtFechaHora() { return fecha; }
 
-float Partida::getDuracion() { return duracion; }
-
 void Partida::setDuracion(float f){duracion=f;}
 
 void Partida::setActiva(bool act) { activa = act; }

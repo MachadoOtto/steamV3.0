@@ -46,10 +46,22 @@ int DtFechaHora::getMinuto() { return min; }
 //int DtFechaHora::getSegundo() { return segundo; }
 
 float DtFechaHora::diffHoras(DtFechaHora fFinal) {
-    int min1, min2 = 0;
-    min1 = min + (hora + (dia + (mes + (anio) * 12) * 31) * 24) * 60;
-    min2 = fFinal.min + (fFinal.hora + (fFinal.dia + (fFinal.mes + (fFinal.anio) * 12) * 31) * 24) * 60;
-    return ((min2 - min1) / 60);
+    struct tm inicial = {0};
+    inicial.tm_hour = hora;   
+    inicial.tm_min = min; 
+    //inicial.tm_sec = segundo;
+    inicial.tm_year = anio - 1900; 
+    inicial.tm_mon = mes - 1; 
+    inicial.tm_mday = dia;
+    struct tm ultimo = {0};
+    ultimo.tm_hour = fFinal.hora;   
+    ultimo.tm_min = fFinal.min; 
+    //ultimo.tm_sec = fFinal.segundo;
+    ultimo.tm_year = fFinal.anio - 1900; 
+    ultimo.tm_mon = fFinal.mes - 1; 
+    ultimo.tm_mday = fFinal.dia;
+    float diff = difftime(mktime(&ultimo), mktime(&inicial)) / 60.0 / 60.0;
+    return diff;
 }
 
 bool operator<(const DtFechaHora dt1, const DtFechaHora dt2) {

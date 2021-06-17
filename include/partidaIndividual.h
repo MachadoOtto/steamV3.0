@@ -24,9 +24,9 @@ class PartidaIndividual: public Partida {
         PartidaIndividual* partidaAnterior;
     public:
         PartidaIndividual(DtPartidaIndividual);
+        float getDuracion();
         void setPartidaAnterior(PartidaIndividual*);
         PartidaIndividual* getPartidaAnterior();
-        virtual DtPartida* obtenerDatosPartida();
         virtual void asignarHoraFinalizacion();
         virtual void eliminarAssoc();
         ~PartidaIndividual();

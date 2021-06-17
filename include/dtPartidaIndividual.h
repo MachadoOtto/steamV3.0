@@ -18,7 +18,6 @@ class DtPartidaIndividual: public DtPartida{
     public:
         DtPartidaIndividual(int,DtFechaHora,float,bool,int);
         int getIdPartidaAnterior();
-        string getString();
 };
 
 std::ostream& operator<<(std::ostream&,DtPartidaIndividual);

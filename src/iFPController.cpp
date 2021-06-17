@@ -158,8 +158,8 @@ std::vector<std::string>* IFPController::obtenerHistorialPartidas() {
     for (std::vector<PartidaIndividual*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
         if ((*it)->getVideojuego()->getNombre() == vj->getNombre()) {
             aInsertar = aInsertar + "ID: " + std::to_string((*it)->getId()) + "\n" + "Fecha de creacion: " + (*it)->getDtFechaHora().getString() + "\n"
-            + "Duracion: " + std::to_string((*it)->getDuracion()) + ".\n";
-            res->insert(res->end(), aInsertar);
+            + "Duracion: " + std::to_string((*it)->getDuracion()) + " horas.\n";
+            res->insert(res->begin(), aInsertar);
         }
         aInsertar = "";
     }
@@ -205,7 +205,7 @@ void IFPController::confirmarFinalizarPartida(int identificador) {
             }
         }
     }
-    p->finalizarPartida();   
+    p->finalizarPartida();
 }
 
 void IFPController::clearCache() {
@@ -220,9 +220,12 @@ std::map<int, std::string>* IFPController::obtenerPartidasMultiActivas() {
     std::map<int, PartidaMultijugador*>* pUnido = host->obtenerPartidasUnido();
     std::string aInsertar = "";
     for (std::map<int, PartidaMultijugador*>::iterator it = pUnido->begin(); it != pUnido->end(); ++it) {
-        DtPartidaMultijugador* dtMulti = dynamic_cast<DtPartidaMultijugador*>(it->second->obtenerDatosPartida());
-        aInsertar = aInsertar + dtMulti->getString();
-        delete dtMulti;
+        aInsertar = aInsertar + "ID: " + std::to_string(it->second->getId()) + "\n" + "Fecha de creacion: " 
+        + it->second->getDtFechaHora().getString() + "\n";
+        if (it->second->getTransmitidaEnVivo()) 
+            aInsertar = aInsertar + "Se esta transmitiendo en vivo\n";
+        else 
+            aInsertar = aInsertar + "No se ha transmitido en vivo\n";
         aInsertar = aInsertar + "Host: " + it->second->getHost()->getNickname() + ".\n";
         aInsertar = aInsertar + "Videojuego: " + it->second->getVideojuego()->getNombre() + ".\n";
         std::map<string, Jugador*>* jUnidos = it->second->getJugadoresUnidos();
