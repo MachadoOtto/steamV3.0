@@ -160,7 +160,7 @@ int main() {
 	    }
 	    case 4: {
 		if(sys->cargarDatosPrueba()){	
-		    cout << "ERROR: Los datos de prueba solo pueden ser cargados una sola vez.\n";
+		    cout << "ERROR: Los datos de prueba pueden ser cargados una sola vez.\n";
 		    pkey();
 		}
 		break;

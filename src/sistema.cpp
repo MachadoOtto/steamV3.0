@@ -397,7 +397,13 @@ int Sistema::altaUsuario(){
     cout<< "Ingrese los siguientes datos para crear su usuario: "<< endl;
     do{
 	cout<< "Email: ";
+	xd2:
 	getline(cin,mail);
+	if(mail==""){
+	    reprintln();
+	    cout << "Por favor ingrese una direccion no vacia: ";
+	    goto xd2;
+	}
 	cout<< "Contrasenia: ";
 	getline(cin,pass);
 	DtUsuario datos(mail, pass);
@@ -441,7 +447,13 @@ int Sistema::altaUsuario(){
 	case 2: {
 	    string emp;
             cout << "Ingrese el nombre de su empresa: ";
+	    xd:
 	    getline(cin,emp);
+	    if(emp == ""){
+		reprintln();
+		cout << "Por favor ingrese un nombre valido para su empresa: ";
+		goto xd;
+	    }
             IUsuario->ingresarEmpresa(emp);
 	    cout << "Se registrara un desarrollador con los siguientes datos en el sistema:\n\n";
 	    cout << "Email: "<<mail<<endl;
@@ -907,7 +919,13 @@ int Sistema::consultarEstadisticas(){
 int Sistema::verInformacionVideojuego(){
     LaFabrica* factory = LaFabrica::getInstance();
     IVideojuegoController* interface = factory->getIVideojuegoController();
-	set<DtVideojuego>* videojuegosSistema = interface->verVideojuegos();
+    set<DtVideojuego>* videojuegosSistema = interface->verVideojuegos();
+    if(videojuegosSistema->empty()){
+	cout << "No hay videojuegos en el sistema a desplegar.\n";
+	delete videojuegosSistema;
+	pkey();
+	return 0;
+    }
     cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n";
 	for (set<DtVideojuego>::iterator it = videojuegosSistema->begin(); it != videojuegosSistema->end(); it++) {
 		cout << "\t" << it->getNombre() << endl;
@@ -1094,8 +1112,14 @@ int Sistema::asignarPuntajeVideojuego(){
 
     LaFabrica * f = LaFabrica::getInstance();
     IVideojuegoController * h = f->getIVideojuegoController();
-    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n\n";
     set<DtVideojuego>* namae = h->verVideojuegos();
+    if(namae->empty()){
+	cout << "No hay videojuegos disponibles en el sistema para puntuar.\n";
+	delete namae;
+	pkey();
+	return 0;
+    }
+    cout << "El sistema cuenta con el siguiente catalogo de videojuegos:\n\n";
     for(set<DtVideojuego>::iterator it = namae->begin(); it != namae->end(); i++,it++){
 	cout << i << ". Nombre: " << it->getNombre() << "\n";
 	for(int j=0;j<i/10;j++)
