@@ -14,6 +14,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <map>
+#include <set>
 
 #include "handlerCatalogo.h"
 #include "handlerEstadistica.h"
@@ -30,10 +33,15 @@
 #include "dtSuscripcion.h"
 #include "suscripcion.h"
 #include "dtEstadistica.h"
+#include "partida.h"
+#include "partidaIndividual.h"
+#include "partidaMultijugador.h"
 
 using std::vector;
 using std::string;
 using std::cout;
+using std::map;
+using std::set;
 
 class DtCategoria;
 class DtEstadistica;
@@ -48,7 +56,7 @@ private:
     TipoValido tSus; //SUS!?
     Usuario * loggedUser; //Player OR Dev. depening on usecase under execution.
     Videojuego * videoCache;
-    set<Categoria*> * categoriaCache;
+    std::map<std::string,Categoria *> * categoriaCache;
     bool exGen, exPlatf;
 
     VideojuegoController();

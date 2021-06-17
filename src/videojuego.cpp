@@ -18,23 +18,28 @@ using std::string;
 using std::map;
 using std::set;
 
-Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *categorias): costoSuscripciones(datos.getDtPrecios()){
-    this->nombre = datos.getNombre();
-    this->descripcion = datos.getDescripcion();
-    this->totalHorasJugadas = 0;
-    this->puntaje = 0;
-    this->totalJugadoresSuscriptos = 0; 
-    this->categorias = categorias;
-    this->partidas = new map<int,Partida*>;
-    this->suscripciones = new set<Suscripcion*>;
+Videojuego::Videojuego(DtVideojuego datos, map<string,Categoria*> *cat): costoSuscripciones(datos.getDtPrecios()){
+    nombre = datos.getNombre();
+    descripcion = datos.getDescripcion();
+    totalHorasJugadas = 0;
+    puntaje = 0;
+    totalJugadoresSuscriptos = 0; 
+    categorias = cat;
+    partidas = new map<int,Partida*>;
+    suscripciones = new set<Suscripcion*>;
     opiniones = new map<string,int>;
 }
 
 Videojuego::~Videojuego() {
-    eliminarInfoAsociada();
-    delete this->categorias;
-    delete this->partidas;
-    delete this->suscripciones;
+    delete categorias;
+    for (map<int,Partida*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
+        delete it->second;
+    }
+    delete partidas;
+    for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
+        delete (*it);
+    }
+    delete suscripciones;
     delete opiniones;
 }
 
@@ -106,17 +111,6 @@ void Videojuego::confirmarSuscripcion(Jugador* host,TipoValido tipoVal,TipoPago 
         SuscripcionVitalicia* nuevaSus = new SuscripcionVitalicia(fechaSistema::fecha,tipoPago,host,this);
 	host->agregarSuscripcion(nuevaSus);
         this->suscripciones->insert(nuevaSus);
-    }
-}
-
-void Videojuego::eliminarInfoAsociada() {
-    for (map<int,Partida*>::iterator it = partidas->begin(); it != partidas->end(); ++it) {
-        it->second->eliminarAssoc();
-        delete it->second;
-    }
-    for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
-        (*it)->eliminarAssoc();
-        delete *it;
     }
 }
 

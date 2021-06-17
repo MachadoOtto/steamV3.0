@@ -36,7 +36,6 @@ public:
     virtual bool esActiva()=0;
     virtual DtSuscripcion getDt()=0;
     bool esDeJugador(Jugador *);
-    void eliminarAssoc();
     virtual ~Suscripcion();
 protected:
     Suscripcion(DtFechaHora, TipoPago,Jugador *,Videojuego *);

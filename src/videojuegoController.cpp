@@ -111,15 +111,15 @@ void VideojuegoController::seleccionarVideojuego(string x){
 
 void VideojuegoController::seleccionarGenero(string x){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
-    categoriaCache->insert(static_cast<Categoria * >(hc->findGender(x)));
+    categoriaCache->insert(map<string,Categoria *>::value_type(x,static_cast<Categoria * >(hc->findGender(x))));
 }
 void VideojuegoController::seleccionarPlataforma(string x){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
-    categoriaCache->insert(static_cast<Categoria * >(hc->findPlatform(x)));
+    categoriaCache->insert(map<string,Categoria *>::value_type(x,static_cast<Categoria * >(hc->findPlatform(x))));
 }
 void VideojuegoController::seleccionarCategoriaOtro(string x){
     HandlerCategoria * hc = HandlerCategoria::getInstance();
-    categoriaCache->insert(static_cast<Categoria * >(hc->findCategory(x)));
+    categoriaCache->insert(map<string,Categoria *>::value_type(x,static_cast<Categoria * >(hc->findCategory(x))));
 }
 
 void VideojuegoController::confirmarPublicacion(){
@@ -128,6 +128,7 @@ void VideojuegoController::confirmarPublicacion(){
     Desarrollador * dev = static_cast<Desarrollador *>(hu->getLoggedUser());
     Videojuego * v = dev->publishVideogame(datos,categoriaCache); 
     hc->addVideojuego(v);
+    categoriaCache = new map<string, Categoria*>;
     this->clearCache();
 }
 
@@ -139,8 +140,15 @@ void VideojuegoController::confirmarSuscripcion(){
 
 void VideojuegoController::confirmarEliminarVideojuego(){
     HandlerCatalogo * hc = HandlerCatalogo::getInstance();
-    videoCache->eliminarInfoAsociada();
-    static_cast<Desarrollador *>(loggedUser)->remove(videoCache);
+    for (map<int, Partida*>::iterator it = videoCache->getPartidas()->begin(); it != videoCache->getPartidas()->end(); ++it) {
+        Jugador* player = it->second->getHost();
+        player->quitar(it->second);
+    }
+    for (set<Suscripcion*>::iterator it = videoCache->getSuscripciones()->begin(); it != videoCache->getSuscripciones()->end(); ++it) {
+        Jugador* player = (*it)->getComprador();
+        player->remove(*it);
+    }
+    static_cast<Desarrollador*>(loggedUser)->remove(videoCache);
     hc->remove(videoCache);
 }
 
@@ -302,7 +310,7 @@ void VideojuegoController::cargarEstadisticas(set<string> x){
 }
 
 VideojuegoController::VideojuegoController():datos("","",0,0,0,0),catData("","",TipoCategoria::Otro){
-    categoriaCache = new set<Categoria*>;
+    categoriaCache = new map<string,Categoria *>;
     loggedUser = nullptr;
     videoCache = nullptr;
     exGen = false;
@@ -313,5 +321,3 @@ VideojuegoController::~VideojuegoController(){
     this->clearCache();
     delete categoriaCache;
 }
-
-

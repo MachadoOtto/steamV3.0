@@ -50,7 +50,7 @@ void Jugador::add(Partida * partida) {
     partidas->insert(std::pair<int,Partida *>(partida->getId(),partida));
 }
 
-void Jugador::remove(Partida * partida) {
+void Jugador::quitar(Partida * partida) {
     partidas->erase(partida->getId());
 }
 

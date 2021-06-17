@@ -60,7 +60,7 @@ class Jugador: public Usuario {
         void finPartida(int);
         void associate(Partida *);
         void removeSus(Suscripcion *);
-        void remove(Partida *);
+        void quitar(Partida *);
 	
 	set<Suscripcion *>* getSuscripciones();
 

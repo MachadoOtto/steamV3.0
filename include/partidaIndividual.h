@@ -28,7 +28,6 @@ class PartidaIndividual: public Partida {
         void setPartidaAnterior(PartidaIndividual*);
         PartidaIndividual* getPartidaAnterior();
         virtual void asignarHoraFinalizacion();
-        virtual void eliminarAssoc();
         ~PartidaIndividual();
 };
 
