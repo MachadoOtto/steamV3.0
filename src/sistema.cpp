@@ -358,7 +358,9 @@ int Sistema::cargarDatosPrueba(){
     
     //Aqui se realizan la secuencia de operaciones para generar el estado predefinido del sistema
     //solicitado
+    fechaSistema::fecha = DtFechaHora(2021,6,12,20,0);
     cout << "Se han cargado todos los datos de prueba exitosamente.\n";
+    cout << "ATENCION: La hora del sistema se ha fijado como 12/06/2021 - 20:00\n";
     pkey();
     return 0;
 }

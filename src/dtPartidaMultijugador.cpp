@@ -19,23 +19,8 @@ bool DtPartidaMultijugador::getTransmitidaEnVivo(){
     return transmitidaEnVivo;
 }
 
-string DtPartidaMultijugador::getString() {
-    string texto = "";
-    texto = texto + "ID: " + std::to_string(id) + "\n" + "Duracion: " + std::to_string(duracion) 
-    + "\n" + "Fecha de creacion: " + fecha.getString() + "\n";
-    if (activa) 
-        texto = texto + "La partida se encuentra en curso.\n";
-    else 
-        texto = texto + "La partida ha finalizado.\n";
-    if (transmitidaEnVivo) 
-        texto = texto + "Se esta transmitiendo en vivo\n";
-    else 
-        texto = texto + "No se ha transmitido en vivo\n";
-    return texto;
-}
-
 std::ostream & operator << (std::ostream &o,DtPartidaMultijugador p) {
-    o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion() 
+    o << "ID: " << p.getId() << "\n" << "Duracion: " << p.getDuracion() << " horas."
     << "\n" << "Fecha de creacion: " << p.getFecha() << "\n";
     if (p.getActiva()) 
         o << "La partida se encuentra en curso.\n";

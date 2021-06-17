@@ -18,7 +18,7 @@ PartidaMultijugador::PartidaMultijugador(DtPartidaMultijugador datos) : Partida(
     
 float PartidaMultijugador::getDuracion() { 
     if (this->esActiva()) {
-        float sum=0;
+        float sum = 0;
         int cont = 0;
         for (vector<JugadorMulti*>::iterator it = jugadoresMultis->begin(); it != jugadoresMultis->end(); ++it) {
             cont++;
@@ -28,7 +28,7 @@ float PartidaMultijugador::getDuracion() {
         sum += (this->getDtFechaHora().diffHoras(fechaSistema::fecha)) * (cont + 1); //Correccion para usar fechaSistema
         return sum;
     } else {
-        return this->getDuracion();
+        return duracion;
     }
 }
 
@@ -40,11 +40,6 @@ void PartidaMultijugador::setJugadoresUnidos(map<string, Jugador*>* jAUnir) {
 
 map<string, Jugador*>* PartidaMultijugador::getJugadoresUnidos() { 
     return jugadoresUnidos; 
-}
-
-DtPartida* PartidaMultijugador::obtenerDatosPartida() {
-    DtPartidaMultijugador* datos = new DtPartidaMultijugador(this->getId(), this->getDtFechaHora(), this->getDuracion(), this->esActiva(),transmitidaEnVivo);
-    return datos;
 }
 
 void PartidaMultijugador::asignarHoraFinalizacion() {

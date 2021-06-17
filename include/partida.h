@@ -21,11 +21,11 @@ class Partida {
     private:
         int identificador;
         DtFechaHora fecha;
-        float duracion;
         bool activa;
         Jugador* host;
         Videojuego* videogame;
     protected:
+        float duracion;
         Partida(DtPartida);
     public:
         int getId();
@@ -39,7 +39,6 @@ class Partida {
         void remove(Jugador*);
         void setVideojuego(Videojuego*);
         Videojuego* getVideojuego();
-        virtual DtPartida* obtenerDatosPartida()=0;
         virtual void asignarHoraFinalizacion()=0;
         void finalizarPartida();
         virtual void eliminarAssoc()=0;

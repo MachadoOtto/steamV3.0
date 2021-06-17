@@ -23,7 +23,6 @@ class DtPartidaMultijugador: public DtPartida {
     public:
         DtPartidaMultijugador(int,DtFechaHora,float,bool,bool);
 	    bool getTransmitidaEnVivo();
-        string getString();
 };
 
 std::ostream& operator<<(std::ostream&, DtPartidaMultijugador);

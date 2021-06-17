@@ -38,7 +38,6 @@ public:
     bool getTransmitidaEnVivo();
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
-    virtual DtPartida* obtenerDatosPartida();
     virtual void asignarHoraFinalizacion();
     virtual void eliminarAssoc();
     void abandonar(JugadorMulti*);
