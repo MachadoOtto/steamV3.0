@@ -32,8 +32,4 @@ void PartidaIndividual::asignarHoraFinalizacion() {
     this->setDuracion(this->getDtFechaHora().diffHoras(fechaSistema::fecha));
 }
 
-void PartidaIndividual::eliminarAssoc() {
-    //this->getHost()->remove(this) revisar esto. partida no tendria que hablar con jugador... generaria una dependencia circular. Se tendria que hacer de otra manera esto
-}
-
 PartidaIndividual::~PartidaIndividual() { }

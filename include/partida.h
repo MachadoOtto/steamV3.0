@@ -41,7 +41,6 @@ class Partida {
         Videojuego* getVideojuego();
         virtual void asignarHoraFinalizacion()=0;
         void finalizarPartida();
-        virtual void eliminarAssoc()=0;
         virtual ~Partida();
 };
 

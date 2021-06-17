@@ -60,8 +60,7 @@ class Videojuego {
         void confirmarPartida(Jugador*,int,bool,map<string,Jugador*>*);
         void cancelarSuscripcion(Jugador*);
         void confirmarSuscripcion(Jugador*,TipoValido,TipoPago);
-        void eliminarInfoAsociada();
-	int addOpinion(string,int);
+	    int addOpinion(string,int);
         //Getters
         string getNombre();
         string getDescripcion();

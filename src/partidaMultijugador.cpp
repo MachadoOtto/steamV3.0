@@ -51,16 +51,6 @@ void PartidaMultijugador::asignarHoraFinalizacion() {
     this->setDuracion(sum);
 }
 
-void PartidaMultijugador::eliminarAssoc() {
-    /* problema similar... se le pida hablar a jugador cuando la partida no deberia
-    host.remove(this);
-    for (map<string, Jugador*>::iterator it = jugadoresUnidos->begin(); it! = jugadoresUnidos->end(); ++it) {
-        it->second->remove(this);
-    }
-    jugadoresUnidos->clear();
-    */
-}
-
 void PartidaMultijugador::abandonar(JugadorMulti* jMulti) {
     jugadoresMultis->insert(jugadoresMultis->begin(), jMulti);
 }

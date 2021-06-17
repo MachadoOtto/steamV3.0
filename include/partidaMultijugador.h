@@ -39,7 +39,6 @@ public:
     void setJugadoresUnidos(map<string, Jugador*>*);
     map<string, Jugador*>* getJugadoresUnidos();
     virtual void asignarHoraFinalizacion();
-    virtual void eliminarAssoc();
     void abandonar(JugadorMulti*);
     ~PartidaMultijugador();
 };

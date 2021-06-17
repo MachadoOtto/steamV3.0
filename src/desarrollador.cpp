@@ -84,12 +84,8 @@ std::set<std::string> * Desarrollador::getVideojuegosDesarrollados() {
     return res;
 }
 
-Videojuego * Desarrollador::publishVideogame(DtVideojuego gameData, std::set<Categoria *> * categorias) {
-    std::map<std::string,Categoria *> * setAMap = new std::map<std::string,Categoria *>;
-    for(std::set<Categoria *>::const_iterator it = categorias->cbegin(); it != categorias->cend(); it++) {
-        setAMap->insert(std::pair<std::string,Categoria *>((*it)->getNombre(),*it));
-    } //Seria mas agradable pasar un map y no un set :$
-    Videojuego * vj = new Videojuego(gameData,setAMap);
+Videojuego * Desarrollador::publishVideogame(DtVideojuego gameData, std::map<std::string,Categoria *> * categorias) {
+    Videojuego * vj = new Videojuego(gameData,categorias);
     videojuegosDesarrollados->insert(std::pair<std::string,Videojuego *>(vj->getNombre(),vj));
     return vj;
 }
@@ -116,17 +112,7 @@ std::set<Estadistica *> * Desarrollador::getEstadisticas(){
     return x;
 }
    
-Desarrollador::~Desarrollador() { //messi? messi nada. Migue dice que muy mal.
-    /*
-    for(std::map<std::string,Videojuego *>::iterator it = videojuegosDesarrollados->begin(); it != videojuegosDesarrollados->end(); it++) {
-	h->remove(it->second);
-	videojuegosDesarrollados->erase(it);
-    } */
+Desarrollador::~Desarrollador() {
     delete videojuegosDesarrollados;
-    /*
-    for(std::map<std::string,Estadistica *>::iterator it = estadisticas->begin(); it != estadisticas->end(); it++) {
-        delete it->second;
-    } */
     delete estadisticas;
 }
-
