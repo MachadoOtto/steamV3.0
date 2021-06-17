@@ -159,7 +159,10 @@ int main() {
 		break;
 	    }
 	    case 4: {
-		sys->cargarDatosPrueba();
+		if(sys->cargarDatosPrueba()){	
+		    cout << "ERROR: Los datos de prueba solo pueden ser cargados una sola vez.\n";
+		    pkey();
+		}
 		break;
 	    }
 	    case 5: {

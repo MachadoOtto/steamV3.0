@@ -14,10 +14,43 @@ using namespace menuUtilities;
 using namespace std;
 
 Sistema::Sistema(){
-//Hago las cosas pertinentes para iniciar el sistema...
+    LaFabrica * lf = LaFabrica::getInstance();
+    IVideojuegoController * iv = lf->getIVideojuegoController();
+    //Categorias por defecto
 
-    //Hay que crear las categorias que ya vienen en el sistema: generos y plataformas
-    //Hay que inicializar las estadisticas
+    TipoCategoria tcat;
+    tcat = TipoCategoria::Plataforma;
+    iv->cargarCategoria(DtCategoria("PC","PC Mastercace",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("PS4","Gr4t console m8",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Xbox One","cringe",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("PS5","$$$",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Xbox X","You vill purchase the suscription",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Switch","soy",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    tcat = TipoCategoria::Genero;
+    iv->cargarCategoria(DtCategoria("Deporte","balls",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Aventura","Juegos tipo maincra",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Estrategia","inb4 400 APM",tcat)); 
+    iv->confirmarAgregarCategoria();
+
+    iv->cargarCategoria(DtCategoria("Accion","inb4 los videojuegos te hacen violentoo",tcat)); 
+    iv->confirmarAgregarCategoria();
+
 }
 
 int Sistema::modificarFecha(){
@@ -57,6 +90,11 @@ int Sistema::modificarFecha(){
 }
 
 int Sistema::cargarDatosPrueba(){
+    static int funcion_consumible = 0;
+    if(funcion_consumible)
+	return 1;
+    funcion_consumible++;
+
     LaFabrica * lf = LaFabrica::getInstance();
     IAltaUsuarioController * iu = lf->getIAltaUsuarioController();
     IVideojuegoController * iv = lf->getIVideojuegoController();
@@ -111,24 +149,9 @@ int Sistema::cargarDatosPrueba(){
 
     //CATEGORIAS
     TipoCategoria tcat;
-    tcat = TipoCategoria::Plataforma;
-    iv->cargarCategoria(DtCategoria("PC","PC Mastercace",tcat)); 
-    iv->confirmarAgregarCategoria();
-
-    iv->cargarCategoria(DtCategoria("PS4","Gr4t console m8",tcat)); 
-    iv->confirmarAgregarCategoria();
-
-    iv->cargarCategoria(DtCategoria("Xbox One","cringe",tcat)); 
-    iv->confirmarAgregarCategoria();
 
     tcat = TipoCategoria::Genero;
-    iv->cargarCategoria(DtCategoria("Deporte","balls",tcat)); 
-    iv->confirmarAgregarCategoria();
-
     iv->cargarCategoria(DtCategoria("Supervivencia","Juegos tipo maincra",tcat)); 
-    iv->confirmarAgregarCategoria();
-
-    iv->cargarCategoria(DtCategoria("Estrategia","inb4 400 APM",tcat)); 
     iv->confirmarAgregarCategoria();
 
     tcat= TipoCategoria::Otro;
