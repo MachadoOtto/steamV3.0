@@ -869,32 +869,36 @@ int Sistema::consultarEstadisticas(){
     LaFabrica * laFabrica = LaFabrica::getInstance();
     IVideojuegoController * IVideo = laFabrica->getIVideojuegoController();
     set<string> * vjDes = IVideo->obtenerNombreVideojuegosDesarrollados();
-    cout << "Videojuegos desarrollados por " << this->getLoggedUserEmail() << " :\n";
-    int i=0;
-    for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end();++it,++i){
-	cout << i << ". " << *it << endl; 
-    }
-    string vid;
-    cout << "\nIngrese el nombre del videojuego del cual desea consultar sus estadisticas: ";
-    bool inok=false;
-    while(!inok){ 
-	getline(cin,vid);
-	for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end() && !inok;++it,++i){
-	    if(*it==vid)
-		inok=true;
-	}
-	if(!inok){
-	    reprintln();
-	    cout << "Por favor seleccione un nombre de videojuego valido: ";
-	}
+    if (!(vjDes->empty())) {
+        cout << "Videojuegos desarrollados por " << this->getLoggedUserEmail() << " :\n";
+        int i=0;
+        for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end();++it,++i){
+            cout << i << ". " << *it << endl; 
+        }
+        string vid;
+        cout << "\nIngrese el nombre del videojuego del cual desea consultar sus estadisticas: ";
+        bool inok=false;
+        while(!inok){ 
+            getline(cin,vid);
+            for(set<string>::iterator it = vjDes->begin(); it!=vjDes->end() && !inok;++it,++i){
+                if(*it==vid)
+                    inok=true;
+            }
+            if(!inok){
+                reprintln();
+                cout << "Por favor seleccione un nombre de videojuego valido: ";
+            }
+        }
+        set<DtEstadistica> * e = IVideo->obtenerEstadisticas(vid);
+        cout << "\nEstadisticas para " << vid << ":\n";
+        for(set<DtEstadistica>::iterator it = e->begin(); it!=e->end();++it)
+            cout << it->getNombre() << ": " << it->getValor() << endl;
+        cout << "\nSe han desplegado las estadisticas del videojuego exitosamente.\n";
+        delete e;
+    } else {
+        cout << "\nERROR: Usted no presenta videojuegos publicados.\n";
     }
     delete vjDes;
-    set<DtEstadistica> * e = IVideo->obtenerEstadisticas(vid);
-    cout << "\nEstadisticas para " << vid << ":\n";
-    for(set<DtEstadistica>::iterator it = e->begin(); it!=e->end();++it)
-	cout << it->getNombre() << ": " << it->getValor() << endl;
-    cout << "\nSe han desplegado las estadisticas del videojuego exitosamente.\n";
-    delete e;
     pkey();
     return 0;
 }
