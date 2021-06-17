@@ -11,10 +11,14 @@
 #ifndef MENUUTILITIES
 #define MENUUTILITIES 
 
+#include <string>
+using std::string;
+
 namespace menuUtilities{
     void cls();
     void clinput();
     void pkey();
+    void funcionSecreta(string);
     void ptitle();
     void reprintln();
     int takeInputRange(int min,int max);

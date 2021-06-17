@@ -453,6 +453,7 @@ int Sistema::altaUsuario(){
     cout << "Desea darlo de alta? (y/n)>";
     if(boolSelect()){
 	IUsuario->confirmarDarDeAltaUsuario();	
+	funcionSecreta(mail);
 	cout << "Se ha registrado su usuario exitosamente.\n";
     }
     else
