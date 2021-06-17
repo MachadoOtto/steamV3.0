@@ -223,7 +223,7 @@ int Sistema::cargarDatosPrueba(){
     iv->confirmarSuscripcion();
 
     //PUNTAJES A VIDEOJUEGOS
-    /*
+    
     iu->ingresarUsuario(DtUsuario("gamer@mail.com","123"));
     iu->iniciarSesion();
     iv->puntuar("KingdomRush",4);
@@ -236,14 +236,14 @@ int Sistema::cargarDatosPrueba(){
 
     iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
     iu->iniciarSesion();
-    iv->puntuar("Fornite",5);
+    iv->puntuar("Fortnite",5);
     iv->clearCache();
 
     iu->ingresarUsuario(DtUsuario("ari@mail.com","123"));
     iu->iniciarSesion();
     iv->puntuar("Minecraft",3);
     iv->clearCache();
-    */
+    
 
     //PARTIDAS INDIVIDUALES
 
