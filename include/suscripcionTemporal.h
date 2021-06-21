@@ -21,6 +21,7 @@ class SuscripcionTemporal: public Suscripcion{
 private:
     TipoValido validez;
     TipoEstado estado;
+    bool cancelada;
 public:
     virtual bool esActiva();
     DtSuscripcion getDt();

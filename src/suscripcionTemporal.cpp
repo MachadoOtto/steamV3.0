@@ -11,7 +11,7 @@
 #include "../include/suscripcionTemporal.h"
 
 bool SuscripcionTemporal::esActiva(){
-    //if(estado==TipoEstado::Activa){
+    if(!cancelada){
 	float delta = fecha.diffHoras(fechaSistema::fecha);
 	//Dado que el calendario no es uniforme, se toman los siguientes criterios para definir las suscripciones:
 	//Una suscripcion de un mes es de 30 dias. Esto significa que las demas suscripciones son de 90 dias y 360 dias respectivamente.
@@ -31,11 +31,12 @@ bool SuscripcionTemporal::esActiva(){
 	    estado=TipoEstado::Activa;
 	    return true;
 	}
-    //}
+    }
     return false;
 }
 
 void SuscripcionTemporal::cancelarSuscripcion(){
+    cancelada = true;
     estado = TipoEstado::Inactiva; 
 }
 
@@ -47,5 +48,6 @@ DtSuscripcion SuscripcionTemporal::getDt(){
 SuscripcionTemporal::SuscripcionTemporal(TipoValido t, TipoEstado ve,DtFechaHora dt,TipoPago tp,Jugador *j, Videojuego *v): Suscripcion(dt,tp,j,v){
     validez = t;
     estado = ve;
+    cancelada = false;
 }
 
