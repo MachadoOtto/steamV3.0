@@ -241,7 +241,7 @@ int Sistema::cargarDatosPrueba(){
     fechaSistema::fecha = DtFechaHora(2020,12,21,15,0); // DtFechaHora(anio, mes, dia, hora, min).
     iu->ingresarUsuario(DtUsuario("ibai@mail.com","123"));
     iu->iniciarSesion();
-    iv->seleccionarVideojuego("Fortnite");
+    iv->seleccionarVideojuego("Minecraft");
     iv->ingresarSuscripcion(TipoValido::Vitalicia, TipoPago::Tarjeta);
     iv->confirmarSuscripcion();
 
@@ -934,15 +934,14 @@ int Sistema::verInformacionVideojuego(){
     bool existeVj = false;
     string nombreVj;
     while(!existeVj){
-	    getline(cin,nombreVj);
-	    for(set<DtVideojuego>::iterator it = videojuegosSistema->begin(); ((it!=videojuegosSistema->end()) && (!existeVj)); ++it) {
-	        if(it->getNombre() == nombreVj)
-		        existeVj = true;
-	        else {
-	            reprintln();
-	            cout << "Por favor ingrese una opcion valida: ";
-            }
-        }
+	getline(cin,nombreVj);
+	for(set<DtVideojuego>::iterator it = videojuegosSistema->begin(); ((it!=videojuegosSistema->end()) && (!existeVj)); ++it)
+	    if(it->getNombre() == nombreVj)
+		existeVj = true;
+	if(!existeVj){ 
+	    reprintln();
+	    cout << "Por favor ingrese una opcion valida: ";
+	}
     }
     delete videojuegosSistema;
     interface->seleccionarVideojuego(nombreVj);

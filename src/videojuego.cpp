@@ -95,7 +95,7 @@ void Videojuego::confirmarPartida(Jugador* host,int id,bool enVivo,map<string,Ju
 
 void Videojuego::cancelarSuscripcion(Jugador* host) {
     for (set<Suscripcion*>::iterator it = suscripciones->begin(); it != suscripciones->end(); ++it) {
-        if ((*it)->esDeJugador(host)) {
+        if ((*it)->esDeJugador(host) && (*it)->esActiva()) {
             static_cast<SuscripcionTemporal*>((*it))->cancelarSuscripcion();
         }
     }
