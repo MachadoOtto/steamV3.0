@@ -28,6 +28,6 @@ float DtPrecios::getVitalicia() { return vitalicia; }
 
 ostream& operator<<(ostream& o, DtPrecios p) {
     o << "Lista de precios: \n" << "\tMensual: " << p.getMensual() << "$\n" << "\tTrimestral: " << p.getTrimestral()
-        << "$\n" << "\tAnual: " << p.getAnual() << "$\n" << "$\tVitalicia: " << p.getVitalicia() << "$\n";
+        << "$\n" << "\tAnual: " << p.getAnual() << "$\n" << "\tVitalicia: " << p.getVitalicia() << "$\n";
     return o;
 }
